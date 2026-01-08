@@ -5,7 +5,7 @@
     "main": "generate_index.js",
     "scripts": {
         "generate": "node scripts/generate_index.js",
-        "format": "prettier --write \"DSA/DSA JAVA/*.{java,txt}\"",
+        "format": "prettier --write \"Codex/dsa/*.{java,txt}\"",
         "build": "npm run format && npm run generate"
     },
     "devDependencies": {
