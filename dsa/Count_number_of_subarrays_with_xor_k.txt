@@ -1,38 +1,39 @@
 // Problem: https://www.geeksforgeeks.org/find-the-number-of-subarrays-having-sum-less-than-k/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int[] arr = {5, 6, 7, 8, 9};
-        int k = 5;
-        
-        // Count subarrays with XOR k
-        int xr = 0;
-        HashMap<Integer, Integer> hm = new HashMap<>();
-        
-        // Initial state: XOR 0 seen once
+
+  public static void main(String[] args) {
+    int[] arr = { 5, 6, 7, 8, 9 };
+    int k = 5;
+
+    // Count subarrays with XOR k
+    int xr = 0;
+    HashMap<Integer, Integer> hm = new HashMap<>();
+
+    // Initial state: XOR 0 seen once
+    hm.put(xr, 1);
+    int cnt = 0;
+
+    for (int i = 0; i < arr.length; i++) {
+      xr = xr ^ arr[i]; // Prefix XOR
+
+      // Formula: PrefixXOR ^ Target = PrevXOR
+      int x = xr ^ k;
+
+      if (hm.containsKey(x)) {
+        cnt += hm.get(x);
+      }
+
+      if (hm.containsKey(xr)) {
+        hm.put(xr, hm.get(xr) + 1);
+      } else {
         hm.put(xr, 1);
-        int cnt = 0;
-        
-        for (int i = 0; i < arr.length; i++) {
-            xr = xr ^ arr[i]; // Prefix XOR
-            
-            // Formula: PrefixXOR ^ Target = PrevXOR
-            int x = xr ^ k;
-            
-            if (hm.containsKey(x)) {
-                cnt += hm.get(x);
-            }
-            
-            if (hm.containsKey(xr)) {
-                hm.put(xr, hm.get(xr) + 1);
-            } else {
-                hm.put(xr, 1);
-            }
-        }
-        
-        System.out.println(cnt);
+      }
     }
+
+    System.out.println(cnt);
+  }
 }

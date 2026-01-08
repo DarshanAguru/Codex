@@ -1,46 +1,47 @@
 // Problem: https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int[] arr = {7, 8, 1, 2, 3, 3, 3, 4, 5, 6};
-        int k = 3;
-        int idx = binarySearch(arr, 0, arr.length - 1, k);
-        System.out.println(idx != -1);
-    }
-    
-    static int binarySearch(int[] arr, int low, int high, int k) {
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            
-            if (arr[mid] == k) return mid;
-            
-            // Handle duplicates: trim search space
-            if (arr[low] == arr[mid] && arr[mid] == arr[high]) {
-                low++;
-                high--;
-                continue;
-            }
-            
-            // Binary Search in Rotated Array logic
-            if (arr[low] <= arr[mid]) {
-                // Left half sorted
-                if (arr[mid] >= k && arr[low] <= k) {
-                    high = mid - 1;
-                } else {
-                    low = mid + 1;
-                }
-            } else {
-                // Right half sorted
-                if (arr[mid] <= k && arr[high] >= k) {
-                    low = mid + 1;
-                } else {
-                    high = mid - 1;
-                }
-            }
+
+  public static void main(String[] args) {
+    int[] arr = { 7, 8, 1, 2, 3, 3, 3, 4, 5, 6 };
+    int k = 3;
+    int idx = binarySearch(arr, 0, arr.length - 1, k);
+    System.out.println(idx != -1);
+  }
+
+  static int binarySearch(int[] arr, int low, int high, int k) {
+    while (low <= high) {
+      int mid = low + (high - low) / 2;
+
+      if (arr[mid] == k) return mid;
+
+      // Handle duplicates: trim search space
+      if (arr[low] == arr[mid] && arr[mid] == arr[high]) {
+        low++;
+        high--;
+        continue;
+      }
+
+      // Binary Search in Rotated Array logic
+      if (arr[low] <= arr[mid]) {
+        // Left half sorted
+        if (arr[mid] >= k && arr[low] <= k) {
+          high = mid - 1;
+        } else {
+          low = mid + 1;
         }
-        return -1;
+      } else {
+        // Right half sorted
+        if (arr[mid] <= k && arr[high] >= k) {
+          low = mid + 1;
+        } else {
+          high = mid - 1;
+        }
+      }
     }
+    return -1;
+  }
 }

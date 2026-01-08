@@ -1,34 +1,35 @@
 // Problem: https://www.geeksforgeeks.org/minimize-the-heights-33/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int[] arr = {12, 6, 4, 15, 17, 10};
-        int k = 6;
-        
-        // Minimize the maximum difference between heights
-        
-        Arrays.sort(arr);
-        
-        int res = arr[arr.length - 1] - arr[0];
-        
-        // We consider two partitions: smaller elements increase by k, larger decrease by k
-        int max = arr[arr.length - 1] - k;
-        int min = arr[0] + k;
-        
-        for (int i = 0; i < arr.length - 1; i++) {
-            // New possible min and max after splitting at index i
-            int mini = Math.min(min, arr[i + 1] - k);
-            int maxi = Math.max(max, arr[i] + k);
-            
-            // Height cannot be negative
-            if (arr[i] - k < 0) continue;
-            
-            res = Math.min(res, maxi - mini);
-        }
-        
-        System.out.println(res);
+
+  public static void main(String[] args) {
+    int[] arr = { 12, 6, 4, 15, 17, 10 };
+    int k = 6;
+
+    // Minimize the maximum difference between heights
+
+    Arrays.sort(arr);
+
+    int res = arr[arr.length - 1] - arr[0];
+
+    // We consider two partitions: smaller elements increase by k, larger decrease by k
+    int max = arr[arr.length - 1] - k;
+    int min = arr[0] + k;
+
+    for (int i = 0; i < arr.length - 1; i++) {
+      // New possible min and max after splitting at index i
+      int mini = Math.min(min, arr[i + 1] - k);
+      int maxi = Math.max(max, arr[i] + k);
+
+      // Height cannot be negative
+      if (arr[i] - k < 0) continue;
+
+      res = Math.min(res, maxi - mini);
     }
+
+    System.out.println(res);
+  }
 }

@@ -1,52 +1,55 @@
 // Problem: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Node {
-    public Node left, right;
-    public int val;
-    Node(int val) {
-        this.val = val;
-    }
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+  }
 }
 
 class Main {
-    public static void main(String[] args) {
-        Node root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(4);
-        root.left.right = new Node(5);
-        root.right = new Node(3);
-        root.right.left = new Node(6);
-        root.right.right = new Node(7);
-        
-        int x = 4;
-        int y = 6;
-        Node res = findLowestCommonAncestor(root, x, y);
-        
-        if (res != null) {
-            System.out.println("LCA: " + res.val);
-        } else {
-            System.out.println("LCA not found");
-        }
+
+  public static void main(String[] args) {
+    Node root = new Node(1);
+    root.left = new Node(2);
+    root.left.left = new Node(4);
+    root.left.right = new Node(5);
+    root.right = new Node(3);
+    root.right.left = new Node(6);
+    root.right.right = new Node(7);
+
+    int x = 4;
+    int y = 6;
+    Node res = findLowestCommonAncestor(root, x, y);
+
+    if (res != null) {
+      System.out.println("LCA: " + res.val);
+    } else {
+      System.out.println("LCA not found");
     }
-    
-    static Node findLowestCommonAncestor(Node root, int x, int y) {
-        // Base case: null or one of the targets found
-        if (root == null || root.val == x || root.val == y) {
-            return root;
-        }
-        
-        Node left = findLowestCommonAncestor(root.left, x, y);
-        Node right = findLowestCommonAncestor(root.right, x, y);
-        
-        // If one is found in left and other in right, current is LCA
-        if (left != null && right != null) {
-            return root;
-        }
-        
-        // Otherwise return the non-null one
-        return (left != null) ? left : right;
+  }
+
+  static Node findLowestCommonAncestor(Node root, int x, int y) {
+    // Base case: null or one of the targets found
+    if (root == null || root.val == x || root.val == y) {
+      return root;
     }
+
+    Node left = findLowestCommonAncestor(root.left, x, y);
+    Node right = findLowestCommonAncestor(root.right, x, y);
+
+    // If one is found in left and other in right, current is LCA
+    if (left != null && right != null) {
+      return root;
+    }
+
+    // Otherwise return the non-null one
+    return (left != null) ? left : right;
+  }
 }

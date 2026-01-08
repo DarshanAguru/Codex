@@ -1,25 +1,26 @@
 // Problem: https://leetcode.com/problems/sum-of-two-integers/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int a = 10;
-        int b = 20;
-        
-        // Sum of two integers without using operators + or -
-        System.out.println(calcSum(a, b));
+
+  public static void main(String[] args) {
+    int a = 10;
+    int b = 20;
+
+    // Sum of two integers without using operators + or -
+    System.out.println(calcSum(a, b));
+  }
+
+  static int calcSum(int a, int b) {
+    // Use XOR for sum without carry, AND for carry
+    // Loop until no carry remains
+    while (b != 0) {
+      int carry = (a & b) << 1;
+      a = a ^ b; // Add without carry
+      b = carry; // Process carry in next iteration
     }
-    
-    static int calcSum(int a, int b) {
-        // Use XOR for sum without carry, AND for carry
-        // Loop until no carry remains
-        while (b != 0) {
-            int carry = (a & b) << 1; 
-            a = a ^ b;               // Add without carry
-            b = carry;               // Process carry in next iteration
-        }
-        return a;
-    }
+    return a;
+  }
 }

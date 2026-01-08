@@ -1,95 +1,101 @@
 // Problem: https://leetcode.com/problems/sort-list/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Node {
-    int val;
-    Node next;
-    Node(int val) { this.val = val; }
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+  }
 }
 
 class LL {
-    public Node head;
-    public Node tail;
-    
-    public void add(int n) {
-        if (head == null) {
-            head = new Node(n);
-            tail = head;
-            return;
-        }
-        tail.next = new Node(n);
-        tail = tail.next;
+
+  public Node head;
+  public Node tail;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      tail = head;
+      return;
     }
-    
-    public void printList() {
-        Node temp = head;
-        System.out.print("[ ");
-        while (temp != null) {
-            System.out.print(temp.val + " ");
-            temp = temp.next;
-        }
-        System.out.println("]");
+    tail.next = new Node(n);
+    tail = tail.next;
+  }
+
+  public void printList() {
+    Node temp = head;
+    System.out.print("[ ");
+    while (temp != null) {
+      System.out.print(temp.val + " ");
+      temp = temp.next;
     }
+    System.out.println("]");
+  }
 }
 
 class Main {
-    public static void main(String[] args) {
-        LL list = new LL();
-        list.add(3);
-        list.add(4);
-        list.add(2);
-        list.add(1);
-        list.add(5);
-        
-        System.out.println("Original:");
-        list.printList();
-        
-        list.head = mergeSort(list.head);
-        
-        System.out.println("Sorted:");
-        list.printList();
+
+  public static void main(String[] args) {
+    LL list = new LL();
+    list.add(3);
+    list.add(4);
+    list.add(2);
+    list.add(1);
+    list.add(5);
+
+    System.out.println("Original:");
+    list.printList();
+
+    list.head = mergeSort(list.head);
+
+    System.out.println("Sorted:");
+    list.printList();
+  }
+
+  static Node mergeSort(Node head) {
+    if (head == null || head.next == null) return head;
+
+    Node mid = getMiddle(head);
+    Node nextToMid = mid.next;
+    mid.next = null;
+
+    Node left = mergeSort(head);
+    Node right = mergeSort(nextToMid);
+
+    return sortedMerge(left, right);
+  }
+
+  static Node sortedMerge(Node a, Node b) {
+    Node result = null;
+    if (a == null) return b;
+    if (b == null) return a;
+
+    if (a.val <= b.val) {
+      result = a;
+      result.next = sortedMerge(a.next, b);
+    } else {
+      result = b;
+      result.next = sortedMerge(a, b.next);
     }
-    
-    static Node mergeSort(Node head) {
-        if (head == null || head.next == null) return head;
-        
-        Node mid = getMiddle(head);
-        Node nextToMid = mid.next;
-        mid.next = null;
-        
-        Node left = mergeSort(head);
-        Node right = mergeSort(nextToMid);
-        
-        return sortedMerge(left, right);
+    return result;
+  }
+
+  static Node getMiddle(Node head) {
+    if (head == null) return head;
+
+    Node slow = head;
+    Node fast = head;
+
+    while (fast.next != null && fast.next.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
     }
-    
-    static Node sortedMerge(Node a, Node b) {
-        Node result = null;
-        if (a == null) return b;
-        if (b == null) return a;
-        
-        if (a.val <= b.val) {
-            result = a;
-            result.next = sortedMerge(a.next, b);
-        } else {
-            result = b;
-            result.next = sortedMerge(a, b.next);
-        }
-        return result;
-    }
-    
-    static Node getMiddle(Node head) {
-        if (head == null) return head;
-        
-        Node slow = head;
-        Node fast = head;
-        
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        return slow;
-    }
+    return slow;
+  }
 }

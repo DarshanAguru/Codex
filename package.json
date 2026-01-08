@@ -9,6 +9,7 @@
         "build": "npm run format && npm run generate"
     },
     "devDependencies": {
-        "prettier": "^3.1.0"
+        "prettier": "^3.1.0",
+        "prettier-plugin-java": "^2.8.1"
     }
 }

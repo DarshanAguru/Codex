@@ -1,62 +1,70 @@
 // Problem: https://leetcode.com/problems/largest-bst-subtree/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Node {
-    public Node left, right;
-    public int val;
-    Node(int val) {
-        this.val = val;
-    }
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+  }
 }
 
 class BSTInfo {
-    public int min;
-    public int max;
-    public int size;
-    
-    BSTInfo(int min, int max, int size) {
-        this.min = min;
-        this.max = max;
-        this.size = size;
-    }
+
+  public int min;
+  public int max;
+  public int size;
+
+  BSTInfo(int min, int max, int size) {
+    this.min = min;
+    this.max = max;
+    this.size = size;
+  }
 }
 
 class Main {
-    public static void main(String[] args) {
-        Node root = new Node(5);
-        root.left = new Node(2);
-        root.left.left = new Node(1);
-        root.left.right = new Node(3);
-        root.right = new Node(4);
-        
-        int res = findLargestBSTInTree(root);
-        System.out.println("Largest BST Size: " + res);
+
+  public static void main(String[] args) {
+    Node root = new Node(5);
+    root.left = new Node(2);
+    root.left.left = new Node(1);
+    root.left.right = new Node(3);
+    root.right = new Node(4);
+
+    int res = findLargestBSTInTree(root);
+    System.out.println("Largest BST Size: " + res);
+  }
+
+  static int findLargestBSTInTree(Node root) {
+    return helper(root).size;
+  }
+
+  static BSTInfo helper(Node root) {
+    if (root == null) {
+      return new BSTInfo(Integer.MAX_VALUE, Integer.MIN_VALUE, 0);
     }
-    
-    static int findLargestBSTInTree(Node root) {
-        return helper(root).size;
+
+    BSTInfo left = helper(root.left);
+    BSTInfo right = helper(root.right);
+
+    // Check if current node forms a BST with left and right subtrees
+    if (left.max < root.val && right.min > root.val) {
+      return new BSTInfo(
+        Math.min(left.min, root.val),
+        Math.max(right.max, root.val),
+        1 + left.size + right.size
+      );
     }
-    
-    static BSTInfo helper(Node root) {
-        if (root == null) {
-            return new BSTInfo(Integer.MAX_VALUE, Integer.MIN_VALUE, 0);
-        }
-        
-        BSTInfo left = helper(root.left);
-        BSTInfo right = helper(root.right);
-        
-        // Check if current node forms a BST with left and right subtrees
-        if (left.max < root.val && right.min > root.val) {
-            return new BSTInfo(
-                Math.min(left.min, root.val),
-                Math.max(right.max, root.val),
-                1 + left.size + right.size
-            );
-        }
-        
-        // Not a BST, effectively discard by returning range [-Inf, Inf] but larger size
-        return new BSTInfo(Integer.MIN_VALUE, Integer.MAX_VALUE, Math.max(left.size, right.size));
-    }
+
+    // Not a BST, effectively discard by returning range [-Inf, Inf] but larger size
+    return new BSTInfo(
+      Integer.MIN_VALUE,
+      Integer.MAX_VALUE,
+      Math.max(left.size, right.size)
+    );
+  }
 }

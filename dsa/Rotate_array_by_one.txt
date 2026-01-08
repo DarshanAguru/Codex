@@ -3,32 +3,33 @@
 import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5};
-        
-        // Store last element
-        int lastEle = arr[arr.length - 1];
-        
-        // Shift all elements to the right
-        for (int i = arr.length - 1; i > 0; i--) {
-            arr[i] = arr[i - 1];
-        }
-        
-        // Place last element at start
-        arr[0] = lastEle;
-        
-        printRes(arr);
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 3, 4, 5 };
+
+    // Store last element
+    int lastEle = arr[arr.length - 1];
+
+    // Shift all elements to the right
+    for (int i = arr.length - 1; i > 0; i--) {
+      arr[i] = arr[i - 1];
     }
-    
-    private static void printRes(int[] arr) {
-        System.out.print("[");
-        for (int i = 0; i < arr.length; i++) {
-            if (i == arr.length - 1) {
-                System.out.print(arr[i]);
-            } else {
-                System.out.print(arr[i] + ", ");
-            }
-        }
-        System.out.println("]");
+
+    // Place last element at start
+    arr[0] = lastEle;
+
+    printRes(arr);
+  }
+
+  private static void printRes(int[] arr) {
+    System.out.print("[");
+    for (int i = 0; i < arr.length; i++) {
+      if (i == arr.length - 1) {
+        System.out.print(arr[i]);
+      } else {
+        System.out.print(arr[i] + ", ");
+      }
     }
+    System.out.println("]");
+  }
 }

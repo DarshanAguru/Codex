@@ -1,39 +1,36 @@
 // Problem: https://leetcode.com/problems/maximum-matrix-sum/
 
-import java.util.*;
 import java.lang.*;
+import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int[][] matrix = {
-            {1, 2, 3},
-            {-1, -2, -3},
-            {1, 2, 3}
-        };
-        long res = maxMatrixSum(matrix);
-        System.out.println("Result: " + res);
-    }
-    
-    static long maxMatrixSum(int[][] matrix) {
-        long sum = 0;
-        int minVal = Integer.MAX_VALUE;
-        int negatives = 0;
-        
-        for (int[] row : matrix) {
-            for (int val : row) {
-                sum += Math.abs(val);
-                if (val < 0) {
-                    negatives++;
-                }
-                minVal = Math.min(minVal, Math.abs(val));
-            }
+
+  public static void main(String[] args) {
+    int[][] matrix = { { 1, 2, 3 }, { -1, -2, -3 }, { 1, 2, 3 } };
+    long res = maxMatrixSum(matrix);
+    System.out.println("Result: " + res);
+  }
+
+  static long maxMatrixSum(int[][] matrix) {
+    long sum = 0;
+    int minVal = Integer.MAX_VALUE;
+    int negatives = 0;
+
+    for (int[] row : matrix) {
+      for (int val : row) {
+        sum += Math.abs(val);
+        if (val < 0) {
+          negatives++;
         }
-        
-        // If odd negatives, we must subtract twice the smallest absolute value
-        if (negatives % 2 != 0) {
-            sum -= 2 * minVal;
-        }
-        
-        return sum;
+        minVal = Math.min(minVal, Math.abs(val));
+      }
     }
+
+    // If odd negatives, we must subtract twice the smallest absolute value
+    if (negatives % 2 != 0) {
+      sum -= 2 * minVal;
+    }
+
+    return sum;
+  }
 }
