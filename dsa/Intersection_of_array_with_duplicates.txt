@@ -1,0 +1,41 @@
+// Problem: https://leetcode.com/problems/intersection-of-two-arrays-ii/
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3, 2, 1};
+        int[] b = {3, 2, 2, 3, 3, 2};
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        // Store first array in HashSet for quick lookup
+        HashSet<Integer> hs = new HashSet<>();
+        for (int i : a) {
+            hs.add(i);
+        }
+        
+        // Iterate second array and check for intersection
+        for (int i : b) {
+            // content check + element reuse prevention (if specified, but here `remove` ensures unique intersection)
+            if (hs.contains(i)) {
+                res.add(i);
+                hs.remove(i); // Remove to avoid duplicates in result if 'b' has multiple same items
+            }
+        }
+        
+        printRes(res);
+    }
+    
+    private static void printRes(ArrayList<?> arr) { // wildcard for cleaner generic warning safety
+        System.out.print("[");
+        for (int i = 0; i < arr.size(); i++) {
+            if (i == arr.size() - 1) {
+                System.out.print(arr.get(i));
+            } else {
+                System.out.print(arr.get(i) + ", ");
+            }
+        }
+        System.out.println("]");
+    }
+}

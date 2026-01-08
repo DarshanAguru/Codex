@@ -1,0 +1,60 @@
+// Problem: https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] wt = {2, 4, 6};
+        int[] val = {5, 11, 13};
+        int W = 10;
+        
+        int n = wt.length;
+        System.out.println("Memoization: " + knapSackMEMO(n, W, wt, val));
+        System.out.println("Tabulation: " + knapSackTAB(n, W, wt, val));
+    }
+   
+   static int knapSackTAB(int n, int W, int[] wt, int[] val) {
+       int[][] dp = new int[n][W + 1];
+       
+       for (int i = wt[0]; i <= W; i++) {
+           dp[0][i] = (i / wt[0]) * val[0];
+       }
+       
+       for (int i = 1; i < n; i++) {
+            for (int c = 0; c <= W; c++) {
+                int notTaken = dp[i - 1][c];
+                int taken = Integer.MIN_VALUE;
+                
+                if (wt[i] <= c) {
+                    taken = val[i] + dp[i][c - wt[i]];
+                }
+                dp[i][c] = Math.max(notTaken, taken);
+            }
+        }
+       return dp[n - 1][W];
+   }
+   
+   static int knapSackMEMO(int n, int W, int[] wt, int[] val) {
+        int[][] dp = new int[n][W + 1];
+        for (int[] row : dp) Arrays.fill(row, -1);
+        return helper(wt, val, n - 1, W, dp);
+    }
+    
+    static int helper(int[] wt, int[] val, int idx, int W, int[][] dp) {
+        if (idx == 0) {
+            return (W / wt[0]) * val[0];
+        }
+        
+        if (dp[idx][W] != -1) return dp[idx][W];
+        
+        int notTaken = helper(wt, val, idx - 1, W, dp);
+        int taken = Integer.MIN_VALUE;
+        
+        if (wt[idx] <= W) {
+            taken = val[idx] + helper(wt, val, idx, W - wt[idx], dp);
+        }
+        
+        return dp[idx][W] = Math.max(notTaken, taken);
+    }
+}

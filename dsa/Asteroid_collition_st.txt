@@ -1,0 +1,37 @@
+// Problem: https://leetcode.com/problems/asteroid-collision/
+
+import java.util.*;
+import java.lang.*;
+import java.util.stream.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] asteroids = {3, 2, -5};
+        
+        int[] res = getStateAfterCollision(asteroids);
+        System.out.println(Arrays.toString(res));
+    }
+    
+    static int[] getStateAfterCollision(int[] asteroids) {
+        Stack<Integer> st = new Stack<>();
+        
+        for (int ast : asteroids) {
+            if (ast > 0) {
+                st.push(ast);
+            } else {
+                // Collision check
+                while (!st.isEmpty() && st.peek() > 0 && st.peek() < -ast) {
+                    st.pop();
+                }
+                
+                if (!st.isEmpty() && st.peek() == -ast) {
+                    st.pop(); // Both destroy each other
+                } else if (st.isEmpty() || st.peek() < 0) {
+                    st.push(ast); // Stays moving left
+                }
+            }
+        }
+        
+        return st.stream().mapToInt(i -> i).toArray();
+    }
+}

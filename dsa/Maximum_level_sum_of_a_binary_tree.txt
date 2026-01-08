@@ -1,0 +1,59 @@
+// Problem: https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/
+
+import java.util.*;
+import java.lang.*;
+
+class Node {
+    public Node left, right;
+    public int val;
+    Node(int val) {
+        this.val = val;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Node root = new Node(1);
+        root.left = new Node(1);
+        root.left.left = new Node(7);
+        root.left.right = new Node(-8);
+        root.right = new Node(0);
+        root.right.left = new Node(-7);
+        root.right.right = new Node(9);
+        
+        int res = maxLevelSum(root);
+        System.out.println("Max Sum Level: " + res);
+    }
+    
+    static int maxLevelSum(Node root) {
+        if (root == null) return 0;
+        
+        Queue<Node> q = new LinkedList<>();
+        q.offer(root);
+        
+        int level = 1;
+        int maxLevel = 1;
+        int maxSum = Integer.MIN_VALUE;
+        
+        while (!q.isEmpty()) {
+            int size = q.size();
+            int currentSum = 0;
+            
+            for (int i = 0; i < size; i++) {
+                Node node = q.poll();
+                currentSum += node.val;
+                
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+            
+            if (currentSum > maxSum) {
+                maxSum = currentSum;
+                maxLevel = level;
+            }
+            level++;
+        }
+        
+        return maxLevel;
+    }
+}

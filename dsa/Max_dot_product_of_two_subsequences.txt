@@ -1,0 +1,49 @@
+// Problem: https://leetcode.com/problems/max-dot-product-of-two-subsequences/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    static int INF = (int)1e9;
+    
+	public static void main(String[] args) {
+	    int[] nums1 = {2, 1, -2, 5};
+	    int[] nums2 = {3, 0, -6};
+	    
+	    int res = maxDotProduct(nums1, nums2);
+	    System.out.println(res);
+	}
+
+    static int maxDotProduct(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+	    int m = nums2.length;
+	    int[][] dp = new int[n][m];
+	    for(int i = 0; i < n; i++) {
+	        Arrays.fill(dp[i], Integer.MIN_VALUE);
+	    }
+	    return helper(0, 0, nums1, nums2, n, m, dp);
+    }
+    
+    static int helper(int i, int j, int[] a, int[] b, int n, int m, int[][] dp) {
+        if (i == n || j == m) {
+            return -INF;
+        }
+        
+        if (dp[i][j] != Integer.MIN_VALUE) {
+            return dp[i][j];
+        }
+        
+        int product = a[i] * b[j];
+        
+        // Option 1: Take (i, j) and move to (i+1, j+1), max with just product (start fresh)
+        int takeMove = product + Math.max(0, helper(i + 1, j + 1, a, b, n, m, dp));
+        
+        // Option 2: Skip i
+        int skipI = helper(i + 1, j, a, b, n, m, dp);
+        
+        // Option 3: Skip j
+        int skipJ = helper(i, j + 1, a, b, n, m, dp);
+        
+        return dp[i][j] = Math.max(takeMove, Math.max(skipI, skipJ));
+    }
+}

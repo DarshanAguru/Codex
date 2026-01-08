@@ -1,0 +1,30 @@
+// Problem: https://leetcode.com/problems/squares-of-a-sorted-array/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+       int[] arr = {-4, -1, 0, 3, 10};
+       int[] res = getSquaresOfSortedArray(arr);
+       System.out.println(Arrays.toString(res));
+    }
+    
+    static int[] getSquaresOfSortedArray(int[] arr) {
+        int n = arr.length;
+        int[] res = new int[n];
+        int left = 0;
+        int right = n - 1;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            if (Math.abs(arr[left]) > Math.abs(arr[right])) {
+                res[i] = arr[left] * arr[left];
+                left++;
+            } else {
+                res[i] = arr[right] * arr[right];
+                right--;
+            }
+        }
+        return res;
+    }
+}

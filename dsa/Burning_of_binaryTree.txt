@@ -1,0 +1,79 @@
+// Problem: https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/
+
+import java.util.*;
+import java.lang.*;
+
+class Node {
+    public Node left, right;
+    public int val;
+    Node(int val) {
+        this.val = val;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.left.left = new Node(4);
+        root.left.left.right = new Node(7);
+        root.right = new Node(3);
+        root.right.left = new Node(5);
+        root.right.right = new Node(6);
+       
+        // Target is reference to node '3' (root.right)
+        Node target = root.right;
+        
+        int res = getMinTimeToBurnTree(root, target);
+        System.out.println("Time to burn: " + res);
+    }
+    
+    static int getMinTimeToBurnTree(Node root, Node target) {
+        if (root == null) return 0;
+        
+        Map<Node, List<Node>> adj = new HashMap<>();
+        buildGraph(root, null, adj);
+        
+        if (!adj.containsKey(target)) return 0;
+        
+        Set<Node> visited = new HashSet<>();
+        Queue<Node> q = new LinkedList<>();
+        
+        q.add(target);
+        visited.add(target);
+        int time = 0;
+        
+        while (!q.isEmpty()) {
+            int size = q.size();
+            boolean burned = false;
+            
+            for (int i = 0; i < size; i++) {
+                Node curr = q.poll();
+                
+                for (Node neighbor : adj.getOrDefault(curr, new ArrayList<>())) {
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        q.add(neighbor);
+                        burned = true;
+                    }
+                }
+            }
+            if (burned) time++;
+        }
+        return time;
+    }
+    
+    static void buildGraph(Node node, Node parent, Map<Node, List<Node>> adj) {
+        if (node == null) return;
+        
+        adj.putIfAbsent(node, new ArrayList<>());
+        
+        if (parent != null) {
+            adj.get(node).add(parent);
+            adj.get(parent).add(node);
+        }
+        
+        buildGraph(node.left, node, adj);
+        buildGraph(node.right, node, adj);
+    }
+}

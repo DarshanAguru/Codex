@@ -1,0 +1,81 @@
+// Problem: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+
+import java.util.*;
+import java.lang.*;
+
+class Node {
+    int val;
+    Node next;
+    Node(int val) { this.val = val; }
+}
+
+class LL {
+    public Node head;
+    public Node tail;
+    
+    public void add(int n) {
+        if (head == null) {
+            head = new Node(n);
+            tail = head;
+            return;
+        }
+        tail.next = new Node(n);
+        tail = tail.next;
+    }
+    
+    public void printList() {
+        Node temp = head;
+        System.out.print("[ ");
+        while (temp != null) {
+            System.out.print(temp.val + " ");
+            temp = temp.next;
+        }
+        System.out.println("]");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        LL list = new LL();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        
+        int N = 2; // Remove 2nd from last
+        System.out.println("Original:");
+        list.printList();
+        
+        list.head = deleteNthNode(list.head, N);
+        
+        System.out.println("After Removal:");
+        list.printList();
+    }
+    
+    static Node deleteNthNode(Node head, int N) {
+        if (head == null) return null;
+        
+        Node dummy = new Node(-1);
+        dummy.next = head;
+        Node fast = dummy;
+        Node slow = dummy;
+        
+        // Move fast ahead by N+1 (including dummy)
+        for (int i = 0; i <= N; i++) {
+            if (fast == null) return head; // N > Length
+            fast = fast.next;
+        }
+        
+        // Move both until fast reaches end
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        
+        // Remove the node
+        slow.next = slow.next.next;
+        
+        return dummy.next;
+    }
+}

@@ -1,0 +1,38 @@
+// Problem: https://leetcode.com/problems/two-sum/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, 6, 5, 8, 11};
+        int target = 15;
+        
+        boolean found = false;
+        
+        // Sort is required for Two Pointer approach
+        Arrays.sort(arr);
+        
+        int left = 0;
+        int right = arr.length - 1;
+        
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+            
+            if (sum == target) {
+                found = true;
+                break;
+            } else if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        
+        if (found) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
+    }
+}

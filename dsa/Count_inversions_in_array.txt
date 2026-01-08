@@ -1,0 +1,64 @@
+// Problem: https://leetcode.com/problems/count-the-number-of-inversions/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] arr = {5, 4, 3, 2, 1};
+        int res = findInversions(arr);
+        System.out.println(res);
+    }
+    
+    static int findInversions(int[] arr) {
+        return mergeSort(arr, 0, arr.length - 1);
+    }
+    
+    static int mergeSort(int[] arr, int l, int r) {
+        int cnt = 0;
+        if (l >= r) return cnt;
+        
+        int mid = (l + r) / 2;
+        cnt += mergeSort(arr, l, mid);
+        cnt += mergeSort(arr, mid + 1, r);
+        cnt += merge(arr, l, mid, r);
+        
+        return cnt;
+    }
+    
+    static int merge(int[] arr, int l, int m, int r) {
+        List<Integer> temp = new ArrayList<>();
+        int low = l;
+        int high = m + 1;
+        
+        int cnt = 0;
+        
+        while (low <= m && high <= r) {
+            if (arr[low] <= arr[high]) {
+                temp.add(arr[low]);
+                low++;
+            } else {
+                // If Arr[low] > Arr[high], then all elements from low to m are greater than Arr[high]
+                temp.add(arr[high]);
+                cnt += (m - low + 1);
+                high++;
+            }
+        }
+        
+        while (low <= m) {
+            temp.add(arr[low]);
+            low++;
+        }
+        
+        while (high <= r) {
+            temp.add(arr[high]);
+            high++;
+        }
+        
+        for (int i = l; i <= r; i++) {
+            arr[i] = temp.get(i - l);
+        }
+        
+        return cnt;
+    }
+}

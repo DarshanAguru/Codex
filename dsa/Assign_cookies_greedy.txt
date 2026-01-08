@@ -1,0 +1,33 @@
+// Problem: https://leetcode.com/problems/assign-cookies/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] students = {1, 2, 3};
+        int[] cookies = {1, 1};
+        
+        int res = findMaxNoStudentsWithCookies(students, cookies);
+        System.out.println(res);
+    }
+    
+    static int findMaxNoStudentsWithCookies(int[] students, int[] cookies) {
+        Arrays.sort(students);
+        Arrays.sort(cookies);
+        
+        int i = 0, j = 0;
+        int count = 0;
+        
+        while (i < students.length && j < cookies.length) {
+            if (cookies[j] >= students[i]) {
+                count++;
+                i++;
+                j++;
+            } else {
+                j++;
+            }
+        }
+        return count;
+    }
+}

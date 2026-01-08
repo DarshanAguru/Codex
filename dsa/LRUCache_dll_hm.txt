@@ -1,0 +1,79 @@
+// Problem: https://leetcode.com/problems/lru-cache/
+
+import java.util.*;
+import java.lang.*;
+
+class Node {
+    public Node prev, next;
+    public int key, val;
+    
+    Node(int key, int val) {
+        this.key = key;
+        this.val = val;
+    }
+}
+
+class LRUCache {
+    int capacity;
+    Node head;
+    Node tail;
+    HashMap<Integer, Node> hm;
+    
+    LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.head = new Node(-1, -1);
+        this.tail = new Node(-1, -1);
+        head.next = tail;
+        tail.prev = head;
+        this.hm = new HashMap<>();
+    }
+    
+    public int get(int key) {
+        if (this.hm.containsKey(key)) {
+            Node node = this.hm.get(key);
+            remove(node);
+            insert(node);
+            return node.val;
+        }
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        if (this.hm.containsKey(key)) {
+            remove(hm.get(key));
+        }
+        if (this.hm.size() == capacity) {
+            remove(this.tail.prev);
+        }
+        insert(new Node(key, value));
+    }
+    
+    private void remove(Node n) {
+        this.hm.remove(n.key);
+        n.prev.next = n.next;
+        n.next.prev = n.prev;
+    }
+    
+    private void insert(Node n) {
+        this.hm.put(n.key, n);
+        n.next = this.head.next;
+        n.next.prev = n;
+        this.head.next = n;
+        n.prev = this.head;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        LRUCache lru = new LRUCache(2);
+        lru.put(1, 1);
+        lru.put(2, 2);
+        System.out.println(lru.get(1)); // 1
+        lru.put(3, 3);
+        System.out.println(lru.get(2)); // -1 (evicted)
+        lru.put(4, 4);
+        System.out.println(lru.get(1)); // -1 (evicted)
+        System.out.println(lru.get(3)); // 3
+        System.out.println(lru.get(4)); // 4
+    }
+}

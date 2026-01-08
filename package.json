@@ -1,0 +1,14 @@
+{
+    "name": "algo-vault-scripts",
+    "version": "1.0.0",
+    "description": "Build scripts for Algo-Vault",
+    "main": "generate_index.js",
+    "scripts": {
+        "generate": "node scripts/generate_index.js",
+        "format": "prettier --write \"DSA/DSA JAVA/*.{java,txt}\"",
+        "build": "npm run format && npm run generate"
+    },
+    "devDependencies": {
+        "prettier": "^3.1.0"
+    }
+}

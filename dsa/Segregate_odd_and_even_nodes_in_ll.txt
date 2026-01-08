@@ -1,0 +1,94 @@
+// Problem: https://leetcode.com/problems/odd-even-linked-list/
+
+import java.util.*;
+import java.lang.*;
+
+class Node {
+    int val;
+    Node next;
+    Node(int val) { this.val = val; }
+}
+
+class LL {
+    public Node head;
+    public Node tail;
+    
+    public void add(int n) {
+        if (head == null) {
+            head = new Node(n);
+            tail = head;
+            return;
+        }
+        tail.next = new Node(n);
+        tail = tail.next;
+    }
+    
+    public void printList() {
+        Node temp = head;
+        System.out.print("[ ");
+        while (temp != null) {
+            System.out.print(temp.val + " ");
+            temp = temp.next;
+        }
+        System.out.println("]");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        LL list = new LL();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        
+        System.out.println("Original:");
+        list.printList();
+        
+        list.head = segregateEvenOdd(list.head);
+        
+        System.out.println("Segregated (Even first):");
+        list.printList();
+    }
+    
+    static Node segregateEvenOdd(Node head) {
+        Node evenStart = null;
+        Node evenEnd = null;
+        Node oddStart = null;
+        Node oddEnd = null;
+        
+        Node curr = head;
+        
+        while (curr != null) {
+            int element = curr.val;
+            
+            if (element % 2 == 0) {
+                if (evenStart == null) {
+                    evenStart = curr;
+                    evenEnd = evenStart;
+                } else {
+                    evenEnd.next = curr;
+                    evenEnd = evenEnd.next;
+                }
+            } else {
+                if (oddStart == null) {
+                    oddStart = curr;
+                    oddEnd = oddStart;
+                } else {
+                    oddEnd.next = curr;
+                    oddEnd = oddEnd.next;
+                }
+            }
+            curr = curr.next;
+        }
+        
+        if (oddStart == null || evenStart == null) return head;
+        
+        evenEnd.next = oddStart;
+        oddEnd.next = null;
+        
+        return evenStart;
+    }
+}

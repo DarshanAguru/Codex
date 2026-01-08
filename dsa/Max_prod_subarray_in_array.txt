@@ -1,0 +1,26 @@
+// Problem: https://leetcode.com/problems/maximum-product-subarray/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 0};
+        
+        // Maximum Product Subarray
+        int prod1 = arr[0];
+        int prod2 = arr[0];
+        int res = arr[0];
+        
+        for (int i = 1; i < arr.length; i++) {
+            // We need to track both max and min products because a negative number can flip them
+            int temp = Math.max(arr[i], Math.max(prod1 * arr[i], prod2 * arr[i]));
+            prod2 = Math.min(arr[i], Math.min(prod1 * arr[i], prod2 * arr[i]));
+            
+            prod1 = temp;
+            res = Math.max(res, prod1);
+        }
+        
+        System.out.println(res);
+    }
+}

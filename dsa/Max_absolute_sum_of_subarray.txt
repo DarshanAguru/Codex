@@ -1,0 +1,26 @@
+// Problem: https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, -5, 1, -4, 3, -2};
+        int res = maxAbsoluteSumOfSubarray(arr);
+        System.out.println("Result: " + res);
+    }
+    
+    static int maxAbsoluteSumOfSubarray(int[] nums) {
+        int maxPrefix = 0;
+        int minPrefix = 0;
+        int currentPrefix = 0;
+        
+        for (int num : nums) {
+            currentPrefix += num;
+            maxPrefix = Math.max(maxPrefix, currentPrefix);
+            minPrefix = Math.min(minPrefix, currentPrefix);
+        }
+        
+        return maxPrefix - minPrefix;
+    }
+}

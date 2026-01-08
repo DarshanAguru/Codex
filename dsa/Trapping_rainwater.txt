@@ -1,0 +1,42 @@
+// Problem: https://leetcode.com/problems/trapping-rain-water/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] arr = {4, 2, 0, 3, 2, 5};
+        
+        int res = getTrappedWater(arr);
+        System.out.println("Result: " + res);
+    }
+    
+    // Optimal Two-Pointer approach: O(N) Time, O(1) Space
+    static int getTrappedWater(int[] arr) {
+        int n = arr.length;
+        int trappedWater = 0;
+        int left = 0;
+        int right = n - 1;
+        int leftMax = 0;
+        int rightMax = 0;
+        
+        while (left <= right) {
+            if (arr[left] <= arr[right]) {
+                if (arr[left] >= leftMax) {
+                    leftMax = arr[left];
+                } else {
+                    trappedWater += leftMax - arr[left];
+                }
+                left++;
+            } else {
+                if (arr[right] >= rightMax) {
+                    rightMax = arr[right];
+                } else {
+                    trappedWater += rightMax - arr[right];
+                }
+                right--;
+            }
+        }
+        return trappedWater;
+    }
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codex</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0f0f10',
+                            800: '#18181b',
+                            700: '#27272a',
+                            600: '#3f3f46',
+                        },
+                        brand: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Prism.js Themes (Tomorrow Night for reliability/clean look) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css"
+        rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/styles.css">
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body
+    class="bg-dark-900 text-gray-300 h-screen w-screen overflow-hidden flex flex-col font-sans selection:bg-brand-500/30">
+
+    <!-- Header -->
+    <header
+        class="h-16 border-b border-dark-700 bg-dark-800/50 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-20 relative">
+        <div class="flex items-center gap-3">
+            <div
+                class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
+                <span class="text-white font-bold text-lg">&lt;/&gt;</span>
+            </div>
+            <h1 class="text-xl font-bold tracking-tight text-white">Codex</h1>
+        </div>
+
+        <div class="flex items-center gap-4 w-full max-w-md mx-6">
+            <div class="relative w-full group">
+                <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 group-focus-within:text-brand-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input id="searchInput" type="text"
+                    class="block w-full p-2 pl-10 text-sm text-gray-200 border border-dark-600 rounded-xl bg-dark-900/50 focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-gray-600 transition-all outline-none"
+                    placeholder="Search problems (e.g. 'Knapsack')...">
+                <div id="search-spinner" class="absolute inset-y-0 right-0 flex items-center pr-3 hidden">
+                    <svg class="animate-spin h-4 w-4 text-brand-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <button id="refreshBtn" title="Refresh Files"
+                    class="p-2 text-gray-400 hover:text-white hover:bg-dark-700 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="text-xs text-gray-500 font-medium hidden md:block">
+            <button id="source-toggle"
+                class="px-2 py-1 rounded bg-dark-700 text-gray-300 hover:bg-dark-600 transition-colors cursor-pointer"
+                title="Click to Toggle Source">GITHUB</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex overflow-hidden relative" id="main-container">
+
+        <!-- Sidebar -->
+        <aside
+            class="w-80 bg-dark-800/30 border-r border-dark-700 flex flex-col shrink-0 transition-transform duration-300 absolute md:relative z-10 h-full -translate-x-full md:translate-x-0 backdrop-blur-sm"
+            id="sidebar">
+            <div
+                class="p-3 border-b border-dark-700/50 flex justify-between items-center text-xs uppercase tracking-wider text-gray-500 font-semibold bg-dark-800/50 backdrop-blur">
+                <span>Code Explorer</span>
+                <span id="file-count" class="bg-dark-700 text-gray-300 px-2 py-0.5 rounded-full text-[10px]">0</span>
+            </div>
+            <div id="file-list" class="flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-0.5 custom-scrollbar">
+                <!-- File items injected here -->
+                <div class="animate-pulse flex space-x-4 p-3">
+                    <div class="flex-1 space-y-2 py-1">
+                        <div class="h-2 bg-dark-700 rounded"></div>
+                        <div class="h-2 bg-dark-700 rounded w-3/4"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Resizer Handle -->
+        <div id="resizer"
+            class="w-1.5 h-full bg-transparent hover:bg-brand-500/50 cursor-col-resize hidden md:block z-50 transition-colors select-none -ml-0.5 active:bg-brand-600">
+        </div>
+
+        <!-- Toggle Sidebar (Mobile) -->
+        <button id="menu-toggle"
+            class="absolute bottom-4 left-4 z-50 md:hidden p-3 bg-brand-600 text-white rounded-full shadow-lg shadow-brand-500/40">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+
+        <!-- Code Area -->
+        <section class="flex-1 flex flex-col min-w-0 bg-[#2d2d2d] relative">
+
+            <!-- Navbar inside code area for active file -->
+            <div class="h-10 bg-[#2d2d2d] border-b border-dark-700 flex items-center px-4 gap-3 select-none">
+                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                    </path>
+                </svg>
+                <span id="active-filename" class="text-sm text-gray-300 font-mono truncate">No file selected</span>
+            </div>
+
+            <!-- Code Container -->
+            <div class="flex-1 overflow-auto custom-scrollbar relative group text-sm" id="code-container">
+                <div id="empty-state"
+                    class="absolute inset-0 flex flex-col items-center justify-center text-gray-600 select-none pointer-events-none">
+                    <svg class="w-16 h-16 mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    <p class="text-lg font-medium opacity-50">Select a file from the sidebar</p>
+                </div>
+
+                <!-- Prism Code Block -->
+                <pre class="!m-0 !bg-transparent min-h-full hidden line-numbers"
+                    id="code-pre"><code id="code-content" class="language-java"></code></pre>
+            </div>
+
+            <!-- Footer -->
+            <div class="h-6 bg-brand-600 text-white text-[10px] flex items-center justify-between px-3 select-none shrink-0"
+                style="background-color: #6b3fca;">
+                <div class="flex gap-4">
+                    <span>UTF-8</span>
+                    <span id="lang-indicator">JAVA</span>
+                </div>
+                <div class="flex font-semibold gap-2 opacity-80 hover:opacity-100 transition-opacity">
+                    Made with <span class="text-red-300">❤</span> by A:D
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Prism Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+    <script src="./assets/scripts.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+// Problem: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+
+import java.util.*;
+import java.lang.*;
+
+class Node {
+    public Node left, right;
+    public int val;
+    Node(int val) {
+        this.val = val;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Node root = new Node(-10);
+        root.left = new Node(9);
+        root.right = new Node(20);
+        root.right.left = new Node(15);
+        root.right.right = new Node(7);
+        
+        int[] maxSum = { Integer.MIN_VALUE };
+        findMaxSumPath(root, maxSum);
+        
+        System.out.println("Max Path Sum: " + maxSum[0]);
+    }
+    
+    static int findMaxSumPath(Node node, int[] maxSum) {
+        if (node == null) return 0;
+        
+        int leftSum = Math.max(0, findMaxSumPath(node.left, maxSum));
+        int rightSum = Math.max(0, findMaxSumPath(node.right, maxSum));
+        
+        maxSum[0] = Math.max(maxSum[0], leftSum + rightSum + node.val);
+        
+        return Math.max(leftSum, rightSum) + node.val;
+    }
+}

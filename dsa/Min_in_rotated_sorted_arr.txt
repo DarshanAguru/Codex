@@ -1,0 +1,37 @@
+// Problem: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+
+import java.util.*;
+import java.lang.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] arr = {3, 4, 5, 1, 2};
+        
+        // Find minimum element in rotated sorted array
+        int low = 0;
+        int high = arr.length - 1;
+        int ans = Integer.MAX_VALUE;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            
+            // If sub-array is already sorted, the min is at 'low'
+            if (arr[low] <= arr[high]) {
+                ans = Math.min(ans, arr[low]);
+                break;
+            }
+            
+            if (arr[low] <= arr[mid]) {
+                // Left half is sorted, min is arr[low], move to right half
+                ans = Math.min(ans, arr[low]);
+                low = mid + 1;
+            } else {
+                // Right half is sorted, min is arr[mid], move to left half
+                ans = Math.min(ans, arr[mid]);
+                high = mid - 1;
+            }
+        }
+        
+        System.out.println(ans);
+    }
+}
