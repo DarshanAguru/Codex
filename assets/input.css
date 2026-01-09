@@ -1,6 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --font-sans: 'Inter', 'sans-serif';
+    --font-mono: 'Fira Code', 'monospace';
+
+    --color-dark-900: #0f0f10;
+    --color-dark-800: #18181b;
+    --color-dark-700: #27272a;
+    --color-dark-600: #3f3f46;
+
+    --color-brand-500: #6366f1;
+    --color-brand-600: #4f46e5;
+}
 
 /* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
