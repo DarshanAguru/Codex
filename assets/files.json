@@ -560,6 +560,14 @@
     "type": "file"
   },
   {
+    "name": "Smallest_subtree_with_all_the_deepest_nodes.txt",
+    "path": "dsa/Smallest_subtree_with_all_the_deepest_nodes.txt",
+    "size": 1740,
+    "created": "2026-01-09T14:11:10.692Z",
+    "modified": "2026-01-09T14:15:58.944Z",
+    "type": "file"
+  },
+  {
     "name": "Sort_a_linked_list_mergeSort.txt",
     "path": "dsa/Sort_a_linked_list_mergeSort.txt",
     "size": 1815,
