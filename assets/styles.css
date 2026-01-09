@@ -229,8 +229,8 @@
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
-  .right-2 {
-    right: calc(var(--spacing) * 2);
+  .right-8 {
+    right: calc(var(--spacing) * 8);
   }
   .bottom-8 {
     bottom: calc(var(--spacing) * 8);
@@ -322,11 +322,11 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
+  .h-dvh {
+    height: 100dvh;
+  }
   .h-full {
     height: 100%;
-  }
-  .h-screen {
-    height: 100vh;
   }
   .min-h-full {
     min-height: 100%;
