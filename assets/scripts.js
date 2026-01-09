@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         allFiles: [],
         currentFile: null,
         isLoading: false,
-        sortMode: 'NAME_ASC'
+        sortMode: 'DATE_NEW'
     };
 
     const elements = {
