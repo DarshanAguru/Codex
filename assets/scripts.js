@@ -29,16 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
         sourceToggle: document.getElementById('source-toggle'),
         menuToggle: document.getElementById('menu-toggle'),
         sidebar: document.getElementById('sidebar'),
+        sidebarBackdrop: document.getElementById('sidebar-backdrop'),
         resizer: document.getElementById('resizer')
     };
 
     init();
 
     function init() {
-        // Hide Toggle on GitHub Pages (Production)
         if (window.location.hostname.includes("github.io")) {
             elements.sourceToggle.style.display = 'none';
-            state.dataSource = 'GITHUB'; // Force GitHub source
+            state.dataSource = 'GITHUB';
         }
 
         updateSourceIndicator();
@@ -58,11 +58,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         elements.sourceToggle.addEventListener('click', toggleSource);
 
-        elements.menuToggle.addEventListener('click', () => {
-            elements.sidebar.classList.toggle('-translate-x-full');
-        });
+        const toggleSidebar = () => {
+            const isClosed = elements.sidebar.classList.contains('-translate-x-full');
+            if (isClosed) {
+                elements.sidebar.classList.remove('-translate-x-full');
+                elements.sidebarBackdrop.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    elements.sidebarBackdrop.classList.remove('opacity-0');
+                });
+            } else {
+                elements.sidebar.classList.add('-translate-x-full');
+                elements.sidebarBackdrop.classList.add('opacity-0');
+                setTimeout(() => {
+                    elements.sidebarBackdrop.classList.add('hidden');
+                }, 300);
+            }
+        };
+
+        const closeSidebar = () => {
+            if (!elements.sidebar.classList.contains('-translate-x-full')) {
+                toggleSidebar();
+            }
+        };
+
+        elements.menuToggle.addEventListener('click', toggleSidebar);
+        elements.sidebarBackdrop.addEventListener('click', closeSidebar);
 
         setupResizer();
+
+        window.closeSidebarMobile = closeSidebar;
     }
 
     function setupResizer() {
@@ -128,8 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (files) {
                 state.allFiles = files.filter(item => item.type === "file" && (item.name.endsWith('.txt') || item.name.endsWith('.java') || item.name.endsWith('.cpp')))
                     .sort((a, b) => {
-                        // Standard natural sort (alphabetical, handling embedded numbers if any)
-                        // Note: At this stage 'DisplayName' doesn't exist yet, we sort by 'name'
                         return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
                     })
                     .map((item, idx) => ({
@@ -270,7 +292,12 @@ document.addEventListener("DOMContentLoaded", () => {
             div.appendChild(icon);
             div.appendChild(textDiv);
 
-            div.addEventListener("click", () => loadContent(file));
+            div.addEventListener("click", () => {
+                loadContent(file);
+                if (window.innerWidth < 768 && window.closeSidebarMobile) {
+                    window.closeSidebarMobile();
+                }
+            });
             fragment.appendChild(div);
         });
 
