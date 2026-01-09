@@ -3,656 +3,656 @@
     "name": "Add_without_operators.txt",
     "path": "dsa/Add_without_operators.txt",
     "size": 610,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.895Z",
+    "modified": "2026-01-09T16:25:48.875Z",
     "type": "file"
   },
   {
     "name": "Aggressive_cows_bs.txt",
     "path": "dsa/Aggressive_cows_bs.txt",
     "size": 1178,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.906Z",
+    "modified": "2026-01-09T16:28:17.743Z",
     "type": "file"
   },
   {
     "name": "All_negative_numbers_in_one_end.txt",
     "path": "dsa/All_negative_numbers_in_one_end.txt",
     "size": 861,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.888Z",
+    "modified": "2026-01-09T14:41:59.122Z",
     "type": "file"
   },
   {
     "name": "All_subseqs_of_string_recursion.txt",
     "path": "dsa/All_subseqs_of_string_recursion.txt",
     "size": 1374,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.911Z",
+    "modified": "2026-01-09T16:28:33.912Z",
     "type": "file"
   },
   {
     "name": "Area_of_largest_rectangle_in_hist.txt",
     "path": "dsa/Area_of_largest_rectangle_in_hist.txt",
     "size": 845,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.922Z",
+    "modified": "2026-01-09T16:28:54.297Z",
     "type": "file"
   },
   {
     "name": "Assign_cookies_greedy.txt",
     "path": "dsa/Assign_cookies_greedy.txt",
     "size": 720,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.942Z",
+    "modified": "2026-01-09T16:29:11.380Z",
     "type": "file"
   },
   {
     "name": "Asteroid_collition_st.txt",
     "path": "dsa/Asteroid_collition_st.txt",
     "size": 958,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.922Z",
+    "modified": "2026-01-09T16:29:30.116Z",
     "type": "file"
   },
   {
     "name": "Backspace_string_compare_constant_space.txt",
     "path": "dsa/Backspace_string_compare_constant_space.txt",
     "size": 1119,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.949Z",
+    "modified": "2026-01-09T16:29:46.527Z",
     "type": "file"
   },
   {
     "name": "Book_allocation_problem_bs.txt",
     "path": "dsa/Book_allocation_problem_bs.txt",
     "size": 1256,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.708Z",
+    "created": "2026-01-08T17:20:04.907Z",
+    "modified": "2026-01-09T16:30:05.337Z",
     "type": "file"
   },
   {
     "name": "Bottom_View_of_binaryTree.txt",
     "path": "dsa/Bottom_View_of_binaryTree.txt",
     "size": 1610,
-    "created": "2026-01-09T16:51:08.708Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.933Z",
+    "modified": "2026-01-09T16:30:22.519Z",
     "type": "file"
   },
   {
     "name": "Burning_of_binaryTree.txt",
     "path": "dsa/Burning_of_binaryTree.txt",
     "size": 1886,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.934Z",
+    "modified": "2026-01-09T16:30:42.027Z",
     "type": "file"
   },
   {
     "name": "Buy_and_sell_stock_1.txt",
     "path": "dsa/Buy_and_sell_stock_1.txt",
     "size": 567,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.949Z",
+    "modified": "2026-01-09T14:47:16.498Z",
     "type": "file"
   },
   {
     "name": "Combination_sum_recursion.txt",
     "path": "dsa/Combination_sum_recursion.txt",
     "size": 1107,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.912Z",
+    "modified": "2026-01-09T16:31:12.211Z",
     "type": "file"
   },
   {
     "name": "Construst_tree_using_inorder_and_preorder_arrays.txt",
     "path": "dsa/Construst_tree_using_inorder_and_preorder_arrays.txt",
     "size": 1676,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.935Z",
+    "modified": "2026-01-09T16:31:23.450Z",
     "type": "file"
   },
   {
     "name": "Container_with_most_water.txt",
     "path": "dsa/Container_with_most_water.txt",
     "size": 853,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.894Z",
+    "modified": "2026-01-09T16:25:22.779Z",
     "type": "file"
   },
   {
     "name": "Count_inversions_in_array.txt",
     "path": "dsa/Count_inversions_in_array.txt",
     "size": 1348,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.897Z",
+    "modified": "2026-01-09T16:27:31.830Z",
     "type": "file"
   },
   {
     "name": "Count_number_of_subarrays_with_xor_k.txt",
     "path": "dsa/Count_number_of_subarrays_with_xor_k.txt",
     "size": 817,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.896Z",
+    "modified": "2026-01-09T16:26:48.342Z",
     "type": "file"
   },
   {
     "name": "Count_set_bits.txt",
     "path": "dsa/Count_set_bits.txt",
     "size": 426,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.895Z",
+    "modified": "2026-01-09T16:25:58.136Z",
     "type": "file"
   },
   {
     "name": "Delete_a_node_from_BST.txt",
     "path": "dsa/Delete_a_node_from_BST.txt",
     "size": 1452,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.937Z",
+    "modified": "2026-01-09T16:32:19.272Z",
     "type": "file"
   },
   {
     "name": "Detect_loop_in_ll.txt",
     "path": "dsa/Detect_loop_in_ll.txt",
     "size": 1059,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.914Z",
+    "modified": "2026-01-09T16:32:37.092Z",
     "type": "file"
   },
   {
     "name": "Diameter_of_a_binaryTree.txt",
     "path": "dsa/Diameter_of_a_binaryTree.txt",
     "size": 823,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.929Z",
+    "modified": "2026-01-09T16:32:54.925Z",
     "type": "file"
   },
   {
     "name": "Duplicate_element_in_array.txt",
     "path": "dsa/Duplicate_element_in_array.txt",
     "size": 481,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.953Z",
+    "modified": "2026-01-09T14:47:44.849Z",
     "type": "file"
   },
   {
     "name": "Dutch_national_flag_algorithm.txt",
     "path": "dsa/Dutch_national_flag_algorithm.txt",
     "size": 744,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.948Z",
+    "modified": "2026-01-09T16:33:11.009Z",
     "type": "file"
   },
   {
     "name": "Find_if_sum_of_squares_of_digit_reaches_one.txt",
     "path": "dsa/Find_if_sum_of_squares_of_digit_reaches_one.txt",
     "size": 636,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.949Z",
+    "modified": "2026-01-09T16:33:25.593Z",
     "type": "file"
   },
   {
     "name": "Find_intersection_of_two_ll.txt",
     "path": "dsa/Find_intersection_of_two_ll.txt",
     "size": 1522,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.919Z",
+    "modified": "2026-01-09T16:33:39.148Z",
     "type": "file"
   },
   {
     "name": "Find_kth_largest_and_smallest_pq.txt",
     "path": "dsa/Find_kth_largest_and_smallest_pq.txt",
     "size": 885,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.926Z",
+    "modified": "2026-01-09T16:33:53.493Z",
     "type": "file"
   },
   {
     "name": "Find_repeating_and_missing_element.txt",
     "path": "dsa/Find_repeating_and_missing_element.txt",
     "size": 1402,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.897Z",
+    "modified": "2026-01-09T16:27:11.253Z",
     "type": "file"
   },
   {
     "name": "Four_sum.txt",
     "path": "dsa/Four_sum.txt",
     "size": 1342,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.950Z",
+    "modified": "2026-01-09T16:34:20.720Z",
     "type": "file"
   },
   {
     "name": "Get_square_of_sorted_array.txt",
     "path": "dsa/Get_square_of_sorted_array.txt",
     "size": 730,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.947Z",
+    "modified": "2026-01-09T16:34:31.949Z",
     "type": "file"
   },
   {
     "name": "Intersection_of_array_with_duplicates.txt",
     "path": "dsa/Intersection_of_array_with_duplicates.txt",
     "size": 1154,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.908Z",
+    "modified": "2026-01-09T14:43:01.660Z",
     "type": "file"
   },
   {
     "name": "Kadanes_algorithm.txt",
     "path": "dsa/Kadanes_algorithm.txt",
     "size": 629,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.930Z",
+    "modified": "2026-01-09T14:44:55.968Z",
     "type": "file"
   },
   {
     "name": "Knapsack_dp.txt",
     "path": "dsa/Knapsack_dp.txt",
     "size": 1548,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.942Z",
+    "modified": "2026-01-09T16:35:01.581Z",
     "type": "file"
   },
   {
     "name": "Koko_eating_bananas.txt",
     "path": "dsa/Koko_eating_bananas.txt",
     "size": 1022,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
-    "type": "file"
-  },
-  {
-    "name": "LRUCache_dll_hm.txt",
-    "path": "dsa/LRUCache_dll_hm.txt",
-    "size": 1641,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.709Z",
+    "created": "2026-01-08T17:20:04.906Z",
+    "modified": "2026-01-09T16:35:18.002Z",
     "type": "file"
   },
   {
     "name": "Largest_bst_in_a_binary_tree.txt",
     "path": "dsa/Largest_bst_in_a_binary_tree.txt",
     "size": 1511,
-    "created": "2026-01-09T16:51:08.709Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.938Z",
+    "modified": "2026-01-09T16:35:38.641Z",
     "type": "file"
   },
   {
     "name": "Lowest_common_ancestor_binaryTree.txt",
     "path": "dsa/Lowest_common_ancestor_binaryTree.txt",
     "size": 1299,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.934Z",
+    "modified": "2026-01-09T16:35:56.965Z",
     "type": "file"
   },
   {
-    "name": "M_coloring_problem_bt.txt",
-    "path": "dsa/M_coloring_problem_bt.txt",
-    "size": 1791,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "name": "LRUCache_dll_hm.txt",
+    "path": "dsa/LRUCache_dll_hm.txt",
+    "size": 1641,
+    "created": "2026-01-08T17:20:04.926Z",
+    "modified": "2026-01-09T16:36:12.008Z",
     "type": "file"
   },
   {
     "name": "Majority_element_n_by_3_boyreMoore.txt",
     "path": "dsa/Majority_element_n_by_3_boyreMoore.txt",
     "size": 1233,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
-    "type": "file"
-  },
-  {
-    "name": "Max_absolute_sum_of_subarray.txt",
-    "path": "dsa/Max_absolute_sum_of_subarray.txt",
-    "size": 668,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
-    "type": "file"
-  },
-  {
-    "name": "Max_dot_product_of_two_subsequences.txt",
-    "path": "dsa/Max_dot_product_of_two_subsequences.txt",
-    "size": 1281,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
-    "type": "file"
-  },
-  {
-    "name": "Max_prod_subarray_in_array.txt",
-    "path": "dsa/Max_prod_subarray_in_array.txt",
-    "size": 712,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
-    "type": "file"
-  },
-  {
-    "name": "Max_sum_of_non_adjacent_elements_dp.txt",
-    "path": "dsa/Max_sum_of_non_adjacent_elements_dp.txt",
-    "size": 661,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
-    "type": "file"
-  },
-  {
-    "name": "Max_sum_subarray_removing_atMost_one_element.txt",
-    "path": "dsa/Max_sum_subarray_removing_atMost_one_element.txt",
-    "size": 1352,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.896Z",
+    "modified": "2026-01-09T16:26:33.762Z",
     "type": "file"
   },
   {
     "name": "Maximum_level_sum_of_a_binary_tree.txt",
     "path": "dsa/Maximum_level_sum_of_a_binary_tree.txt",
     "size": 1270,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.945Z",
+    "modified": "2026-01-09T16:38:33.947Z",
     "type": "file"
   },
   {
     "name": "Maximum_matrix_sum.txt",
     "path": "dsa/Maximum_matrix_sum.txt",
     "size": 825,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.943Z",
+    "modified": "2026-01-09T16:38:47.380Z",
     "type": "file"
   },
   {
     "name": "Maximum_number_of_k-divisible_components.txt",
     "path": "dsa/Maximum_number_of_k-divisible_components.txt",
     "size": 1729,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.942Z",
+    "modified": "2026-01-09T16:39:10.014Z",
     "type": "file"
   },
   {
     "name": "Maximum_product_of_splitted_binary_tree.txt",
     "path": "dsa/Maximum_product_of_splitted_binary_tree.txt",
     "size": 1265,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.947Z",
+    "modified": "2026-01-09T16:39:25.964Z",
     "type": "file"
   },
   {
     "name": "Maximum_sum_path_binaryTree.txt",
     "path": "dsa/Maximum_sum_path_binaryTree.txt",
     "size": 945,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.932Z",
+    "modified": "2026-01-09T16:39:40.952Z",
+    "type": "file"
+  },
+  {
+    "name": "Max_absolute_sum_of_subarray.txt",
+    "path": "dsa/Max_absolute_sum_of_subarray.txt",
+    "size": 668,
+    "created": "2026-01-08T17:20:04.944Z",
+    "modified": "2026-01-09T16:37:08.074Z",
+    "type": "file"
+  },
+  {
+    "name": "Max_dot_product_of_two_subsequences.txt",
+    "path": "dsa/Max_dot_product_of_two_subsequences.txt",
+    "size": 1281,
+    "created": "2026-01-08T17:20:04.953Z",
+    "modified": "2026-01-09T16:37:26.340Z",
+    "type": "file"
+  },
+  {
+    "name": "Max_prod_subarray_in_array.txt",
+    "path": "dsa/Max_prod_subarray_in_array.txt",
+    "size": 712,
+    "created": "2026-01-08T17:20:04.889Z",
+    "modified": "2026-01-09T14:49:20.786Z",
+    "type": "file"
+  },
+  {
+    "name": "Max_sum_of_non_adjacent_elements_dp.txt",
+    "path": "dsa/Max_sum_of_non_adjacent_elements_dp.txt",
+    "size": 661,
+    "created": "2026-01-08T17:20:04.939Z",
+    "modified": "2026-01-09T17:07:04.578Z",
+    "type": "file"
+  },
+  {
+    "name": "Max_sum_subarray_removing_atMost_one_element.txt",
+    "path": "dsa/Max_sum_subarray_removing_atMost_one_element.txt",
+    "size": 1352,
+    "created": "2026-01-08T17:20:04.944Z",
+    "modified": "2026-01-09T16:38:16.659Z",
     "type": "file"
   },
   {
     "name": "Median_of_two_sorted_arrays_bs.txt",
     "path": "dsa/Median_of_two_sorted_arrays_bs.txt",
     "size": 1317,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.907Z",
+    "modified": "2026-01-09T16:39:59.166Z",
     "type": "file"
   },
   {
     "name": "Middle_of_linked_list.txt",
     "path": "dsa/Middle_of_linked_list.txt",
     "size": 1226,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
-    "type": "file"
-  },
-  {
-    "name": "Min_in_rotated_sorted_arr.txt",
-    "path": "dsa/Min_in_rotated_sorted_arr.txt",
-    "size": 955,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.914Z",
+    "modified": "2026-01-09T16:57:13.814Z",
     "type": "file"
   },
   {
     "name": "Minimize_max_dist_bw_gas_stations.txt",
     "path": "dsa/Minimize_max_dist_bw_gas_stations.txt",
     "size": 1317,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.908Z",
+    "modified": "2026-01-09T16:40:38.396Z",
     "type": "file"
   },
   {
     "name": "Minimize_the_max_diff_btw_towers.txt",
     "path": "dsa/Minimize_the_max_diff_btw_towers.txt",
     "size": 877,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.940Z",
+    "modified": "2026-01-09T14:45:40.740Z",
     "type": "file"
   },
   {
     "name": "Minimum_path_sum_in_a_grid_dp.txt",
     "path": "dsa/Minimum_path_sum_in_a_grid_dp.txt",
     "size": 2113,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:16.652Z",
+    "created": "2026-01-08T17:20:04.941Z",
+    "modified": "2026-01-09T17:09:56.467Z",
+    "type": "file"
+  },
+  {
+    "name": "Min_in_rotated_sorted_arr.txt",
+    "path": "dsa/Min_in_rotated_sorted_arr.txt",
+    "size": 955,
+    "created": "2026-01-08T17:20:04.892Z",
+    "modified": "2026-01-09T14:49:38.146Z",
     "type": "file"
   },
   {
     "name": "Morris_preorder_traversal_of_binary_tree.txt",
     "path": "dsa/Morris_preorder_traversal_of_binary_tree.txt",
     "size": 1403,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.936Z",
+    "modified": "2026-01-09T16:41:17.240Z",
+    "type": "file"
+  },
+  {
+    "name": "M_coloring_problem_bt.txt",
+    "path": "dsa/M_coloring_problem_bt.txt",
+    "size": 1791,
+    "created": "2026-01-08T17:20:04.913Z",
+    "modified": "2026-01-09T16:36:30.880Z",
     "type": "file"
   },
   {
     "name": "Next_greater_element.txt",
     "path": "dsa/Next_greater_element.txt",
     "size": 1220,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.921Z",
+    "modified": "2026-01-09T16:41:34.820Z",
     "type": "file"
   },
   {
     "name": "Next_permutation.txt",
     "path": "dsa/Next_permutation.txt",
     "size": 1219,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.710Z",
+    "created": "2026-01-08T17:20:04.895Z",
+    "modified": "2026-01-09T16:26:14.508Z",
     "type": "file"
   },
   {
     "name": "Ninja_training_find_max_points_dp.txt",
     "path": "dsa/Ninja_training_find_max_points_dp.txt",
     "size": 2719,
-    "created": "2026-01-09T16:51:08.710Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.940Z",
+    "modified": "2026-01-09T16:42:06.211Z",
     "type": "file"
   },
   {
     "name": "Peak_element_in_unsorted_arr.txt",
     "path": "dsa/Peak_element_in_unsorted_arr.txt",
     "size": 668,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.904Z",
+    "modified": "2026-01-09T16:42:23.842Z",
     "type": "file"
   },
   {
     "name": "Plus_one.txt",
     "path": "dsa/Plus_one.txt",
     "size": 581,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.943Z",
+    "modified": "2026-01-09T16:42:41.939Z",
     "type": "file"
   },
   {
     "name": "Product_of_array_except_self.txt",
     "path": "dsa/Product_of_array_except_self.txt",
     "size": 940,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.888Z",
+    "modified": "2026-01-09T16:56:14.277Z",
     "type": "file"
   },
   {
     "name": "Remove_duplicated_from_sorted_list.txt",
     "path": "dsa/Remove_duplicated_from_sorted_list.txt",
     "size": 1102,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.946Z",
+    "modified": "2026-01-09T16:43:05.858Z",
     "type": "file"
   },
   {
     "name": "Remove_nth_node_from_last_in_ll.txt",
     "path": "dsa/Remove_nth_node_from_last_in_ll.txt",
     "size": 1596,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.914Z",
+    "modified": "2026-01-09T16:43:19.242Z",
     "type": "file"
   },
   {
     "name": "Rotate_array_by_one.txt",
     "path": "dsa/Rotate_array_by_one.txt",
     "size": 745,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.920Z",
+    "modified": "2026-01-09T14:44:27.342Z",
     "type": "file"
   },
   {
     "name": "Search_element_in_rotated_array.txt",
     "path": "dsa/Search_element_in_rotated_array.txt",
     "size": 940,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.892Z",
+    "modified": "2026-01-09T16:24:47.871Z",
     "type": "file"
   },
   {
     "name": "Search_in_rotated_sorted_arr_2.txt",
     "path": "dsa/Search_in_rotated_sorted_arr_2.txt",
     "size": 1125,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.898Z",
+    "modified": "2026-01-09T16:27:51.879Z",
     "type": "file"
   },
   {
     "name": "Segregate_odd_and_even_nodes_in_ll.txt",
     "path": "dsa/Segregate_odd_and_even_nodes_in_ll.txt",
     "size": 1831,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.921Z",
+    "modified": "2026-01-09T16:43:38.946Z",
     "type": "file"
   },
   {
     "name": "Segregate_ones_and_zeroes.txt",
     "path": "dsa/Segregate_ones_and_zeroes.txt",
     "size": 817,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.946Z",
+    "modified": "2026-01-09T16:43:48.263Z",
     "type": "file"
   },
   {
     "name": "Shortest_unsorted_continuous_subarray.txt",
     "path": "dsa/Shortest_unsorted_continuous_subarray.txt",
     "size": 860,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.948Z",
+    "modified": "2026-01-09T16:44:02.729Z",
     "type": "file"
   },
   {
     "name": "Sliding_window_maximum_dq.txt",
     "path": "dsa/Sliding_window_maximum_dq.txt",
     "size": 1009,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.925Z",
+    "modified": "2026-01-09T16:44:17.684Z",
     "type": "file"
   },
   {
     "name": "Smallest_subtree_with_all_the_deepest_nodes.txt",
     "path": "dsa/Smallest_subtree_with_all_the_deepest_nodes.txt",
     "size": 2162,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:16.787Z",
+    "created": "2026-01-09T14:11:10.692Z",
+    "modified": "2026-01-09T17:09:56.605Z",
     "type": "file"
   },
   {
     "name": "Sort_a_linked_list_mergeSort.txt",
     "path": "dsa/Sort_a_linked_list_mergeSort.txt",
     "size": 1835,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.920Z",
+    "modified": "2026-01-09T16:44:59.470Z",
     "type": "file"
   },
   {
     "name": "Subset_sum_equals_to_k_dp.txt",
     "path": "dsa/Subset_sum_equals_to_k_dp.txt",
     "size": 2345,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.941Z",
+    "modified": "2026-01-09T16:45:17.786Z",
     "type": "file"
   },
   {
     "name": "SudokuSolving.txt",
     "path": "dsa/SudokuSolving.txt",
     "size": 2019,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.913Z",
+    "modified": "2026-01-09T16:46:09.755Z",
     "type": "file"
   },
   {
     "name": "Task_scheduler.txt",
     "path": "dsa/Task_scheduler.txt",
     "size": 784,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.927Z",
+    "modified": "2026-01-09T16:46:25.200Z",
     "type": "file"
   },
   {
     "name": "Three_sum.txt",
     "path": "dsa/Three_sum.txt",
     "size": 1141,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.892Z",
+    "modified": "2026-01-09T16:25:04.100Z",
     "type": "file"
   },
   {
     "name": "Trapping_rainwater.txt",
     "path": "dsa/Trapping_rainwater.txt",
     "size": 984,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.922Z",
+    "modified": "2026-01-09T16:46:38.316Z",
     "type": "file"
   },
   {
     "name": "Two_sum.txt",
     "path": "dsa/Two_sum.txt",
     "size": 714,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.944Z",
+    "modified": "2026-01-09T14:46:53.077Z",
     "type": "file"
   },
   {
     "name": "Two_sum_in_bst.txt",
     "path": "dsa/Two_sum_in_bst.txt",
     "size": 892,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.938Z",
+    "modified": "2026-01-09T16:46:57.461Z",
     "type": "file"
   },
   {
     "name": "Two_sum_two_Input_array_is_sorted.txt",
     "path": "dsa/Two_sum_two_Input_array_is_sorted.txt",
     "size": 708,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.945Z",
+    "modified": "2026-01-09T16:47:11.522Z",
     "type": "file"
   },
   {
     "name": "Union_of_array_with_duplicates.txt",
     "path": "dsa/Union_of_array_with_duplicates.txt",
     "size": 896,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.896Z",
+    "modified": "2026-01-09T14:42:37.835Z",
     "type": "file"
   },
   {
     "name": "Word_search.txt",
     "path": "dsa/Word_search.txt",
     "size": 1245,
-    "created": "2026-01-09T16:51:08.711Z",
-    "modified": "2026-01-09T16:51:08.711Z",
+    "created": "2026-01-08T17:20:04.913Z",
+    "modified": "2026-01-09T16:47:40.737Z",
     "type": "file"
   }
 ]

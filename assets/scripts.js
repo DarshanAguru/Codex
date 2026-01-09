@@ -202,13 +202,37 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (res.ok) content = await res.text();
                 }
 
-                // Extract Date: // Date: 09/01/2026
-                const dateMatch = content.match(/\/\/\s*Date:\s*(\d{2}\/\d{2}\/\d{4})/);
+                // Extract Date: // Date: 09/01/2026 or // Date: 2026-01-09 etc
+                const dateMatch = content.match(/\/\/\s*Date:\s*(.*)/i);
                 if (dateMatch) {
-                    file.customDate = dateMatch[1];
-                    const parts = file.customDate.split('/');
-                    // MM/DD/YYYY -> YYYY-MM-DD
-                    file.dateObj = new Date(`${parts[2]}-${parts[0]}-${parts[1]}`);
+                    const rawDate = dateMatch[1].trim();
+                    // Attempt 1: DD/MM/YYYY (Slash separated)
+                    const dmyMatch = rawDate.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                    if (dmyMatch) {
+                        const [_, day, month, year] = dmyMatch;
+                        file.customDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+                        file.dateObj = new Date(`${year}-${month}-${day}`);
+                    }
+                    // Attempt 2: DD-MM-YYYY (Dash separated)
+                    else if (rawDate.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/)) {
+                        const [_, day, month, year] = rawDate.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+                        file.customDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+                        file.dateObj = new Date(`${year}-${month}-${day}`);
+                    }
+                    // Attempt 3: YYYY-MM-DD (ISO)
+                    else if (rawDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)) {
+                        const [_, year, month, day] = rawDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+                        file.customDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+                        file.dateObj = new Date(`${year}-${month}-${day}`);
+                    }
+                    // Fallback: Default JS Date parsing
+                    else {
+                        const dateObj = new Date(rawDate);
+                        if (!isNaN(dateObj.getTime())) {
+                            file.customDate = dateObj.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' });
+                            file.dateObj = dateObj;
+                        }
+                    }
                 }
             } catch (e) {
                 console.warn(`Failed to fetch date for ${file.name}`, e);
