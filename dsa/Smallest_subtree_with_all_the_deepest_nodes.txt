@@ -74,11 +74,11 @@ class Main {
     // If left subtree is deeper, the target node is in the left subtree
     if (left.val > right.val) {
       return new Pair(left.node, left.val + 1);
-    } 
+    }
     // If right subtree is deeper, the target node is in the right subtree
     else if (right.val > left.val) {
       return new Pair(right.node, right.val + 1);
-    } 
+    }
     // If both subtrees are equally deep, current node is the LCA
     else {
       return new Pair(node, left.val + 1);
