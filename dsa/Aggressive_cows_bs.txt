@@ -1,3 +1,4 @@
+// Date: 07/01/2026
 // Problem: https://leetcode.com/problems/magnetic-force-between-two-balls/
 
 import java.lang.*;

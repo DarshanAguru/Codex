@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
         dataSource: localStorage.getItem(CONFIG.dataSourceKey) || 'GITHUB',
         allFiles: [],
         currentFile: null,
-        isLoading: false
+        isLoading: false,
+        sortMode: 'NAME_ASC'
     };
 
     const elements = {
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         codeContent: document.getElementById('code-content'),
         emptyState: document.getElementById('empty-state'),
         searchInput: document.getElementById('searchInput'),
+        sortSelect: document.getElementById('sortSelect'),
         activeFilename: document.getElementById('active-filename'),
         refreshBtn: document.getElementById('refreshBtn'),
         searchSpinner: document.getElementById('search-spinner'),
@@ -48,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function setupEventListeners() {
         elements.searchInput.addEventListener('input', debounce((e) => handleSearch(e.target.value), 300));
+        if (elements.sortSelect) {
+            elements.sortSelect.addEventListener('change', (e) => handleSort(e.target.value));
+        }
         elements.refreshBtn.addEventListener('click', () => {
             if (state.dataSource === 'GITHUB') {
                 localStorage.removeItem(CONFIG.eTagKey);
@@ -151,15 +156,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (files) {
                 state.allFiles = files.filter(item => item.type === "file" && (item.name.endsWith('.txt') || item.name.endsWith('.java') || item.name.endsWith('.cpp')))
-                    .sort((a, b) => {
-                        return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
-                    })
                     .map((item, idx) => ({
                         ...item,
-                        DisplayName: formatDisplayName(idx, item.name)
+                        DisplayName: formatDisplayName(idx, item.name),
+                        customDate: null,
+                        dateObj: null
                     }));
 
+                // Sort initially by name
+                sortFiles();
                 renderList(state.allFiles);
+
+                // Fetch dates in background
+                fetchFileDates();
             }
         } catch (error) {
             console.error("Load Error:", error);
@@ -172,6 +181,95 @@ document.addEventListener("DOMContentLoaded", () => {
         } finally {
             setLoading(false);
         }
+    }
+
+    async function fetchFileDates() {
+        // Limit concurrency to avoid overwhelming
+        const batchSize = 5;
+        let filesToFetch = [...state.allFiles];
+
+        const fetchDate = async (file) => {
+            if (file.customDate) return;
+            try {
+                let content = "";
+                if (state.dataSource === 'GITHUB') {
+                    // Use raw content URL for efficiency
+                    const targetUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/main/${CONFIG.githubFolder}/${file.name}`;
+                    const res = await fetch(targetUrl); // Simple fetch, no restart logic needed for raw usually
+                    if (res.ok) content = await res.text();
+                } else {
+                    const res = await fetch(`./${CONFIG.githubFolder}/${file.name}`);
+                    if (res.ok) content = await res.text();
+                }
+
+                // Extract Date: // Date: 09/01/2026
+                const dateMatch = content.match(/\/\/\s*Date:\s*(\d{2}\/\d{2}\/\d{4})/);
+                if (dateMatch) {
+                    file.customDate = dateMatch[1];
+                    const parts = file.customDate.split('/');
+                    // MM/DD/YYYY -> YYYY-MM-DD
+                    file.dateObj = new Date(`${parts[2]}-${parts[0]}-${parts[1]}`);
+                }
+            } catch (e) {
+                console.warn(`Failed to fetch date for ${file.name}`, e);
+            }
+        };
+
+        // Process in batches
+        for (let i = 0; i < filesToFetch.length; i += batchSize) {
+            const batch = filesToFetch.slice(i, i + batchSize);
+            await Promise.all(batch.map(f => fetchDate(f)));
+
+            // Re-sort and render if needed
+            if (state.sortMode.includes('DATE')) {
+                sortFiles();
+                renderList(state.allFiles);
+            } else {
+                // Even if name sort, we might want to show the extracted date in the list text
+                renderList(state.allFiles);
+            }
+        }
+
+        sortFiles();
+        renderList(state.allFiles);
+    }
+
+    function handleSort(mode) {
+        state.sortMode = mode;
+        sortFiles();
+        renderList(state.allFiles);
+    }
+
+    function sortFiles() {
+        state.allFiles.sort((a, b) => {
+            const nameComp = a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
+
+            if (state.sortMode === 'NAME_ASC') {
+                return nameComp;
+            } else if (state.sortMode === 'NAME_DESC') {
+                return -1 * nameComp;
+            } else if (state.sortMode === 'DATE_NEW') {
+                const dateA = a.dateObj || (a.modified ? new Date(a.modified) : new Date(0));
+                const dateB = b.dateObj || (b.modified ? new Date(b.modified) : new Date(0));
+
+                const diff = dateB - dateA;
+                if (diff !== 0) return diff;
+                return nameComp; // Secondary sort: Name Asc
+            } else if (state.sortMode === 'DATE_OLD') {
+                const dateA = a.dateObj || (a.modified ? new Date(a.modified) : new Date(2147483647000));
+                const dateB = b.dateObj || (b.modified ? new Date(b.modified) : new Date(2147483647000));
+
+                const diff = dateA - dateB;
+                if (diff !== 0) return diff;
+                return nameComp; // Secondary sort: Name Asc
+            }
+            return 0;
+        });
+
+        // Re-calculate DisplayName to reflect new index order
+        state.allFiles.forEach((file, idx) => {
+            file.DisplayName = formatDisplayName(idx, file.name);
+        });
     }
 
     async function fetchFromGitHub() {
@@ -261,6 +359,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const div = document.createElement("div");
             div.id = `file-${file.name}`;
             div.className = "file-item group flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-dark-700/50 transition-all border border-transparent hover:border-dark-600";
+            if (state.currentFile === file.name || (state.currentFile === null && false)) div.classList.add('active');
+            // The active check above is simplified.
 
             const icon = document.createElement("div");
             icon.className = "w-8 h-8 rounded-md bg-dark-800 flex items-center justify-center text-gray-500 group-hover:text-brand-500 transition-colors shrink-0";
@@ -276,7 +376,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const meta = document.createElement("div");
             meta.className = "text-[10px] text-gray-600 truncate";
 
-            if (file.created) {
+            if (file.customDate) {
+                meta.textContent = `Date: ${file.customDate}`;
+                meta.classList.add('text-brand-500'); // Highlight
+            } else if (file.created) {
                 const date = new Date(file.created);
                 meta.textContent = date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
             } else if (file.modified) {
