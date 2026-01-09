@@ -1,3 +1,4 @@
+// Date: 06/01/2026
 // Problem: https://practice.geeksforgeeks.org/problems/segregate-0s-and-1s5106/1
 
 import java.lang.*;

@@ -1,3 +1,4 @@
+// Date: 20/08/2025
 // Problem: https://www.codingninjas.com/codestudio/problems/ninja-s-training_3621003
 
 import java.lang.*;

@@ -1,3 +1,4 @@
+// Date: 09/01/2026
 // Problem: https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/
 
 import java.lang.*;
@@ -26,8 +27,8 @@ class Main {
 
   static class Pair {
 
-    TreeNode node;
-    int val;
+    TreeNode node; // LCA of the deepest nodes in the subtree
+    int val; // Function as the depth of the subtree
 
     Pair(TreeNode n, int v) {
       this.node = n;
@@ -63,17 +64,23 @@ class Main {
     return res.node;
   }
 
+  // Returns a pair containing the LCA of deepest nodes and the max depth in the current subtree
   private static Pair dfs(TreeNode node) {
     if (node == null) return new Pair(null, 0);
 
     Pair left = dfs(node.left);
     Pair right = dfs(node.right);
 
+    // If left subtree is deeper, the target node is in the left subtree
     if (left.val > right.val) {
       return new Pair(left.node, left.val + 1);
-    } else if (right.val > left.val) {
+    } 
+    // If right subtree is deeper, the target node is in the right subtree
+    else if (right.val > left.val) {
       return new Pair(right.node, right.val + 1);
-    } else {
+    } 
+    // If both subtrees are equally deep, current node is the LCA
+    else {
       return new Pair(node, left.val + 1);
     }
   }

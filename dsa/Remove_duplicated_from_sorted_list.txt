@@ -1,3 +1,4 @@
+// Date: 06/01/2026
 // Problem: https://leetcode.com/problems/remove-duplicates-from-sorted-list/
 
 import java.lang.*;

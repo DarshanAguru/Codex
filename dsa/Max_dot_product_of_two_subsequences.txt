@@ -1,3 +1,4 @@
+// Date: 08/01/2026
 // Problem: https://leetcode.com/problems/max-dot-product-of-two-subsequences/
 
 import java.lang.*;
