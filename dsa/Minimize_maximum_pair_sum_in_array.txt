@@ -16,7 +16,9 @@ class Main {
     int n = nums.length;
     Arrays.sort(nums);
 
-    int res = 0, left = 0, sum = 0;
+    int res = 0,
+      left = 0,
+      sum = 0;
     int right = n;
 
     while (left < right) {
