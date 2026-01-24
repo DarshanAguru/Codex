@@ -1,0 +1,78 @@
+// Date: 20/08/2025
+// Problem: https://leetcode.com/problems/minimum-path-sum/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  static int INF = (int) Math.pow(10, 9);
+
+  public static void main(String[] args) {
+    int[][] matrix = { { 5, 9, 6 }, { 11, 5, 2 } };
+
+    int n = matrix.length;
+    int m = matrix[0].length;
+
+    System.out.println("Memoization: " + findMinPathSumMEMO(matrix, n, m));
+    System.out.println("Tabulation: " + findMinPathSumTAB(matrix, n, m));
+    System.out.println("Space Opt: " + findMinPathSumSO(matrix, n, m));
+  }
+
+  // Space Optimization
+  static int findMinPathSumSO(int[][] matrix, int n, int m) {
+    int[] prev = new int[m];
+
+    for (int i = 0; i < n; i++) {
+      int[] curr = new int[m];
+      for (int j = 0; j < m; j++) {
+        if (i == 0 && j == 0) {
+          curr[j] = matrix[i][j];
+        } else {
+          int up = (i > 0) ? prev[j] : INF;
+          int left = (j > 0) ? curr[j - 1] : INF;
+          curr[j] = matrix[i][j] + Math.min(up, left);
+        }
+      }
+      prev = curr;
+    }
+    return prev[m - 1];
+  }
+
+  // Tabulation
+  static int findMinPathSumTAB(int[][] matrix, int n, int m) {
+    int[][] dp = new int[n][m];
+
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        if (i == 0 && j == 0) {
+          dp[i][j] = matrix[i][j];
+        } else {
+          int up = (i > 0) ? dp[i - 1][j] : INF;
+          int left = (j > 0) ? dp[i][j - 1] : INF;
+          dp[i][j] = matrix[i][j] + Math.min(up, left);
+        }
+      }
+    }
+    return dp[n - 1][m - 1];
+  }
+
+  // Memoization
+  static int findMinPathSumMEMO(int[][] matrix, int n, int m) {
+    int[][] dp = new int[n][m];
+    for (int[] row : dp) Arrays.fill(row, -1);
+    return helper(matrix, n - 1, m - 1, dp);
+  }
+
+  static int helper(int[][] matrix, int i, int j, int[][] dp) {
+    if (i == 0 && j == 0) return matrix[0][0];
+    if (i < 0 || j < 0) return INF;
+
+    if (dp[i][j] != -1) return dp[i][j];
+
+    int up = helper(matrix, i - 1, j, dp);
+    int left = helper(matrix, i, j - 1, dp);
+
+    return dp[i][j] = matrix[i][j] + Math.min(up, left);
+  }
+}

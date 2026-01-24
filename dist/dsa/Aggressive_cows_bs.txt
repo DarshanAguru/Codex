@@ -1,0 +1,52 @@
+// Date: 06/08/2025
+// Problem: https://leetcode.com/problems/magnetic-force-between-two-balls/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 0, 3, 4, 7, 10, 9 };
+    int k = 4;
+
+    Arrays.sort(arr);
+
+    int min = arr[0];
+    int max = arr[arr.length - 1];
+
+    // Binary Search for largest minimum distance
+    int res = binarySearch(arr, 1, max - min, k);
+    System.out.println(res);
+  }
+
+  static boolean canBePlaced(int[] arr, int dist, int k) {
+    int prev = arr[0];
+    int count = 1;
+
+    for (int i = 1; i < arr.length; i++) {
+      if (arr[i] - prev >= dist) {
+        prev = arr[i];
+        count++;
+      }
+      if (count >= k) return true;
+    }
+    return false;
+  }
+
+  static int binarySearch(int[] arr, int low, int high, int k) {
+    int ans = 1;
+
+    while (low <= high) {
+      int mid = (high + low) / 2;
+
+      if (canBePlaced(arr, mid, k)) {
+        ans = mid; // Possible answer, try larger distance
+        low = mid + 1;
+      } else {
+        high = mid - 1; // Cannot place with this distance, try smaller
+      }
+    }
+    return ans; // The largest valid min distance
+  }
+}

@@ -1,0 +1,59 @@
+// Date: 05/08/2025
+// Problem: https://leetcode.com/problems/find-missing-and-repeated-values/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 3, 1, 2, 5, 3 };
+
+    // Find Repeating and Missing Number using XOR
+    int xor = 0;
+    for (int i = 0; i < arr.length; i++) {
+      xor ^= arr[i];
+      xor ^= (i + 1);
+    }
+
+    // xor now contains (Repeating ^ Missing)
+    // Get the rightmost set bit to distinguish numbers
+    int diff = (xor & ~(xor - 1));
+
+    int zero = 0; // Bucket 1 (bit not set)
+    int one = 0; // Bucket 2 (bit set)
+
+    // Pass 1: Categorize array elements
+    for (int i = 0; i < arr.length; i++) {
+      if ((arr[i] & diff) != 0) {
+        one ^= arr[i];
+      } else {
+        zero ^= arr[i];
+      }
+    }
+
+    // Pass 2: Categorize numbers 1..N
+    for (int i = 1; i <= arr.length; i++) {
+      if ((i & diff) != 0) {
+        one ^= i;
+      } else {
+        zero ^= i;
+      }
+    }
+
+    // 'one' and 'zero' hold the two numbers.
+    // Need to identify which is repeating and which is missing.
+    int cnt = 0;
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == zero) {
+        cnt++;
+      }
+    }
+
+    if (cnt == 2) {
+      System.out.println("Repeating: " + zero + ", Missing: " + one);
+    } else {
+      System.out.println("Repeating: " + one + ", Missing: " + zero);
+    }
+  }
+}

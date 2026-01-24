@@ -1,0 +1,33 @@
+// Date: 06/08/2025
+// Problem: https://leetcode.com/problems/find-peak-element/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 3, 4, 5 };
+
+    int idx = findPeakElement(arr);
+    System.out.println(idx);
+  }
+
+  static int findPeakElement(int[] arr) {
+    int l = 0;
+    int r = arr.length - 1;
+
+    while (l < r) {
+      int mid = l + (r - l) / 2;
+
+      if (arr[mid] > arr[mid + 1]) {
+        // We are in descending part of peak, so peak is to left (or mid)
+        r = mid;
+      } else {
+        // Ascending part, peak is to right
+        l = mid + 1;
+      }
+    }
+    return l;
+  }
+}

@@ -1,0 +1,59 @@
+// Date: 07/08/2025
+// Problem: https://www.geeksforgeeks.org/print-subsequences-string/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String str = "abc";
+    List<String> res1 = new ArrayList<>();
+    List<String> res2 = new ArrayList<>();
+
+    // 1. Recursive Method
+    getAllSubSeqsRecursion(str, 0, res1, "");
+
+    // 2. Bit Manipulation Method
+    getAllSubSeqsBitMask(str, res2);
+
+    System.out.println("Recursive: " + res1);
+    System.out.println("Bit Mask: " + res2);
+  }
+
+  static void getAllSubSeqsBitMask(String str, List<String> res) {
+    int n = str.length();
+    // Loop from 0 to 2^n - 1
+    for (int i = 0; i < (1 << n); i++) {
+      StringBuilder sub = new StringBuilder();
+
+      for (int j = 0; j < n; j++) {
+        // Check if j-th bit is set
+        if ((i & (1 << j)) != 0) {
+          sub.append(str.charAt(j));
+        }
+      }
+      if (sub.length() > 0) {
+        res.add(sub.toString());
+      }
+    }
+  }
+
+  static void getAllSubSeqsRecursion(
+    String str,
+    int i,
+    List<String> res,
+    String tmp
+  ) {
+    if (i == str.length()) {
+      if (!tmp.isEmpty()) res.add(tmp);
+      return;
+    }
+
+    // Include current char
+    getAllSubSeqsRecursion(str, i + 1, res, tmp + str.charAt(i));
+
+    // Exclude current char
+    getAllSubSeqsRecursion(str, i + 1, res, tmp);
+  }
+}

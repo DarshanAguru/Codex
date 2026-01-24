@@ -1,0 +1,74 @@
+// Date: 12/08/2025
+// Problem: https://leetcode.com/problems/intersection-of-two-linked-lists/
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class LL {
+
+  public Node head;
+  public Node tail;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      tail = head;
+      return;
+    }
+    tail.next = new Node(n);
+    tail = tail.next;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    // Create Intersection for testing
+    Node intersect = new Node(8);
+    intersect.next = new Node(4);
+    intersect.next.next = new Node(5);
+
+    Node headA = new Node(4);
+    headA.next = new Node(1);
+    headA.next.next = intersect;
+
+    Node headB = new Node(5);
+    headB.next = new Node(6);
+    headB.next.next = new Node(1);
+    headB.next.next.next = intersect;
+
+    Node res = getIntersectionNode(headA, headB);
+
+    if (res != null) {
+      System.out.println("Intersected at '" + res.val + "'");
+    } else {
+      System.out.println("No intersection");
+    }
+  }
+
+  static Node getIntersectionNode(Node headA, Node headB) {
+    if (headA == null || headB == null) return null;
+
+    Node a = headA;
+    Node b = headB;
+
+    // Traverse both lists. When one ends, switch to the other list's head.
+    // If there's an intersection, they will meet. If not, they end at null.
+    while (a != b) {
+      a = (a == null) ? headB : a.next;
+      b = (b == null) ? headA : b.next;
+    }
+
+    return a;
+  }
+}

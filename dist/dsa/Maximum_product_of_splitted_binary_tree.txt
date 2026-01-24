@@ -1,0 +1,59 @@
+// Date: 07/01/2026
+// Problem: https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  Node left, right;
+  int val;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class Main {
+
+  static int MOD = 1000000007;
+  static long maxProduct = 0;
+  static long totalSum = 0;
+
+  public static void main(String[] args) {
+    Node root = new Node(1);
+    root.left = new Node(2);
+    root.right = new Node(3);
+    root.left.left = new Node(4);
+    root.left.right = new Node(5);
+    root.right.left = new Node(6);
+
+    System.out.println(maxProduct(root));
+  }
+
+  static int maxProduct(Node root) {
+    maxProduct = 0;
+    totalSum = getTotalSum(root);
+    helper(root);
+    return (int) (maxProduct % MOD);
+  }
+
+  static long getTotalSum(Node root) {
+    if (root == null) return 0;
+    return root.val + getTotalSum(root.left) + getTotalSum(root.right);
+  }
+
+  static long helper(Node root) {
+    if (root == null) return 0;
+
+    long leftSum = helper(root.left);
+    long rightSum = helper(root.right);
+
+    long subtreeSum = root.val + leftSum + rightSum;
+    long remainingSum = totalSum - subtreeSum;
+
+    maxProduct = Math.max(maxProduct, subtreeSum * remainingSum);
+
+    return subtreeSum;
+  }
+}

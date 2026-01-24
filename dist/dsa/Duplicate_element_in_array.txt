@@ -1,0 +1,24 @@
+// Date: 05/08/2025
+// Problem: https://leetcode.com/problems/find-the-duplicate-number/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 3, 4 };
+    String duplicate = null;
+
+    HashSet<Integer> hs = new HashSet<>();
+
+    for (int i : arr) {
+      if (hs.contains(i)) {
+        duplicate = String.valueOf(i);
+      }
+      hs.add(i);
+    }
+
+    System.out.println("Duplicate Element " + duplicate);
+  }
+}

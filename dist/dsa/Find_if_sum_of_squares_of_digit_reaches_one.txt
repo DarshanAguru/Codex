@@ -1,0 +1,35 @@
+// Date: 07/01/2026
+// Problem: https://leetcode.com/problems/happy-number/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int n = 7;
+    boolean res = isHappy(n);
+    System.out.println(res);
+  }
+
+  static boolean isHappy(int n) {
+    int slow = n;
+    int fast = getNext(n);
+
+    while (fast != 1 && slow != fast) {
+      slow = getNext(slow);
+      fast = getNext(getNext(fast));
+    }
+    return fast == 1;
+  }
+
+  static int getNext(int n) {
+    int sum = 0;
+    while (n > 0) {
+      int digit = n % 10;
+      sum += digit * digit;
+      n /= 10;
+    }
+    return sum;
+  }
+}

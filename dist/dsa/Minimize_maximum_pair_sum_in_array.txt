@@ -1,0 +1,31 @@
+// Date: 24/01/2026
+// Problem: https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] nums = { 3, 5, 4, 2, 4, 6 };
+    int res = minPairSum(nums);
+    System.out.println(res);
+  }
+
+  public static int minPairSum(int[] nums) {
+    int n = nums.length;
+    Arrays.sort(nums);
+
+    int res = 0,
+      left = 0,
+      sum = 0;
+    int right = n;
+
+    while (left < right) {
+      sum = nums[left++] + nums[--right];
+      res = Math.max(res, sum);
+    }
+
+    return res;
+  }
+}

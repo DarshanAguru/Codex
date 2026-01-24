@@ -1,0 +1,55 @@
+// Date: 07/08/2025
+// Problem: https://leetcode.com/problems/minimize-max-distance-to-gas-station/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 3, 4, 5 };
+    int k = 4;
+
+    // Solution using Binary Search (Correct approach for competitive limits)
+    double resBS = findMinOfMaxDistBS(arr, k);
+    System.out.println(resBS);
+  }
+
+  static int canFit(int[] arr, double width) {
+    int cnt = 0;
+    for (int i = 1; i < arr.length; i++) {
+      int inBetween = (int) ((arr[i] - arr[i - 1]) / width);
+
+      // If perfectly divisible, we don't need the extra station at end
+      if ((arr[i] - arr[i - 1]) == (width * inBetween)) {
+        inBetween--;
+      }
+      cnt += inBetween;
+    }
+    return cnt;
+  }
+
+  static double findMinOfMaxDistBS(int[] arr, int k) {
+    double low = 0;
+    double high = 0;
+
+    for (int i = 0; i < arr.length - 1; i++) {
+      high = Math.max(high, (double) (arr[i + 1] - arr[i]));
+    }
+
+    double eps = 1e-6; // Precision
+
+    while (high - low > eps) {
+      double mid = (high + low) / 2.0;
+
+      if (canFit(arr, mid) > k) {
+        // If we need > k stations, the max dist is too small
+        low = mid;
+      } else {
+        // Feasible
+        high = mid;
+      }
+    }
+    return high;
+  }
+}

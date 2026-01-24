@@ -1,0 +1,47 @@
+// Date: 06/08/2025
+// Problem: https://leetcode.com/problems/koko-eating-bananas/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 25, 12, 8, 14, 19 };
+    int h = 5;
+
+    int max = 0;
+    for (int i : arr) {
+      max = Math.max(i, max);
+    }
+
+    // Binary Search for minimum eating speed 'k'
+    // Range: [1, max(piles)]
+    int res = binarySearch(arr, 1, max, h);
+    System.out.println(res);
+  }
+
+  static double getHoursNeeded(int[] arr, int speed) {
+    double hours = 0;
+    for (int pile : arr) {
+      hours += Math.ceil((double) pile / speed);
+    }
+    return hours;
+  }
+
+  static int binarySearch(int[] arr, int l, int r, int h) {
+    int ans = r; // Initialize with max possible speed
+
+    while (l <= r) {
+      int mid = l + (r - l) / 2;
+
+      if (getHoursNeeded(arr, mid) <= h) {
+        ans = mid;
+        r = mid - 1; // Try slower speed
+      } else {
+        l = mid + 1; // Need faster speed
+      }
+    }
+    return ans;
+  }
+}

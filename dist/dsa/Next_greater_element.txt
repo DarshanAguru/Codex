@@ -1,0 +1,46 @@
+// Date: 13/08/2025
+// Problem: https://leetcode.com/problems/next-greater-element-i/
+
+import java.lang.*;
+import java.util.*;
+import java.util.stream.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 3, 10, 4, 2, 1, 2, 6, 1, 7, 2, 9 };
+
+    int[] res = getNextGreaterElement(arr);
+
+    System.out.println(Arrays.toString(res));
+  }
+
+  static int[] getNextGreaterElement(int[] arr) {
+    int n = arr.length;
+    int[] res = new int[n];
+    Stack<Integer> st = new Stack<>();
+
+    // Loop from right to left (circularly treated 2*n-1 usually, but here array is linear
+    // judging by output array size 'n'. The original code loop 2*n-1 suggests Circular NGE.
+    // I will keep the circular logic as original code intended.)
+
+    for (int i = 2 * n - 1; i >= 0; i--) {
+      // Remove smaller elements
+      while (!st.isEmpty() && st.peek() <= arr[i % n]) {
+        st.pop();
+      }
+
+      // If i < n, it means we are in the main array range, so we record the answer
+      if (i < n) {
+        if (st.isEmpty()) {
+          res[i] = -1;
+        } else {
+          res[i] = st.peek();
+        }
+      }
+      // Push current element
+      st.push(arr[i % n]);
+    }
+    return res;
+  }
+}

@@ -1,0 +1,87 @@
+// Date: 09/01/2026
+// Problem: https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/
+
+import java.lang.*;
+import java.util.*;
+
+class TreeNode {
+
+  int val;
+  TreeNode left;
+  TreeNode right;
+
+  TreeNode() {}
+
+  TreeNode(int val) {
+    this.val = val;
+  }
+
+  TreeNode(int val, TreeNode left, TreeNode right) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+class Main {
+
+  static class Pair {
+
+    TreeNode node; // LCA of the deepest nodes in the subtree
+    int val; // Function as the depth of the subtree
+
+    Pair(TreeNode n, int v) {
+      this.node = n;
+      this.val = v;
+    }
+  }
+
+  public static void main(String[] args) {
+    // Example: [3,5,1,6,2,0,8,null,null,7,4]
+    TreeNode root = new TreeNode(3);
+    root.left = new TreeNode(5);
+    root.right = new TreeNode(1);
+    root.left.left = new TreeNode(6);
+    root.left.right = new TreeNode(2);
+    root.right.left = new TreeNode(0);
+    root.right.right = new TreeNode(8);
+    root.left.right.left = new TreeNode(7);
+    root.left.right.right = new TreeNode(4);
+
+    TreeNode result = subtreeWithAllDeepest(root);
+    printTree(result);
+  }
+
+  public static void printTree(TreeNode root) {
+    if (root == null) return;
+    printTree(root.left);
+    System.out.print(root.val + " ");
+    printTree(root.right);
+  }
+
+  public static TreeNode subtreeWithAllDeepest(TreeNode root) {
+    Pair res = dfs(root);
+    return res.node;
+  }
+
+  // Returns a pair containing the LCA of deepest nodes and the max depth in the current subtree
+  private static Pair dfs(TreeNode node) {
+    if (node == null) return new Pair(null, 0);
+
+    Pair left = dfs(node.left);
+    Pair right = dfs(node.right);
+
+    // If left subtree is deeper, the target node is in the left subtree
+    if (left.val > right.val) {
+      return new Pair(left.node, left.val + 1);
+    }
+    // If right subtree is deeper, the target node is in the right subtree
+    else if (right.val > left.val) {
+      return new Pair(right.node, right.val + 1);
+    }
+    // If both subtrees are equally deep, current node is the LCA
+    else {
+      return new Pair(node, left.val + 1);
+    }
+  }
+}

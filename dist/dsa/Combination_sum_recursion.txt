@@ -1,0 +1,47 @@
+// Date: 07/08/2025
+// Problem: https://leetcode.com/problems/combination-sum/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 2, 3, 6, 7 };
+    int target = 7;
+
+    List<List<Integer>> res = new ArrayList<>();
+    List<Integer> tmp = new ArrayList<>();
+
+    getCombinationSum(0, arr, res, tmp, target);
+
+    System.out.println(res);
+  }
+
+  static void getCombinationSum(
+    int idx,
+    int[] arr,
+    List<List<Integer>> res,
+    List<Integer> tmp,
+    int target
+  ) {
+    // Base case: If processed all elements
+    if (idx == arr.length) {
+      if (target == 0) {
+        res.add(new ArrayList<>(tmp));
+      }
+      return;
+    }
+
+    // Include current element if it fits
+    if (arr[idx] <= target) {
+      tmp.add(arr[idx]);
+      // Stay at same index since we can reuse the element (unlimited supply)
+      getCombinationSum(idx, arr, res, tmp, target - arr[idx]);
+      tmp.remove(tmp.size() - 1); // Backtrack
+    }
+
+    // Exclude current element and move next
+    getCombinationSum(idx + 1, arr, res, tmp, target);
+  }
+}

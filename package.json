@@ -6,8 +6,9 @@
     "scripts": {
         "generate": "node scripts/generate_index.js",
         "format": "prettier --write \"dsa/*.{java,txt}\"",
-        "build:css": "npx @tailwindcss/cli -i ./assets/input.css -o ./assets/styles.css",
-        "build": "npm run format && npm run generate && npm run build:css"
+        "build:css": "npx @tailwindcss/cli -i ./assets/input.css -o ./dist/assets/styles.css",
+        "package": "node scripts/build.js",
+        "build": "npm run format && npm run generate && npm run package && npm run build:css"
     },
     "devDependencies": {
         "@tailwindcss/cli": "^4.1.18",

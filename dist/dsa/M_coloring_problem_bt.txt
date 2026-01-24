@@ -1,0 +1,83 @@
+// Date: 12/08/2025
+// Problem: https://www.geeksforgeeks.org/m-coloring-problem/
+
+import java.lang.*;
+import java.util.*;
+
+class Graph {
+
+  Map<Integer, List<Integer>> map;
+
+  Graph() {
+    this.map = new HashMap<>();
+  }
+
+  public void addEdge(int s, int d) {
+    this.map.putIfAbsent(s, new ArrayList<>());
+    this.map.putIfAbsent(d, new ArrayList<>());
+    this.map.get(s).add(d);
+    this.map.get(d).add(s);
+  }
+
+  public List<Integer> getNeighbors(int n) {
+    return this.map.getOrDefault(n, new ArrayList<>());
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    int N = 4;
+    int M = 3; // Number of colors
+
+    int[][] edges = { { 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 0 }, { 0, 2 } };
+
+    Graph graph = convertToGraph(edges);
+
+    int[] color = new int[N];
+
+    if (solveGraphColoring(0, graph, color, N, M)) {
+      System.out.println("Solution exists: " + Arrays.toString(color));
+    } else {
+      System.out.println("No solution exists");
+    }
+  }
+
+  static boolean isSafe(int node, Graph graph, int[] color, int c) {
+    for (int neighbor : graph.getNeighbors(node)) {
+      if (color[neighbor] == c) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  static boolean solveGraphColoring(
+    int node,
+    Graph graph,
+    int[] color,
+    int N,
+    int M
+  ) {
+    if (node == N) return true;
+
+    for (int i = 1; i <= M; i++) {
+      if (isSafe(node, graph, color, i)) {
+        color[node] = i;
+        if (solveGraphColoring(node + 1, graph, color, N, M)) {
+          return true;
+        }
+        color[node] = 0; // Backtrack
+      }
+    }
+    return false;
+  }
+
+  static Graph convertToGraph(int[][] edges) {
+    Graph graph = new Graph();
+    for (int[] edge : edges) {
+      graph.addEdge(edge[0], edge[1]);
+    }
+    return graph;
+  }
+}

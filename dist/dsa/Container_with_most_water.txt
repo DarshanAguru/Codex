@@ -1,0 +1,38 @@
+// Date: 05/08/2025
+// Problem: https://leetcode.com/problems/container-with-most-water/
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 5, 4, 3 };
+    int res = maxArea(arr);
+    System.out.println(res);
+  }
+
+  static int maxArea(int[] heights) {
+    int n = heights.length;
+    int max = 0;
+
+    int left = 0;
+    int right = n - 1;
+
+    // Two Pointer Approach: O(N)
+    while (left < right) {
+      // Calculate area based on shorter boundary
+      int currentArea =
+        Math.min(heights[left], heights[right]) * (right - left);
+      max = Math.max(max, currentArea);
+
+      // Move the pointer of the shorter wall to try and find a taller one
+      if (heights[left] < heights[right]) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+    return max;
+  }
+}
