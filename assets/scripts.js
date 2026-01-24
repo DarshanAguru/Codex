@@ -2,14 +2,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const CONFIG = {
         githubUser: "DarshanAguru",
+        // Kept for reference or future use, though fetching is now local
         githubRepo: "Codex",
         githubFolder: "dsa",
-        eTagKey: "codex-etag",
-        cacheKey: "codex-cache"
+        themeKey: "codex-theme"
     };
 
     let state = {
-        dataSource: 'GITHUB',
+        dataSource: 'HOST',
         allFiles: [],
         currentFile: null,
         isLoading: false,
@@ -36,17 +36,44 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebarLoading: document.getElementById('sidebar-loading'),
         modeCodeBtn: document.getElementById('mode-code'),
         modeSummaryBtn: document.getElementById('mode-summary'),
-        markdownContent: document.getElementById('markdown-content')
+        markdownContent: document.getElementById('markdown-content'),
+        themeToggle: document.getElementById('theme-toggle'),
+        iconSun: document.getElementById('icon-sun'),
+        iconMoon: document.getElementById('icon-moon')
     };
 
     init();
 
     function init() {
-        // Force GITHUB mode relative to where it's hosted
-        updateSourceIndicator();
+        initTheme();
         loadFiles();
-        loadSummaries(); // Pre-fetch summaries list
+        loadSummaries();
         setupEventListeners();
+    }
+
+    function initTheme() {
+        const savedTheme = localStorage.getItem(CONFIG.themeKey) || 'dark';
+        applyTheme(savedTheme);
+    }
+
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+            elements.iconSun.classList.add('hidden');
+            elements.iconMoon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            elements.iconSun.classList.remove('hidden');
+            elements.iconMoon.classList.add('hidden');
+        }
+        localStorage.setItem(CONFIG.themeKey, theme);
+    }
+
+    function toggleTheme() {
+        const isLight = document.documentElement.classList.contains('light');
+        applyTheme(isLight ? 'dark' : 'light');
     }
 
     function setupEventListeners() {
@@ -55,13 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
             elements.sortSelect.addEventListener('change', (e) => handleSort(e.target.value));
         }
         elements.refreshBtn.addEventListener('click', () => {
-            if (state.dataSource === 'GITHUB') {
-                localStorage.removeItem(CONFIG.eTagKey);
-                localStorage.removeItem(CONFIG.cacheKey);
-            }
             loadFiles();
         });
-
 
         const toggleSidebar = () => {
             const isClosed = elements.sidebar.classList.contains('-translate-x-full');
@@ -93,9 +115,26 @@ document.addEventListener("DOMContentLoaded", () => {
         elements.modeCodeBtn.addEventListener('click', () => switchMode('CODE'));
         elements.modeSummaryBtn.addEventListener('click', () => switchMode('SUMMARY'));
 
+        // Theme Toggle
+        if (elements.themeToggle) {
+            elements.themeToggle.addEventListener('click', toggleTheme);
+        }
+
         setupResizer();
 
         window.closeSidebarMobile = closeSidebar;
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                elements.searchInput.focus();
+            }
+            if (e.key === '/' && document.activeElement !== elements.searchInput) {
+                e.preventDefault();
+                elements.searchInput.focus();
+            }
+        });
     }
 
     function setupResizer() {
@@ -128,22 +167,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function toggleSource() {
-        // Redundant
-    }
-
-    function updateSourceIndicator() {
-        // Redundant
-    }
-
     async function loadFiles() {
-        setSidebarLoading(true); // Helper to show overlay
+        setSidebarLoading(true);
         try {
             let files = [];
             try {
-                // files = await fetchFromLocal();
-                // Fallback to fetchFromGitHub always or use raw if optimized
-                files = await fetchFromGitHub();
+                files = await fetchFromHost();
             } catch (e) {
                 console.warn("Failed to load files", e);
             }
@@ -157,8 +186,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         dateObj: null
                     }));
 
-                // Fetch dates BEFORE rendering
-                await fetchFileDates();
+                // Fetch dates BEFORE rendering (Not needed anymore as logic moved to build)
+                // But wait, if files.json has displayDate, we just use it.
+                // We don't need fetchFileDates() loop.
 
                 // Sort and render ONCE
                 sortFiles();
@@ -170,88 +200,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="p-4 text-center text-red-400 text-xs">
                     <p class="font-bold">Failed to load files.</p>
                     <p class="opacity-75 mt-1">${error.message}</p>
-                    ${state.dataSource === 'LOCAL' ? '<p class="mt-2 text-[10px] text-gray-500">Ensure "files.json" exists in assets/ for Local mode.</p>' : ''}
                 </div>`;
         } finally {
-            setLoading(false); // Global spinner
-            setSidebarLoading(false); // Hide sidebar overlay
-        }
-    }
-
-    async function fetchFileDates() {
-        // Increased batch size for faster loading (User requested efficiency for possible 1000 files)
-        const batchSize = 20;
-        let filesToFetch = [...state.allFiles];
-
-        const fetchDate = async (file) => {
-            // Optimization: If customDate is already present (from files.json), just parse it
-            if (file.customDate && !file.dateObj) {
-                parseDateStr(file);
-                return;
-            }
-
-            if (file.customDate) return;
-            try {
-                let content = "";
-                if (state.dataSource === 'GITHUB') {
-                    // Use raw content URL for efficiency
-                    const targetUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/main/${CONFIG.githubFolder}/${file.name}`;
-                    const res = await fetch(targetUrl); // Simple fetch, no restart logic needed for raw usually
-                    if (res.ok) content = await res.text();
-                } else {
-                    const res = await fetch(`./${CONFIG.githubFolder}/${file.name}`);
-                    if (res.ok) content = await res.text();
-                }
-
-                // Extract Date: // Date: 09/01/2026 or // Date: 2026-01-09 etc
-                const dateMatch = content.match(/\/\/\s*Date:\s*(.*)/i);
-                if (dateMatch) {
-                    file.customDate = dateMatch[1].trim();
-                    parseDateStr(file);
-                }
-            } catch (e) {
-                console.warn(`Failed to fetch date for ${file.name}`, e);
-            }
-        };
-
-        // Helper to parse the date string into Date Object
-        const parseDateStr = (file) => {
-            const rawDate = file.customDate;
-            // Attempt 1: DD/MM/YYYY (Slash separated)
-            const dmyMatch = rawDate.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-            if (dmyMatch) {
-                const [_, day, month, year] = dmyMatch;
-                file.dateObj = new Date(`${year}-${month}-${day}`);
-                // Normalize display format if needed
-                file.customDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-            }
-            // Attempt 2: DD-MM-YYYY (Dash separated)
-            else if (rawDate.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/)) {
-                const [_, day, month, year] = rawDate.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
-                file.dateObj = new Date(`${year}-${month}-${day}`);
-                file.customDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-            }
-            // Attempt 3: YYYY-MM-DD (ISO)
-            else if (rawDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)) {
-                const [_, year, month, day] = rawDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-                file.dateObj = new Date(`${year}-${month}-${day}`);
-                file.customDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-            }
-            // Fallback: Default JS Date parsing
-            else {
-                const dateObj = new Date(rawDate);
-                if (!isNaN(dateObj.getTime())) {
-                    file.dateObj = dateObj;
-                    file.customDate = dateObj.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' });
-                }
-            }
-        };
-
-        // Process in batches
-        for (let i = 0; i < filesToFetch.length; i += batchSize) {
-            const batch = filesToFetch.slice(i, i + batchSize);
-            await Promise.all(batch.map(f => fetchDate(f)));
-            // No intermediate rendering
+            setLoading(false);
+            setSidebarLoading(false);
         }
     }
 
@@ -270,108 +222,39 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (state.sortMode === 'NAME_DESC') {
                 return -1 * nameComp;
             } else if (state.sortMode === 'DATE_NEW') {
-                const dateA = a.dateObj || (a.modified ? new Date(a.modified) : new Date(0));
-                const dateB = b.dateObj || (b.modified ? new Date(b.modified) : new Date(0));
+                const dateA = a.timestamp || 0;
+                const dateB = b.timestamp || 0;
 
                 const diff = dateB - dateA;
                 if (diff !== 0) return diff;
-                return nameComp; // Secondary sort: Name Asc
+                return nameComp;
             } else if (state.sortMode === 'DATE_OLD') {
-                const dateA = a.dateObj || (a.modified ? new Date(a.modified) : new Date(2147483647000));
-                const dateB = b.dateObj || (b.modified ? new Date(b.modified) : new Date(2147483647000));
+                const dateA = a.timestamp || 2147483647000;
+                const dateB = b.timestamp || 2147483647000;
 
                 const diff = dateA - dateB;
                 if (diff !== 0) return diff;
-                return nameComp; // Secondary sort: Name Asc
+                return nameComp;
             }
             return 0;
         });
 
-        // Re-calculate DisplayName to reflect new index order
         state.allFiles.forEach((file, idx) => {
             file.DisplayName = formatDisplayName(idx, file.name);
         });
     }
 
-    async function fetchFromGitHub() {
-        // Optimization: Try to fetch the single files.json first
-        const rawIndexUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/main/assets/files.json`;
-
-        try {
-            // We don't use cache for this check usually to ensure we get latest, but strict caching might be okay.
-            // Let's use fetchWithBackoff but handle 404 gracefully.
-            const res = await fetch(rawIndexUrl);
-            if (res.ok) {
-                const data = await res.json();
-                console.log("Loaded from GitHub Raw files.json");
-                return data;
-            }
-        } catch (e) {
-            console.warn("Failed to fetch raw files.json, falling back to API", e);
-        }
-
-        const url = `https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.githubRepo}/contents/${CONFIG.githubFolder}`;
-        try {
-            const cached = localStorage.getItem(CONFIG.cacheKey);
-            const etag = localStorage.getItem(CONFIG.eTagKey);
-
-            const headers = { "Accept": "application/vnd.github.v3+json" };
-            if (etag) headers["If-None-Match"] = etag;
-
-            const response = await fetchWithBackoff(url, { headers });
-
-            if (response.status === 304 && cached) {
-                console.log("Using cached file list");
-                return JSON.parse(cached);
-            }
-
-            if (!response.ok) throw new Error(`GitHub API Error: ${response.status}`);
-
-            const data = await response.json();
-
-            const newEtag = response.headers.get("etag");
-            if (newEtag) localStorage.setItem(CONFIG.eTagKey, newEtag);
-            localStorage.setItem(CONFIG.cacheKey, JSON.stringify(data));
-
-            return data;
-
-        } catch (e) {
-            const cached = localStorage.getItem(CONFIG.cacheKey);
-            if (cached) {
-                console.warn("Network failed, using stale cache");
-                return JSON.parse(cached);
-            }
-            throw e;
-        }
-    }
-
-    async function fetchFromLocal() {
+    async function fetchFromHost() {
         const response = await fetch('./assets/files.json');
-        if (!response.ok) throw new Error("Could not find local index (assets/files.json)");
+        if (!response.ok) throw new Error("Could not find index (assets/files.json)");
         return await response.json();
     }
 
     async function loadSummaries() {
         try {
             let data = [];
-            if (state.dataSource === 'GITHUB') {
-                // Try GitHub Raw first
-                const rawUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/main/assets/summaries.json`;
-                const res = await fetch(rawUrl);
-                if (res.ok) data = await res.json();
-                else {
-                    // Fallback API
-                    const url = `https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.githubRepo}/contents/Summaries`;
-                    const resApi = await fetch(url);
-                    if (resApi.ok) {
-                        const items = await resApi.json();
-                        data = items.map(item => ({ ...item, name: item.name, DisplayName: item.name }));
-                    }
-                }
-            } else {
-                const res = await fetch('./assets/summaries.json');
-                if (res.ok) data = await res.json();
-            }
+            const res = await fetch('./assets/summaries.json');
+            if (res.ok) data = await res.json();
 
             if (data) {
                 state.summaries = data.map(item => ({
@@ -389,22 +272,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (state.currentMode === mode) return;
         state.currentMode = mode;
 
-        // Update Buttons
         if (mode === 'CODE') {
             elements.modeCodeBtn.className = "px-3 py-1 rounded bg-brand-600 text-white transition-all shadow-sm";
             elements.modeSummaryBtn.className = "px-3 py-1 rounded text-gray-400 hover:text-white hover:bg-dark-700 transition-all";
 
-            // Show Code UI
-            elements.codePre.classList.remove('hidden'); // Potentially hidden if file selected
-            if (!state.currentFile) elements.codePre.classList.add('hidden'); // Keep hidden if empty
+            elements.codePre.classList.remove('hidden');
+            if (!state.currentFile) elements.codePre.classList.add('hidden');
 
             elements.markdownContent.classList.add('hidden');
-            document.getElementById('lang-indicator').textContent = "JAVA"; // Default or dynamic
+            document.getElementById('lang-indicator').textContent = "JAVA";
 
             renderList(state.allFiles);
             if (state.currentFile) {
-                // Restore view if needed, or just let user click again
-                // Ideally we remember state.currentFile
                 const fileObj = state.allFiles.find(f => f.name === state.currentFile);
                 if (fileObj) loadContent(fileObj);
             } else {
@@ -416,10 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
             elements.modeSummaryBtn.className = "px-3 py-1 rounded bg-brand-600 text-white transition-all shadow-sm";
             elements.modeCodeBtn.className = "px-3 py-1 rounded text-gray-400 hover:text-white hover:bg-dark-700 transition-all";
 
-            // Show Summary UI
             elements.codePre.classList.add('hidden');
-            elements.markdownContent.classList.remove('hidden'); // Will be shown when content loads
-            elements.emptyState.classList.remove('hidden'); // Show empty state initially
+            elements.markdownContent.classList.remove('hidden');
+            elements.emptyState.classList.remove('hidden');
             elements.markdownContent.innerHTML = "";
             elements.activeFilename.textContent = "Select a Summary";
             document.getElementById('lang-indicator').textContent = "MARKDOWN";
@@ -427,7 +305,6 @@ document.addEventListener("DOMContentLoaded", () => {
             renderList(state.summaries);
         }
 
-        // Reset Search
         elements.searchInput.value = "";
     }
 
@@ -449,22 +326,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 let content = "";
-                if (state.dataSource === 'GITHUB') {
-                    const targetUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/main/${CONFIG.githubFolder}/${filename}`;
-                    const res = await fetchWithBackoff(targetUrl);
-                    if (!res.ok) throw new Error("Failed to fetch content");
-                    content = await res.text();
-                } else {
-                    const res = await fetch(`./${CONFIG.githubFolder}/${filename}`);
-                    if (!res.ok) throw new Error("Local file not found");
-                    content = await res.text();
-                }
+                const res = await fetch(`./${CONFIG.githubFolder}/${filename}`);
+                if (!res.ok) throw new Error("File not found");
+                content = await res.text();
+
                 renderCode(content);
             } catch (e) {
                 renderCode(`// Error loading file content:\n// ${e.message}`);
             }
         } else {
-            // Summary Mode
             elements.codePre.classList.add('hidden');
             elements.markdownContent.classList.remove('hidden');
             elements.markdownContent.innerHTML = '<div class="flex justify-center p-10"><svg class="animate-spin h-8 w-8 text-brand-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></div>';
@@ -472,16 +342,9 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 let content = "";
                 let folder = "Summaries"; // Default
-                if (state.dataSource === 'GITHUB') {
-                    const targetUrl = `https://raw.githubusercontent.com/${CONFIG.githubUser}/${CONFIG.githubRepo}/main/${folder}/${filename}`;
-                    const res = await fetchWithBackoff(targetUrl);
-                    if (!res.ok) throw new Error("Failed to fetch content");
-                    content = await res.text();
-                } else {
-                    const res = await fetch(`./${folder}/${filename}`);
-                    if (!res.ok) throw new Error("Local file not found");
-                    content = await res.text();
-                }
+                const res = await fetch(`./${folder}/${filename}`);
+                if (!res.ok) throw new Error("Summary not found");
+                content = await res.text();
 
                 if (window.marked) {
                     elements.markdownContent.innerHTML = marked.parse(content);
@@ -494,7 +357,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function renderList(files) {
+    function handleSearch(query) {
+        const q = query.toLowerCase();
+        const dataset = state.currentMode === 'CODE' ? state.allFiles : state.summaries;
+
+        if (!q) {
+            renderList(dataset);
+            return;
+        }
+        const filtered = dataset.filter(item =>
+            item.DisplayName.toLowerCase().includes(q) ||
+            item.name.toLowerCase().includes(q)
+        );
+        renderList(filtered, q);
+    }
+
+    function renderList(files, highlightQuery = "") {
         elements.fileList.innerHTML = "";
         elements.fileCount.textContent = files.length;
 
@@ -508,8 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const div = document.createElement("div");
             div.id = `file-${file.name}`;
             div.className = "file-item group flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-dark-700/50 transition-all border border-transparent hover:border-dark-600";
-            if (state.currentFile === file.name || (state.currentFile === null && false)) div.classList.add('active');
-            // The active check above is simplified.
+            if (state.currentFile === file.name) div.classList.add('active');
 
             const icon = document.createElement("div");
             icon.className = "w-8 h-8 rounded-md bg-dark-800 flex items-center justify-center text-gray-500 group-hover:text-brand-500 transition-colors shrink-0";
@@ -520,22 +397,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const title = document.createElement("div");
             title.className = "text-sm font-medium text-gray-300 truncate group-hover:text-white transition-colors";
-            title.textContent = file.DisplayName;
+
+            // Highlighting Logic
+            if (highlightQuery) {
+                const regex = new RegExp(`(${highlightQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                title.innerHTML = file.DisplayName.replace(regex, '<span class="text-brand-500 font-bold">$1</span>');
+            } else {
+                title.textContent = file.DisplayName;
+            }
 
             const meta = document.createElement("div");
             meta.className = "text-[10px] text-gray-600 truncate";
 
-            if (file.customDate) {
+            if (file.displayDate) {
+                meta.textContent = `Date: ${file.displayDate}`;
+                meta.classList.add('text-brand-500');
+            } else if (file.customDate) {
                 meta.textContent = `Date: ${file.customDate}`;
-                meta.classList.add('text-brand-500'); // Highlight
-            } else if (file.created) {
-                const date = new Date(file.created);
-                meta.textContent = date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-            } else if (file.modified) {
-                const date = new Date(file.modified);
-                meta.textContent = "Mod: " + date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+                meta.classList.add('text-brand-500');
             } else {
-                meta.textContent = file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'Local File';
+                meta.textContent = file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'File';
             }
 
             textDiv.appendChild(title);
@@ -583,26 +464,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${idx + 1}. ${name}`;
     }
 
-    async function fetchWithBackoff(url, options = {}, retries = 3, backoff = 500) {
-        try {
-            const res = await fetch(url, options);
-            if (res.status === 403 || res.status === 429) {
-                if (retries > 0) {
-                    console.warn(`Rate limited. Retrying in ${backoff}ms...`);
-                    await new Promise(r => setTimeout(r, backoff));
-                    return fetchWithBackoff(url, options, retries - 1, backoff * 2);
-                }
-            }
-            return res;
-        } catch (e) {
-            if (retries > 0) {
-                await new Promise(r => setTimeout(r, backoff));
-                return fetchWithBackoff(url, options, retries - 1, backoff * 2);
-            }
-            throw e;
-        }
-    }
-
     function handleSearch(query) {
         const q = query.toLowerCase();
         const dataset = state.currentMode === 'CODE' ? state.allFiles : state.summaries;
@@ -640,10 +501,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!elements.sidebarLoading) return;
         if (isLoading) {
             elements.sidebarLoading.classList.remove('hidden');
-            // elements.fileList.classList.add('overflow-hidden'); // Optional: prevent scrolling while loading
         } else {
             elements.sidebarLoading.classList.add('hidden');
-            // elements.fileList.classList.remove('overflow-hidden');
         }
     }
 });

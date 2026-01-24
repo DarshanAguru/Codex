@@ -1,16 +1,50 @@
 @import "tailwindcss";
 
-@theme {
-    --font-sans: 'Inter', 'sans-serif';
-    --font-mono: 'Fira Code', 'monospace';
-
+:root {
+    /* Default is DARK */
     --color-dark-900: #0f0f10;
     --color-dark-800: #18181b;
     --color-dark-700: #27272a;
     --color-dark-600: #3f3f46;
+    --color-text-base: #d1d5db;
+    /* gray-300 */
+    --color-text-muted: #6b7280;
+    /* gray-500 */
 
     --color-brand-500: #6366f1;
     --color-brand-600: #4f46e5;
+}
+
+:root.light {
+    /* Light Mode Overrides */
+    --color-dark-900: #ffffff;
+    /* Main BG */
+    --color-dark-800: #f3f4f6;
+    /* Sidebar BG */
+    --color-dark-700: #e5e7eb;
+    /* Borders */
+    --color-dark-600: #d1d5db;
+    /* Input Borders */
+    --color-text-base: #374151;
+    /* gray-700 */
+    --color-text-muted: #6b7280;
+    /* gray-500 */
+}
+
+@theme {
+    --font-sans: 'Inter', 'sans-serif';
+    --font-mono: 'Fira Code', 'monospace';
+
+    --color-dark-900: var(--color-dark-900);
+    --color-dark-800: var(--color-dark-800);
+    --color-dark-700: var(--color-dark-700);
+    --color-dark-600: var(--color-dark-600);
+    /* Mapped standard text colors to variables for broader impact if used */
+    --color-gray-300: var(--color-text-base);
+    --color-gray-500: var(--color-text-muted);
+
+    --color-brand-500: var(--color-brand-500);
+    --color-brand-600: var(--color-brand-600);
 }
 
 /* Custom Scrollbar */
@@ -20,13 +54,13 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background: #18181b;
+    background: var(--color-dark-800);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #3f3f46;
+    background-color: var(--color-dark-600);
     border-radius: 4px;
-    border: 2px solid #18181b;
+    border: 2px solid var(--color-dark-800);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -46,7 +80,7 @@
 }
 
 #file-list:hover::-webkit-scrollbar-thumb {
-    background-color: #3f3f46;
+    background-color: var(--color-dark-600);
 }
 
 /* Prism Overrides */
@@ -90,9 +124,9 @@ div.code-toolbar:hover>.toolbar {
 }
 
 div.code-toolbar>.toolbar>.toolbar-item>button {
-    background: #27272a !important;
-    color: #e5e7eb !important;
-    border: 1px solid #3f3f46 !important;
+    background: var(--color-dark-700) !important;
+    color: var(--color-text-base) !important;
+    border: 1px solid var(--color-dark-600) !important;
     border-radius: 6px !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
     font-family: 'Inter', sans-serif !important;
@@ -103,9 +137,9 @@ div.code-toolbar>.toolbar>.toolbar-item>button {
 }
 
 div.code-toolbar>.toolbar>.toolbar-item>button:hover {
-    background: #4f46e5 !important;
+    background: var(--color-brand-600) !important;
     color: white !important;
-    border-color: #4f46e5 !important;
+    border-color: var(--color-brand-600) !important;
 }
 
 .file-item.active {

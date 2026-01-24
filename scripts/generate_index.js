@@ -22,11 +22,30 @@ try {
 
         if (stats.isFile()) {
             let customDate = null;
+            let timestamp = stats.mtimeMs; // Default to file modification time
+
             try {
                 const content = fs.readFileSync(fullPath, 'utf8');
                 const dateMatch = content.match(/\/\/\s*Date:\s*(.*)/i);
                 if (dateMatch) {
-                    customDate = dateMatch[1].trim();
+                    const rawDate = dateMatch[1].trim();
+                    customDate = rawDate; // Keep raw for reference or specific display
+
+                    // Parse timestamp for sorting
+                    // Try DD/MM/YYYY
+                    const dmy = rawDate.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                    if (dmy) {
+                        timestamp = new Date(`${dmy[3]}-${dmy[2]}-${dmy[1]}`).getTime();
+                    }
+                    // Try DD-MM-YYYY
+                    else if (rawDate.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/)) {
+                        const parts = rawDate.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+                        timestamp = new Date(`${parts[3]}-${parts[2]}-${parts[1]}`).getTime();
+                    }
+                    // Try YYYY-MM-DD
+                    else if (rawDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)) {
+                        timestamp = new Date(rawDate).getTime();
+                    }
                 }
             } catch (readErr) {
                 console.warn(`Could not read file content for ${file}:`, readErr);
@@ -36,9 +55,10 @@ try {
                 name: file,
                 path: `dsa/${file}`,
                 size: stats.size,
-                created: stats.birthtime,
-                modified: stats.mtime,
-                customDate: customDate, // Added custom date field
+                // created: stats.birthtime, // Removed to save size, usually incorrect on various FS
+                // modified: stats.mtime,   // Removed, we use timestamp
+                timestamp: timestamp || 0,
+                displayDate: customDate,
                 type: 'file'
             });
         }

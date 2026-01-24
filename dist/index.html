@@ -51,8 +51,10 @@
             <h1 class="text-xl font-bold tracking-tight text-white">Codex</h1>
         </div>
 
-        <div class="flex items-center gap-4 w-full max-w-md mx-6">
-            <div class="relative w-full group">
+        <!-- Center Section: Search + Mode Toggle -->
+        <div class="flex items-center gap-4 flex-1 justify-center max-w-2xl mx-auto">
+            <!-- Search -->
+            <div class="relative w-full max-w-md group">
                 <div
                     class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 group-focus-within:text-brand-500 transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,8 +63,8 @@
                     </svg>
                 </div>
                 <input id="searchInput" type="text"
-                    class="block w-full p-2 pl-10 text-sm text-gray-200 border border-dark-600 rounded-xl bg-dark-900/50 focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-gray-600 transition-all outline-none"
-                    placeholder="Search...">
+                    class="block w-full p-2 pl-10 text-sm text-gray-300 border border-dark-600 rounded-xl bg-dark-900/50 focus:ring-2 focus:ring-brand-500 focus:border-transparent placeholder-gray-500 transition-all outline-none"
+                    placeholder="Search... (Ctrl + K)">
                 <div id="search-spinner" class="absolute inset-y-0 right-0 flex items-center pr-3 hidden">
                     <svg class="animate-spin h-4 w-4 text-brand-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
@@ -75,31 +77,44 @@
                 </div>
             </div>
 
-            <div class="flex gap-2 items-center">
-                <!-- Mode Toggle -->
-                <div class="bg-dark-900/50 p-1 rounded-lg border border-dark-600 flex text-xs font-medium mr-2">
-                    <button id="mode-code"
-                        class="px-3 py-1 rounded bg-brand-600 text-white transition-all shadow-sm">Code</button>
-                    <button id="mode-summary"
-                        class="px-3 py-1 rounded text-gray-400 hover:text-white hover:bg-dark-700 transition-all">Summaries</button>
-                </div>
-
-                <button id="refreshBtn" title="Refresh Files"
-                    class="p-2 text-gray-400 hover:text-white hover:bg-dark-700 rounded-lg transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
-                        </path>
-                    </svg>
-                </button>
+            <!-- Mode Toggle (Code | Summaries) -->
+            <div class="bg-dark-900/50 p-1 rounded-lg border border-dark-600 flex text-xs font-medium shrink-0">
+                <button id="mode-code"
+                    class="px-3 py-1 rounded bg-brand-600 text-white transition-all shadow-sm">Code</button>
+                <button id="mode-summary"
+                    class="px-3 py-1 rounded text-gray-400 hover:text-white hover:bg-dark-700 transition-all">Summaries</button>
             </div>
         </div>
 
-        <div class="text-xs text-gray-500 font-medium hidden md:block">
-            <button id="source-toggle"
-                class="px-2 py-1 rounded bg-dark-700 text-gray-300 hover:bg-dark-600 transition-colors cursor-pointer"
-                title="Click to Toggle Source">GITHUB</button>
+        <!-- Right Section: Theme Toggle + Refresh -->
+        <div class="flex items-center gap-2">
+            <button id="theme-toggle" title="Toggle Theme"
+                class="p-2 text-gray-400 hover:text-white hover:bg-dark-700 rounded-lg transition-colors">
+                <!-- Moon Icon (Dark Mode Active) -->
+                <svg id="icon-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                    </path>
+                </svg>
+                <!-- Sun Icon (Light Mode Active) -->
+                <svg id="icon-sun" class="w-5 h-5 block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                    </path>
+                </svg>
+            </button>
+
+            <button id="refreshBtn" title="Refresh Files"
+                class="p-2 text-gray-400 hover:text-white hover:bg-dark-700 rounded-lg transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                    </path>
+                </svg>
+            </button>
         </div>
+
+
     </header>
 
     <main class="flex-1 flex overflow-hidden relative" id="main-container">
