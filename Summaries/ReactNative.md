@@ -1,431 +1,158 @@
-# React Native
+# React Native Interview Preparation
 
-- Topics covered:
-    - ScrollView
-    - KeyboardAvoidingView
-    - TouchableOpacity
-    - FlatList
-    - Stack Screen
-    - Navigation Container
-    - UseRef
-    - UseMemo
-    - UseCallBack
-    - Context API
-    - Redux
+## 1. Core Architecture
 
-## React native functional component
+### Old Architecture (The Bridge)
+- **JS Thread**: Runs JavaScript logic (React).
+- **Native Thread**: Runs UI rendering (Android/iOS).
+- **The Bridge**: Asynchronous JSON messaging queue between JS and Native.
+- **Bottleneck**: Fast scrolling or animations can clog the bridge -> White screens or frame drops.
 
-1. ScollView
+### New Architecture (Fabric & TurboModules)
+- **JSI (JavaScript Interface)**: Allows JS to call C++ (Native) methods *directly* and synchronously (No Bridge).
+- **Fabric**: New UI Rendering engine. Renders UI synchronously on the Shadow Thread.
+- **TurboModules**: Lazy loads native modules (only when needed), speeding up startup time.
+
+---
+
+## 2. Performance Optimization
+
+### FlatList Optimization
 ```jsx
-    const DemoScrollView = ():React.JSX.Element => {
-        return (
-            <ScrollView horizontal={true}>
-                <Text> Hello World </Text>
-                <Text> Hello World </Text>
-                <Text> Hello World </Text>
-                <Text> Hello World </Text>
-                <Text> Hello World </Text>
-                <Text> Hello World </Text>
-                <Text> Hello World </Text>
-                <Text> Hello World </Text>
-            </ScrollView>
-        )
-    }
-
-    // ... Some styles
+<FlatList
+  data={bigData}
+  renderItem={renderItem} // Use memoized component
+  keyExtractor={item => item.id}
+  initialNumToRender={10} // First screen items
+  maxToRenderPerBatch={10} // Batch size
+  windowSize={5} // Viewport height units to keep in memory (Default 21)
+  removeClippedSubviews={true} // Unmount off-screen views
+  getItemLayout={(data, index) => ( // Skip measurement calculation
+    {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
+  )}
+/>
 ```
 
-2. FlatListView
+### Memoization
+- **React.memo**: Memoize functional components to prevent re-renders if props haven't changed.
+- **useMemo**: Memoize expensive calculations.
+- **useCallback**: Memoize functions references to prevent child re-renders.
+
+### Image Optimization
+- Use `FastImage` (from `react-native-fast-image`) for aggressive caching.
+- Resize images on server (CDN) before fetching.
+
+---
+
+## 3. Essential Hooks Checklist
+
+- **useState**: Manage local state.
+- **useEffect**: Side effects (API calls, subscriptions). `[]` for mount, `[prop]` for changes, `return () => {}` for cleanup.
+- **useLayoutEffect**: Fires *before* browser paints. Good for blocking UI updates (rare).
+- **useRef**: Persist value without re-render (Timers, TextInput focus).
+
+---
+
+## 4. Navigation (React Navigation 6+)
+
+### Stack Navigator
 ```jsx
-
-    const DemoFlatListView = ():React.JSX.Element =>{
-        const data = [
-            {
-                id: 1,
-                name:'name1',
-            },
-            {
-                id: 2,
-                name: 'name2',
-            },
-            {
-                id: 3,
-                name:'name3',
-            },
-        ]
-
-        return(
-            <FlatList data={data} renderItem={
-                ({item})=> (
-                <View><Text>{item.name}</Text></View>
-            )}>
-            </FlatList>
-        )
-    }
-
-    //some styles
+const Stack = createNativeStackNavigator();
+<NavigationContainer>
+  <Stack.Navigator>
+    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen name="Profile" component={ProfileScreen} />
+  </Stack.Navigator>
+</NavigationContainer>
 ```
 
-3. TouchableOpacity
+### Passing Data
 ```jsx
-    const DemoTouchableOpacity = ():React.JSX.Element=>{
-        return (
-            <View>
-                <TouchableOpacity onPress={()=>{console.log("Pressed!"); Alert.alert('Pressed')}}>
-                    <Text>
-                        Touch Here!
-                    </Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
+// Navigate
+navigation.navigate('Profile', { userId: 123 });
 
-    // some styles
+// Receive
+const { userId } = route.params;
 ```
 
-4. KeyboardAvoidingView
-```jsx
-    const KeyboardAvoidingViewDemo = ():React.JSX.Element => {
-        return(
-            <KeyboardAvoidingView>
-                <View>
-                    <TextInput placeholder="Enter text here"/>
-                </View>
-            </KeyboardAvoidingView>
-        )
+---
+
+## 5. State Management snippets
+
+### Redux Toolkit (Modern)
+**1. Slice (Logic)**
+```ts
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: { items: [] },
+  reducers: {
+    addToCart: (state, action) => {
+      state.items.push(action.payload); // Immer handles immutability
     }
-// some styles
+  }
+});
+export const { addToCart } = cartSlice.actions;
+export default cartSlice.reducer;
 ```
 
-## Tabs bar
-
-1. createBottomTabNavigator
-```jsx
-    import ....
-
-    //RootStackParam some custom type exported
-
-    const Tab =    createBottomTabNavigator<RootStackParam>();
-    const BottomNavigator = () => {
-        return (
-            <NavigationContainer>
-                <Tab.Screen name="home" component={HomeComponent}/>
-            </NavigationContainer>
-        )
-    }
+**2. Store (Config)**
+```ts
+export const store = configureStore({
+  reducer: { cart: cartReducer }
+});
 ```
 
-## Context API
-
-1. createContext
-```jsx
-    import ...
-
-    interface Prod {
-        id: number,
-        name: string,
-        price: string
-    };
-
-    interface ContextType {
-        cartItems: Prod[],
-        addToCart: (product: Prod) => void,
-        removeFromCart: (id: number) => void
-    }
-
-    const ctxt = createContext<ContextType | undefined>(undefined);
-
-    interface ProviderProps {
-        children: ReactNode
-    }
-
-    const provider:React.FC<ProviderProps> = ({children}) => {
-
-        const [cartItems, setCartItems] = useState<Prod[]>([])
-
-        const addToCart = (product:Prod) => {
-                setCartItems(prev => [...prev, product]);
-        }
-
-        const removeFromCart = (id:number) => {
-            setCartItems(prev => prev.filter((prod:Prod)=> prod.id !== id));
-        }
-
-        return (
-            <ctxt.Provider value={{cartItems, addToCart, removeFromCart}}>
-                {children}
-            </ctxt.Provider>
-        )
-    }
-
-    export const useCart = () => {
-        const ctx = useContext(ctxt);
-        if(!ctx)
-        {
-            throw new Error('useCart must be used within Cart Provider');
-        }
-        return ctx;
-    }
+**3. Usage (Component)**
+```tsx
+const dispatch = useDispatch();
+const items = useSelector(state => state.cart.items);
 ```
 
-## Redux toolkit
+### Context API (Simpler global state)
+Good for themes, user auth, language settings. Avoid for high-frequency updates (causes massive re-renders).
 
-1. ProductType.ts
-    ```ts
-        export interface ProductItem
-        {
-            id: number,
-            name: string,
-            price: string
-        }
-    ```
+---
 
-2. CartSlice.ts
-    ```ts
-        import ...
+## 6. Common Interview Questions
 
-        interface cartState{
-            items: ProductItem[]
-        }
+#### Q: Flexbox in React Native vs Web?
+- **Direction**: RN default is `column`, Web is `row`.
+- **Units**: RN uses unitless numbers (logical pixels), Web uses `px`, `rem`, `%`.
+- **Background**: RN doesn't support complex CSS `background` shorthand (use specific props).
 
-        const initialState:CartState = {
-            items: []
-        }
+#### Q: How to handle offline mode?
+- Use `NetInfo` to detect state.
+- Cache data using `AsyncStorage` or `Realm`/`WatermelonDB`.
+- Queue actions using `redux-persist` or custom queue.
 
-        const cartSlice = createSlice({
-            name: 'cart',
-            initialState: initialState
-            reducers: {
-                addToCart: (state, action:PayloadAction<ProductItem>) => {
-                    
-                },
-                removeFromCart: (state, action:PayloadAction<number>) => {
+#### Q: Difference between `useEffect` and `useLayoutEffect`?
+- `useEffect` is asynchronous (after paint).
+- `useLayoutEffect` is synchronous (before paint). Use it if you need to measure DOM/View layout before showing it to avoid flicker.
 
-                }
-            }
-        })
+#### Q: What is the "Shadow Tree"?
+- React Native generates a Shadow Tree (internal representation) in C++ which Yoga (layout engine) uses to calculate layout (x, y, width, height) before converting it to native Views.
 
-        export const cartReducer = cartSlice.reducer
+---
 
-        export const { addToCart, removeFromCart } = cartSlice.actions
-
-    ```
-
-3. Store.ts
-    ```ts
-        import ...
-        export const store = configureStore({
-            reducer:{
-                cart: cartReducer
-            }
-        })
-
-        export type RootState = ReturnType<typeof store.getState>
-    ```
-
-4. anyfile.tsx
-    ```jsx
-        import ...
+## Code Snippet: Custom Hook for API
+```ts
+function useGet<T>(url: string) {
+    const [data, setData] = useState<T | null>(null);
+    const [loading, setLoading] = useState(false);
+    
+    useEffect(() => {
+        let mounted = true;
+        setLoading(true);
+        api.get(url).then(res => {
+            if(mounted) setData(res);
+        }).finally(() => {
+            if(mounted) setLoading(false);
+        });
         
-        const dispatch = useDispatch()
-        
-        //using the slice function
-        const handleItem = (item:ProductItem) => {
-            dispatch(addToCart(item))
-        }
-    ```
+        return () => { mounted = false; }; // Cleanup
+    }, [url]);
 
-5. App.tsx
-    ```jsx
-        // wrap the component in provider
-        // some code
-        <Provider store={store}>
-        </Provider>
-        //some code
-    ```
-
-6. somefile.tsx
-    ```jsx
-        import ...
-        //some code
-        const items = useSelector((state: RootState) => state.cart.items)
-        //some code
-    ```
-
-## API calling in react native
-
-Install `axios`
-```
-> npm install axios
-```
-
-1. apiClient.ts
-```jsx
-import axios from 'axios'
-
-// ex base url: https://jsonplaceholder.typicode.com subpath /user
-
-const api = axios.create({
-    baseURL: '',
-    headers: {'Content-Type':'application/json'},
-    withCredentials: true,
-})
-
-export async function get<T>(url:string):Promise<T>
-{
-    const res = await api.get(url)
-    return res.data
+    return { data, loading };
 }
 ```
-
-2. useGet.ts
-```jsx
-    function useGet<T>(){
-        const  [loading, setLoading] = useState<boolean>(false);
-        const  [data, setData] = useState<T | null>(null);
-        const  [error, SetError] = useState<string | null >(null);
-
-        const execute = async (url:string):Promise<T> => {
-            try{
-                setLoading(true);
-                const response = await get<T>(url);
-                setData(response);
-                setLoading(false);
-                return response;
-            }catch(err)
-            {
-                setError(err.response.data);
-            }
-        }
-
-        return {
-            loading, error, data, execute
-        }
-
-    }
-```
-
-3. UserListScreen.tsx
-```jsx
-
-    const {loading, data, execute} = useGet<User[]>();
-
-    const fetchUsers = async() => {
-        await execute('/user')
-    }
-
-```
-
-
-## Async Storage
-
-To install:
-```bash
-> npm i @react-native-async-storage/async-storage
-```
-
-AsyncStorage class for ease of navigation
-```jsx
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-
-class AbstractStorage<T> {
-
-    key;
-
-    constructor(key:string){
-
-        this.key=key;
-
-    };
-
-    async addData(data:T):Promise<boolean>
-    {
-
-        try{
-
-            const stringData:string = JSON.stringify(data);
-            await AsyncStorage.setItem(
-                this.key,
-                stringData
-            );
-            return true;
-
-        }
-        catch(err){
-
-            console.log(err);
-            return false;
-
-        }
-
-    };
-
-    async getData():Promise<T | null>{
-
-        try{
-
-            const res = await AsyncStorage.getItem(this.key);
-            const data = res === null? null: JSON.parse(res);
-            return data;
-
-        }
-        catch(err){
-
-            console.log(err);
-            return null;
-
-        }
-
-    };
-
-    async removeData():Promise<boolean>{
-
-        try{
-
-            await AsyncStorage.removeItem(this.key);
-            return true;
-
-        }
-        catch(err){
-
-            console.log(err);
-            return false;
-
-        }
-
-    };
-
-    static async clearStorage():Promise<boolean>{
-
-        try{
-
-            await AsyncStorage.clear();
-            return true;
-
-        }
-        catch(err){
-
-            console.log(err);
-            return false;
-
-        }
-
-    };
-
-};
-
-export default AbstractStorage;
-```
-
----
-### React native vector icons
-To apply `react-native-vector-icons` install:
-```
-> npm install react-native-vector-icons @types/react-native-vector-icons
-```
-Add this line ` apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"` 
-in build.gradle file in `react {...}` section in `android>app`
-
----
 

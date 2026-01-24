@@ -1,272 +1,198 @@
-# Java Important Concepts
+# Java Interview Preparation & Revision
 
-- Class Loader:
-    - Its a subsystem in JVM, used for loading classes.
-    - Built-in class loaders:
-        - Bootstrap Classloader:
-            - First In JVM.
-            - Loads rt.jar that constitutes all class files of Java Standard Edition. (lang, net, util,sql,io etc.).
-        - Extention ClassLoader:
-            - Child of Bootstrap classloader.
-            - loads class present in $JAVA_HOME/jre/lib/ext
-        - System Application Classloader:
-            - Child of extention classloader.
-            - loads class files of application, by default classpath is set to current directory.
+## 1. Core Java Concepts
 
-- Why we cannot override static method?
-    - Its class level.
-    - Determined at compile-time.
-    - Type reference decides which method to call withour referencing it to object.
+### OOPS Concepts (Real-world Analogies)
+- **Polymorphism**: A person acting as a *Employee* in office, *Father* at home, and *Customer* in a mall. (One entity, many forms).
+- **Inheritance**: A child acquiring properties (surname, assets) from parents.
+- **Encapsulation**: A Capsule wrapping medicine. We hide the internal composition (variables) and expose functionality via outer shell (getters/setters).
+- **Abstraction**: A Car Dashboard. You drive using steering/pedals without knowing internal engine combustion details.
 
-- Dynamic method dispatch:
-    - Process through which a call towards an overridden method is resolved at runtime.
+### Class Loaders
+- **Bootstrap ClassLoader**: Loads JDK internal classes (`rt.jar` - `java.lang`, `java.util` etc.) - Written in C/C++.
+- **Extension ClassLoader**: Loads classes from `lib/ext`.
+- **System/Application ClassLoader**: Loads classes from your classpath (your code + libs).
 
-- Volatile keyword in java:
-    - Variable that is marked as volatile can be read directly from main memory insted of cache memory.
-    - Changes to that variable are visible to all threads.
+### String Immutability
+- **Why Immutable?**
+  1.  **String Pool**: Saves memory by sharing existing strings. Modifying one would affect all references.
+  2.  **Security**: Strings used for DB Passwords, Network URLs. Mutability affects security.
+  3.  **Thread Safety**: Inherently safe, multiple threads can access without locking.
+  4.  **HashCode Caching**: Hash is calculated once and cached (great for HashMap keys).
 
-- When does finally block doesnot execute:
-    - Where we use `System.exit(0)` in main try/catch block.
+### StringBuffer vs StringBuilder
+| Feature | StringBuffer | StringBuilder |
+| :--- | :--- | :--- |
+| Thread Safety | Synchronized (Safe) | Not Synchronized (Unsafe) |
+| Performance | Slower | Faster |
+| Since | Java 1.0 | Java 1.5 |
 
-- StringBuffer vs StringBuilder:
-    - StringBuffer is thread safe -- less efficient.
-    - StringBuilde is not thread safe -- more efficient.
+### Exception Handling
+- **Checked vs Unchecked**:
+    - **Checked (Compile-time)**: `IOException`, `SQLException`. Must be handled via try-catch or throws.
+    - **Unchecked (Runtime)**: `NullPointerException`, `IndexOutOfBoundsException`. Logic errors.
+- **Finally Block**: Executed *always* (cleanup code), except when `System.exit(0)` is called or JVM crashes.
 
-- Vector vs ArrayList:
-    - Vector is thread safe (synchronized) -- slower.
-    - ArrayList is not thread safe -- faster.
+### Copying Objects
+- **Shallow Copy**: Copies the *references* of nested objects. Changes to nested objects affect the original. (`clone()` default).
+- **Deep Copy**: Recursively copies *everything*. New memory allocated for all nested objects.
 
-- String is immutable in java:
-    - String Pool:
-        - If we assign a value to a String (like `"Hello"`). It get stored in string literal pool area, which can be referenced by several reference variables. This we need to make it immutable to provide consistancy.
-        - Stored in stack memory.
-    - Classloading:
-        - String is used for the mechanism of classloading, thus for security we need it to be immutable.
-    - Cache hash value:
-        - String is used as key in hashmap as we can cache the hash of string and since it is immutable it will always be constant.
+---
 
-- HashMap vs HashSet:
-    - HashMap:
-        - Uses Map interface.
-        - Not thread safe.
-        - Null keys and values are allowed.
-        - Duplicate keys are not allowed.
-    - HashSet:
-        - Uses Set interface.
-        - Not thread safe.
-        - Duplicate values are not allowed.
+## 2. Collections Framework
 
-- Producer-Consumer pattern:
-    - Used while writing concurrent code or multihtreaded code.
-    - Implemented using wait and notify method.
-    - Producer waits if the bucket is full and consumer waits if bucket is empty.
-    - Advantages:
-        - Producer not need to know no. of consumers.
-        - Producer and consumer can work on separate speeds. We can increase consumers for better utilisation.
-        - Functionally separate Producer and Consumer leads to cleaner and managable code.
+### List
+- **ArrayList**: Dynamic array. Slow manipulation (shifting), Fast access `O(1)`. Not synchronized.
+- **LinkedList**: Doubly linked list. Fast manipulation `O(1)`, Slow access `O(n)`. implements `Deque` too.
+- **Vector**: Synchronized ArrayList (Legacy).
 
-- Make Immutable classes in java:
-    - making class final.
-    - make instance variable private.
-    - not create setter method for variable.
-    - handle variables in constructor only.
-    - return clone of object in getter thus not returning the original object.
+### Set (Unique Elements)
+- **HashSet**: Backed by HashMap. No order guarantee. `O(1)` add/remove/contains.
+- **LinkedHashSet**: Maintains insertion order (Doubly linked list + HashMap).
+- **TreeSet**: Sorted order (Red-Black tree). `O(log n)`.
 
-- Fail-safe and Fail-fast iterator:
-    - Fail-fast:
-        - It fails as soon as the structure of collection is changed since beginning of the iteration.
-        - Structural changes are removing, adding or updating any element from collection when one thread is iterating over that collection.
-        - Uses modification count -- when change in count it throws `ConcurrentModificationException`.
-    - Fail-safe:
-        - Does not throw exception if collection is modified.
-        - It works on clone instead of original collection.
+### Map (Key-Value)
+- **HashMap**:
+    - Uses `hashing`. `Key.hashCode()` determines bucket index.
+    - **Java 8+**: When bucket size > 8, Linked List -> Balanced Tree (`O(n)` to `O(log n)`).
+    - Allows 1 null key.
+- **LinkedHashMap**: Insertion order maintained.
+- **TreeMap**: Sorted keys.
+- **Hashtable**: Synchronized, No nulls allowed (Legacy).
+- **ConcurrentHashMap**:
+    - Segments locking (Bucket level locking) instead of locking whole map.
+    - Much faster than Hashtable/SynchronizedMap in parallel environment.
 
-- SOLID design Principle:
-    - S - Single Responsibility Principle (SRP):
-        - A class should have only one reason to change, thus it should have only one responsibility.
-    - O - Open/Closed Principle (OCP):
-        - Entities should be open for extension but closed for modification. promotes use of interface and abstract class.
-    - L - Liskov Substitution Principle (LSP):
-        - Objects of superclass should be replaceable with objects of subclass without affecting the correctness of program.
-    - I - Interface Segregation Principle (ISP):
-        - Clients should not be forced to depend on interfaces they do not use.
-    - D - Dependency Inversion Principle (DIP):
-        - High-level modules should not depend on low level module.
-        - Both should depend on Abstraction.
-        - Abstraction should not depend on detail vice-versa.
+### Fail-Fast vs Fail-Safe
+- **Fail-Fast**: Throws `ConcurrentModificationException` if collection modified while iterating (ArrayList, HashMap iterators).
+- **Fail-Safe**: Iterates on a clone. No exception, but might not reflect latest data (CopyOnWriteArrayList, ConcurrentHashMap iterator).
 
-- Funcational Interface:
-    - An interface that contains only one abstract method and can have mutiple default or static method.
-    - It can be used as assignment target for lambda expressions or method references.
-    - Ex. Runnable
+---
 
-- HashMap vs HashTable:
-    - HashMap:
-        - Allows null keys and values.
-        - not thread safe.
-        - better performance.
-    - HashTable:
-        - not allow null keys or values.
-        - thread-safe.
-        - less performance as compared to HashMap.
+## 3. Multithreading & Concurrency
 
-- Types on inner classes in Java:
-    - Non-static inner class:
-        - Associated with an instance of outer class.
-        - Can access members of outerclass directly.
-    - Static nested class:
-        - Does not require instance of outer class.
-        - can only access the static members.
-    - Method-local inner class:
-        - Defined within a method.
-        - Can access local veriables and parameters if they are final or effectively final.
-    - Anonymous Inner Class:
-        - class defined without name at time of instantiation.
-        - for one time implementation of an interface or subclass.
+### Creating Threads
+1. Extending `Thread` class.
+2. Implementing `Runnable` interface.
+3. Implementing `Callable` (returns Future).
 
-- Method refenrences in java:
-    - Shorthand notation of lambda expression to call a method.
-    - Way to refer method without invoking them.
-    - Four types:
-        - Static Method Reference:
-            - `ClassName::staticMethodName`
-        - Instance Method Reference for particular object:
-            - `instance::instanceMethodName`
-        - Instance Method Reference for Arbitary Object of particular type:
-            - `ClassName::instanceMethodName`
-        - Constructor Reference:
-            - `ClassName::new`
+### Volatile Keyword
+- Guarantees visibility of changes to variables across threads.
+- READs and WRITEs bypass cache and go directly to/from Main Memory.
+- Does *not* guarantee atomicity (use `AtomicInteger` or `synchronized` for that).
 
-- Java 8 features:
-    - Lambda Expressions.
-    - Streams API.
-    - Default methods in interfaces.
-    - Optional Class.
-    - New Date and Time API.
+### Synchronization
+- **Method Level**: Locks the object instance (`this`).
+- **Block Level**: Locks a specific object. Better performance (Critical Section).
+- **Class Level**: `static synchronized`. Locks the `Class` object.
 
-- Try-with-resources:
-    - Introduced in Java 7.
-    - Used to manage resources that need tobe closed after use. (ex. sockets, files, etc.)
-    - Implements `AutoClosable` interface.
-    - usage: 
-        ```java
-        try (
-            BufferedReader br = new BufferedReader(
-                new FileReader("file.txt")
-                )
-            ){
-            //some code
-            } catch(IOException e)
-            {
-            //some code
-            }
-        ```
+### Executor Framework (Java 5+)
+- Replaces manual `new Thread()`.
+- **Types**:
+    - `FixedThreadPool(n)`: Reuses n threads.
+    - `CachedThreadPool()`: Creates threads as needed, kills idle ones.
+    - `SingleThreadExecutor()`: Sequential execution.
+    - `ScheduledThreadPool`: For periodic tasks.
 
-- Comparable vs Comparator:
-    - Comparable:
-        - Interface -- defines natural ordering of objects.
-        - Requires implementation of `compareTo` method within class itself.
-    - Comparator:
-        - Interface -- defines external ordering of objects.
-        - Requires implementation of `compare` method in separate class or lambda expression.
+### CompletableFuture (Java 8+)
+- For asynchronous programming (Promise-like).
+```java
+CompletableFuture.supplyAsync(() -> fetchOrder())
+    .thenApply(order -> enrichOrder(order))
+    .thenAccept(order -> sendEmail(order));
+```
 
-- InstanceOf operator:
-    - Used to check if instance is of specific class.
-    - used to avoid `ClassCastException`.
+---
 
-- Shallow copy vs Deep copy:
-    - Shallow Copy:
-        - Creates new object.
-        - Does not create copies of the objects contained in original object.
-        - It copies the references to original objects.
-        - Changes to original affects the copy.
-    - Deep Copy:
-        -   Creates a new object.
-        - Recursively copies all objects contained in original object.
-        - Changes to original does not affect the copy.
+## 4. Java 8 Features (Crucial for Interviews)
 
-- Stream API benefits:
-    - Conciseness:
-        Allows writing readable and concise code using a functional style.
-    - Lazy Evaluation:
-        Process elements only when necessary.
-    - Parallel procesing:
-        Can be processed in parallel.
-    - Declarative Approach:
-        Focuses on what to do rather than how to do.
+### Lambda Expressions
+- Anonymous function (No name, return type, modifiers).
+- Used with Functional Interfaces. `(a, b) -> a + b`
 
-- Wrapper Class:
-    - Larger entity encapsulates the smaller entity.
-    - In java wrapper class is that object that encapsulates the primitive data types.
-    - ex. Interger, Character, Byte, Long, Double, Float, etc.
+### Functional Interfaces
+- Interface with **exactly one** abstract method.
+- Can have static/default methods.
+- **Common Ones**:
+    - `Predicate<T>`: `test(T t) -> boolean` (Filters)
+    - `Function<T,R>`: `apply(T t) -> R` (Maps types)
+    - `Consumer<T>`: `accept(T t) -> void` (Printing/Side-effects)
+    - `Supplier<T>`: `get() -> T` (Factory)
 
-- Default values assigned to variables and instances:
-    - Numeric type (int, byte, short, etc.) is `0`.
-    - Boolean type (boolean) is `false`.
-    - Object type is `null`.
-    - Char type (char) is `"u0000"` (null character).
+### Stream API
+- Process collections of objects.
+- **Key Operations**:
+    - **Intermediate (Lazy)**: `filter`, `map`, `sorted`, `distinct`.
+    - **Terminal (Eager)**: `collect`, `forEach`, `count`, `reduce`.
+```java
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+List<String> filtered = names.stream()
+    .filter(name -> name.startsWith("C"))
+    .map(String::toUpperCase)
+    .collect(Collectors.toList());
+```
 
-- InputStream/OutputStream vs Reader/Writer:
-    - InputStream/OutputStream:
-        - uses byte stream.
-        - accepts byte arrays.
-        - usecases for binary data (pictures etc.)
-    - Reader/Writer:
-        - uses character stream.
-        - accepts characeter array.
-        - usecases for textual data (unicode characters etc.)
+### Method References (`::`)
+- Shorthand for Lambdas calling a specific method.
+- `System.out::println` instead of `x -> System.out.println(x)`.
 
-- Ways to take input from console:
-    - Command line args.
-        ```java
-            for(String val : args)
-            {
-                System.out.println(val);
-            }
-        ```
-    - Buffered Reader Class.
-        ```java
-            BufferedReader read = new BufferedReader(
-                new InputStreamReader(System.in)
-            );
-            String x = read.readLine();
-        ```
-    - Console class.
-        ```java
-            String x = System.console().readLine();
-        ```
-    - Scanner class.
-        ```java
-            Scanner in = new Scanner(System.in);
-            String x = in.nextLine();
-        ```
+### Optional Class
+- Container to handle `null` gracefully. Avoids `NullPointerException`.
+```java
+Optional<String> name = Optional.ofNullable(maybeNullString);
+name.ifPresent(n -> System.out.println(n));
+String val = name.orElse("Default");
+```
 
-- transient keyword:
-    - Used in serialization if we don't want to save the value of particular variable in file.
+---
 
-- Copies of arrays:
-    - arr.clone():
-        - `arr.clone()` creates a shallow copy for non-primitive objects in array.
-        - for primitive types it behaves as deep copy as primitive values are directly copied.
-    - System.arrayCopy():
-        - `System.arrayCopy(originalArr,originStartingpos, copyArr, destStartingPos,length)` creates a deep copy.
-    - Arrays.copyOf():
-        - `Arrays.copyOf(arr, arr.length)` creates deep copy.
-        - If length is more than the original array length, extra elements are initialized with default values.
-    - Arrays.copyOfRange():
-        - `Arrays.copyOfRange(arr,0,arr.length)` create deep copy.
-        - Can specify range of elements.
+## 5. Memory Management
 
-- Jagged array:
-    - Its a 2D array where each row has different length.
-        ```java
-            int[][] arr = {
-                {1,2,3},
-                {4,5},
-                {6,7,8,9}
-            };
-        ```
+### Stack vs Heap
+- **Stack**: Method frames, local primitives, reference variables. Thread-safe (each thread has own stack). fast access.
+- **Heap**: Objects (`new ...`). Shared by all threads. Subject to Garbage Collection.
 
-- Marker Interface:
-    - An interface is called marker interface if it is recognized as empty interface  (no fields or methods).
-    - Ex. Serializable, Cloneable etc.
+### Garbage Collection (GC)
+- **Mark and Sweep**: Mark live objects, sweep dead ones.
+- **Generational Strategy**:
+    - **Young Gen**: Eden space, Survivor spaces (S0, S1). Minor GC.
+    - **Old Gen**: Long-lived objects. Major GC (Stop-the-world).
+- **Types**: Serial, Parallel (Throughput), CMS (Low latency), G1 (Balanced).
+
+---
+
+## 6. Design Patterns (Quick Revise)
+
+### Creational
+- **Singleton**: One instance per application (DbConnection, Config).
+- **Factory**: Create object without exposing creation logic.
+- **Builder**: Construct complex objects step-by-step (`lombok @Builder`).
+
+### Structural
+- **Adapter**: Bridge two incompatible interfaces.
+- **Decorator**: Add responsibilities dynamically (Java IO Wrappers).
+
+### Behavioral
+- **Observer**: One-to-many dependency (Events/Listeners).
+- **Strategy**: Strategy pattern defines a family of algorithms (PaymentStrategy: Card/UPI).
+
+---
+
+## 7. Common Snippets
+
+### Comparator (Custom Sort)
+```java
+// Sort List<Employee> by Salary
+Collections.sort(employees, (e1, e2) -> e1.getSalary() - e2.getSalary());
+
+// Java 8 Style
+employees.sort(Comparator.comparingInt(Employee::getSalary));
+```
+
+### Remove Duplicates from List
+```java
+List<Integer> list = Arrays.asList(1, 2, 2, 3);
+List<Integer> unique = list.stream().distinct().collect(Collectors.toList());
+// OR
+Set<Integer> set = new HashSet<>(list);
+```
