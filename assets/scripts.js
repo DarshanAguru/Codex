@@ -5,12 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
         githubRepo: "Codex",
         githubFolder: "dsa",
         eTagKey: "codex-etag",
-        cacheKey: "codex-cache",
-        dataSourceKey: "codex-source"
+        cacheKey: "codex-cache"
     };
 
     let state = {
-        dataSource: localStorage.getItem(CONFIG.dataSourceKey) || 'GITHUB',
+        dataSource: 'GITHUB',
         allFiles: [],
         currentFile: null,
         isLoading: false,
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         activeFilename: document.getElementById('active-filename'),
         refreshBtn: document.getElementById('refreshBtn'),
         searchSpinner: document.getElementById('search-spinner'),
-        sourceToggle: document.getElementById('source-toggle'),
         menuToggle: document.getElementById('menu-toggle'),
         sidebar: document.getElementById('sidebar'),
         sidebarBackdrop: document.getElementById('sidebar-backdrop'),
@@ -44,11 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     init();
 
     function init() {
-        if (window.location.hostname.includes("github.io")) {
-            elements.sourceToggle.style.display = 'none';
-            state.dataSource = 'GITHUB';
-        }
-
+        // Force GITHUB mode relative to where it's hosted
         updateSourceIndicator();
         loadFiles();
         loadSummaries(); // Pre-fetch summaries list
@@ -68,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
             loadFiles();
         });
 
-        elements.sourceToggle.addEventListener('click', toggleSource);
 
         const toggleSidebar = () => {
             const isClosed = elements.sidebar.classList.contains('-translate-x-full');
@@ -136,20 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function toggleSource() {
-        state.dataSource = state.dataSource === 'GITHUB' ? 'LOCAL' : 'GITHUB';
-        localStorage.setItem(CONFIG.dataSourceKey, state.dataSource);
-        updateSourceIndicator();
-
-        state.allFiles = [];
-        renderList([]);
-        loadFiles();
+        // Redundant
     }
 
     function updateSourceIndicator() {
-        elements.sourceToggle.textContent = state.dataSource;
-        elements.sourceToggle.className = state.dataSource === 'GITHUB'
-            ? "px-2 py-1 rounded bg-dark-700 text-gray-300 hover:bg-dark-600 transition-colors cursor-pointer border border-transparent"
-            : "px-2 py-1 rounded bg-brand-600/20 text-brand-500 border border-brand-500/50 hover:bg-brand-600/30 transition-colors cursor-pointer";
+        // Redundant
     }
 
     async function loadFiles() {
@@ -157,12 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             let files = [];
             try {
-                files = await fetchFromLocal();
+                // files = await fetchFromLocal();
+                // Fallback to fetchFromGitHub always or use raw if optimized
+                files = await fetchFromGitHub();
             } catch (e) {
-                console.warn("Failed to load static index, falling back to GitHub API", e);
-                if (state.dataSource === 'GITHUB') {
-                    files = await fetchFromGitHub();
-                }
+                console.warn("Failed to load files", e);
             }
 
             if (files) {
