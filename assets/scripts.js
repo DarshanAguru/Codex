@@ -415,6 +415,9 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (file.customDate) {
                 meta.textContent = `Date: ${file.customDate}`;
                 meta.classList.add('text-brand-500');
+            } else if (file.modified) {
+                const date = new Date(file.modified);
+                meta.textContent = "Mod: " + date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
             } else {
                 meta.textContent = file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'File';
             }
