@@ -432,6 +432,14 @@
     "type": "file"
   },
   {
+    "name": "minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
+    "path": "dsa/minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
+    "size": 612,
+    "timestamp": 1769299200000,
+    "displayDate": "25/01/2026",
+    "type": "file"
+  },
+  {
     "name": "Minimum_Pair_Removal_to_Sort_Array_I.txt",
     "path": "dsa/Minimum_Pair_Removal_to_Sort_Array_I.txt",
     "size": 1138,
