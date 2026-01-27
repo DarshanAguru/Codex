@@ -55,8 +55,6 @@ try {
                 name: file,
                 path: `dsa/${file}`,
                 size: stats.size,
-                // created: stats.birthtime, // Removed to save size, usually incorrect on various FS
-                // modified: stats.mtime,   // Removed, we use timestamp
                 timestamp: timestamp || 0,
                 displayDate: customDate,
                 type: 'file'
