@@ -7,7 +7,8 @@
         "generate": "node scripts/generate_index.js",
         "format": "prettier --write \"dsa/*.{java,txt}\"",
         "build:css": "npx @tailwindcss/cli -i ./assets/input.css -o ./assets/styles.css",
-        "build": "node scripts/smart_build.js"
+        "build": "node scripts/smart_build.js",
+        "build:force": "node scripts/smart_build.js --force"
     },
     "devDependencies": {
         "@tailwindcss/cli": "^4.1.18",

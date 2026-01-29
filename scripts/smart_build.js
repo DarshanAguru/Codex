@@ -12,7 +12,14 @@ function run(command) {
     }
 }
 
+const isForce = process.argv.includes('--force');
+
 function getChangedFiles() {
+    if (isForce) {
+        console.log('Force mode enabled. Building all files...');
+        return null; // Null triggers fallback to full build
+    }
+
     try {
         // Check for staged and unstaged changes
         const diff = execSync('git diff --name-only HEAD', { encoding: 'utf8', cwd: path.join(__dirname, '..') });
@@ -63,6 +70,9 @@ if (changedFiles) {
         console.log('No CSS/HTML changes detected. Skipping CSS build.');
         shouldBuildCss = false;
     }
+} else {
+    // Force mode or git issues -> Always build CSS
+    shouldBuildCss = true;
 }
 
 if (shouldBuildCss) {

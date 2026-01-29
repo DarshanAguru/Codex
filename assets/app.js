@@ -2,7 +2,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const CONFIG = {
         githubUser: "DarshanAguru",
-        // Kept for reference or future use, though fetching is now local
         githubRepo: "Codex",
         githubFolder: "dsa",
         themeKey: "codex-theme"
@@ -42,6 +41,80 @@ document.addEventListener("DOMContentLoaded", () => {
         iconMoon: document.getElementById('icon-moon')
     };
 
+    // --- Helpers (Defined first to avoid hoisting issues) ---
+    function formatDisplayName(idx, filename) {
+        if (!filename) return "Unknown";
+        let name = filename.replace(/\.(txt|java|cpp)$/, '');
+        name = name.replace(/_/g, ' ');
+        return `${idx + 1}. ${name}`;
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
+
+    function setLoading(isLoading) {
+        state.isLoading = isLoading;
+        if (isLoading) {
+            elements.searchSpinner.classList.remove('hidden');
+        } else {
+            elements.searchSpinner.classList.add('hidden');
+        }
+    }
+
+    function setSidebarLoading(isLoading) {
+        if (!elements.sidebarLoading) return;
+        if (isLoading) {
+            elements.sidebarLoading.classList.remove('hidden');
+        } else {
+            elements.sidebarLoading.classList.add('hidden');
+        }
+    }
+
+    function showToast(msg, type = 'info') {
+        console.log(`[Toast ${type}]: ${msg}`);
+    }
+
+    function updateStatus(isOnline) {
+        const indicator = document.getElementById('status-indicator');
+        const text = document.getElementById('status-text');
+        if (indicator && text) {
+            if (isOnline) {
+                indicator.className = "w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] transition-colors";
+                text.textContent = "Online";
+            } else {
+                indicator.className = "w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)] transition-colors";
+                text.textContent = "Offline";
+            }
+        }
+    }
+
+    // --- Caching Service ---
+    const CacheService = {
+        save: (key, data) => {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                console.warn("Cache Save Failed (Storage Full?):", e);
+            }
+        },
+        get: (key) => {
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : null;
+            } catch (e) {
+                return null;
+            }
+        },
+        remove: (key) => localStorage.removeItem(key)
+    };
+
+    // Start App
     init();
 
     function init() {
@@ -49,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadFiles();
         loadSummaries();
         setupEventListeners();
+        updateStatus(navigator.onLine);
     }
 
     function initTheme() {
@@ -77,7 +151,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setupEventListeners() {
-        elements.searchInput.addEventListener('input', debounce((e) => handleSearch(e.target.value), 300));
+        // Debounce search input
+        const debouncedSearch = debounce((e) => {
+            handleSearch(e.target.value);
+            setLoading(false);
+        }, 300);
+
+        elements.searchInput.addEventListener('input', (e) => {
+            setLoading(true);
+            debouncedSearch(e);
+        });
+
         if (elements.sortSelect) {
             elements.sortSelect.addEventListener('change', (e) => handleSort(e.target.value));
         }
@@ -111,11 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
         elements.menuToggle.addEventListener('click', toggleSidebar);
         elements.sidebarBackdrop.addEventListener('click', closeSidebar);
 
-        // Mode Toggles
         elements.modeCodeBtn.addEventListener('click', () => switchMode('CODE'));
         elements.modeSummaryBtn.addEventListener('click', () => switchMode('SUMMARY'));
 
-        // Theme Toggle
         if (elements.themeToggle) {
             elements.themeToggle.addEventListener('click', toggleTheme);
         }
@@ -124,7 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.closeSidebarMobile = closeSidebar;
 
-        // Keyboard Shortcuts
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                 e.preventDefault();
@@ -134,6 +215,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.preventDefault();
                 elements.searchInput.focus();
             }
+        });
+
+        window.addEventListener('online', () => {
+            showToast("You are back online!", "success");
+            updateStatus(true);
+            loadFiles();
+        });
+        window.addEventListener('offline', () => {
+            showToast("You are offline. Using cached data.", "warning");
+            updateStatus(false);
         });
     }
 
@@ -171,10 +262,23 @@ document.addEventListener("DOMContentLoaded", () => {
         setSidebarLoading(true);
         try {
             let files = [];
+
+            // Strategy: Network First
             try {
                 files = await fetchFromHost();
-            } catch (e) {
-                console.warn("Failed to load files", e);
+                CacheService.save('codex_files_index', { timestamp: Date.now(), data: files });
+                updateStatus(true);
+            } catch (networkError) {
+                console.warn("Network load failed:", networkError);
+                updateStatus(false);
+
+                const cached = CacheService.get('codex_files_index');
+                if (cached && cached.data) {
+                    files = cached.data;
+                    showToast("Network failed. Loaded from cache.", "warning");
+                } else {
+                    throw networkError;
+                }
             }
 
             if (files) {
@@ -182,26 +286,41 @@ document.addEventListener("DOMContentLoaded", () => {
                     .map((item, idx) => ({
                         ...item,
                         DisplayName: formatDisplayName(idx, item.name),
-                        // SearchName is the clean name for searching (no index)
                         SearchName: item.name.replace(/\.(txt|java|cpp)$/, '').replace(/_/g, ' '),
                         customDate: null,
                         dateObj: null
                     }));
 
-                // Sort and render ONCE
                 sortFiles();
                 renderList(state.allFiles);
             }
         } catch (error) {
-            console.error("Load Error:", error);
             elements.fileList.innerHTML = `
                 <div class="p-4 text-center text-red-400 text-xs">
                     <p class="font-bold">Failed to load files.</p>
-                    <p class="opacity-75 mt-1">${error.message}</p>
+                    <p class="opacity-75 mt-1 break-words">${error.message}</p>
+                    <button id="retry-btn" class="mt-3 px-3 py-1 bg-dark-700 hover:bg-dark-600 rounded text-xs transition-colors">Retry</button>
+                    ${typeof formatDisplayName === 'undefined' ? '<p class="text-[10px] mt-2 text-red-300">DEBUG: formatDisplayName missing</p>' : ''}
                 </div>`;
+
+            const retryBtn = document.getElementById('retry-btn');
+            if (retryBtn) retryBtn.addEventListener('click', loadFiles);
         } finally {
             setLoading(false);
             setSidebarLoading(false);
+        }
+    }
+
+    async function fetchFromHost() {
+        try {
+            const response = await fetch(`./assets/files.json?t=${Date.now()}`);
+            if (!response.ok) throw new Error("Index fetch failed");
+            return await response.json();
+        } catch (e) {
+            console.warn("Retrying fetch without timestamp...", e);
+            const response = await fetch(`./assets/files.json`);
+            if (!response.ok) throw new Error(`Could not find index: ${response.statusText}`);
+            return await response.json();
         }
     }
 
@@ -214,63 +333,54 @@ document.addEventListener("DOMContentLoaded", () => {
     function sortFiles() {
         state.allFiles.sort((a, b) => {
             const nameComp = a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
-
             if (state.sortMode === 'DATE_NEW') {
-                const dateA = a.timestamp || 0;
-                const dateB = b.timestamp || 0;
-
-                const diff = dateB - dateA;
-                if (diff !== 0) return diff;
-                return nameComp;
-            } else if (state.sortMode === 'DATE_OLD') {
-                const dateA = a.timestamp || 2147483647000;
-                const dateB = b.timestamp || 2147483647000;
-
-                const diff = dateA - dateB;
-                if (diff !== 0) return diff;
-                return nameComp;
-            } else if (state.sortMode === 'PROBLEM_ASC') {
-                const probA = a.problemNo || 999999;
-                const probB = b.problemNo || 999999;
-
-                const diff = probA - probB;
-                if (diff !== 0) return diff;
-                return nameComp;
-            } else if (state.sortMode === 'PROBLEM_DESC') {
-                const probA = a.problemNo || 0;
-                const probB = b.problemNo || 0;
-
-                const diff = probB - probA;
-                if (diff !== 0) return diff;
-                return nameComp;
+                const diff = (b.timestamp || 0) - (a.timestamp || 0);
+                return diff !== 0 ? diff : nameComp;
+            }
+            if (state.sortMode === 'DATE_OLD') {
+                const diff = (a.timestamp || 2147483647000) - (b.timestamp || 2147483647000);
+                return diff !== 0 ? diff : nameComp;
+            }
+            if (state.sortMode === 'PROBLEM_ASC') {
+                const diff = (a.problemNo || 999999) - (b.problemNo || 999999);
+                return diff !== 0 ? diff : nameComp;
+            }
+            if (state.sortMode === 'PROBLEM_DESC') {
+                const diff = (b.problemNo || 0) - (a.problemNo || 0);
+                return diff !== 0 ? diff : nameComp;
             }
             return 0;
         });
 
-        // Re-calculate DisplayName after sort (so index matches display order)
-        // BUT SearchName remains constant based on file content/name
         state.allFiles.forEach((file, idx) => {
             file.DisplayName = formatDisplayName(idx, file.name);
         });
     }
 
-    async function fetchFromHost() {
-        const response = await fetch('./assets/files.json');
-        if (!response.ok) throw new Error("Could not find index (assets/files.json)");
-        return await response.json();
-    }
-
     async function loadSummaries() {
         try {
             let data = [];
-            const res = await fetch('./assets/summaries.json');
-            if (res.ok) data = await res.json();
+            const isOnline = navigator.onLine;
+
+            try {
+                if (isOnline) {
+                    const res = await fetch(`./assets/summaries.json?t=${Date.now()}`);
+                    if (res.ok) {
+                        data = await res.json();
+                        CacheService.save('codex_summaries_index', { timestamp: Date.now(), data: data });
+                    }
+                } else {
+                    throw new Error("Offline");
+                }
+            } catch (e) {
+                const cached = CacheService.get('codex_summaries_index');
+                if (cached && cached.data) data = cached.data;
+            }
 
             if (data) {
                 state.summaries = data.map(item => ({
                     ...item,
                     DisplayName: item.name.replace('.md', '').replace(/_/g, ' '),
-                    // Summary search name matches display name for now
                     SearchName: item.name.replace('.md', '').replace(/_/g, ' '),
                     type: 'summary'
                 }));
@@ -290,7 +400,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             elements.codePre.classList.remove('hidden');
             if (!state.currentFile) elements.codePre.classList.add('hidden');
-
             elements.markdownContent.classList.add('hidden');
             document.getElementById('lang-indicator').textContent = "JAVA";
 
@@ -302,7 +411,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 elements.emptyState.classList.remove('hidden');
                 elements.codePre.classList.add('hidden');
             }
-
         } else {
             elements.modeSummaryBtn.className = "px-3 py-1 rounded bg-brand-600 text-white transition-all shadow-sm";
             elements.modeCodeBtn.className = "px-3 py-1 rounded text-gray-400 hover:text-white hover:bg-dark-700 transition-all";
@@ -316,7 +424,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             renderList(state.summaries);
         }
-
         elements.searchInput.value = "";
     }
 
@@ -331,41 +438,72 @@ document.addEventListener("DOMContentLoaded", () => {
         const activeItem = document.getElementById(`file-${filename}`);
         if (activeItem) activeItem.classList.add('active');
 
+        const cacheKey = `codex_content_${filename}`;
+        const cachedItem = CacheService.get(cacheKey);
+        const isCacheValid = cachedItem && cachedItem.timestamp === fileItem.timestamp;
+
         if (state.currentMode === 'CODE') {
             elements.codePre.classList.remove('hidden');
             elements.markdownContent.classList.add('hidden');
+
+            if (isCacheValid) {
+                renderCode(cachedItem.content);
+                return;
+            }
+
             elements.codeContent.textContent = "Loading...";
 
             try {
-                let content = "";
-                const res = await fetch(`./${CONFIG.githubFolder}/${filename}`);
-                if (!res.ok) throw new Error("File not found");
-                content = await res.text();
-
-                renderCode(content);
+                if (navigator.onLine) {
+                    const res = await fetch(`./${CONFIG.githubFolder}/${filename}`);
+                    if (!res.ok) throw new Error("File not found");
+                    const content = await res.text();
+                    CacheService.save(cacheKey, { timestamp: fileItem.timestamp, content: content });
+                    renderCode(content);
+                } else if (cachedItem) {
+                    renderCode(cachedItem.content);
+                    showToast("Offline: Showing cached version", "warning");
+                } else {
+                    throw new Error("Offline & No Cache");
+                }
             } catch (e) {
                 renderCode(`// Error loading file content:\n// ${e.message}`);
             }
         } else {
             elements.codePre.classList.add('hidden');
             elements.markdownContent.classList.remove('hidden');
+
+            if (isCacheValid) {
+                renderMarkdown(cachedItem.content);
+                return;
+            }
+
             elements.markdownContent.innerHTML = '<div class="flex justify-center p-10"><svg class="animate-spin h-8 w-8 text-brand-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></div>';
 
             try {
-                let content = "";
-                let folder = "Summaries"; // Default
-                const res = await fetch(`./${folder}/${filename}`);
-                if (!res.ok) throw new Error("Summary not found");
-                content = await res.text();
-
-                if (window.marked) {
-                    elements.markdownContent.innerHTML = marked.parse(content);
+                let folder = "Summaries";
+                if (navigator.onLine) {
+                    const res = await fetch(`./${folder}/${filename}`);
+                    if (!res.ok) throw new Error("Summary not found");
+                    const content = await res.text();
+                    CacheService.save(cacheKey, { timestamp: fileItem.timestamp || Date.now(), content: content });
+                    renderMarkdown(content);
+                } else if (cachedItem) {
+                    renderMarkdown(cachedItem.content);
                 } else {
-                    elements.markdownContent.textContent = content;
+                    throw new Error("Offline & No Cache");
                 }
             } catch (e) {
                 elements.markdownContent.innerHTML = `<div class="text-red-400 p-4">Error loading summary: ${e.message}</div>`;
             }
+        }
+    }
+
+    function renderMarkdown(content) {
+        if (window.marked) {
+            elements.markdownContent.innerHTML = marked.parse(content);
+        } else {
+            elements.markdownContent.textContent = content;
         }
     }
 
@@ -377,16 +515,18 @@ document.addEventListener("DOMContentLoaded", () => {
             renderList(dataset);
             return;
         }
-        const filtered = dataset.filter(item =>
-            // Match readable name (without index)
-            (item.SearchName && item.SearchName.toLowerCase().includes(q)) ||
-            // Match filename
-            item.name.toLowerCase().includes(q) ||
-            // Match Problem Number
-            (item.problemNo && item.problemNo.toString().includes(q)) ||
-            // Match Topics
-            (item.topics && item.topics.some(t => t.toLowerCase().includes(q)))
-        );
+
+        const terms = q.split(/[\s,]+/).filter(t => t.length > 0);
+        const filtered = dataset.filter(item => {
+            return terms.every(term => {
+                return (
+                    (item.SearchName && item.SearchName.toLowerCase().includes(term)) ||
+                    item.name.toLowerCase().includes(term) ||
+                    (item.problemNo && item.problemNo.toString().includes(term)) ||
+                    (item.topics && item.topics.some(t => t.toLowerCase().includes(term)))
+                );
+            });
+        });
         renderList(filtered, q);
     }
 
@@ -416,7 +556,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const title = document.createElement("div");
             title.className = "text-sm font-medium text-gray-300 truncate group-hover:text-white transition-colors";
 
-            // Highlighting Logic
             if (highlightQuery) {
                 const regex = new RegExp(`(${highlightQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
                 title.innerHTML = file.DisplayName.replace(regex, '<span class="text-brand-500 font-bold">$1</span>');
@@ -440,7 +579,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 meta.textContent = file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'File';
             }
 
-            // --- Metadata Badges (Problem No & Topics) ---
             const badgeContainer = document.createElement("div");
             badgeContainer.className = "flex flex-wrap gap-1 mt-1";
 
@@ -452,8 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (file.topics && file.topics.length > 0) {
-                // Show up to 2 topics, then +N
-                const maxProps = 2; // Reduced for visibility
+                const maxProps = 2;
                 file.topics.slice(0, maxProps).forEach(topic => {
                     const tag = document.createElement("span");
                     tag.className = "px-1.5 py-0.5 rounded bg-dark-700 text-gray-400 text-[9px] border border-dark-600";
@@ -508,53 +645,5 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
         });
-    }
-
-    function formatDisplayName(idx, filename) {
-        let name = filename.replace(/\.(txt|java|cpp)$/, '');
-        name = name.replace(/_/g, ' ');
-        return `${idx + 1}. ${name}`;
-    }
-
-    function handleSearch(query) {
-        const q = query.toLowerCase();
-        const dataset = state.currentMode === 'CODE' ? state.allFiles : state.summaries;
-
-        if (!q) {
-            renderList(dataset);
-            return;
-        }
-        const filtered = dataset.filter(item =>
-            item.DisplayName.toLowerCase().includes(q) ||
-            item.name.toLowerCase().includes(q)
-        );
-        renderList(filtered);
-    }
-
-    function debounce(func, wait) {
-        let timeout;
-        return function (...args) {
-            const context = this;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(context, args), wait);
-        };
-    }
-
-    function setLoading(isLoading) {
-        state.isLoading = isLoading;
-        if (isLoading) {
-            elements.searchSpinner.classList.remove('hidden');
-        } else {
-            elements.searchSpinner.classList.add('hidden');
-        }
-    }
-
-    function setSidebarLoading(isLoading) {
-        if (!elements.sidebarLoading) return;
-        if (isLoading) {
-            elements.sidebarLoading.classList.remove('hidden');
-        } else {
-            elements.sidebarLoading.classList.add('hidden');
-        }
     }
 });
