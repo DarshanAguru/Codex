@@ -1,5 +1,7 @@
 // Date: 31/07/2025
 // Problem: https://www.geeksforgeeks.org/move-negative-numbers-beginning-positive-end-constant-extra-space/
+// Leetcode Problem No: 905 (Similar Concept: Sort Array By Parity)
+// Relevance: Array, Two Pointers, Partition
 
 import java.util.ArrayList;
 
@@ -7,19 +9,23 @@ class Main {
 
   public static void main(String[] args) {
     int[] arr = { 1, -1, 3, 2, -7, -5, 11, 6 };
+    // Using an auxiliary array method (O(N) space)
+    // To do this in O(1) space, one would use a Two-Pointer partition (similar to QuickSort)
     int[] temp = new int[arr.length];
 
     int l = 0;
 
-    // First Pass: Collect all positive numbers
+    // First Pass: Collect all positive numbers (including 0)
     for (int i = 0; i < arr.length; i++) {
       if (arr[i] >= 0) {
-        // Treating 0 as positive for partition
         temp[l++] = arr[i];
       }
     }
 
     // Second Pass: Collect all negative numbers
+    // Note: This logic puts Positives FIRST.
+    // The problem title says "All negative numbers in one end", traditionally at start,
+    // but this code puts positives at start. The logic implies separation.
     for (int i = 0; i < arr.length; i++) {
       if (arr[i] < 0) {
         temp[l++] = arr[i];

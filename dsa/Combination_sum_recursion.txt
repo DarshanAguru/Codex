@@ -1,5 +1,7 @@
 // Date: 07/08/2025
 // Problem: https://leetcode.com/problems/combination-sum/
+// Leetcode Problem No: 39
+// Relevance: Array, Backtracking
 
 import java.lang.*;
 import java.util.*;

@@ -1,5 +1,7 @@
 // Date: 18/08/2025
 // Problem: https://leetcode.com/problems/asteroid-collision/
+// Leetcode Problem No: 735
+// Relevance: Stack, Array
 
 import java.lang.*;
 import java.util.*;
@@ -19,17 +21,21 @@ class Main {
 
     for (int ast : asteroids) {
       if (ast > 0) {
+        // Positive asteroid always moves right, just push
         st.push(ast);
       } else {
-        // Collision check
+        // Negative asteroid moving left. Check for collisions with top of stack (right-moving asteroids).
+        // While stack has a positive asteroid (st.peek() > 0) and it is smaller than current (|ast| > st.peek())
         while (!st.isEmpty() && st.peek() > 0 && st.peek() < -ast) {
-          st.pop();
+          st.pop(); // Positive asteroid explodes
         }
 
         if (!st.isEmpty() && st.peek() == -ast) {
-          st.pop(); // Both destroy each other
+          // Same size: both explode
+          st.pop();
         } else if (st.isEmpty() || st.peek() < 0) {
-          st.push(ast); // Stays moving left
+          // Stack empty or only negative asteroids left: current one survives
+          st.push(ast);
         }
       }
     }

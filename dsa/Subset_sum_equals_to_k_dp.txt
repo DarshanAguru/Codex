@@ -1,5 +1,5 @@
 // Date: 21/08/2025
-// Problem: https://www.geeksforgeeks.org/subset-sum-problem-dp-25/
+// Relevance: Dynamic Programming
 
 import java.lang.*;
 import java.util.*;

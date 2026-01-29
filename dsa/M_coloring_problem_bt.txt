@@ -1,5 +1,5 @@
 // Date: 12/08/2025
-// Problem: https://www.geeksforgeeks.org/m-coloring-problem/
+// Relevance: Graph, Backtracking, Recursion
 
 import java.lang.*;
 import java.util.*;

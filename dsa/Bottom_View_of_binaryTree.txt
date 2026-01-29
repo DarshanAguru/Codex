@@ -1,5 +1,7 @@
 // Date: 18/08/2025
 // Problem: https://practice.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+// Leetcode Problem No: 987 (Related: Vertical Order Traversal)
+// Relevance: Tree, BFS, Hash Table
 
 import java.lang.*;
 import java.util.*;
@@ -44,11 +46,16 @@ class Main {
     System.out.println(res);
   }
 
+  // Method to compute the Bottom View of a Binary Tree
+  // Bottom View consists of the nodes visible from the bottom (i.e., last node at each horizontal distance)
   static List<Integer> getBottomViewOfTree(Node root) {
     if (root == null) return new ArrayList<>();
 
-    // Map to store the last node at each horizontal distance
+    // Map to store Horizontal Distance (HD) -> Node Value
+    // We use a TreeMap to keep the keys (HD) sorted from left to right (-ve to +ve)
     Map<Integer, Integer> map = new TreeMap<>();
+
+    // BFS Queue storing Node and its Horizontal Distance
     Queue<Pair> q = new LinkedList<>();
 
     q.add(new Pair(root, 0));
@@ -58,7 +65,8 @@ class Main {
       Node node = p.node;
       int hd = p.hd;
 
-      // Put updates the value for hd, so the last one remains (Bottom View)
+      // Update the map for this HD. Since we are doing BFS (level order),
+      // the last node processed for a given HD will be the "bottom-most" one.
       map.put(hd, node.val);
 
       if (node.left != null) {

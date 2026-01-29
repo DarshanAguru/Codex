@@ -1,5 +1,5 @@
 // Date: 31/07/2025
-// Problem: https://www.geeksforgeeks.org/find-union-and-intersection-of-two-unsorted-arrays/
+// Relevance: Array, Hash Table
 
 import java.util.*;
 

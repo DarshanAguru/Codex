@@ -1,5 +1,7 @@
 // Date: 07/01/2026
 // Problem: https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/
+// Leetcode Problem No: 1339
+// Relevance: Tree, Depth-First Search, Binary Tree, Recursion
 
 import java.lang.*;
 import java.util.*;

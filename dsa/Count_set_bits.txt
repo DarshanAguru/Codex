@@ -1,5 +1,7 @@
 // Date: 05/08/2025
 // Problem: https://leetcode.com/problems/number-of-1-bits/
+// Leetcode Problem No: 191
+// Relevance: Bit Manipulation
 
 import java.lang.*;
 import java.util.*;

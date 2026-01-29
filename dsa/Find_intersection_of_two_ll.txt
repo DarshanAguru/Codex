@@ -1,5 +1,7 @@
 // Date: 12/08/2025
 // Problem: https://leetcode.com/problems/intersection-of-two-linked-lists/
+// Leetcode Problem No: 160
+// Relevance: Linked List, Two Pointers
 
 import java.lang.*;
 import java.util.*;

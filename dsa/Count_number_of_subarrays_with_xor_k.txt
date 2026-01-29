@@ -1,5 +1,5 @@
 // Date: 05/08/2025
-// Problem: https://www.geeksforgeeks.org/find-the-number-of-subarrays-having-sum-less-than-k/
+// Relevance: Array, Hash Table, Prefix Sum
 
 import java.lang.*;
 import java.util.*;

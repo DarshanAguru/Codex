@@ -1,5 +1,5 @@
 // Date: 04/08/2025
-// Problem: https://www.geeksforgeeks.org/minimize-the-heights-33/
+// Relevance: Array, Sorting, Greedy
 
 import java.lang.*;
 import java.util.*;

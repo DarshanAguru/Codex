@@ -1,5 +1,7 @@
 // Date: 25/01/2026
 // Problem: https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/
+// Leetcode Problem No: 1984
+// Relevance: Array, Sorting, Sliding Window
 
 import java.lang.*;
 import java.util.*;

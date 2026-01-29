@@ -1,5 +1,7 @@
 // Date: 28/11/2025
 // Problem: https://leetcode.com/problems/maximum-number-of-k-divisible-components/
+// Leetcode Problem No: 2872
+// Relevance: Tree, Depth-First Search, Breadth-First Search, Graph
 
 import java.lang.*;
 import java.util.*;

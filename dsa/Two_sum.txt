@@ -1,5 +1,7 @@
 // Date: 05/08/2025
 // Problem: https://leetcode.com/problems/two-sum/
+// Leetcode Problem No: 1
+// Relevance: Array, Two Pointers, Hash Table
 
 import java.lang.*;
 import java.util.*;

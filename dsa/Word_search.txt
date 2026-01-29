@@ -1,5 +1,7 @@
 // Date: 12/08/2025
 // Problem: https://leetcode.com/problems/word-search/
+// Leetcode Problem No: 79
+// Relevance: Array, Backtracking, Matrix
 
 import java.lang.*;
 import java.util.*;

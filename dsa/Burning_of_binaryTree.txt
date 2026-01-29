@@ -1,5 +1,7 @@
 // Date: 19/08/2025
 // Problem: https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/
+// Leetcode Problem No: 2385
+// Relevance: Tree, Graph, BFS
 
 import java.lang.*;
 import java.util.*;

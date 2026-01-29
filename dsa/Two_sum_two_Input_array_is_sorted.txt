@@ -1,5 +1,7 @@
 // Date: 06/01/2026
 // Problem: https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+// Leetcode Problem No: 167
+// Relevance: Array, Sorting, Two Pointers
 
 import java.lang.*;
 import java.util.*;

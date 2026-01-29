@@ -22,7 +22,7 @@ function getChangedFiles() {
         return [...diff.split('\n'), ...untracked.split('\n')]
             .map(f => f.trim())
             .filter(f => f.length > 0)
-            .map(f => f.replace(/\\/g, '/')); // Normalize paths to forward slashes
+            .map(f => f.replace(/\\/g, '/'));
     } catch (e) {
         console.warn('Warning: Not a git repository or git error. Falling back to full checking/build.');
         return null;

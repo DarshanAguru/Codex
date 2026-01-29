@@ -1,5 +1,7 @@
 // Date: 07/08/2025
 // Problem: https://www.geeksforgeeks.org/print-subsequences-string/
+// Leetcode Problem No: 78 (Similar Concept: Subsets)
+// Relevance: String, Recursion, Bit Manipulation, Backtracking
 
 import java.lang.*;
 import java.util.*;
@@ -11,16 +13,19 @@ class Main {
     List<String> res1 = new ArrayList<>();
     List<String> res2 = new ArrayList<>();
 
-    // 1. Recursive Method
+    // 1. Recursive Method (Backtracking approach)
     getAllSubSeqsRecursion(str, 0, res1, "");
 
-    // 2. Bit Manipulation Method
+    // 2. Bit Manipulation Method (Power Set logic)
     getAllSubSeqsBitMask(str, res2);
 
     System.out.println("Recursive: " + res1);
     System.out.println("Bit Mask: " + res2);
   }
 
+  // Method 2: Bit Manipulation
+  // Total subsequences = 2^n. Each number from 0 to 2^n - 1 represents a unique subsequence.
+  // If the j-th bit of 'i' is set, we include the j-th character.
   static void getAllSubSeqsBitMask(String str, List<String> res) {
     int n = str.length();
     // Loop from 0 to 2^n - 1
@@ -28,7 +33,7 @@ class Main {
       StringBuilder sub = new StringBuilder();
 
       for (int j = 0; j < n; j++) {
-        // Check if j-th bit is set
+        // Check if j-th bit is set in 'i'
         if ((i & (1 << j)) != 0) {
           sub.append(str.charAt(j));
         }
@@ -39,21 +44,23 @@ class Main {
     }
   }
 
+  // Method 1: Recursion (Pick / Don't Pick pattern)
   static void getAllSubSeqsRecursion(
     String str,
     int i,
     List<String> res,
     String tmp
   ) {
+    // Base Case: Processed all characters
     if (i == str.length()) {
       if (!tmp.isEmpty()) res.add(tmp);
       return;
     }
 
-    // Include current char
+    // Option 1: Include current char
     getAllSubSeqsRecursion(str, i + 1, res, tmp + str.charAt(i));
 
-    // Exclude current char
+    // Option 2: Exclude current char
     getAllSubSeqsRecursion(str, i + 1, res, tmp);
   }
 }

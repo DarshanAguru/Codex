@@ -1,5 +1,7 @@
 // Date: 18/08/2025
 // Problem: https://leetcode.com/problems/lru-cache/
+// Leetcode Problem No: 146
+// Relevance: Hash Table, Linked List, Design, Doubly-Linked List
 
 import java.lang.*;
 import java.util.*;

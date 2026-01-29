@@ -1,5 +1,6 @@
 // Date: 12/01/2026
 // Problem: https://leetcode.com/problems/minimum-time-visiting-all-points/
+// Leetcode Problem No: 1266
 
 import java.lang.*;
 import java.util.*;

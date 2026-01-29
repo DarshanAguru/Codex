@@ -217,11 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         state.allFiles.sort((a, b) => {
             const nameComp = a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
 
-            if (state.sortMode === 'NAME_ASC') {
-                return nameComp;
-            } else if (state.sortMode === 'NAME_DESC') {
-                return -1 * nameComp;
-            } else if (state.sortMode === 'DATE_NEW') {
+            if (state.sortMode === 'DATE_NEW') {
                 const dateA = a.timestamp || 0;
                 const dateB = b.timestamp || 0;
 
@@ -233,6 +229,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 const dateB = b.timestamp || 2147483647000;
 
                 const diff = dateA - dateB;
+                if (diff !== 0) return diff;
+                return nameComp;
+            } else if (state.sortMode === 'PROBLEM_ASC') {
+                const probA = a.problemNo || 999999;
+                const probB = b.problemNo || 999999;
+
+                const diff = probA - probB;
+                if (diff !== 0) return diff;
+                return nameComp;
+            } else if (state.sortMode === 'PROBLEM_DESC') {
+                const probA = a.problemNo || 0;
+                const probB = b.problemNo || 0;
+
+                const diff = probB - probA;
                 if (diff !== 0) return diff;
                 return nameComp;
             }
@@ -367,7 +377,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const filtered = dataset.filter(item =>
             item.DisplayName.toLowerCase().includes(q) ||
-            item.name.toLowerCase().includes(q)
+            item.name.toLowerCase().includes(q) ||
+            (item.problemNo && item.problemNo.toString().includes(q)) ||
+            (item.topics && item.topics.some(t => t.toLowerCase().includes(q)))
         );
         renderList(filtered, q);
     }
@@ -422,8 +434,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 meta.textContent = file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'File';
             }
 
+            // --- Metadata Badges (Problem No & Topics) ---
+            const badgeContainer = document.createElement("div");
+            badgeContainer.className = "flex flex-wrap gap-1 mt-1";
+
+            if (file.problemNo) {
+                const probBadge = document.createElement("span");
+                probBadge.className = "px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[9px] border border-blue-500/30";
+                probBadge.textContent = `#${file.problemNo}`;
+                badgeContainer.appendChild(probBadge);
+            }
+
+            if (file.topics && file.topics.length > 0) {
+                // Show up to 2 topics, then +N
+                const maxProps = 2; // Reduced for visibility
+                file.topics.slice(0, maxProps).forEach(topic => {
+                    const tag = document.createElement("span");
+                    tag.className = "px-1.5 py-0.5 rounded bg-dark-700 text-gray-400 text-[9px] border border-dark-600";
+                    tag.textContent = topic;
+                    badgeContainer.appendChild(tag);
+                });
+                if (file.topics.length > maxProps) {
+                    const more = document.createElement("span");
+                    more.className = "px-1.5 py-0.5 rounded bg-dark-700 text-gray-500 text-[9px]";
+                    more.textContent = `+${file.topics.length - maxProps}`;
+                    badgeContainer.appendChild(more);
+                }
+            }
+
             textDiv.appendChild(title);
             textDiv.appendChild(meta);
+            if (badgeContainer.children.length > 0) {
+                textDiv.appendChild(badgeContainer);
+            }
 
             div.appendChild(icon);
             div.appendChild(textDiv);

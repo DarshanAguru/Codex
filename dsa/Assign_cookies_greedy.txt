@@ -1,5 +1,7 @@
 // Date: 21/08/2025
 // Problem: https://leetcode.com/problems/assign-cookies/
+// Leetcode Problem No: 455
+// Relevance: Array, Sorting, Greedy
 
 import java.lang.*;
 import java.util.*;
@@ -7,27 +9,32 @@ import java.util.*;
 class Main {
 
   public static void main(String[] args) {
-    int[] students = { 1, 2, 3 };
-    int[] cookies = { 1, 1 };
+    int[] students = { 1, 2, 3 }; // Greed factor of children
+    int[] cookies = { 1, 1 }; // Size of cookies
 
     int res = findMaxNoStudentsWithCookies(students, cookies);
     System.out.println(res);
   }
 
   static int findMaxNoStudentsWithCookies(int[] students, int[] cookies) {
+    // Greedy Strategy: Try to satisfy the child with the smallest greed factor
+    // using the smallest available cookie that meets the requirement.
     Arrays.sort(students);
     Arrays.sort(cookies);
 
-    int i = 0,
-      j = 0;
+    int i = 0; // Pointer for students
+    int j = 0; // Pointer for cookies
     int count = 0;
 
     while (i < students.length && j < cookies.length) {
       if (cookies[j] >= students[i]) {
+        // If cookie j satisfies student i, assign it and move to next student
         count++;
         i++;
         j++;
       } else {
+        // If cookie j is too small, try the next larger cookie (j++)
+        // Student i still needs to be satisfied
         j++;
       }
     }

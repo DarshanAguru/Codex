@@ -1,5 +1,7 @@
 // Date: 06/08/2025
 // Problem: https://leetcode.com/problems/split-array-largest-sum/
+// Leetcode Problem No: 410
+// Relevance: Array, Binary Search
 
 import java.lang.*;
 import java.util.*;
@@ -13,6 +15,8 @@ class Main {
     int min = Arrays.stream(arr).max().getAsInt(); // Lower bound: Max pages in one book
     int max = Arrays.stream(arr).sum(); // Upper bound: Sum of all pages
 
+    // Binary Search on Answer: The answer lines between max(arr) and sum(arr).
+    // Monotonic property: If we can allocate with 'x' max pages, we can also do it with 'x+1'.
     int res = binarySearch(arr, min, max, m);
     System.out.println(res);
   }

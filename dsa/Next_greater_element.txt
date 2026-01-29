@@ -1,5 +1,7 @@
 // Date: 13/08/2025
 // Problem: https://leetcode.com/problems/next-greater-element-i/
+// Leetcode Problem No: 496
+// Relevance: Stack, Array, Monotonic Stack
 
 import java.lang.*;
 import java.util.*;

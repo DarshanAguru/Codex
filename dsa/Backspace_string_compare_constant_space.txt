@@ -1,5 +1,7 @@
 // Date: 07/01/2026
 // Problem: https://leetcode.com/problems/backspace-string-compare/
+// Leetcode Problem No: 844
+// Relevance: String, Stack, Two Pointers, Simulation
 
 import java.lang.*;
 import java.util.*;
@@ -13,6 +15,8 @@ class Main {
     System.out.println(res);
   }
 
+  // Two Pointers approach (O(1) Space)
+  // We iterate backwards because we know which characters are deleted by backspaces that come *after* them.
   static boolean backspaceCompare(String s, String t) {
     int i = s.length() - 1;
     int j = t.length() - 1;
@@ -20,18 +24,20 @@ class Main {
     int skipT = 0;
 
     while (i >= 0 || j >= 0) {
+      // Find the next valid char in S
       while (i >= 0) {
         if (s.charAt(i) == '#') {
           skipS++;
           i--;
         } else if (skipS > 0) {
-          skipS--;
+          skipS--; // Skip current char as it is deleted
           i--;
         } else {
-          break;
+          break; // Found a valid char
         }
       }
 
+      // Find the next valid char in T
       while (j >= 0) {
         if (t.charAt(j) == '#') {
           skipT++;
@@ -44,10 +50,12 @@ class Main {
         }
       }
 
+      // Compare current valid characters
       if (i >= 0 && j >= 0 && s.charAt(i) != t.charAt(j)) {
         return false;
       }
 
+      // If one string exhausted but other isn't
       if ((i >= 0) != (j >= 0)) {
         return false;
       }

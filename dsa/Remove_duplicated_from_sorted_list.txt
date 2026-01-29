@@ -1,5 +1,7 @@
 // Date: 06/01/2026
 // Problem: https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+// Leetcode Problem No: 83
+// Relevance: Linked List
 
 import java.lang.*;
 import java.util.*;

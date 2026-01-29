@@ -1,5 +1,7 @@
 // Date: 31/07/2025
-// Problem: https://leetcode.com/problems/intersection-of-two-arrays-ii/
+// Problem: https://leetcode.com/problems/intersection-of-two-arrays/
+// Leetcode Problem No: 349
+// Relevance: Hash Table, Array
 
 import java.util.*;
 
@@ -11,7 +13,7 @@ class Main {
 
     ArrayList<Integer> res = new ArrayList<>();
 
-    // Store first array in HashSet for quick lookup
+    // Store first array in HashSet for quick lookup (Unique elements only)
     HashSet<Integer> hs = new HashSet<>();
     for (int i : a) {
       hs.add(i);
@@ -19,10 +21,11 @@ class Main {
 
     // Iterate second array and check for intersection
     for (int i : b) {
-      // content check + element reuse prevention (if specified, but here `remove` ensures unique intersection)
+      // Logic: If found in Set, add to result and remove from Set to prevent duplicates in result.
+      // This logic produces Unique Intersection (Problem 349).
       if (hs.contains(i)) {
         res.add(i);
-        hs.remove(i); // Remove to avoid duplicates in result if 'b' has multiple same items
+        hs.remove(i);
       }
     }
 

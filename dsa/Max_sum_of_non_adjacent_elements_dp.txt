@@ -1,5 +1,7 @@
 // Date: 20/08/2025
 // Problem: https://leetcode.com/problems/house-robber/
+// Leetcode Problem No: 198
+// Relevance: Dynamic Programming, Array
 
 import java.lang.*;
 import java.util.*;

@@ -1,5 +1,7 @@
 // Date: 07/01/2026
 // Problem: https://leetcode.com/problems/happy-number/
+// Leetcode Problem No: 202
+// Relevance: Hash Table, Math, Two Pointers
 
 import java.lang.*;
 import java.util.*;

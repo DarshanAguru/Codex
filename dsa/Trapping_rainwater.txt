@@ -1,5 +1,7 @@
 // Date: 12/08/2025
 // Problem: https://leetcode.com/problems/trapping-rain-water/
+// Leetcode Problem No: 42
+// Relevance: Array, Two Pointers, Dynamic Programming, Stack
 
 import java.lang.*;
 import java.util.*;

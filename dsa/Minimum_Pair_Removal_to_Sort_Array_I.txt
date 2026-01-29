@@ -1,5 +1,7 @@
 // Date: 22/01/2026
 // Problem: https://leetcode.com/problems/minimum-pair-removal-to-sort-array-i/
+// Leetcode Problem No: 3507
+// Relevance: Array, Sorting
 
 import java.lang.*;
 import java.util.*;

@@ -1,5 +1,7 @@
 // Date: 09/01/2026
 // Problem: https://leetcode.com/problems/longest-repeating-character-replacement/
+// Leetcode Problem No: 424
+// Relevance: Hash Table, Sliding Window, String
 
 import java.lang.*;
 import java.util.*;

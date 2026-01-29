@@ -1,5 +1,7 @@
 // Date: 07/08/2025
 // Problem: https://leetcode.com/problems/minimize-max-distance-to-gas-station/
+// Leetcode Problem No: 774
+// Relevance: Binary Search, Array, Array
 
 import java.lang.*;
 import java.util.*;

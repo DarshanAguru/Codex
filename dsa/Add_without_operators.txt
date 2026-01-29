@@ -1,5 +1,7 @@
 // Date: 05/08/2025
 // Problem: https://leetcode.com/problems/sum-of-two-integers/
+// Leetcode Problem No: 371
+// Relevance: Bit Manipulation, Math
 
 import java.lang.*;
 import java.util.*;
@@ -17,10 +19,18 @@ class Main {
   static int calcSum(int a, int b) {
     // Use XOR for sum without carry, AND for carry
     // Loop until no carry remains
+    // Iterate until there is no carry left
     while (b != 0) {
+      // 'carry' contains common set bits of a and b, shifted left by 1
+      // This represents the carry-over for the next position
       int carry = (a & b) << 1;
-      a = a ^ b; // Add without carry
-      b = carry; // Process carry in next iteration
+
+      // 'a' becomes the sum of bits of a and b where at least one is not set (XOR)
+      // This simulates addition without carry
+      a = a ^ b;
+
+      // 'b' becomes the carry, to be added in the next iteration
+      b = carry;
     }
     return a;
   }

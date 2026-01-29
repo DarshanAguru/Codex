@@ -1,0 +1,83 @@
+// Date: 29/01/2026
+// Problem: https://leetcode.com/problems/minimum-cost-to-convert-string-i/
+// Leetcode Problem No: 2976
+// Relevance: Graph, Floyd-Warshall, Shortest Path
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String source = "abcd";
+    String target = "acbe";
+    char[] original = { 'a', 'b', 'c', 'c', 'e', 'd' };
+    char[] changed = { 'b', 'c', 'b', 'e', 'b', 'e' };
+    int[] cost = { 2, 5, 5, 1, 2, 20 };
+
+    long res = minimumCost(source, target, original, changed, cost);
+
+    System.out.println(res);
+  }
+
+  static long minimumCost(
+    String source,
+    String target,
+    char[] original,
+    char[] changed,
+    int[] cost
+  ) {
+    // Graph initialization for 26 lowercase English letters
+    int n = original.length;
+    long INF = Integer.MAX_VALUE;
+
+    long[][] dist = new long[26][26];
+    for (long[] row : dist) {
+      Arrays.fill(row, INF);
+    }
+
+    // Distance to self is 0
+    for (int i = 0; i < 26; i++) {
+      dist[i][i] = 0;
+    }
+
+    // Populate initial costs from the given arrays
+    for (int i = 0; i < n; i++) {
+      int u = original[i] - 'a';
+      int v = changed[i] - 'a';
+      int c = cost[i];
+
+      dist[u][v] = Math.min(dist[u][v], c);
+    }
+
+    // Floyd-Warshall Algorithm to find all-pairs shortest paths
+    // Iterate through all intermediate nodes 'k'
+    for (int k = 0; k < 26; k++) {
+      // Iterate through all source nodes 'i'
+      for (int i = 0; i < 26; i++) {
+        if (dist[i][k] == INF) continue;
+        // Iterate through all destination nodes 'j'
+        for (int j = 0; j < 26; j++) {
+          if (dist[k][j] != INF) {
+            dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+          }
+        }
+      }
+    }
+
+    // Calculate total cost to convert source string to target string
+    long totalCost = 0L;
+
+    for (int i = 0; i < source.length(); i++) {
+      int u = source.charAt(i) - 'a';
+      int v = target.charAt(i) - 'a';
+      if (u == v) continue;
+
+      // If conversion is impossible (distance is still INF), return -1
+      if (dist[u][v] == INF) return -1;
+      totalCost += dist[u][v];
+    }
+
+    return totalCost;
+  }
+}

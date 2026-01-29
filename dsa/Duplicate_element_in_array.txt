@@ -1,5 +1,7 @@
 // Date: 05/08/2025
 // Problem: https://leetcode.com/problems/find-the-duplicate-number/
+// Leetcode Problem No: 287
+// Relevance: Hash Table
 
 import java.lang.*;
 import java.util.*;
@@ -8,6 +10,8 @@ class Main {
 
   public static void main(String[] args) {
     int[] arr = { 1, 2, 3, 4 };
+    // Note: This solution uses O(N) space.
+    // Floyd's Cycle Finding (Tortoise and Hare) can solve this in O(1) space.
     String duplicate = null;
 
     HashSet<Integer> hs = new HashSet<>();

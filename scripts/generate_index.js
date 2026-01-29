@@ -23,9 +23,13 @@ try {
         if (stats.isFile()) {
             let customDate = null;
             let timestamp = stats.mtimeMs; // Default to file modification time
+            let problemNo = null;
+            let topics = [];
 
             try {
                 const content = fs.readFileSync(fullPath, 'utf8');
+
+                // Parse Date
                 const dateMatch = content.match(/\/\/\s*Date:\s*(.*)/i);
                 if (dateMatch) {
                     const rawDate = dateMatch[1].trim();
@@ -47,6 +51,19 @@ try {
                         timestamp = new Date(rawDate).getTime();
                     }
                 }
+
+                // Parse Leetcode Problem No
+                const problemMatch = content.match(/\/\/\s*Leetcode\s*Problem\s*No:\s*(\d+)/i);
+                if (problemMatch) {
+                    problemNo = parseInt(problemMatch[1], 10);
+                }
+
+                // Parse Relevance (Topics)
+                const relevanceMatch = content.match(/\/\/\s*Relevance:\s*(.*)/i);
+                if (relevanceMatch) {
+                    topics = relevanceMatch[1].split(',').map(t => t.trim()).filter(t => t.length > 0);
+                }
+
             } catch (readErr) {
                 console.warn(`Could not read file content for ${file}:`, readErr);
             }
@@ -57,6 +74,8 @@ try {
                 size: stats.size,
                 timestamp: timestamp || 0,
                 displayDate: customDate,
+                problemNo: problemNo, // New field
+                topics: topics,       // New field
                 type: 'file'
             });
         }
