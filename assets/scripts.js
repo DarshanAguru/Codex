@@ -182,13 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     .map((item, idx) => ({
                         ...item,
                         DisplayName: formatDisplayName(idx, item.name),
+                        // SearchName is the clean name for searching (no index)
+                        SearchName: item.name.replace(/\.(txt|java|cpp)$/, '').replace(/_/g, ' '),
                         customDate: null,
                         dateObj: null
                     }));
-
-                // Fetch dates BEFORE rendering (Not needed anymore as logic moved to build)
-                // But wait, if files.json has displayDate, we just use it.
-                // We don't need fetchFileDates() loop.
 
                 // Sort and render ONCE
                 sortFiles();
@@ -249,6 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return 0;
         });
 
+        // Re-calculate DisplayName after sort (so index matches display order)
+        // BUT SearchName remains constant based on file content/name
         state.allFiles.forEach((file, idx) => {
             file.DisplayName = formatDisplayName(idx, file.name);
         });
@@ -270,6 +270,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 state.summaries = data.map(item => ({
                     ...item,
                     DisplayName: item.name.replace('.md', '').replace(/_/g, ' '),
+                    // Summary search name matches display name for now
+                    SearchName: item.name.replace('.md', '').replace(/_/g, ' '),
                     type: 'summary'
                 }));
             }
@@ -376,9 +378,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const filtered = dataset.filter(item =>
-            item.DisplayName.toLowerCase().includes(q) ||
+            // Match readable name (without index)
+            (item.SearchName && item.SearchName.toLowerCase().includes(q)) ||
+            // Match filename
             item.name.toLowerCase().includes(q) ||
+            // Match Problem Number
             (item.problemNo && item.problemNo.toString().includes(q)) ||
+            // Match Topics
             (item.topics && item.topics.some(t => t.toLowerCase().includes(q)))
         );
         renderList(filtered, q);
