@@ -286,6 +286,20 @@
     "type": "file"
   },
   {
+    "name": "Divide_an_array_into_subarrays_with_minimum_cost_i.txt",
+    "path": "dsa/Divide_an_array_into_subarrays_with_minimum_cost_i.txt",
+    "size": 761,
+    "timestamp": 1769904000000,
+    "displayDate": "01/02/2026",
+    "problemNo": 3010,
+    "topics": [
+      "Array",
+      "Sorting",
+      "Enumeration"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Duplicate_element_in_array.txt",
     "path": "dsa/Duplicate_element_in_array.txt",
     "size": 657,
