@@ -1,0 +1,31 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/trionic-array-i/
+// Leetcode Problem No: 3637
+// Relevance: Array
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+  public static void main(String[] args) {
+    int[] nums = { 1, 2, 3, 2, 4, 5 };
+    System.out.println(isTrionic(nums));
+  }
+
+  public static boolean isTrionic(int[] nums) {
+    int n = nums.length;
+    if (nums[0] >= nums[1]) {
+      return false;
+    }
+    int count = 1;
+    for (int i = 2; i < n; i++) {
+      if (nums[i - 1] == nums[i]) {
+        return false;
+      }
+      if ((nums[i - 2] - nums[i - 1]) * (nums[i - 1] - nums[i]) < 0) {
+        count++;
+      }
+    }
+    return count == 3;
+  }
+}

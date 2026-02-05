@@ -1,0 +1,40 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/exclusive-time-of-functions/
+// Leetcode Problem No: 636
+// Relevance: Stack, Array
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+  public static void main(String[] args) {
+    int n = 2;
+    List<String> logs = Arrays.asList("0:start:0", "1:start:2", "1:end:5", "0:end:6");
+    int[] res = exclusiveTime(n, logs);
+    System.out.println(Arrays.toString(res));
+  }
+
+  public static int[] exclusiveTime(int n, List<String> logs) {
+    Stack<Integer> st = new Stack<>();
+    int[] res = new int[n];
+    int prevTime = 0;
+    for (int i = 0; i < logs.size(); i++) {
+      String[] call = logs.get(i).split(":");
+      int id = Integer.parseInt(call[0]);
+      String cmd = call[1];
+      int time = Integer.parseInt(call[2]);
+
+      if (cmd.equals("start")) {
+        if (!st.isEmpty()) {
+          res[st.peek()] += time - prevTime;
+        }
+        st.push(id);
+        prevTime = time;
+      } else {
+        res[st.pop()] += time - prevTime + 1;
+        prevTime = time + 1;
+      }
+    }
+    return res;
+  }
+}

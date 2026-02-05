@@ -1,0 +1,26 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/transformed-array/
+// Leetcode Problem No: 3379
+// Relevance: Array, Simulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+  public static void main(String[] args) {
+    int[] nums = { 3, -2, 1, 1 };
+    int[] res = constructTransformedArray(nums);
+    System.out.println(Arrays.toString(res));
+  }
+
+  public static int[] constructTransformedArray(int[] nums) {
+    int n = nums.length;
+    int[] res = new int[n];
+
+    for (int i = 0; i < n; i++) {
+      res[i] = nums[((i + nums[i]) % n + n) % n];
+    }
+
+    return res;
+  }
+}

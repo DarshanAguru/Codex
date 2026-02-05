@@ -1,0 +1,31 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/build-an-array-with-stack-operations/
+// Leetcode Problem No: 1441
+// Relevance: Stack, Array, Simulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+  public static void main(String[] args) {
+    int[] target = { 1, 3 };
+    int n = 3;
+    List<String> res = buildArray(target, n);
+    System.out.println(res);
+  }
+
+  public static List<String> buildArray(int[] target, int n) {
+    List<String> res = new ArrayList<>();
+    int k = 0;
+    for (int i = 1; i <= n; i++) {
+        if (k < target.length && i == target[k]) {
+            res.add("Push");
+            k++;
+        } else if (k < target.length && target[k] > i) {
+            res.add("Push");
+            res.add("Pop");
+        }
+    }
+    return res;
+  }
+}
