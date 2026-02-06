@@ -7,8 +7,8 @@ import java.lang.*;
 import java.util.*;
 
 class Main {
-  public static void main(String[] args) {
-  }
+
+  public static void main(String[] args) {}
 
   public static int[] dailyTemperatures(int[] temperatures) {
     int n = temperatures.length;

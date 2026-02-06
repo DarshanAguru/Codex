@@ -36,6 +36,5 @@ class Main {
       }
     }
     return res;
-
   }
 }

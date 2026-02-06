@@ -137,6 +137,20 @@
     "type": "file"
   },
   {
+    "name": "Build_an_array_with_stack_operations.txt",
+    "path": "dsa/Build_an_array_with_stack_operations.txt",
+    "size": 773,
+    "timestamp": 1770249600000,
+    "displayDate": "05/02/2026",
+    "problemNo": 1441,
+    "topics": [
+      "Stack",
+      "Array",
+      "Simulation"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Burning_of_binaryTree.txt",
     "path": "dsa/Burning_of_binaryTree.txt",
     "size": 1946,
@@ -246,6 +260,20 @@
     "type": "file"
   },
   {
+    "name": "Daily_temperatures.txt",
+    "path": "dsa/Daily_temperatures.txt",
+    "size": 637,
+    "timestamp": 1770249600000,
+    "displayDate": "05/02/2026",
+    "problemNo": 739,
+    "topics": [
+      "Stack",
+      "Array",
+      "Monotonic Stack"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Delete_a_node_from_BST.txt",
     "path": "dsa/Delete_a_node_from_BST.txt",
     "size": 1504,
@@ -322,6 +350,32 @@
       "Array",
       "Sorting",
       "Two Pointers"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Exclusive_time_of_functions.txt",
+    "path": "dsa/Exclusive_time_of_functions.txt",
+    "size": 1115,
+    "timestamp": 1770249600000,
+    "displayDate": "05/02/2026",
+    "problemNo": 636,
+    "topics": [
+      "Stack",
+      "Array"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Find_all_numbers_disappeared_in_an_array.txt",
+    "path": "dsa/Find_all_numbers_disappeared_in_an_array.txt",
+    "size": 865,
+    "timestamp": 1769904000000,
+    "displayDate": "01/02/2026",
+    "problemNo": 448,
+    "topics": [
+      "Array",
+      "HashTable"
     ],
     "type": "file"
   },
@@ -419,6 +473,20 @@
     "topics": [
       "Hash Table",
       "Array"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Ipo.txt",
+    "path": "dsa/Ipo.txt",
+    "size": 1075,
+    "timestamp": 1770249600000,
+    "displayDate": "05/02/2026",
+    "problemNo": 502,
+    "topics": [
+      "Heap",
+      "Greedy",
+      "Sorting"
     ],
     "type": "file"
   },
@@ -837,6 +905,20 @@
     "type": "file"
   },
   {
+    "name": "Minimum_removals_to_balance_array.txt",
+    "path": "dsa/Minimum_removals_to_balance_array.txt",
+    "size": 722,
+    "timestamp": 1770336000000,
+    "displayDate": "06/02/2026",
+    "problemNo": 3634,
+    "topics": [
+      "Array",
+      "Sorting",
+      "Sliding Window"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Min_in_rotated_sorted_arr.txt",
     "path": "dsa/Min_in_rotated_sorted_arr.txt",
     "size": 1027,
@@ -1171,6 +1253,19 @@
     "type": "file"
   },
   {
+    "name": "Transformed_array.txt",
+    "path": "dsa/Transformed_array.txt",
+    "size": 606,
+    "timestamp": 1770249600000,
+    "displayDate": "05/02/2026",
+    "problemNo": 3379,
+    "topics": [
+      "Array",
+      "Simulation"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Trapping_rainwater.txt",
     "path": "dsa/Trapping_rainwater.txt",
     "size": 1073,
@@ -1182,6 +1277,18 @@
       "Two Pointers",
       "Dynamic Programming",
       "Stack"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Trionic_array_i.txt",
+    "path": "dsa/Trionic_array_i.txt",
+    "size": 691,
+    "timestamp": 1770249600000,
+    "displayDate": "05/02/2026",
+    "problemNo": 3637,
+    "topics": [
+      "Array"
     ],
     "type": "file"
   },

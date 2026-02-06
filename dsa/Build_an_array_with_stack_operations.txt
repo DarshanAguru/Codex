@@ -7,6 +7,7 @@ import java.lang.*;
 import java.util.*;
 
 class Main {
+
   public static void main(String[] args) {
     int[] target = { 1, 3 };
     int n = 3;
@@ -18,13 +19,13 @@ class Main {
     List<String> res = new ArrayList<>();
     int k = 0;
     for (int i = 1; i <= n; i++) {
-        if (k < target.length && i == target[k]) {
-            res.add("Push");
-            k++;
-        } else if (k < target.length && target[k] > i) {
-            res.add("Push");
-            res.add("Pop");
-        }
+      if (k < target.length && i == target[k]) {
+        res.add("Push");
+        k++;
+      } else if (k < target.length && target[k] > i) {
+        res.add("Push");
+        res.add("Pop");
+      }
     }
     return res;
   }
