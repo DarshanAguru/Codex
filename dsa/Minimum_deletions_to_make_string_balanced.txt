@@ -1,0 +1,31 @@
+// Date: 07/02/2026
+// Problem: https://leetcode.com/problems/minimum-deletions-to-make-string-balanced/
+// Leetcode Problem No: 1653
+// Relevance: String, Stack, Greedy
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        String s = "aababbab";
+        System.out.println(minimumDeletions(s));
+    }
+
+    public static int minimumDeletions(String s) {
+        int n = s.length();
+        int countB = 0;
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == 'b') {
+                countB++;
+            } else {
+                if (countB > 0) {
+                    countB--;
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+}
