@@ -1,0 +1,42 @@
+// Date: 12/02/2026
+// Problem: https://leetcode.com/problems/longest-balanced-substring-i/
+// Leetcode Problem No: 3713
+// Relevance: String, Hash Table, Brute Force
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        String s = "abba";
+        System.out.println(longestBalanced(s));
+    }
+
+    public static int longestBalanced(String s) {
+        int n = s.length();
+        HashMap<Character, Integer> hm = new HashMap<>();
+        int res = 0;
+        
+        for(int i = 0; i < n; i++) {
+            int maxCnt = 0;
+            int distinct = 0;
+            hm.clear();
+            
+            for(int j = i; j < n; j++) {
+                char c = s.charAt(j);
+                hm.put(c, hm.getOrDefault(c, 0) + 1);
+                
+                if(hm.get(c) == 1) {
+                    distinct++;
+                }
+
+                maxCnt = Math.max(maxCnt, hm.get(c));
+
+                if(maxCnt * distinct == j - i + 1) {
+                    res = Math.max(res, j - i + 1);
+                }
+            }
+        }
+        return res;
+    }
+}
