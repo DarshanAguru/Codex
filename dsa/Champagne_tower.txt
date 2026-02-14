@@ -1,0 +1,36 @@
+// Date: 14/02/2026
+// Problem: https://leetcode.com/problems/champagne-tower/
+// Leetcode Problem No: 799
+// Relevance: Dynamic Programming
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int poured = 2;
+    int query_row = 1;
+    int query_glass = 1;
+    System.out.println(champagneTower(poured, query_row, query_glass));
+  }
+
+  public static double champagneTower(
+    int poured,
+    int query_row,
+    int query_glass
+  ) {
+    double[][] dp = new double[102][102];
+    dp[0][0] = (double) poured;
+    for (int i = 0; i <= query_row; i++) {
+      for (int j = 0; j <= i; j++) {
+        double val = (dp[i][j] - 1.0) / 2.0;
+        if (val > 0) {
+          dp[i + 1][j] += val;
+          dp[i + 1][j + 1] += val;
+        }
+      }
+    }
+    return Math.min(1, dp[query_row][query_glass]);
+  }
+}

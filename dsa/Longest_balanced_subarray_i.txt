@@ -7,36 +7,37 @@ import java.lang.*;
 import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int[] nums = {2, 5, 4, 3};
-        System.out.println(longestBalanced(nums));
-    }
 
-    public static int longestBalanced(int[] nums) {
-        int n = nums.length;
-        HashMap<Integer, Integer> hm = new HashMap<>(); // Used to store distinct elements and check odd/even
-        int res = 0;
-        
-        for(int i = 0; i < n; i++) {
-            int evenCnt = 0;
-            int oddCnt = 0;
-            hm.clear();
-            
-            for(int j = i; j < n; j++) {
-                if(!hm.containsKey(nums[j])) {
-                    hm.put(nums[j], 1);
-                    if(nums[j] % 2 == 0) {
-                        evenCnt++;
-                    } else {
-                        oddCnt++;
-                    }
-                }
-                
-                if(evenCnt == oddCnt) {
-                    res = Math.max(res, j - i + 1);
-                }
-            }
+  public static void main(String[] args) {
+    int[] nums = { 2, 5, 4, 3 };
+    System.out.println(longestBalanced(nums));
+  }
+
+  public static int longestBalanced(int[] nums) {
+    int n = nums.length;
+    HashMap<Integer, Integer> hm = new HashMap<>(); // Used to store distinct elements and check odd/even
+    int res = 0;
+
+    for (int i = 0; i < n; i++) {
+      int evenCnt = 0;
+      int oddCnt = 0;
+      hm.clear();
+
+      for (int j = i; j < n; j++) {
+        if (!hm.containsKey(nums[j])) {
+          hm.put(nums[j], 1);
+          if (nums[j] % 2 == 0) {
+            evenCnt++;
+          } else {
+            oddCnt++;
+          }
         }
-        return res;
+
+        if (evenCnt == oddCnt) {
+          res = Math.max(res, j - i + 1);
+        }
+      }
     }
+    return res;
+  }
 }

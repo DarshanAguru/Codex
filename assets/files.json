@@ -110,6 +110,37 @@
     "type": "file"
   },
   {
+    "name": "Balanced_binary_tree.txt",
+    "path": "dsa/Balanced_binary_tree.txt",
+    "size": 1237,
+    "timestamp": 1770508800000,
+    "displayDate": "08/02/2026",
+    "problemNo": 110,
+    "topics": [
+      "Tree",
+      "Depth-First Search",
+      "Binary Tree"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Balance_a_binary_search_tree.txt",
+    "path": "dsa/Balance_a_binary_search_tree.txt",
+    "size": 1627,
+    "timestamp": 1770595200000,
+    "displayDate": "09/02/2026",
+    "problemNo": 1382,
+    "topics": [
+      "Divide and Conquer",
+      "Binary Search Tree",
+      "Greedy",
+      "Tree",
+      "Binary Tree",
+      "Depth-First Search"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Book_allocation_problem_bs.txt",
     "path": "dsa/Book_allocation_problem_bs.txt",
     "size": 1495,
@@ -173,6 +204,18 @@
     "problemNo": 121,
     "topics": [
       "Array",
+      "Dynamic Programming"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Champagne_tower.txt",
+    "path": "dsa/Champagne_tower.txt",
+    "size": 855,
+    "timestamp": 1771027200000,
+    "displayDate": "14/02/2026",
+    "problemNo": 799,
+    "topics": [
       "Dynamic Programming"
     ],
     "type": "file"
@@ -544,6 +587,34 @@
     "type": "file"
   },
   {
+    "name": "Longest_balanced_subarray_i.txt",
+    "path": "dsa/Longest_balanced_subarray_i.txt",
+    "size": 994,
+    "timestamp": 1770681600000,
+    "displayDate": "10/02/2026",
+    "problemNo": 3719,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Brute Force"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Longest_balanced_substring_i.txt",
+    "path": "dsa/Longest_balanced_substring_i.txt",
+    "size": 938,
+    "timestamp": 1770854400000,
+    "displayDate": "12/02/2026",
+    "problemNo": 3713,
+    "topics": [
+      "String",
+      "Hash Table",
+      "Brute Force"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Longest_repeating_character_replacement.txt",
     "path": "dsa/Longest_repeating_character_replacement.txt",
     "size": 1004,
@@ -860,6 +931,20 @@
       "Graph",
       "Floyd-Warshall",
       "Shortest Path"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Minimum_deletions_to_make_string_balanced.txt",
+    "path": "dsa/Minimum_deletions_to_make_string_balanced.txt",
+    "size": 664,
+    "timestamp": 1770422400000,
+    "displayDate": "07/02/2026",
+    "problemNo": 1653,
+    "topics": [
+      "String",
+      "Stack",
+      "Greedy"
     ],
     "type": "file"
   },
