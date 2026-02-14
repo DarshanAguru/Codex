@@ -156,3 +156,75 @@ function useGet<T>(url: string) {
 }
 ```
 
+---
+
+## 7. Advanced React Native Concepts (Senior Level)
+
+### New Architecture Deep Dive
+- **Fabric Renderer**:
+    - **UI Manager (Pure C++)**: Creates Shadow Nodes (C++).
+    - **Yoga**: Calculates layout.
+    - **Mounting**: Host Platform mounts native views (Android Views/UIViews).
+    - **Benefits**: Synchronous resizing, multithreading (off-main-thread layout calculation).
+- **Codegen**:
+    - Generates Native & C++ boilerplate from TypeScript interfaces/specs.
+    - Ensures type safety between JS and Native.
+- **Hermes Engine**:
+    - JavaScript engine optimized for RN.
+    - **Bytecode Precompilation**: JS is compiled to bytecode during build, not runtime.
+    - **Faster Startup**: No JIT warmth needed.
+    - **Smaller APK Size**: Compact bytecode.
+
+### Advanced Performance Optimization
+- **Re-renders**:
+    - **Why did you render (wdyr)**: Tool to identify unnecessary renders.
+    - **React Compiler (Future)**: Auto memoization.
+- **FlashList (Shopify)**:
+    - Replaces `FlatList`. Uses "Recycling" (views are kept in pool and reused) instead of unmounting/remounting.
+    - **5x-10x faster** on low-end devices.
+- **Inline Requires**: Delay loading modules until needed (`require('./HeavyScreen').default`). Reduces bundle size at startup.
+
+### Bridging Native Modules
+- **Legacy Bridge (Promises/Callbacks)**:
+    - `@ReactMethod` (Android) / `RCT_EXPORT_METHOD` (iOS).
+    - Async only.
+- **JSI (Direct C++ Calls)**:
+    - Exposes native functions to global `global` object in JS.
+    - `global.myNativeFunction()` runs synchronously.
+    - Used by `react-native-mmkv`, `react-native-reanimated`.
+
+### Animations (60 FPS)
+- **Animated API (Native Driver)**: `useNativeDriver: true`. Offloads animation to UI thread. LIMITED (transform, opacity only).
+- **Reanimated 2/3**:
+    - **Worklets**: Tiny JS functions that run on a separate UI thread.
+    - **Shared Values**: Reactive values shared between JS thread and UI thread.
+    - **Layout Animations**: Auto-animate layout changes (`entering`, `exiting`).
+- **Skia**:
+    - High-performance 2D graphics (Canvas-like) powered by Skia (same engine as Chrome/Flutter).
+
+### CI/CD & OTA Updates
+- **Fastlane**: Ruby scripts to automate screenshots, beta deployment (TestFlight/Play Console).
+- **EAS (Expo Application Services)**:
+    - **Build**: Cloud builds (no Mac needed for iOS).
+    - **Submit**: Auto-submit to stores.
+    - **Update**: Deeply integrated OTA updates.
+- **CodePush**:
+    - Push JS bundle updates directly to users without App Store review.
+    - **Limitations**: Cannot update Native Code (Info.plist, Gradle, Native Libraries).
+
+### Senior Interview Questions
+#### Q: How does React Native handle threads?
+**Ans**:
+1.  **Main/UI Thread**: Android/iOS main thread (Rendering, Gestures).
+2.  **JS Thread**: Runs React/Business logic.
+3.  **Shadow Thread**: Layout calculation (Yoga).
+4.  **Native Modules Thread**: (Optional) For native modules like Geolocation/FS.
+*New Architecture moves layout to Background Thread and allows JS to sync with Main Thread.*
+
+#### Q: Explain the difference between FlatList and FlashList.
+**Ans**: FlatList *unmounts* views when they go off-screen and *creates new ones* when scrolling down (high memory/CPU churn). FlashList *recycles* the views (changes data bound to the existing view) - similar to Android `RecyclerView` or iOS `UICollectionView`.
+
+#### Q: How to debug a React Native crash in production?
+**Ans**:
+- **Crashlytics (Firebase)**: Native crashes (Java/Kotlin/ObjC).
+- **Sentry**: JS errors + Native crashes. Breadcrumbs (user actions leading to crash). Source Maps (to decode minified JS stack trace).

@@ -196,3 +196,71 @@ List<Integer> unique = list.stream().distinct().collect(Collectors.toList());
 // OR
 Set<Integer> set = new HashSet<>(list);
 ```
+
+---
+
+## 8. Advanced Java Concepts (Senior Level)
+
+### JVM Deep Dive
+- **Memory Model (JMM)**: Defines how threads interact through memory. **Happens-Before** relationship guarantees visibility.
+- **JIT Compiler (Just-In-Time)**:
+    - **C1 Compiler (Client)**: Fast startup, basic optimizations.
+    - **C2 Compiler (Server)**: Aggressive optimizations (inlining, loop unrolling) for long-running apps.
+    - **HotSpot**: Identifies "hot" methods calling frequently and compiles them to native code.
+- **Class Loading Mechanism**:
+    - Loading -> Linking (Verify, Prepare, Resolve) -> Initialization.
+
+### Advanced Garbage Collection (GC)
+- **G1 GC (Garbage First)**: Default in Java 9+. Splits heap into regions. Prioritizes regions with most garbage.
+- **ZGC (Z Garbage Collector)**: Low latency (sub-millisecond pauses). Scalable to TBs of heap.
+- **Performance Tuning**:
+    - `-Xms` / `-Xmx`: Initial/Max heap size (Set equal to avoid resizing overhead).
+    - `-XX:+UseG1GC`: Explicitly enable G1.
+
+### Concurrency Advanced
+- **ForkJoinPool**: Work-stealing algorithm. Optimizes recursive tasks (used by Parallel Streams).
+- **StampedLock**: Faster than `ReadWriteLock` (tryOptimisticRead).
+- **Atomic Variables**: Use **CAS (Compare-And-Swap)** instructions (CPU level) instead of locks. High performance.
+- **Virtual Threads (Java 21)**: Lightweight threads (Project Loom). scales to millions of threads unlike OS threads. `Thread.ofVirtual().start(...)`.
+
+### Modern Java Features (Java 11 - 21)
+- **Var Keyword (Java 10)**: Local variable type inference. `var list = new ArrayList<String>();`.
+- **Records (Java 14)**: Data-classes (immutable, auto getters/hashcode/equals). `public record Point(int x, int y) {}`.
+- **Sealed Classes (Java 17)**: Restrict which classes can extend them. `public sealed class Shape permits Circle, Square {}`.
+- **Pattern Matching for switch (Java 21)**:
+  ```java
+  String result = switch(obj) {
+      case Integer i -> "It is an integer: " + i;
+      case String s when s.length() > 5 -> "Long string: " + s;
+      default -> "Unknown";
+  };
+  ```
+
+### Advanced Collections
+- **BlockingQueue**: `ArrayBlockingQueue`, `LinkedBlockingQueue` (Producer-Consumer pattern).
+- **IdentityHashMap**: Uses reference equality (`==`) instead of `equals()`.
+- **WeakHashMap**: Keys are WeakReferences. If key has no other references, entry is GC'd (Cache implementation).
+
+### System Design & Performance
+- **Connection Pooling**: HikariCP (Fast, lightweight). Reuses expensive DB connections.
+- **Caching**:
+    - **L1 Cache (Heap)**: Fast, limited size (Caffeine, Guava).
+    - **L2 Cache (Distributed)**: Redis, Memcached.
+- **Distributed Systems**:
+    - **CAP Theorem**: Consistency, Availability, Partition Tolerance.
+    - **Consistent Hashing**: Distributing data across nodes evenly.
+
+### Senior Interview Questions
+#### Q: Explain the internal working of HashMap.
+**Ans**: Array of Nodes (Buckets). `hashCode()` -> Index. Collision handled by LinkedList (Java 8+ converts to Red-Black Tree if processing > 8). `equals()` checks key equality.
+
+#### Q: How does G1 GC work differently from CMS?
+**Ans**: CMS (Concurrent Mark Sweep) works on Old Gen (fragmentation issues). G1 works on Regions (both Young/Old), compacts memory on the fly (no fragmentation), and allows setting "Pause Time Goal".
+
+#### Q: What is the Diamond Problem and how does Java handle it?
+**Ans**: Multiple inheritance ambiguity. Java classes don't support it. Interfaces do (Default Methods), but compiler forces overriding if conflict exists.
+
+#### Q: ThreadLocal vs Volatile?
+**Ans**:
+- **Volatile**: Shared variable, creates visibility across threads (no atomicity).
+- **ThreadLocal**: Private variable per thread (no sharing).

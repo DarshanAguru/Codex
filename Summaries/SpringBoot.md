@@ -154,3 +154,67 @@ public class GlobalExceptionHandler {
     }
 }
 ```
+
+---
+
+## 7. Advanced Spring Boot Concepts (Senior Level)
+
+### Spring Boot Internals
+- **Auto Configuration Deep Dive**: `@ConditionalOnClass`, `@ConditionalOnMissingBean`. `META-INF/spring.factories` (pre-2.7) vs `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`.
+- **Startup Optimization**: Lazy Initialization, Spring AOT, CDS (Class Data Sharing).
+
+### Advanced Bean Scopes
+- **Request**: Created once per HTTP request.
+- **Session**: Created once per HTTP session.
+- **Application**: Created once per ServletContext.
+- **WebSocket**: Created once per WebSocket session.
+
+### Transaction Management (Deep Dive)
+- **@Transactional**:
+    - **Propagation**:
+        - `REQUIRED`: Join existing or create new.
+        - `REQUIRES_NEW`: Suspend existing, create new.
+        - `NESTED`: Savepoint within existing transaction.
+    - **Isolation**: READ_COMMITTED, REPEATABLE_READ, SERIALIZABLE.
+    - **Rollback Rules**: By default rolls back on `RuntimeException`, not `CheckedException` (unless `rollbackFor` specified).
+
+### Spring Security (OAuth2 & JWT)
+- **Security Filter Chain**: The heart of Spring Security.
+- **AuthenticationProvider**: Logic to verify credentials.
+- **UserDetailsService**: Loading user data.
+- **OAuth2**:
+    - **Resource Server**: Validates tokens (JWT/Opaque).
+    - **Client**: Initiates login.
+
+### Microservices Patterns with Spring Cloud
+- **Circuit Breaker** (Resilience4j): Fail fast, fallback methods.
+- **Service Discovery** (Eureka/Consul): Dynamic IP resolution.
+- **API Gateway** (Spring Cloud Gateway): Routing, Rate Limiting, Auth-offloading.
+- **Distributed Tracing**: Micrometer Tracing + Zipkin/Jaeger.
+
+### Testing Strategies (Senior Level)
+- **Slice Testing**:
+    - `@WebMvcTest`: Only Controller layer.
+    - `@DataJpaTest`: Only Repository layer.
+- **Integration Testing**:
+    - `@SpringBootTest`: Full context.
+    - **Testcontainers**: Spin up real Docker containers (DB, Kafka) for reliable integration tests.
+
+### Performance Tuning & Best Practices
+- **Connection Pooling**: HikariCP config (minimumIdle, maximumPoolSize).
+- **Caching**: `@Cacheable`, Caffeine (local), Redis (distributed).
+- **Asynchronous Processing**: `@Async` (requires separate ThreadPoolTaskExecutor config).
+- **Profile Management**: keeping `application-prod.yml` separate.
+
+### Senior Interview Questions
+#### Q: How does @Transactional work internally?
+**Ans**: Uses AOP (CGLIB/JDK Proxy). Creates a proxy that wraps the method. Opens transaction `before()` method, commits `afterReturning()`, rollbacks `afterThrowing()`. *Self-invocation issue*: Calling `@Transactional` method from same class bypasses proxy (transaction won't work).
+
+#### Q: Difference between BeanFactory and ApplicationContext?
+**Ans**: `BeanFactory` is the root interface (lazy loading). `ApplicationContext` extends it (eager loading, supports AOP, events, i18n). Always use `ApplicationContext` unless memory is strictly limited.
+
+#### Q: How to handle Distributed Transactions?
+**Ans**:
+1.  **Saga Pattern**: Choreography (Events) or Orchestration.
+2.  **Two-Phase Commit (2PC)**: Using XA Transactions (Performance heavy).
+3.  **Best Practice**: Avoid strict distributed transactions; use eventual consistency.
