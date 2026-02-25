@@ -1,0 +1,56 @@
+// Date: 25/02/2026
+// Problem: https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/
+// Leetcode Problem No: 1022
+// Relevance: Tree, Depth-First Search, Binary Tree, Bit Manipulation
+
+import java.lang.*;
+import java.util.*;
+
+class TreeNode {
+
+  int val;
+  TreeNode left;
+  TreeNode right;
+
+  TreeNode() {}
+
+  TreeNode(int val) {
+    this.val = val;
+  }
+
+  TreeNode(int val, TreeNode left, TreeNode right) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    TreeNode root = new TreeNode(1);
+    root.left = new TreeNode(0);
+    root.right = new TreeNode(1);
+    root.left.left = new TreeNode(0);
+    root.left.right = new TreeNode(1);
+    root.right.left = new TreeNode(0);
+    root.right.right = new TreeNode(1);
+
+    System.out.println(sumRootToLeaf(root));
+  }
+
+  static int sumRootToLeaf(TreeNode root) {
+    return helper(root, 0);
+  }
+
+  static int helper(TreeNode root, int bit) {
+    if (root == null) {
+      return 0;
+    }
+    bit = (bit << 1) | root.val;
+    if (root.left == null && root.right == null) {
+      return bit;
+    }
+    return helper(root.left, bit) + helper(root.right, bit);
+  }
+}

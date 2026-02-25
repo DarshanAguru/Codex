@@ -1,0 +1,39 @@
+// Date: 25/02/2026
+// Problem: https://leetcode.com/problems/prime-number-of-set-bits-in-binary-representation/
+// Leetcode Problem No: 762
+// Relevance: Math, Bit Manipulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int left = 6;
+    int right = 10;
+    System.out.println(countPrimeSetBits(left, right));
+  }
+
+  static int countPrimeSetBits(int left, int right) {
+    int count = 0;
+    for (int i = left; i <= right; i++) {
+      if (isPrime(Integer.bitCount(i))) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  static boolean isPrime(int n) {
+    return (
+      n == 2 ||
+      n == 3 ||
+      n == 5 ||
+      n == 7 ||
+      n == 11 ||
+      n == 13 ||
+      n == 17 ||
+      n == 19
+    );
+  }
+}

@@ -1,0 +1,36 @@
+// Date: 25/02/2026
+// Problem: https://leetcode.com/problems/binary-gap/
+// Leetcode Problem No: 868
+// Relevance: Bit Manipulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int n = 22;
+    System.out.println(binaryGap(n));
+  }
+
+  static int binaryGap(int n) {
+    int r = 0,
+      l = -1;
+    int res = 0;
+    while (n != 0) {
+      r += 1;
+      int bit = n & 1;
+      if (bit == 1) {
+        if (l == -1) {
+          l = r;
+        } else {
+          res = Math.max(res, r - l);
+          l = r;
+        }
+      }
+
+      n >>= 1;
+    }
+    return res;
+  }
+}

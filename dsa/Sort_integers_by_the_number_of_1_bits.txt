@@ -1,0 +1,30 @@
+// Date: 25/02/2026
+// Problem: https://leetcode.com/problems/sort-integers-by-the-number-of-1-bits/
+// Leetcode Problem No: 1356
+// Relevance: Array, Bit Manipulation, Sorting
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+    int[] res = sortByBits(arr);
+    System.out.println(Arrays.toString(res));
+  }
+
+  static int[] sortByBits(int[] arr) {
+    Integer[] convertedArr = Arrays.stream(arr).boxed().toArray(Integer[]::new);
+    Arrays.sort(convertedArr, (a, b) -> {
+      int ca = Integer.bitCount(a);
+      int cb = Integer.bitCount(b);
+      if (ca != cb) {
+        return Integer.compare(ca, cb);
+      }
+      return Integer.compare(a, b);
+    });
+
+    return Arrays.stream(convertedArr).mapToInt(Integer::intValue).toArray();
+  }
+}

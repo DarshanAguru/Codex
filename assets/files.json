@@ -110,6 +110,23 @@
     "type": "file"
   },
   {
+    "name": "Balance_a_binary_search_tree.txt",
+    "path": "dsa/Balance_a_binary_search_tree.txt",
+    "size": 1627,
+    "timestamp": 1770595200000,
+    "displayDate": "09/02/2026",
+    "problemNo": 1382,
+    "topics": [
+      "Divide and Conquer",
+      "Binary Search Tree",
+      "Greedy",
+      "Tree",
+      "Binary Tree",
+      "Depth-First Search"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Balanced_binary_tree.txt",
     "path": "dsa/Balanced_binary_tree.txt",
     "size": 1237,
@@ -124,19 +141,39 @@
     "type": "file"
   },
   {
-    "name": "Balance_a_binary_search_tree.txt",
-    "path": "dsa/Balance_a_binary_search_tree.txt",
-    "size": 1627,
-    "timestamp": 1770595200000,
-    "displayDate": "09/02/2026",
-    "problemNo": 1382,
+    "name": "Binary_gap.txt",
+    "path": "dsa/Binary_gap.txt",
+    "size": 623,
+    "timestamp": 1771977600000,
+    "displayDate": "25/02/2026",
+    "problemNo": 868,
     "topics": [
-      "Divide and Conquer",
-      "Binary Search Tree",
-      "Greedy",
-      "Tree",
-      "Binary Tree",
-      "Depth-First Search"
+      "Bit Manipulation"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Binary_number_with_alternating_bits.txt",
+    "path": "dsa/Binary_number_with_alternating_bits.txt",
+    "size": 591,
+    "timestamp": 1771372800000,
+    "displayDate": "18/02/2026",
+    "problemNo": 693,
+    "topics": [
+      "Bit Manipulation"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Binary_watch.txt",
+    "path": "dsa/Binary_watch.txt",
+    "size": 837,
+    "timestamp": 1771286400000,
+    "displayDate": "17/02/2026",
+    "problemNo": 401,
+    "topics": [
+      "Backtracking",
+      "Bit Manipulation"
     ],
     "type": "file"
   },
@@ -217,6 +254,20 @@
     "problemNo": 799,
     "topics": [
       "Dynamic Programming"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Check_if_a_string_contains_all_binary_codes_of_size_k.txt",
+    "path": "dsa/Check_if_a_string_contains_all_binary_codes_of_size_k.txt",
+    "size": 698,
+    "timestamp": 1771977600000,
+    "displayDate": "25/02/2026",
+    "problemNo": 1461,
+    "topics": [
+      "Hash Table",
+      "String",
+      "Bit Manipulation"
     ],
     "type": "file"
   },
@@ -572,6 +623,21 @@
     "type": "file"
   },
   {
+    "name": "LRUCache_dll_hm.txt",
+    "path": "dsa/LRUCache_dll_hm.txt",
+    "size": 1735,
+    "timestamp": 1755475200000,
+    "displayDate": "18/08/2025",
+    "problemNo": 146,
+    "topics": [
+      "Hash Table",
+      "Linked List",
+      "Design",
+      "Doubly-Linked List"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Largest_bst_in_a_binary_tree.txt",
     "path": "dsa/Largest_bst_in_a_binary_tree.txt",
     "size": 1609,
@@ -643,17 +709,16 @@
     "type": "file"
   },
   {
-    "name": "LRUCache_dll_hm.txt",
-    "path": "dsa/LRUCache_dll_hm.txt",
-    "size": 1735,
-    "timestamp": 1755475200000,
-    "displayDate": "18/08/2025",
-    "problemNo": 146,
+    "name": "M_coloring_problem_bt.txt",
+    "path": "dsa/M_coloring_problem_bt.txt",
+    "size": 1774,
+    "timestamp": 1754956800000,
+    "displayDate": "12/08/2025",
+    "problemNo": null,
     "topics": [
-      "Hash Table",
-      "Linked List",
-      "Design",
-      "Doubly-Linked List"
+      "Graph",
+      "Backtracking",
+      "Recursion"
     ],
     "type": "file"
   },
@@ -668,6 +733,71 @@
       "Array",
       "Counting",
       "Sorting"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Max_absolute_sum_of_subarray.txt",
+    "path": "dsa/Max_absolute_sum_of_subarray.txt",
+    "size": 738,
+    "timestamp": 1767571200000,
+    "displayDate": "05/01/2026",
+    "problemNo": 1749,
+    "topics": [
+      "Array",
+      "Dynamic Programming"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Max_dot_product_of_two_subsequences.txt",
+    "path": "dsa/Max_dot_product_of_two_subsequences.txt",
+    "size": 1351,
+    "timestamp": 1767830400000,
+    "displayDate": "08/01/2026",
+    "problemNo": 1458,
+    "topics": [
+      "Dynamic Programming",
+      "Array"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Max_prod_subarray_in_array.txt",
+    "path": "dsa/Max_prod_subarray_in_array.txt",
+    "size": 781,
+    "timestamp": 1754352000000,
+    "displayDate": "05/08/2025",
+    "problemNo": 152,
+    "topics": [
+      "Array",
+      "Dynamic Programming"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Max_sum_of_non_adjacent_elements_dp.txt",
+    "path": "dsa/Max_sum_of_non_adjacent_elements_dp.txt",
+    "size": 730,
+    "timestamp": 1755648000000,
+    "displayDate": "20/08/2025",
+    "problemNo": 198,
+    "topics": [
+      "Dynamic Programming",
+      "Array"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Max_sum_subarray_removing_atMost_one_element.txt",
+    "path": "dsa/Max_sum_subarray_removing_atMost_one_element.txt",
+    "size": 1422,
+    "timestamp": 1767571200000,
+    "displayDate": "05/01/2026",
+    "problemNo": 1186,
+    "topics": [
+      "Array",
+      "Dynamic Programming"
     ],
     "type": "file"
   },
@@ -745,71 +875,6 @@
     "type": "file"
   },
   {
-    "name": "Max_absolute_sum_of_subarray.txt",
-    "path": "dsa/Max_absolute_sum_of_subarray.txt",
-    "size": 738,
-    "timestamp": 1767571200000,
-    "displayDate": "05/01/2026",
-    "problemNo": 1749,
-    "topics": [
-      "Array",
-      "Dynamic Programming"
-    ],
-    "type": "file"
-  },
-  {
-    "name": "Max_dot_product_of_two_subsequences.txt",
-    "path": "dsa/Max_dot_product_of_two_subsequences.txt",
-    "size": 1351,
-    "timestamp": 1767830400000,
-    "displayDate": "08/01/2026",
-    "problemNo": 1458,
-    "topics": [
-      "Dynamic Programming",
-      "Array"
-    ],
-    "type": "file"
-  },
-  {
-    "name": "Max_prod_subarray_in_array.txt",
-    "path": "dsa/Max_prod_subarray_in_array.txt",
-    "size": 781,
-    "timestamp": 1754352000000,
-    "displayDate": "05/08/2025",
-    "problemNo": 152,
-    "topics": [
-      "Array",
-      "Dynamic Programming"
-    ],
-    "type": "file"
-  },
-  {
-    "name": "Max_sum_of_non_adjacent_elements_dp.txt",
-    "path": "dsa/Max_sum_of_non_adjacent_elements_dp.txt",
-    "size": 730,
-    "timestamp": 1755648000000,
-    "displayDate": "20/08/2025",
-    "problemNo": 198,
-    "topics": [
-      "Dynamic Programming",
-      "Array"
-    ],
-    "type": "file"
-  },
-  {
-    "name": "Max_sum_subarray_removing_atMost_one_element.txt",
-    "path": "dsa/Max_sum_subarray_removing_atMost_one_element.txt",
-    "size": 1422,
-    "timestamp": 1767571200000,
-    "displayDate": "05/01/2026",
-    "problemNo": 1186,
-    "topics": [
-      "Array",
-      "Dynamic Programming"
-    ],
-    "type": "file"
-  },
-  {
     "name": "Median_of_two_sorted_arrays_bs.txt",
     "path": "dsa/Median_of_two_sorted_arrays_bs.txt",
     "size": 1398,
@@ -837,18 +902,27 @@
     "type": "file"
   },
   {
-    "name": "Minimize_maximum_pair_sum_in_array.txt",
-    "path": "dsa/Minimize_maximum_pair_sum_in_array.txt",
-    "size": 674,
-    "timestamp": 1769212800000,
-    "displayDate": "24/01/2026",
-    "problemNo": 1877,
+    "name": "Min_in_rotated_sorted_arr.txt",
+    "path": "dsa/Min_in_rotated_sorted_arr.txt",
+    "size": 1027,
+    "timestamp": 1754352000000,
+    "displayDate": "05/08/2025",
+    "problemNo": 153,
     "topics": [
       "Array",
       "Sorting",
-      "Two Pointers",
-      "Greedy"
+      "Binary Search"
     ],
+    "type": "file"
+  },
+  {
+    "name": "Min_time_visiting_all_points.txt",
+    "path": "dsa/Min_time_visiting_all_points.txt",
+    "size": 632,
+    "timestamp": 1768176000000,
+    "displayDate": "12/01/2026",
+    "problemNo": 1266,
+    "topics": [],
     "type": "file"
   },
   {
@@ -866,6 +940,21 @@
     "type": "file"
   },
   {
+    "name": "Minimize_maximum_pair_sum_in_array.txt",
+    "path": "dsa/Minimize_maximum_pair_sum_in_array.txt",
+    "size": 674,
+    "timestamp": 1769212800000,
+    "displayDate": "24/01/2026",
+    "problemNo": 1877,
+    "topics": [
+      "Array",
+      "Sorting",
+      "Two Pointers",
+      "Greedy"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Minimize_the_max_diff_btw_towers.txt",
     "path": "dsa/Minimize_the_max_diff_btw_towers.txt",
     "size": 847,
@@ -876,6 +965,19 @@
       "Array",
       "Sorting",
       "Greedy"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Minimum_Pair_Removal_to_Sort_Array_I.txt",
+    "path": "dsa/Minimum_Pair_Removal_to_Sort_Array_I.txt",
+    "size": 1196,
+    "timestamp": 1769040000000,
+    "displayDate": "22/01/2026",
+    "problemNo": 3507,
+    "topics": [
+      "Array",
+      "Sorting"
     ],
     "type": "file"
   },
@@ -949,33 +1051,6 @@
     "type": "file"
   },
   {
-    "name": "minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
-    "path": "dsa/minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
-    "size": 686,
-    "timestamp": 1769299200000,
-    "displayDate": "25/01/2026",
-    "problemNo": 1984,
-    "topics": [
-      "Array",
-      "Sorting",
-      "Sliding Window"
-    ],
-    "type": "file"
-  },
-  {
-    "name": "Minimum_Pair_Removal_to_Sort_Array_I.txt",
-    "path": "dsa/Minimum_Pair_Removal_to_Sort_Array_I.txt",
-    "size": 1196,
-    "timestamp": 1769040000000,
-    "displayDate": "22/01/2026",
-    "problemNo": 3507,
-    "topics": [
-      "Array",
-      "Sorting"
-    ],
-    "type": "file"
-  },
-  {
     "name": "Minimum_path_sum_in_a_grid_dp.txt",
     "path": "dsa/Minimum_path_sum_in_a_grid_dp.txt",
     "size": 2189,
@@ -1004,30 +1079,6 @@
     "type": "file"
   },
   {
-    "name": "Min_in_rotated_sorted_arr.txt",
-    "path": "dsa/Min_in_rotated_sorted_arr.txt",
-    "size": 1027,
-    "timestamp": 1754352000000,
-    "displayDate": "05/08/2025",
-    "problemNo": 153,
-    "topics": [
-      "Array",
-      "Sorting",
-      "Binary Search"
-    ],
-    "type": "file"
-  },
-  {
-    "name": "Min_time_visiting_all_points.txt",
-    "path": "dsa/Min_time_visiting_all_points.txt",
-    "size": 632,
-    "timestamp": 1768176000000,
-    "displayDate": "12/01/2026",
-    "problemNo": 1266,
-    "topics": [],
-    "type": "file"
-  },
-  {
     "name": "Morris_preorder_traversal_of_binary_tree.txt",
     "path": "dsa/Morris_preorder_traversal_of_binary_tree.txt",
     "size": 1477,
@@ -1038,20 +1089,6 @@
       "Tree",
       "Depth-First Search",
       "Array"
-    ],
-    "type": "file"
-  },
-  {
-    "name": "M_coloring_problem_bt.txt",
-    "path": "dsa/M_coloring_problem_bt.txt",
-    "size": 1774,
-    "timestamp": 1754956800000,
-    "displayDate": "12/08/2025",
-    "problemNo": null,
-    "topics": [
-      "Graph",
-      "Backtracking",
-      "Recursion"
     ],
     "type": "file"
   },
@@ -1117,6 +1154,19 @@
     "topics": [
       "Array",
       "Math"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Prime_number_of_set_bits_in_binary_representation.txt",
+    "path": "dsa/Prime_number_of_set_bits_in_binary_representation.txt",
+    "size": 776,
+    "timestamp": 1771977600000,
+    "displayDate": "25/02/2026",
+    "problemNo": 762,
+    "topics": [
+      "Math",
+      "Bit Manipulation"
     ],
     "type": "file"
   },
@@ -1283,6 +1333,20 @@
     "type": "file"
   },
   {
+    "name": "Sort_integers_by_the_number_of_1_bits.txt",
+    "path": "dsa/Sort_integers_by_the_number_of_1_bits.txt",
+    "size": 840,
+    "timestamp": 1771977600000,
+    "displayDate": "25/02/2026",
+    "problemNo": 1356,
+    "topics": [
+      "Array",
+      "Bit Manipulation",
+      "Sorting"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Subset_sum_equals_to_k_dp.txt",
     "path": "dsa/Subset_sum_equals_to_k_dp.txt",
     "size": 2311,
@@ -1305,6 +1369,21 @@
       "Array",
       "Backtracking",
       "Matrix"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Sum_of_root_to_leaf_binary_numbers.txt",
+    "path": "dsa/Sum_of_root_to_leaf_binary_numbers.txt",
+    "size": 1206,
+    "timestamp": 1771977600000,
+    "displayDate": "25/02/2026",
+    "problemNo": 1022,
+    "topics": [
+      "Tree",
+      "Depth-First Search",
+      "Binary Tree",
+      "Bit Manipulation"
     ],
     "type": "file"
   },
@@ -1444,6 +1523,20 @@
       "Array",
       "Backtracking",
       "Matrix"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
+    "path": "dsa/minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
+    "size": 686,
+    "timestamp": 1769299200000,
+    "displayDate": "25/01/2026",
+    "problemNo": 1984,
+    "topics": [
+      "Array",
+      "Sorting",
+      "Sliding Window"
     ],
     "type": "file"
   }
