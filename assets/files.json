@@ -155,7 +155,7 @@
   {
     "name": "Binary_number_with_alternating_bits.txt",
     "path": "dsa/Binary_number_with_alternating_bits.txt",
-    "size": 591,
+    "size": 592,
     "timestamp": 1771372800000,
     "displayDate": "18/02/2026",
     "problemNo": 693,
@@ -167,7 +167,7 @@
   {
     "name": "Binary_watch.txt",
     "path": "dsa/Binary_watch.txt",
-    "size": 837,
+    "size": 730,
     "timestamp": 1771286400000,
     "displayDate": "17/02/2026",
     "problemNo": 401,
@@ -1128,6 +1128,19 @@
     "problemNo": null,
     "topics": [
       "Dynamic Programming"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Number_of_steps_to_reduce_a_number_in_binary_representation_to_one",
+    "path": "dsa/Number_of_steps_to_reduce_a_number_in_binary_representation_to_one",
+    "size": 647,
+    "timestamp": 1772064000000,
+    "displayDate": "26/02/2026",
+    "problemNo": 1404,
+    "topics": [
+      "String",
+      "Bit Manipulation"
     ],
     "type": "file"
   },
