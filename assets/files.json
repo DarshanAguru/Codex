@@ -1145,6 +1145,19 @@
     "type": "file"
   },
   {
+    "name": "Partitioning_into_minimum_number_of_deci_binary_numbers.txt",
+    "path": "dsa/Partitioning_into_minimum_number_of_deci_binary_numbers.txt",
+    "size": 520,
+    "timestamp": 1772323200000,
+    "displayDate": "01/03/2026",
+    "problemNo": 1689,
+    "topics": [
+      "String",
+      "Greedy"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Peak_element_in_unsorted_arr.txt",
     "path": "dsa/Peak_element_in_unsorted_arr.txt",
     "size": 731,
