@@ -1079,6 +1079,20 @@
     "type": "file"
   },
   {
+    "name": "Minimum_swaps_to_arrange_a_binary_grid.txt",
+    "path": "dsa/Minimum_swaps_to_arrange_a_binary_grid.txt",
+    "size": 1166,
+    "timestamp": 1772409600000,
+    "displayDate": "02/03/2026",
+    "problemNo": 1536,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Matrix"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Morris_preorder_traversal_of_binary_tree.txt",
     "path": "dsa/Morris_preorder_traversal_of_binary_tree.txt",
     "size": 1477,
