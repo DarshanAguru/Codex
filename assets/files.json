@@ -1400,6 +1400,19 @@
     "type": "file"
   },
   {
+    "name": "Special_positions_in_a_binary_matrix.txt",
+    "path": "dsa/Special_positions_in_a_binary_matrix.txt",
+    "size": 892,
+    "timestamp": 1775174400000,
+    "displayDate": "03/04/2026",
+    "problemNo": 1582,
+    "topics": [
+      "Array",
+      "Matrix"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Subset_sum_equals_to_k_dp.txt",
     "path": "dsa/Subset_sum_equals_to_k_dp.txt",
     "size": 2311,
