@@ -1022,6 +1022,18 @@
     "type": "file"
   },
   {
+    "name": "Minimum_changes_to_make_alternating_binary_string.txt.",
+    "path": "dsa/Minimum_changes_to_make_alternating_binary_string.txt.",
+    "size": 820,
+    "timestamp": 1777766400000,
+    "displayDate": "03/05/2026",
+    "problemNo": 1758,
+    "topics": [
+      "String"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Minimum_cost_path_with_edge_reversals.txt",
     "path": "dsa/Minimum_cost_path_with_edge_reversals.txt",
     "size": 1839,
