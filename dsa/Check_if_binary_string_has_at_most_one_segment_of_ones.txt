@@ -1,0 +1,37 @@
+// Date: 03/06/2026
+// Problem: https://leetcode.com/problems/check-if-binary-string-has-at-most-one-segment-of-ones/
+// Leetcode Problem No: 1784
+// Relevance: String
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String s = "1001";
+    boolean res = checkOnesSegment(s);
+    System.out.println(res);
+  }
+
+  static boolean checkOnesSegment(String s) {
+    int n = s.length();
+    int zeroCount = 0;
+    int leadingOnes = 0;
+    int i = 0;
+
+    while (i < n && s.charAt(i) == '1') {
+      leadingOnes++;
+      i++;
+    }
+
+    while (i < n && s.charAt(i) == '0') {
+      zeroCount++;
+      i++;
+    }
+
+    return (
+      (zeroCount == n) || (leadingOnes == n) || (leadingOnes + zeroCount == n)
+    );
+  }
+}
