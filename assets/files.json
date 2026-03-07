@@ -1088,6 +1088,19 @@
     "type": "file"
   },
   {
+    "name": "Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
+    "path": "dsa/Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
+    "size": 772,
+    "timestamp": 1783036800000,
+    "displayDate": "03/07/2026",
+    "problemNo": 1888,
+    "topics": [
+      "String",
+      "Sliding Window"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Minimum_path_sum_in_a_grid_dp.txt",
     "path": "dsa/Minimum_path_sum_in_a_grid_dp.txt",
     "size": 2189,

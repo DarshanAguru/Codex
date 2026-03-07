@@ -1,0 +1,33 @@
+// Date: 03/07/2026
+// Problem: https://leetcode.com/problems/minimum-number-of-flips-to-make-the-binary-string-alternating/
+// Leetcode Problem No: 1888
+// Relevance: String, Sliding Window
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String s = "111000";
+    System.out.println(minFlips(s));
+  }
+
+  static int minFlips(String s) {
+    int n = s.length();
+    int res = n;
+    int[] operations = { 0, 0 };
+
+    for (int i = 0; i < n; i++) {
+      operations[(s.charAt(i) ^ i) & 1]++;
+    }
+
+    for (int i = 0; i < n; i++) {
+      operations[(s.charAt(i) ^ i) & 1]--;
+      operations[(s.charAt(i) ^ (n + i)) & 1]++;
+      res = Math.min(res, Math.min(operations[0], operations[1]));
+    }
+
+    return res;
+  }
+}
