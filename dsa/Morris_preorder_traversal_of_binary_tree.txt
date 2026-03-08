@@ -33,6 +33,26 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Morris Traversal (O(1) Space Preorder)
+  // Morris traversal modifies the tree structure temporarily to avoid using a Stack or Recursion.
+  // We use the concept of "Threaded Binary Trees".
+  // For any node, its PREDECESSOR in Inorder traversal is the rightmost node in its left subtree.
+  // 1. If `left == null`, process current node and move right.
+  // 2. If `left != null`, find the predecessor `prev`.
+  //    - If `prev.right == null`: We haven't visited this left subtree yet.
+  //      Create a thread: `prev.right = curr`.
+  //      Since it's PREORDER (Root, Left, Right), process `curr` NOW! Then move `curr = curr.left`.
+  //    - If `prev.right == curr`: Thread already exists, meaning we are returning from the left subtree.
+  //      Remove thread: `prev.right = null`. Move `curr = curr.right`.
+  //
+  // Dry run for tree: root=4, L=2, R=5.
+  // curr=4. L!=null. prev=2. prev.right=null.
+  //   prev.right=4. add(4). curr=2.
+  // curr=2. L=null. add(2). curr=2.right -> which is 4!
+  // curr=4. L!=null. prev=2. prev.right=4 (thread exists!).
+  //   prev.right=null. curr=curr.right=5.
+  // curr=5. L=null. add(5). curr=5.right=null. Loop ends.
+  // Result: [4, 2, 5].
   static List<Integer> getMorrisPreorder(Node root) {
     List<Integer> preorder = new ArrayList<>();
     Node curr = root;

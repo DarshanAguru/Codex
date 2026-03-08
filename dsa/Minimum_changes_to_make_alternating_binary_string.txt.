@@ -13,6 +13,22 @@ class Main {
     System.out.println(minOperations(s));
   }
 
+  // Logic: Ad-hoc / Pattern Matching
+  // For a binary string to be alternating, it can ONLY follow one of two patterns:
+  // Pattern 1: Starts with 0 (e.g., 010101...) -> Even indices are '0', Odd are '1'.
+  // Pattern 2: Starts with 1 (e.g., 101010...) -> Even indices are '1', Odd are '0'.
+  // We can just iterate through the given string and count how many characters 
+  // differ from Pattern 1 (`startWithZero`), and how many differ from Pattern 2 (`startWithOne`).
+  // The answer is the minimum of these two counts.
+  //
+  // Dry run for s = "0100":
+  // i=0 ('0'): Matches Pat1. Differs Pat2. -> startWithOne=1
+  // i=1 ('1'): Matches Pat1. Differs Pat2. -> startWithOne=2
+  // i=2 ('0'): Matches Pat1. Differs Pat2. -> startWithOne=3
+  // i=3 ('0'): Matches Pat2. Differs Pat1. -> startWithZero=1
+  // startWithZero = 1 (we only had to change index 3 from '0' to '1' to make "0101").
+  // startWithOne = 3 (we had to change indices 0, 1, 2 to make "1010").
+  // Min changes = 1.
   static int minOperations(String s) {
     int n = s.length();
     int startWithZero = 0;

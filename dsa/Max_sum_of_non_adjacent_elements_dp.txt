@@ -15,6 +15,22 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: 1D Dynamic Programming (House Robber)
+  // We want to find the maximum sum of elements such that no two elements are adjacent.
+  // Let `dp[i]` be the max sum ending at index `i`.
+  // At each index `i`, we have two choices:
+  // 1. Rob house `i`: We get `arr[i]`, but we CANNOT rob house `i-1`. So we add the max from `i-2`.
+  // 2. Skip house `i`: We don't get `arr[i]`, but we KEEP the max sum from `i-1`.
+  // Recurrence: `dp[i] = max(dp[i-1], arr[i] + dp[i-2])`.
+  // We only need the last two values (`prev1` and `prev2`) to compute the current one,
+  // optimizing space to O(1).
+  //
+  // Dry run for arr = [1, 2, 3, 1]:
+  // i=0(1): prev2 = 1.
+  // i=1(2): prev1 = max(1, 2) = 2.
+  // i=2(3): curr = max(2, 3 + 1) = 4. prev2=2, prev1=4.
+  // i=3(1): curr = max(4, 1 + 2) = 4. prev2=4, prev1=4.
+  // Returns 4.
   static int findMaxSumOfNonAdjElements(int[] arr) {
     int n = arr.length;
     if (n == 0) return 0;

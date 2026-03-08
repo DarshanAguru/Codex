@@ -19,6 +19,27 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Greedy + Prefix zeros
+  // A grid is valid if all elements above the main diagonal are zero.
+  // This means row `i` must have at least `n - 1 - i` trailing zeros.
+  // We can only swap ADJACENT rows. This is equivalent to finding the minimum number of
+  // adjacent swaps to sort an array to satisfy a condition.
+  // 1. Calculate the position of the last '1' for each row (`pos` array).
+  //    If `pos[i] = -1`, the row is all zeros (good!).
+  // 2. Iterate row exactly `i` from 0 to n-1. We need a row with `pos[j] <= i`.
+  // 3. Find the FIRST row `j` (where `j >= i`) that satisfies this condition.
+  //    Choosing the *first* valid row is greedy and guarantees minimum adjacent swaps.
+  // 4. Simulate bubbling up row `j` to row `i` by swapping it with the row above it step-by-step.
+  //    Add `j - i` to our total swaps.
+  // If we can't find any valid row for index `i`, return -1.
+  //
+  // Dry run for grid:
+  // pos = [2, 2, 2, 2] (all rows end with 1 at index 2).
+  // i=0: needs pos <= 0. None found. Returns -1.
+  // Valid grid example: pos = [1, 0, -1].
+  // i=0: needs <= 0. j=1 (pos=0). Swaps=1-0=1. Array becomes [0, 1, -1].
+  // i=1: needs <= 1. j=1 (pos=1). Swaps=0. Array becomes [0, 1, -1].
+  // ...
   static int minSwaps(int[][] grid) {
     int n = grid.length;
     int[] pos = new int[n];

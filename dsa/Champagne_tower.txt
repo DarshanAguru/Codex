@@ -15,6 +15,24 @@ class Main {
     System.out.println(champagneTower(poured, query_row, query_glass));
   }
 
+  // Logic: Dynamic Programming / Simulation
+  // We simulate pouring champagne into glasses structured as a 2D triangle.
+  // We maintain a 2D DP array where dp[i][j] represents the TOTAL amount of champagne
+  // that flowed *into* the glass at row `i`, column `j`.
+  // We start by pouring all `poured` full glasses into dp[0][0].
+  // Then, we iterate row by row. For any glass dp[i][j], if it has >1 unit of champagne,
+  // it overflows. The overflow amount is `(dp[i][j] - 1.0)`.
+  // Half of this overflow goes to the left child dp[i+1][j], and half to the right child dp[i+1][j+1].
+  // Finally, the amount *actually* in the queried glass is min(1.0, dp[query_row][query_glass]).
+  //
+  // Dry run for poured = 2, query_row=1, query_glass=1:
+  // dp[0][0] = 2.0.
+  // i=0:
+  //   j=0: val = (2.0 - 1.0)/2 = 0.5. dp[1][0] += 0.5, dp[1][1] += 0.5.
+  // i=1:
+  //   j=0: dp[1][0] = 0.5. no overflow.
+  //   j=1: dp[1][1] = 0.5. no overflow.
+  // min(1, dp[1][1]) = min(1, 0.5) = 0.5. Result 0.5.
   public static double champagneTower(
     int poured,
     int query_row,

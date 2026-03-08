@@ -20,6 +20,25 @@ class Main {
     System.out.println(Arrays.toString(res));
   }
 
+  // Logic: Stack simulation
+  // We want to calculate the total execution time of each function.
+  // Since functions can call other functions (which pauses the current one), we use a Stack.
+  // - On "start": Compute the time elapsed since the last log for the function currently
+  //   at the top of the stack. Then push the new function's ID and update `prevTime`.
+  // - On "end": Pop the function ID from the stack, add its finished time block
+  //   `time - prevTime + 1` to its counter. Update `prevTime` to `time + 1`.
+  //
+  // Dry run for logs = ["0:start:0", "1:start:2", "1:end:5", "0:end:6"], n=2:
+  // res = [0, 0], stack = [], prevTime = 0
+  // log 0 ("0:start:0"):
+  //   stack empty. push(0). prev=0. stack=[0].
+  // log 1 ("1:start:2"):
+  //   stack has 0. res[0] += (2 - 0) = 2. push(1). prev=2. stack=[0, 1]. res=[2, 0].
+  // log 2 ("1:end:5"):
+  //   pop 1. res[1] += (5 - 2 + 1) = 4. prev=5+1=6. stack=[0]. res=[2, 4].
+  // log 3 ("0:end:6"):
+  //   pop 0. res[0] += (6 - 6 + 1) = 1. prev=7. stack=[]. res=[3, 4].
+  // Result is [3, 4].
   public static int[] exclusiveTime(int n, List<String> logs) {
     Stack<Integer> st = new Stack<>();
     int[] res = new int[n];

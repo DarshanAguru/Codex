@@ -7,6 +7,24 @@ import java.util.*;
 
 class Main {
 
+  // Logic: Array Traversal / Shifting
+  // To rotate an array to the right by ONE position:
+  // 1. Save the last element in a variable (`lastEle`). This element will wrap around
+  //    to become the first element.
+  // 2. Shift all other elements one index to the right.
+  //    IMPORTANT: We must do this from RIGHT to LEFT (`i = n-1` down to `1`).
+  //    If we shift left to right (`arr[i+1] = arr[i]`), we would overwrite elements
+  //    before we get a chance to move them!
+  // 3. Place the saved `lastEle` into the first position (`arr[0]`).
+  //
+  // Dry run for arr = [1, 2, 3, 4, 5]:
+  // lastEle = 5
+  // i=4: arr[4] = arr[3] -> [1, 2, 3, 4, 4]
+  // i=3: arr[3] = arr[2] -> [1, 2, 3, 3, 4]
+  // i=2: arr[2] = arr[1] -> [1, 2, 2, 3, 4]
+  // i=1: arr[1] = arr[0] -> [1, 1, 2, 3, 4]
+  // Loop ends.
+  // arr[0] = lastEle (5) -> [5, 1, 2, 3, 4]
   public static void main(String[] args) {
     int[] arr = { 1, 2, 3, 4, 5 };
 

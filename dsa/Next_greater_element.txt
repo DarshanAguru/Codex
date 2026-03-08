@@ -17,6 +17,23 @@ class Main {
     System.out.println(Arrays.toString(res));
   }
 
+  // Logic: Monotonic Stack (Decreasing)
+  // We want to find the NEXT element to the right that is strictly GREATER than the current element.
+  // The code uses `2*n - 1` indicating a "Circular" array approach (though not strictly necessary
+  // for standard NGE, it handles circular lists perfectly).
+  // We traverse the array efficiently from Right to Left.
+  // We maintain a stack of elements. The stack will always be strictly decreasing from bottom to top.
+  // 1. While stack is not empty and the top element is `<= curr`: `pop()` it. It can never be
+  //    the "Next Greater" for `curr` or anything to the left of `curr` (since `curr` is larger and comes first).
+  // 2. After popping, if stack is empty, there is no greater element (-1).
+  //    If not empty, `st.peek()` IS the Next Greater Element.
+  // 3. Push `curr` onto the stack for the elements on the left to evaluate.
+  //
+  // Dry run for arr = [3, 10, 4]: (Loop i=2 down to 0)
+  // i=2 (4): st=[]. res[2]=-1. st.push(4).
+  // i=1 (10): st=[4]. 4 <= 10? Yes, pop. st=[]. res[1]=-1. st.push(10).
+  // i=0 (3): st=[10]. 10 <= 3? No. res[0]=10. st.push(3).
+  // Result: [10, -1, -1] (for a non-circular dry run).
   static int[] getNextGreaterElement(int[] arr) {
     int n = arr.length;
     int[] res = new int[n];

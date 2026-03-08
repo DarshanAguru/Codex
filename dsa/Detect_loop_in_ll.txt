@@ -50,6 +50,19 @@ class Main {
     System.out.println(hasLoop);
   }
 
+  // Logic: Floyd's Tortoise and Hare / Fast and Slow Pointers
+  // To detect a cycle in a linked list, we use two pointers traversing at different speeds.
+  // `slow` moves 1 step at a time, `fast` moves 2 steps at a time.
+  // If there is no cycle, `fast` will eventually reach `null`.
+  // If there is a cycle, `fast` will "lap" `slow` and eventually point to the same node as `slow`.
+  // When `slow == fast`, we know a cycle exists.
+  //
+  // Dry run for list = 1 -> 2 -> 3 -> 4 -> 5 -> (points back to 3):
+  // Init: slow=1, fast=1.
+  // Step 1: slow=2, fast=3.
+  // Step 2: slow=3, fast=5.
+  // Step 3: slow=4, fast=4. (Since from 5, next is 3, next.next is 4).
+  // slow == fast (4 == 4). Returns true.
   static boolean findLoop(Node head) {
     Node slow = head;
     Node fast = head;

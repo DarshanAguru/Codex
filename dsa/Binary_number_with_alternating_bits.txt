@@ -14,6 +14,18 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Bit Manipulation
+  // The goal is to check if adjacent bits in a number are always different.
+  // We can extract the rightmost bit using `n & 1`.
+  // We store it in `prev`, then shift `n` to the right (`n >>= 1`).
+  // In a loop, we extract the new rightmost bit (`curr`). If `curr == prev`, it's not alternating, return false.
+  // Otherwise, we update `prev = curr` and continue until `n` becomes 0.
+  //
+  // Dry run for n = 5 (binary 101):
+  // prev = 5 & 1 = 1. n = 5 >> 1 = 2 (binary 10).
+  // Loop 1: n=2. curr = 2 & 1 = 0. prev!=curr (1!=0). prev = 0. n = 2 >> 1 = 1.
+  // Loop 2: n=1. curr = 1 & 1 = 1. prev!=curr (0!=1). prev = 1. n = 1 >> 1 = 0.
+  // Loop ends, return true.
   static boolean hasAlternatingBits(int n) {
     int prev = n & 1;
     n >>= 1;

@@ -36,6 +36,25 @@ class Main {
     return false;
   }
 
+  // Logic: Binary Search on Answer
+  // We want to maximize the minimum distance between cows.
+  // The minimum possible distance is 1, and the max possible is difference between
+  // the max and min elements in the sorted array.
+  // We binary search for the final answer in the range [1, max_dist].
+  // For a distance `mid`, we greedily check if we can place `k` cows with at least
+  // `mid` distance between any two cows. If yes, we try to find a larger distance (low = mid + 1).
+  // If no, we must reduce the distance (high = mid - 1).
+  //
+  // Dry run for arr = [0, 3, 4, 7, 9, 10], k = 4:
+  // low = 1, high = 10 - 0 = 10 -> mid = 5
+  // canBePlaced(5): 0 -> 7 -> (only 2 cows placed, need 4). False. high = 4
+  // low = 1, high = 4 -> mid = 2
+  // canBePlaced(2): 0 -> 3 -> 7 -> 9. 4 cows placed. True. ans = 2, low = 3
+  // low = 3, high = 4 -> mid = 3
+  // canBePlaced(3): 0 -> 3 -> 7 -> 10. 4 cows placed. True. ans = 3, low = 4
+  // low = 4, high = 4 -> mid = 4
+  // canBePlaced(4): 0 -> 4 -> (not enough left). False. high = 3
+  // Result is ans = 3.
   static int binarySearch(int[] arr, int low, int high, int k) {
     int ans = 1;
 

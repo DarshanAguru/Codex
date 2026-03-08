@@ -13,6 +13,27 @@ class Main {
     System.out.println(numSpecial(mat));
   }
 
+  // Logic: Precomputation / Array Traversal
+  // A position (i, j) is "special" if `mat[i][j] == 1` AND all other elements in
+  // row `i` and col `j` are 0.
+  // This means the sum of row `i` must be exactly 1, and the sum of col `j` must be exactly 1.
+  // 1. Pass 1: Precompute the sum of each row into `row[]` and each col into `col[]`.
+  //    Since elements are only 0 or 1, the sum is exactly the count of 1s.
+  // 2. Pass 2: Iterate through the matrix again. If `mat[i][j] == 1` and
+  //    `row[i] == 1` and `col[j] == 1`, we increment our count of special positions.
+  //
+  // Dry run for mat =
+  // [1, 0, 0]
+  // [0, 0, 1]
+  // [1, 0, 0]
+  // Step 1 (Counts):
+  // row sums: row[0]=1, row[1]=1, row[2]=1.
+  // col sums: col[0]=2, col[1]=0, col[2]=1.
+  // Step 2 (Check):
+  // (0,0)=1: row[0]=1, col[0]=2. (col is >1, so NOT special)
+  // (1,2)=1: row[1]=1, col[2]=1. (Both are 1! SPECIAL!)
+  // (2,0)=1: row[2]=1, col[0]=2. (NOT special)
+  // Returns 1.
   static int numSpecial(int[][] mat) {
     int m = mat.length;
     int n = mat[0].length;

@@ -31,6 +31,20 @@ class Main {
     System.out.println("Max Sum Level: " + res);
   }
 
+  // Logic: Breadth-First Search (BFS) / Level Order Traversal
+  // To find the level with the maximum sum, we traverse the tree level by level using a Queue.
+  // For each level, we find how many nodes are in the queue (`size`).
+  // We loop `size` times, dequeueing nodes, adding their values to a `currentSum`, and
+  // enqueueing their children for the next level.
+  // After processing all nodes of the current level, we compare `currentSum` with `maxSum`.
+  // If it's greater, we update `maxSum` and record the current `level`.
+  // We return the `maxLevel` that had the highest sum.
+  //
+  // Dry run:
+  // Level 1: [1]. sum=1. maxSum=1, maxLevel=1.
+  // Level 2: [1, 0]. sum=1+0=1. maxSum stays 1. (q now has [7,-8,-7,9]).
+  // Level 3: [7, -8, -7, 9]. sum=7-8-7+9=1. maxSum stays 1.
+  // Looks like all levels sum to 1! Returning smallest level, which is 1.
   static int maxLevelSum(Node root) {
     if (root == null) return 0;
 

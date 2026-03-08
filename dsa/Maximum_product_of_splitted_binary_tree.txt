@@ -33,6 +33,27 @@ class Main {
     System.out.println(maxProduct(root));
   }
 
+  // Logic: DFS (Post-order Traversal)
+  // We want to remove one edge to maximize the product of the sums of the two resulting trees.
+  // The sum of the entire tree is fixed as `totalSum`.
+  // If we remove an edge directly above a subtree, the sum of that subtree is `subtreeSum`.
+  // The sum of the *other* resulting tree will be `totalSum - subtreeSum`.
+  // Therefore, the product after removing that edge is `subtreeSum * (totalSum - subtreeSum)`.
+  // Strategy:
+  // 1. Do a DFS pass to calculate the `totalSum` of the tree.
+  // 2. Do a second DFS pass. At each node, calculate its `subtreeSum`.
+  //    Update `maxProduct = max(maxProduct, subtreeSum * (totalSum - subtreeSum))`.
+  // 3. Return `maxProduct % MOD`.
+  //
+  // Dry run for tree: root=1, L=2(L=4, R=5), R=3.
+  // Pass 1: totalSum = 1+2+3+4+5+6 = 21.
+  // Pass 2:
+  // Node 4: subSum=4. prod = 4 * (21-4) = 4 * 17 = 68.
+  // Node 5: subSum=5. prod = 5 * (21-5) = 5 * 16 = 80.
+  // Node 2: subSum=2+4+5=11. prod = 11 * (21-11) = 11 * 10 = 110. (Max so far)
+  // Node 6: subSum=6. prod = 6 * (21-6) = 6 * 15 = 90.
+  // Node 3: subSum=3+6=9. prod = 9 * (21-9) = 9 * 12 = 108.
+  // Max Product is 110.
   static int maxProduct(Node root) {
     maxProduct = 0;
     totalSum = getTotalSum(root);

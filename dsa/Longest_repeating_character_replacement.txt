@@ -16,6 +16,23 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Sliding Window + Hash Map
+  // We want to find the longest substring containing the same letter, given we can change at most `k` letters.
+  // We maintain a sliding window `[left, right]`.
+  // Inside the window, we identify the most frequent character (its frequency is `max`).
+  // The number of characters we would *have to replace* to make the entire window uniform
+  // is `length_of_window - max`.
+  // If this number exceeds `k`, the window is invalid. We shrink it from the left.
+  // We keep track of the maximum valid window size seen.
+  //
+  // Dry run for s = "AABABBA", k = 1:
+  // right=0 ('A'): A=1. max=1. win=1. replaces = 1-1=0 <= 1. res=1.
+  // right=1 ('A'): A=2. max=2. win=2. replaces = 2-2=0 <= 1. res=2.
+  // right=2 ('B'): A=2, B=1. max=2. win=3. replaces = 3-2=1 <= 1. res=3. (Window: AAB)
+  // right=3 ('A'): A=3, B=1. max=3. win=4. replaces = 4-3=1 <= 1. res=4. (Window: AABA)
+  // right=4 ('B'): A=3, B=2. max=3. win=5. replaces = 5-3=2 > 1. Invalid!
+  //                Shrink left (removes A). map: A=2, B=2. left moves to 1.
+  // ... and so on. Max result found is 4.
   public static int characterReplacement(String s, int k) {
     HashMap<Character, Integer> map = new HashMap<>();
     int res = 0,

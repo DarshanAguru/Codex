@@ -39,6 +39,28 @@ class Main {
     System.out.println(sumRootToLeaf(root));
   }
 
+  // Logic: DFS (Pre-order Traversal) / Bit Manipulation
+  // We need to traverse from root to all leaves. Each path forms a binary number.
+  // We maintain a running integer `bit` that accumulates the path value.
+  // Since it's binary, shifting left by 1 (`bit << 1`) is equivalent to multiplying by 2.
+  // Then we add the current node's value (`| root.val` or `+ root.val`).
+  // When we reach a leaf (both children are null), we return the accumulated `bit` value.
+  // We sum the results of the left and right subtrees.
+  //
+  // Dry run for root=1, L=0, R=1, L.L=0, L.R=1, R.L=0, R.R=1:
+  // DFS(Node 1, bit=0):
+  //   bit = (0 << 1) | 1 = 1.
+  //   Left Recurse DFS(Node 0, bit=1):
+  //     bit = (1 << 1) | 0 = 2.
+  //     Left Recurse DFS(Node 0, bit=2): Leaf! bit=(2<<1)|0 = 4. Returns 4.
+  //     Right Recurse DFS(Node 1, bit=2): Leaf! bit=(2<<1)|1 = 5. Returns 5.
+  //     Node 0 returns 4 + 5 = 9.
+  //   Right Recurse DFS(Node 1, bit=1):
+  //     bit = (1 << 1) | 1 = 3.
+  //     Left Recurse DFS(Node 0, bit=3): Leaf! bit=(3<<1)|0 = 6. Returns 6.
+  //     Right Recurse DFS(Node 1, bit=3): Leaf! bit=(3<<1)|1 = 7. Returns 7.
+  //     Node 1 returns 6 + 7 = 13.
+  //   Root returns 9 + 13 = 22.
   static int sumRootToLeaf(TreeNode root) {
     return helper(root, 0);
   }

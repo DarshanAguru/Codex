@@ -34,6 +34,24 @@ class Main {
     System.out.println("Time to burn: " + res);
   }
 
+  // Logic: Graph Conversion + BFS
+  // A binary tree only has directed edges from parent to child. The fire spreads radially
+  // (to children AND to parents).
+  // 1. Convert Tree to Graph: Do a traversal to build an adjacency list, creating undirected
+  //    edges between parents and children.
+  // 2. Multi-source BFS (or standard BFS since there's 1 target): Start the BFS from the `target` node.
+  //    Keep track of `visited` nodes. Each level of the BFS takes 1 unit of time.
+  //    The maximum depth/level of the BFS is the time to burn the tree.
+  //
+  // Dry run (conceptual):
+  // Target is node 3.
+  // t=0: Queue=[3]. Visited={3}.
+  // t=1: Pop 3. Add neighbors (1, 5, 6). Visited={3,1,5,6}. Queue=[1,5,6]. burned=true. time=1.
+  // t=2: Pop 1 (add 2). Pop 5 (no unvisited neighbors). Pop 6 (no unvisited neighbors). Queue=[2]. time=2.
+  // t=3: Pop 2 (add 4). Queue=[4]. time=3.
+  // t=4: Pop 4 (add 7). Queue=[7]. time=4.
+  // t=5: Pop 7 (no neighbors). Queue empty. Loop terminates.
+  // Total time = 4.
   static int getMinTimeToBurnTree(Node root, Node target) {
     if (root == null) return 0;
 

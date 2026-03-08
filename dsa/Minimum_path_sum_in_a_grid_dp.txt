@@ -21,6 +21,31 @@ class Main {
     System.out.println("Space Opt: " + findMinPathSumSO(matrix, n, m));
   }
 
+  // Logic: 2D Dynamic Programming
+  // We want to find a path from top-left (0,0) to bottom-right (n-1,m-1) minimizing the numeric sum.
+  // We can only move DOWN or RIGHT.
+  // At any cell `(i, j)`, the minimum path sum to reach it is:
+  // `matrix[i][j] + min(PathSumTo(i-1, j), PathSumTo(i, j-1))` (i.e. coming from Top or Left).
+  // Base case: `dp[0][0] = matrix[0][0]`.
+  // Out of bounds: INF.
+  //
+  // Three approaches are provided:
+  // 1. Memoization: Top-down recursion with caching in `dp[][]`.
+  // 2. Tabulation: Bottom-up DP filling a full `n x m` table.
+  // 3. Space Optimization: Since computing row `i` only requires values from row `i-1` and
+  //    the current row `i` (left element), we only need two 1D arrays (`prev` and `curr`), reducing
+  //    space complexity from O(N*M) to O(M).
+  //
+  // Dry run for [[5,9,6], [11,5,2]]:
+  // Row 0:
+  // j=0: 5.
+  // j=1: 9 + 5(left) = 14.
+  // j=2: 6 + 14(left) = 20.  -> curr = [5, 14, 20]
+  // Row 1:
+  // j=0: 11 + 5(top) = 16.
+  // j=1: 5 + min(16(left), 14(top)) = 5 + 14 = 19.
+  // j=2: 2 + min(19(left), 20(top)) = 2 + 19 = 21. -> curr = [16, 19, 21].
+  // Final answer: 21.
   // Space Optimization
   static int findMinPathSumSO(int[][] matrix, int n, int m) {
     int[] prev = new int[m];

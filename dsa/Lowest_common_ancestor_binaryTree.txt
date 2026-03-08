@@ -38,6 +38,27 @@ class Main {
     }
   }
 
+  // Logic: DFS (Post-order Traversal)
+  // We want to find the lowest node in T that has both `p` and `q` as descendants.
+  // We traverse the tree. If we reach null, or find either `p` or `q`, we return that node.
+  // We recursively search the left and right subtrees.
+  // - If BOTH left and right recursive calls return non-null, it means `p` is in one subtree
+  //   and `q` is in the other. Thus, the current node is the LCA!
+  // - If only ONE subtree returns non-null, it means both `p` and `q` are located in that
+  //   subtree (or one is the ancestor of the other). We bubble up the non-null result.
+  //
+  // Dry run for root = 1, L=2 (L=4, R=5), R=3 (L=6, R=7). Targets x=4, y=6.
+  // Search(1):
+  //   Search(2):
+  //     Search(4): returns 4 (matches x).
+  //     Search(5): returns null.
+  //     Left=4, Right=null -> returns 4.
+  //   Search(3):
+  //     Search(6): returns 6 (matches y).
+  //     Search(7): returns null.
+  //     Left=6, Right=null -> returns 6.
+  //   Back at 1: Left=4, Right=6. BOTH are non-null!
+  //   Returns current node (1) as the LCA.
   static Node findLowestCommonAncestor(Node root, int x, int y) {
     // Base case: null or one of the targets found
     if (root == null || root.val == x || root.val == y) {

@@ -61,6 +61,27 @@ class Main {
     printTree(root.right);
   }
 
+  // Logic: DFS (Post-order Traversal)
+  // We want the lowest common ancestor (LCA) of ALL the deepest nodes.
+  // We use DFS to return a `Pair` containing:
+  // 1. The deepest depth found in that subtree.
+  // 2. The LCA node of the deepest nodes in that subtree.
+  // At any given node:
+  // - We recursively get the `(LCA, depth)` of the left and right subtrees.
+  // - If `left.depth == right.depth`: This node balances the deepest nodes from both sides.
+  //   So, THIS node is their LCA. Return `(this_node, left.depth + 1)`.
+  // - If `left.depth > right.depth`: The deepest nodes are strictly in the left subtree.
+  //   So, the LCA must also be in the left subtree. Return `(left.LCA, left.depth + 1)`.
+  // - If `right.depth > left.depth`: Similar logic, return `(right.LCA, right.depth + 1)`.
+  //
+  // Dry run for root=3, L=5(depth=3), R=1(depth=2):
+  // Let's look at node 2 (L=7, R=4). Both children return depth 1.
+  //   Since 1 == 1, node 2 returns (Node(2), depth=2).
+  // Now at node 5 (L=6, R=2): L returns (Node(6), 1), R returns (Node(2), 2).
+  //   Since 2 > 1, right is deeper. Node 5 returns (Node(2), 3).
+  // Now at root 3 (L=5, R=1): L returns (Node(2), 3), R returns (Node(0 or 8), 2).
+  //   Since 3 > 2, left is deeper. Root 3 returns (Node(2), 4).
+  // Final LCA is Node(2).
   public static TreeNode subtreeWithAllDeepest(TreeNode root) {
     Pair res = dfs(root);
     return res.node;

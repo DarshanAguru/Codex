@@ -2,7 +2,7 @@
   {
     "name": "Add_without_operators.txt",
     "path": "dsa/Add_without_operators.txt",
-    "size": 996,
+    "size": 1944,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 371,
@@ -15,7 +15,7 @@
   {
     "name": "Aggressive_cows_bs.txt",
     "path": "dsa/Aggressive_cows_bs.txt",
-    "size": 1251,
+    "size": 2319,
     "timestamp": 1754438400000,
     "displayDate": "06/08/2025",
     "problemNo": 1552,
@@ -29,7 +29,7 @@
   {
     "name": "All_negative_numbers_in_one_end.txt",
     "path": "dsa/All_negative_numbers_in_one_end.txt",
-    "size": 1297,
+    "size": 2084,
     "timestamp": 1753920000000,
     "displayDate": "31/07/2025",
     "problemNo": 905,
@@ -43,7 +43,7 @@
   {
     "name": "All_subseqs_of_string_recursion.txt",
     "path": "dsa/All_subseqs_of_string_recursion.txt",
-    "size": 1850,
+    "size": 2428,
     "timestamp": 1754524800000,
     "displayDate": "07/08/2025",
     "problemNo": 78,
@@ -58,7 +58,7 @@
   {
     "name": "Area_of_largest_rectangle_in_hist.txt",
     "path": "dsa/Area_of_largest_rectangle_in_hist.txt",
-    "size": 1802,
+    "size": 2933,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 84,
@@ -70,7 +70,7 @@
   {
     "name": "Assign_cookies_greedy.txt",
     "path": "dsa/Assign_cookies_greedy.txt",
-    "size": 1230,
+    "size": 1872,
     "timestamp": 1755734400000,
     "displayDate": "21/08/2025",
     "problemNo": 455,
@@ -84,7 +84,7 @@
   {
     "name": "Asteroid_collition_st.txt",
     "path": "dsa/Asteroid_collition_st.txt",
-    "size": 1364,
+    "size": 2298,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 735,
@@ -97,7 +97,7 @@
   {
     "name": "Backspace_string_compare_constant_space.txt",
     "path": "dsa/Backspace_string_compare_constant_space.txt",
-    "size": 1579,
+    "size": 2457,
     "timestamp": 1767744000000,
     "displayDate": "07/01/2026",
     "problemNo": 844,
@@ -112,7 +112,7 @@
   {
     "name": "Balance_a_binary_search_tree.txt",
     "path": "dsa/Balance_a_binary_search_tree.txt",
-    "size": 1627,
+    "size": 2538,
     "timestamp": 1770595200000,
     "displayDate": "09/02/2026",
     "problemNo": 1382,
@@ -129,7 +129,7 @@
   {
     "name": "Balanced_binary_tree.txt",
     "path": "dsa/Balanced_binary_tree.txt",
-    "size": 1237,
+    "size": 2153,
     "timestamp": 1770508800000,
     "displayDate": "08/02/2026",
     "problemNo": 110,
@@ -143,7 +143,7 @@
   {
     "name": "Binary_gap.txt",
     "path": "dsa/Binary_gap.txt",
-    "size": 623,
+    "size": 1624,
     "timestamp": 1771977600000,
     "displayDate": "25/02/2026",
     "problemNo": 868,
@@ -155,7 +155,7 @@
   {
     "name": "Binary_number_with_alternating_bits.txt",
     "path": "dsa/Binary_number_with_alternating_bits.txt",
-    "size": 592,
+    "size": 1292,
     "timestamp": 1771372800000,
     "displayDate": "18/02/2026",
     "problemNo": 693,
@@ -167,7 +167,7 @@
   {
     "name": "Binary_watch.txt",
     "path": "dsa/Binary_watch.txt",
-    "size": 730,
+    "size": 1510,
     "timestamp": 1771286400000,
     "displayDate": "17/02/2026",
     "problemNo": 401,
@@ -180,7 +180,7 @@
   {
     "name": "Book_allocation_problem_bs.txt",
     "path": "dsa/Book_allocation_problem_bs.txt",
-    "size": 1495,
+    "size": 2524,
     "timestamp": 1754438400000,
     "displayDate": "06/08/2025",
     "problemNo": 410,
@@ -193,7 +193,7 @@
   {
     "name": "Bottom_View_of_binaryTree.txt",
     "path": "dsa/Bottom_View_of_binaryTree.txt",
-    "size": 2093,
+    "size": 2999,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 987,
@@ -207,7 +207,7 @@
   {
     "name": "Build_an_array_with_stack_operations.txt",
     "path": "dsa/Build_an_array_with_stack_operations.txt",
-    "size": 773,
+    "size": 1544,
     "timestamp": 1770249600000,
     "displayDate": "05/02/2026",
     "problemNo": 1441,
@@ -221,7 +221,7 @@
   {
     "name": "Burning_of_binaryTree.txt",
     "path": "dsa/Burning_of_binaryTree.txt",
-    "size": 1946,
+    "size": 2971,
     "timestamp": 1755561600000,
     "displayDate": "19/08/2025",
     "problemNo": 2385,
@@ -235,7 +235,7 @@
   {
     "name": "Buy_and_sell_stock_1.txt",
     "path": "dsa/Buy_and_sell_stock_1.txt",
-    "size": 636,
+    "size": 1558,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 121,
@@ -248,7 +248,7 @@
   {
     "name": "Champagne_tower.txt",
     "path": "dsa/Champagne_tower.txt",
-    "size": 855,
+    "size": 1855,
     "timestamp": 1771027200000,
     "displayDate": "14/02/2026",
     "problemNo": 799,
@@ -260,7 +260,7 @@
   {
     "name": "Check_if_a_string_contains_all_binary_codes_of_size_k.txt",
     "path": "dsa/Check_if_a_string_contains_all_binary_codes_of_size_k.txt",
-    "size": 698,
+    "size": 1524,
     "timestamp": 1771977600000,
     "displayDate": "25/02/2026",
     "problemNo": 1461,
@@ -274,7 +274,7 @@
   {
     "name": "Check_if_binary_string_has_at_most_one_segment_of_ones.txt",
     "path": "dsa/Check_if_binary_string_has_at_most_one_segment_of_ones.txt",
-    "size": 762,
+    "size": 1720,
     "timestamp": 1780444800000,
     "displayDate": "03/06/2026",
     "problemNo": 1784,
@@ -286,7 +286,7 @@
   {
     "name": "Combination_sum_recursion.txt",
     "path": "dsa/Combination_sum_recursion.txt",
-    "size": 1168,
+    "size": 2177,
     "timestamp": 1754524800000,
     "displayDate": "07/08/2025",
     "problemNo": 39,
@@ -299,7 +299,7 @@
   {
     "name": "Construst_tree_using_inorder_and_preorder_arrays.txt",
     "path": "dsa/Construst_tree_using_inorder_and_preorder_arrays.txt",
-    "size": 1762,
+    "size": 2848,
     "timestamp": 1755561600000,
     "displayDate": "19/08/2025",
     "problemNo": 105,
@@ -314,7 +314,7 @@
   {
     "name": "Container_with_most_water.txt",
     "path": "dsa/Container_with_most_water.txt",
-    "size": 922,
+    "size": 1777,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 11,
@@ -328,7 +328,7 @@
   {
     "name": "Count_inversions_in_array.txt",
     "path": "dsa/Count_inversions_in_array.txt",
-    "size": 1491,
+    "size": 2569,
     "timestamp": 1754438400000,
     "displayDate": "06/08/2025",
     "problemNo": 3193,
@@ -342,7 +342,7 @@
   {
     "name": "Count_number_of_subarrays_with_xor_k.txt",
     "path": "dsa/Count_number_of_subarrays_with_xor_k.txt",
-    "size": 766,
+    "size": 1885,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": null,
@@ -356,7 +356,7 @@
   {
     "name": "Count_set_bits.txt",
     "path": "dsa/Count_set_bits.txt",
-    "size": 485,
+    "size": 959,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 191,
@@ -368,7 +368,7 @@
   {
     "name": "Daily_temperatures.txt",
     "path": "dsa/Daily_temperatures.txt",
-    "size": 637,
+    "size": 1897,
     "timestamp": 1770249600000,
     "displayDate": "05/02/2026",
     "problemNo": 739,
@@ -382,7 +382,7 @@
   {
     "name": "Delete_a_node_from_BST.txt",
     "path": "dsa/Delete_a_node_from_BST.txt",
-    "size": 1504,
+    "size": 2593,
     "timestamp": 1755648000000,
     "displayDate": "20/08/2025",
     "problemNo": 450,
@@ -395,7 +395,7 @@
   {
     "name": "Detect_loop_in_ll.txt",
     "path": "dsa/Detect_loop_in_ll.txt",
-    "size": 1127,
+    "size": 1838,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 141,
@@ -408,7 +408,7 @@
   {
     "name": "Diameter_of_a_binaryTree.txt",
     "path": "dsa/Diameter_of_a_binaryTree.txt",
-    "size": 901,
+    "size": 1910,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 543,
@@ -422,7 +422,7 @@
   {
     "name": "Divide_an_array_into_subarrays_with_minimum_cost_i.txt",
     "path": "dsa/Divide_an_array_into_subarrays_with_minimum_cost_i.txt",
-    "size": 761,
+    "size": 1584,
     "timestamp": 1769904000000,
     "displayDate": "01/02/2026",
     "problemNo": 3010,
@@ -436,7 +436,7 @@
   {
     "name": "Duplicate_element_in_array.txt",
     "path": "dsa/Duplicate_element_in_array.txt",
-    "size": 657,
+    "size": 1164,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 287,
@@ -448,7 +448,7 @@
   {
     "name": "Dutch_national_flag_algorithm.txt",
     "path": "dsa/Dutch_national_flag_algorithm.txt",
-    "size": 814,
+    "size": 1764,
     "timestamp": 1767744000000,
     "displayDate": "07/01/2026",
     "problemNo": 75,
@@ -462,7 +462,7 @@
   {
     "name": "Exclusive_time_of_functions.txt",
     "path": "dsa/Exclusive_time_of_functions.txt",
-    "size": 1115,
+    "size": 2175,
     "timestamp": 1770249600000,
     "displayDate": "05/02/2026",
     "problemNo": 636,
@@ -475,7 +475,7 @@
   {
     "name": "Find_all_numbers_disappeared_in_an_array.txt",
     "path": "dsa/Find_all_numbers_disappeared_in_an_array.txt",
-    "size": 865,
+    "size": 1879,
     "timestamp": 1769904000000,
     "displayDate": "01/02/2026",
     "problemNo": 448,
@@ -488,7 +488,7 @@
   {
     "name": "Find_if_sum_of_squares_of_digit_reaches_one.txt",
     "path": "dsa/Find_if_sum_of_squares_of_digit_reaches_one.txt",
-    "size": 709,
+    "size": 1524,
     "timestamp": 1767744000000,
     "displayDate": "07/01/2026",
     "problemNo": 202,
@@ -502,7 +502,7 @@
   {
     "name": "Find_intersection_of_two_ll.txt",
     "path": "dsa/Find_intersection_of_two_ll.txt",
-    "size": 1590,
+    "size": 2410,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 160,
@@ -515,7 +515,7 @@
   {
     "name": "Find_kth_bit_in_nth_binary_string.txt",
     "path": "dsa/Find_kth_bit_in_nth_binary_string.txt",
-    "size": 745,
+    "size": 1875,
     "timestamp": 1772496000000,
     "displayDate": "03/03/2026",
     "problemNo": 1545,
@@ -528,7 +528,7 @@
   {
     "name": "Find_kth_largest_and_smallest_pq.txt",
     "path": "dsa/Find_kth_largest_and_smallest_pq.txt",
-    "size": 963,
+    "size": 2013,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 215,
@@ -542,7 +542,7 @@
   {
     "name": "Find_repeating_and_missing_element.txt",
     "path": "dsa/Find_repeating_and_missing_element.txt",
-    "size": 1487,
+    "size": 2585,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 2965,
@@ -555,9 +555,23 @@
     "type": "file"
   },
   {
+    "name": "Find_unique_binary_string.txt",
+    "path": "dsa/Find_unique_binary_string.txt",
+    "size": 1388,
+    "timestamp": 1785715200000,
+    "displayDate": "03/08/2026",
+    "problemNo": 1980,
+    "topics": [
+      "Array",
+      "String",
+      "Backtracking"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Four_sum.txt",
     "path": "dsa/Four_sum.txt",
-    "size": 1412,
+    "size": 2485,
     "timestamp": 1767744000000,
     "displayDate": "07/01/2026",
     "problemNo": 18,
@@ -571,7 +585,7 @@
   {
     "name": "Get_square_of_sorted_array.txt",
     "path": "dsa/Get_square_of_sorted_array.txt",
-    "size": 801,
+    "size": 1656,
     "timestamp": 1767744000000,
     "displayDate": "07/01/2026",
     "problemNo": 977,
@@ -585,7 +599,7 @@
   {
     "name": "Intersection_of_array_with_duplicates.txt",
     "path": "dsa/Intersection_of_array_with_duplicates.txt",
-    "size": 1215,
+    "size": 2060,
     "timestamp": 1753920000000,
     "displayDate": "31/07/2025",
     "problemNo": 349,
@@ -598,7 +612,7 @@
   {
     "name": "Ipo.txt",
     "path": "dsa/Ipo.txt",
-    "size": 1075,
+    "size": 2265,
     "timestamp": 1770249600000,
     "displayDate": "05/02/2026",
     "problemNo": 502,
@@ -612,7 +626,7 @@
   {
     "name": "Kadanes_algorithm.txt",
     "path": "dsa/Kadanes_algorithm.txt",
-    "size": 697,
+    "size": 1735,
     "timestamp": 1754265600000,
     "displayDate": "04/08/2025",
     "problemNo": 53,
@@ -625,7 +639,7 @@
   {
     "name": "Knapsack_dp.txt",
     "path": "dsa/Knapsack_dp.txt",
-    "size": 1512,
+    "size": 2633,
     "timestamp": 1755734400000,
     "displayDate": "21/08/2025",
     "problemNo": null,
@@ -637,7 +651,7 @@
   {
     "name": "Koko_eating_bananas.txt",
     "path": "dsa/Koko_eating_bananas.txt",
-    "size": 1085,
+    "size": 2313,
     "timestamp": 1754438400000,
     "displayDate": "06/08/2025",
     "problemNo": 875,
@@ -650,7 +664,7 @@
   {
     "name": "LRUCache_dll_hm.txt",
     "path": "dsa/LRUCache_dll_hm.txt",
-    "size": 1735,
+    "size": 2780,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 146,
@@ -665,7 +679,7 @@
   {
     "name": "Largest_bst_in_a_binary_tree.txt",
     "path": "dsa/Largest_bst_in_a_binary_tree.txt",
-    "size": 1609,
+    "size": 2867,
     "timestamp": 1755648000000,
     "displayDate": "20/08/2025",
     "problemNo": 333,
@@ -680,7 +694,7 @@
   {
     "name": "Longest_balanced_subarray_i.txt",
     "path": "dsa/Longest_balanced_subarray_i.txt",
-    "size": 994,
+    "size": 1810,
     "timestamp": 1770681600000,
     "displayDate": "10/02/2026",
     "problemNo": 3719,
@@ -694,7 +708,7 @@
   {
     "name": "Longest_balanced_substring_i.txt",
     "path": "dsa/Longest_balanced_substring_i.txt",
-    "size": 938,
+    "size": 1802,
     "timestamp": 1770854400000,
     "displayDate": "12/02/2026",
     "problemNo": 3713,
@@ -708,7 +722,7 @@
   {
     "name": "Longest_repeating_character_replacement.txt",
     "path": "dsa/Longest_repeating_character_replacement.txt",
-    "size": 1004,
+    "size": 2116,
     "timestamp": 1767916800000,
     "displayDate": "09/01/2026",
     "problemNo": 424,
@@ -722,7 +736,7 @@
   {
     "name": "Lowest_common_ancestor_binaryTree.txt",
     "path": "dsa/Lowest_common_ancestor_binaryTree.txt",
-    "size": 1377,
+    "size": 2459,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 236,
@@ -736,7 +750,7 @@
   {
     "name": "M_coloring_problem_bt.txt",
     "path": "dsa/M_coloring_problem_bt.txt",
-    "size": 1774,
+    "size": 3154,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": null,
@@ -750,7 +764,7 @@
   {
     "name": "Majority_element_n_by_3_boyreMoore.txt",
     "path": "dsa/Majority_element_n_by_3_boyreMoore.txt",
-    "size": 1300,
+    "size": 2286,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 229,
@@ -764,7 +778,7 @@
   {
     "name": "Max_absolute_sum_of_subarray.txt",
     "path": "dsa/Max_absolute_sum_of_subarray.txt",
-    "size": 738,
+    "size": 1637,
     "timestamp": 1767571200000,
     "displayDate": "05/01/2026",
     "problemNo": 1749,
@@ -777,7 +791,7 @@
   {
     "name": "Max_dot_product_of_two_subsequences.txt",
     "path": "dsa/Max_dot_product_of_two_subsequences.txt",
-    "size": 1351,
+    "size": 2243,
     "timestamp": 1767830400000,
     "displayDate": "08/01/2026",
     "problemNo": 1458,
@@ -790,7 +804,7 @@
   {
     "name": "Max_prod_subarray_in_array.txt",
     "path": "dsa/Max_prod_subarray_in_array.txt",
-    "size": 781,
+    "size": 1830,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 152,
@@ -803,7 +817,7 @@
   {
     "name": "Max_sum_of_non_adjacent_elements_dp.txt",
     "path": "dsa/Max_sum_of_non_adjacent_elements_dp.txt",
-    "size": 730,
+    "size": 1561,
     "timestamp": 1755648000000,
     "displayDate": "20/08/2025",
     "problemNo": 198,
@@ -816,7 +830,7 @@
   {
     "name": "Max_sum_subarray_removing_atMost_one_element.txt",
     "path": "dsa/Max_sum_subarray_removing_atMost_one_element.txt",
-    "size": 1422,
+    "size": 2478,
     "timestamp": 1767571200000,
     "displayDate": "05/01/2026",
     "problemNo": 1186,
@@ -829,7 +843,7 @@
   {
     "name": "Maximum_level_sum_of_a_binary_tree.txt",
     "path": "dsa/Maximum_level_sum_of_a_binary_tree.txt",
-    "size": 1347,
+    "size": 2215,
     "timestamp": 1767657600000,
     "displayDate": "06/01/2026",
     "problemNo": 1161,
@@ -843,7 +857,7 @@
   {
     "name": "Maximum_matrix_sum.txt",
     "path": "dsa/Maximum_matrix_sum.txt",
-    "size": 890,
+    "size": 2074,
     "timestamp": 1767571200000,
     "displayDate": "05/01/2026",
     "problemNo": 1975,
@@ -857,7 +871,7 @@
   {
     "name": "Maximum_number_of_k-divisible_components.txt",
     "path": "dsa/Maximum_number_of_k-divisible_components.txt",
-    "size": 1826,
+    "size": 3507,
     "timestamp": 1764288000000,
     "displayDate": "28/11/2025",
     "problemNo": 2872,
@@ -872,7 +886,7 @@
   {
     "name": "Maximum_product_of_splitted_binary_tree.txt",
     "path": "dsa/Maximum_product_of_splitted_binary_tree.txt",
-    "size": 1357,
+    "size": 2528,
     "timestamp": 1767744000000,
     "displayDate": "07/01/2026",
     "problemNo": 1339,
@@ -887,7 +901,7 @@
   {
     "name": "Maximum_sum_path_binaryTree.txt",
     "path": "dsa/Maximum_sum_path_binaryTree.txt",
-    "size": 1044,
+    "size": 2094,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 124,
@@ -902,7 +916,7 @@
   {
     "name": "Median_of_two_sorted_arrays_bs.txt",
     "path": "dsa/Median_of_two_sorted_arrays_bs.txt",
-    "size": 1398,
+    "size": 2917,
     "timestamp": 1754438400000,
     "displayDate": "06/08/2025",
     "problemNo": 4,
@@ -916,7 +930,7 @@
   {
     "name": "Middle_of_linked_list.txt",
     "path": "dsa/Middle_of_linked_list.txt",
-    "size": 1294,
+    "size": 1895,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 876,
@@ -929,7 +943,7 @@
   {
     "name": "Min_in_rotated_sorted_arr.txt",
     "path": "dsa/Min_in_rotated_sorted_arr.txt",
-    "size": 1027,
+    "size": 2388,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 153,
@@ -943,7 +957,7 @@
   {
     "name": "Min_time_visiting_all_points.txt",
     "path": "dsa/Min_time_visiting_all_points.txt",
-    "size": 632,
+    "size": 1425,
     "timestamp": 1768176000000,
     "displayDate": "12/01/2026",
     "problemNo": 1266,
@@ -953,7 +967,7 @@
   {
     "name": "Minimize_max_dist_bw_gas_stations.txt",
     "path": "dsa/Minimize_max_dist_bw_gas_stations.txt",
-    "size": 1387,
+    "size": 2902,
     "timestamp": 1754524800000,
     "displayDate": "07/08/2025",
     "problemNo": 774,
@@ -967,7 +981,7 @@
   {
     "name": "Minimize_maximum_pair_sum_in_array.txt",
     "path": "dsa/Minimize_maximum_pair_sum_in_array.txt",
-    "size": 674,
+    "size": 1535,
     "timestamp": 1769212800000,
     "displayDate": "24/01/2026",
     "problemNo": 1877,
@@ -982,7 +996,7 @@
   {
     "name": "Minimize_the_max_diff_btw_towers.txt",
     "path": "dsa/Minimize_the_max_diff_btw_towers.txt",
-    "size": 847,
+    "size": 2495,
     "timestamp": 1754265600000,
     "displayDate": "04/08/2025",
     "problemNo": null,
@@ -996,7 +1010,7 @@
   {
     "name": "Minimum_Pair_Removal_to_Sort_Array_I.txt",
     "path": "dsa/Minimum_Pair_Removal_to_Sort_Array_I.txt",
-    "size": 1196,
+    "size": 2282,
     "timestamp": 1769040000000,
     "displayDate": "22/01/2026",
     "problemNo": 3507,
@@ -1009,7 +1023,7 @@
   {
     "name": "Minimum_absolute_difference.txt",
     "path": "dsa/Minimum_absolute_difference.txt",
-    "size": 954,
+    "size": 1982,
     "timestamp": 1769385600000,
     "displayDate": "26/01/2026",
     "problemNo": 1200,
@@ -1022,7 +1036,7 @@
   {
     "name": "Minimum_ascii_delete_sum_for_two_strings.txt",
     "path": "dsa/Minimum_ascii_delete_sum_for_two_strings.txt",
-    "size": 1109,
+    "size": 2253,
     "timestamp": 1768003200000,
     "displayDate": "10/01/2026",
     "problemNo": 712,
@@ -1036,7 +1050,7 @@
   {
     "name": "Minimum_changes_to_make_alternating_binary_string.txt.",
     "path": "dsa/Minimum_changes_to_make_alternating_binary_string.txt.",
-    "size": 820,
+    "size": 1811,
     "timestamp": 1777766400000,
     "displayDate": "03/05/2026",
     "problemNo": 1758,
@@ -1048,7 +1062,7 @@
   {
     "name": "Minimum_cost_path_with_edge_reversals.txt",
     "path": "dsa/Minimum_cost_path_with_edge_reversals.txt",
-    "size": 1839,
+    "size": 3052,
     "timestamp": 1769472000000,
     "displayDate": "27/01/2026",
     "problemNo": 2662,
@@ -1062,7 +1076,7 @@
   {
     "name": "Minimum_cost_to_convert_string_i.txt",
     "path": "dsa/Minimum_cost_to_convert_string_i.txt",
-    "size": 2199,
+    "size": 3345,
     "timestamp": 1769644800000,
     "displayDate": "29/01/2026",
     "problemNo": 2976,
@@ -1076,7 +1090,7 @@
   {
     "name": "Minimum_deletions_to_make_string_balanced.txt",
     "path": "dsa/Minimum_deletions_to_make_string_balanced.txt",
-    "size": 664,
+    "size": 1752,
     "timestamp": 1770422400000,
     "displayDate": "07/02/2026",
     "problemNo": 1653,
@@ -1090,7 +1104,7 @@
   {
     "name": "Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "path": "dsa/Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
-    "size": 772,
+    "size": 2013,
     "timestamp": 1783036800000,
     "displayDate": "03/07/2026",
     "problemNo": 1888,
@@ -1103,7 +1117,7 @@
   {
     "name": "Minimum_path_sum_in_a_grid_dp.txt",
     "path": "dsa/Minimum_path_sum_in_a_grid_dp.txt",
-    "size": 2189,
+    "size": 3339,
     "timestamp": 1755648000000,
     "displayDate": "20/08/2025",
     "problemNo": 64,
@@ -1117,7 +1131,7 @@
   {
     "name": "Minimum_removals_to_balance_array.txt",
     "path": "dsa/Minimum_removals_to_balance_array.txt",
-    "size": 722,
+    "size": 1923,
     "timestamp": 1770336000000,
     "displayDate": "06/02/2026",
     "problemNo": 3634,
@@ -1131,7 +1145,7 @@
   {
     "name": "Minimum_swaps_to_arrange_a_binary_grid.txt",
     "path": "dsa/Minimum_swaps_to_arrange_a_binary_grid.txt",
-    "size": 1166,
+    "size": 2404,
     "timestamp": 1772409600000,
     "displayDate": "02/03/2026",
     "problemNo": 1536,
@@ -1145,7 +1159,7 @@
   {
     "name": "Morris_preorder_traversal_of_binary_tree.txt",
     "path": "dsa/Morris_preorder_traversal_of_binary_tree.txt",
-    "size": 1477,
+    "size": 2676,
     "timestamp": 1755561600000,
     "displayDate": "19/08/2025",
     "problemNo": 144,
@@ -1159,7 +1173,7 @@
   {
     "name": "Next_greater_element.txt",
     "path": "dsa/Next_greater_element.txt",
-    "size": 1292,
+    "size": 2475,
     "timestamp": 1755043200000,
     "displayDate": "13/08/2025",
     "problemNo": 496,
@@ -1173,7 +1187,7 @@
   {
     "name": "Next_permutation.txt",
     "path": "dsa/Next_permutation.txt",
-    "size": 1280,
+    "size": 2620,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 31,
@@ -1186,7 +1200,7 @@
   {
     "name": "Ninja_training_find_max_points_dp.txt",
     "path": "dsa/Ninja_training_find_max_points_dp.txt",
-    "size": 2667,
+    "size": 4147,
     "timestamp": 1755648000000,
     "displayDate": "20/08/2025",
     "problemNo": null,
@@ -1198,7 +1212,7 @@
   {
     "name": "Number_of_steps_to_reduce_a_number_in_binary_representation_to_one",
     "path": "dsa/Number_of_steps_to_reduce_a_number_in_binary_representation_to_one",
-    "size": 647,
+    "size": 1901,
     "timestamp": 1772064000000,
     "displayDate": "26/02/2026",
     "problemNo": 1404,
@@ -1211,7 +1225,7 @@
   {
     "name": "Partitioning_into_minimum_number_of_deci_binary_numbers.txt",
     "path": "dsa/Partitioning_into_minimum_number_of_deci_binary_numbers.txt",
-    "size": 520,
+    "size": 1265,
     "timestamp": 1772323200000,
     "displayDate": "01/03/2026",
     "problemNo": 1689,
@@ -1224,7 +1238,7 @@
   {
     "name": "Peak_element_in_unsorted_arr.txt",
     "path": "dsa/Peak_element_in_unsorted_arr.txt",
-    "size": 731,
+    "size": 1670,
     "timestamp": 1754438400000,
     "displayDate": "06/08/2025",
     "problemNo": 162,
@@ -1237,7 +1251,7 @@
   {
     "name": "Plus_one.txt",
     "path": "dsa/Plus_one.txt",
-    "size": 634,
+    "size": 1626,
     "timestamp": 1767225600000,
     "displayDate": "01/01/2026",
     "problemNo": 66,
@@ -1250,7 +1264,7 @@
   {
     "name": "Prime_number_of_set_bits_in_binary_representation.txt",
     "path": "dsa/Prime_number_of_set_bits_in_binary_representation.txt",
-    "size": 776,
+    "size": 1632,
     "timestamp": 1771977600000,
     "displayDate": "25/02/2026",
     "problemNo": 762,
@@ -1263,7 +1277,7 @@
   {
     "name": "Product_of_array_except_self.txt",
     "path": "dsa/Product_of_array_except_self.txt",
-    "size": 1000,
+    "size": 1974,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 238,
@@ -1276,7 +1290,7 @@
   {
     "name": "Remove_duplicated_from_sorted_list.txt",
     "path": "dsa/Remove_duplicated_from_sorted_list.txt",
-    "size": 1155,
+    "size": 2179,
     "timestamp": 1767657600000,
     "displayDate": "06/01/2026",
     "problemNo": 83,
@@ -1288,7 +1302,7 @@
   {
     "name": "Remove_nth_node_from_last_in_ll.txt",
     "path": "dsa/Remove_nth_node_from_last_in_ll.txt",
-    "size": 1663,
+    "size": 3116,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 19,
@@ -1301,7 +1315,7 @@
   {
     "name": "Rotate_array_by_one.txt",
     "path": "dsa/Rotate_array_by_one.txt",
-    "size": 813,
+    "size": 1669,
     "timestamp": 1753920000000,
     "displayDate": "31/07/2025",
     "problemNo": 189,
@@ -1315,7 +1329,7 @@
   {
     "name": "Search_element_in_rotated_array.txt",
     "path": "dsa/Search_element_in_rotated_array.txt",
-    "size": 1011,
+    "size": 2402,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 33,
@@ -1329,7 +1343,7 @@
   {
     "name": "Search_in_rotated_sorted_arr_2.txt",
     "path": "dsa/Search_in_rotated_sorted_arr_2.txt",
-    "size": 1196,
+    "size": 2129,
     "timestamp": 1754438400000,
     "displayDate": "06/08/2025",
     "problemNo": 81,
@@ -1343,7 +1357,7 @@
   {
     "name": "Segregate_odd_and_even_nodes_in_ll.txt",
     "path": "dsa/Segregate_odd_and_even_nodes_in_ll.txt",
-    "size": 1885,
+    "size": 3003,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 328,
@@ -1355,7 +1369,7 @@
   {
     "name": "Segregate_ones_and_zeroes.txt",
     "path": "dsa/Segregate_ones_and_zeroes.txt",
-    "size": 769,
+    "size": 1599,
     "timestamp": 1767657600000,
     "displayDate": "06/01/2026",
     "problemNo": null,
@@ -1368,7 +1382,7 @@
   {
     "name": "Shortest_unsorted_continuous_subarray.txt",
     "path": "dsa/Shortest_unsorted_continuous_subarray.txt",
-    "size": 929,
+    "size": 2196,
     "timestamp": 1767744000000,
     "displayDate": "07/01/2026",
     "problemNo": 581,
@@ -1382,7 +1396,7 @@
   {
     "name": "Sliding_window_maximum_dq.txt",
     "path": "dsa/Sliding_window_maximum_dq.txt",
-    "size": 1097,
+    "size": 2471,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 239,
@@ -1397,7 +1411,7 @@
   {
     "name": "Smallest_subtree_with_all_the_deepest_nodes.txt",
     "path": "dsa/Smallest_subtree_with_all_the_deepest_nodes.txt",
-    "size": 2240,
+    "size": 3548,
     "timestamp": 1767916800000,
     "displayDate": "09/01/2026",
     "problemNo": 865,
@@ -1411,7 +1425,7 @@
   {
     "name": "Sort_a_linked_list_mergeSort.txt",
     "path": "dsa/Sort_a_linked_list_mergeSort.txt",
-    "size": 1918,
+    "size": 3015,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 148,
@@ -1425,7 +1439,7 @@
   {
     "name": "Sort_integers_by_the_number_of_1_bits.txt",
     "path": "dsa/Sort_integers_by_the_number_of_1_bits.txt",
-    "size": 840,
+    "size": 1664,
     "timestamp": 1771977600000,
     "displayDate": "25/02/2026",
     "problemNo": 1356,
@@ -1439,7 +1453,7 @@
   {
     "name": "Special_positions_in_a_binary_matrix.txt",
     "path": "dsa/Special_positions_in_a_binary_matrix.txt",
-    "size": 892,
+    "size": 1859,
     "timestamp": 1775174400000,
     "displayDate": "03/04/2026",
     "problemNo": 1582,
@@ -1452,7 +1466,7 @@
   {
     "name": "Subset_sum_equals_to_k_dp.txt",
     "path": "dsa/Subset_sum_equals_to_k_dp.txt",
-    "size": 2311,
+    "size": 3603,
     "timestamp": 1755734400000,
     "displayDate": "21/08/2025",
     "problemNo": null,
@@ -1464,7 +1478,7 @@
   {
     "name": "SudokuSolving.txt",
     "path": "dsa/SudokuSolving.txt",
-    "size": 2088,
+    "size": 3245,
     "timestamp": 1754870400000,
     "displayDate": "11/08/2025",
     "problemNo": 37,
@@ -1478,7 +1492,7 @@
   {
     "name": "Sum_of_root_to_leaf_binary_numbers.txt",
     "path": "dsa/Sum_of_root_to_leaf_binary_numbers.txt",
-    "size": 1206,
+    "size": 2417,
     "timestamp": 1771977600000,
     "displayDate": "25/02/2026",
     "problemNo": 1022,
@@ -1493,7 +1507,7 @@
   {
     "name": "Task_scheduler.txt",
     "path": "dsa/Task_scheduler.txt",
-    "size": 872,
+    "size": 2018,
     "timestamp": 1755475200000,
     "displayDate": "18/08/2025",
     "problemNo": 621,
@@ -1508,7 +1522,7 @@
   {
     "name": "Three_sum.txt",
     "path": "dsa/Three_sum.txt",
-    "size": 1211,
+    "size": 2414,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 15,
@@ -1522,7 +1536,7 @@
   {
     "name": "Transformed_array.txt",
     "path": "dsa/Transformed_array.txt",
-    "size": 606,
+    "size": 1719,
     "timestamp": 1770249600000,
     "displayDate": "05/02/2026",
     "problemNo": 3379,
@@ -1535,7 +1549,7 @@
   {
     "name": "Trapping_rainwater.txt",
     "path": "dsa/Trapping_rainwater.txt",
-    "size": 1073,
+    "size": 2318,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 42,
@@ -1550,7 +1564,7 @@
   {
     "name": "Trionic_array_i.txt",
     "path": "dsa/Trionic_array_i.txt",
-    "size": 691,
+    "size": 1674,
     "timestamp": 1770249600000,
     "displayDate": "05/02/2026",
     "problemNo": 3637,
@@ -1562,7 +1576,7 @@
   {
     "name": "Two_sum.txt",
     "path": "dsa/Two_sum.txt",
-    "size": 786,
+    "size": 1776,
     "timestamp": 1754352000000,
     "displayDate": "05/08/2025",
     "problemNo": 1,
@@ -1576,7 +1590,7 @@
   {
     "name": "Two_sum_in_bst.txt",
     "path": "dsa/Two_sum_in_bst.txt",
-    "size": 991,
+    "size": 1962,
     "timestamp": 1755648000000,
     "displayDate": "20/08/2025",
     "problemNo": 653,
@@ -1591,7 +1605,7 @@
   {
     "name": "Two_sum_two_Input_array_is_sorted.txt",
     "path": "dsa/Two_sum_two_Input_array_is_sorted.txt",
-    "size": 779,
+    "size": 1586,
     "timestamp": 1767657600000,
     "displayDate": "06/01/2026",
     "problemNo": 167,
@@ -1605,7 +1619,7 @@
   {
     "name": "Union_of_array_with_duplicates.txt",
     "path": "dsa/Union_of_array_with_duplicates.txt",
-    "size": 834,
+    "size": 1513,
     "timestamp": 1753920000000,
     "displayDate": "31/07/2025",
     "problemNo": null,
@@ -1618,7 +1632,7 @@
   {
     "name": "Word_search.txt",
     "path": "dsa/Word_search.txt",
-    "size": 1314,
+    "size": 2857,
     "timestamp": 1754956800000,
     "displayDate": "12/08/2025",
     "problemNo": 79,
@@ -1632,7 +1646,7 @@
   {
     "name": "minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
     "path": "dsa/minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
-    "size": 686,
+    "size": 1710,
     "timestamp": 1769299200000,
     "displayDate": "25/01/2026",
     "problemNo": 1984,

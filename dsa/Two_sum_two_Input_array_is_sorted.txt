@@ -16,6 +16,21 @@ class Main {
     System.out.println(Arrays.toString(res));
   }
 
+  // Logic: Two Pointers (Optimal for Sorted Arrays)
+  // Since the input array is already sorted, we do not need a HashMap for O(N) time.
+  // We can achieve O(N) time and O(1) space using two pointers.
+  // 1. `left` points to the first element (index 0).
+  // 2. `right` points to the last element (index n-1).
+  // 3. Compute `sum = arr[left] + arr[right]`.
+  //    - If `sum == target`: we found the pair. (Return 1-indexed positions).
+  //    - If `sum > target`: we need a smaller sum. The only way to decrease the sum
+  //      is to decrement `right`.
+  //    - If `sum < target`: we need a larger sum. The only way to increase the sum
+  //      is to increment `left`.
+  //
+  // Dry run for arr = [2, 3, 4], target = 6:
+  // l=0(2), r=2(4). sum=6.
+  // 6 == 6! Return [left+1, right+1] -> [1, 3].
   static int[] twoSum(int[] arr, int target) {
     int left = 0;
     int right = arr.length - 1;

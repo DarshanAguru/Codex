@@ -52,6 +52,28 @@ class Main {
     return true;
   }
 
+  // Logic: Backtracking (Graph Coloring)
+  // We want to color a graph with at most M colors such that no two adjacent nodes have the same color.
+  // We use recursion and backtracking to try all valid colors for each node sequentially (0 to N-1).
+  // For node `i`, we try colors `1` to `M`.
+  // - `isSafe()` checks if any of `i`'s neighbors already have the chosen color.
+  // - If safe, we assign the color `color[i] = c` and recursively color the next node `i + 1`.
+  // - If that path succeeds, we return true.
+  // - If it fails (meaning no valid coloring possible down this path), we backtrack `color[i] = 0`
+  //   and try the next color.
+  // If no colors work for node `i`, return false (triggering backtracking on the previous node).
+  //
+  // Dry run for N=4, M=3, edges (0-1, 1-2, 2-3, 3-0, 0-2) [A square with a diagonal]:
+  // node 0: tries color 1. Safe. color[0]=1.
+  //   node 1: tries color 1. Unsafe (neighbor 0 has 1).
+  //           tries color 2. Safe. color[1]=2.
+  //     node 2: tries color 1. Unsafe (neighbor 0 has 1).
+  //             tries color 2. Unsafe (neighbor 1 has 2).
+  //             tries color 3. Safe. color[2]=3.
+  //       node 3: tries color 1. Unsafe (neighbor 0 has 1).
+  //               tries color 2. Safe (neighbor 0 has 1, neighbor 2 has 3). color[3]=2.
+  //         node 4: N reached. Return true!
+  // Output: [1, 2, 3, 2].
   static boolean solveGraphColoring(
     int node,
     Graph graph,

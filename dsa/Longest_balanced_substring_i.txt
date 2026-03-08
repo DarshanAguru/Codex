@@ -13,6 +13,20 @@ class Main {
     System.out.println(longestBalanced(s));
   }
 
+  // Logic: Brute Force Substrings + Frequencies
+  // Checks all possible substrings to see if all distinct characters appear the exact same number of times.
+  // For each starting index `i`, we expand an ending index `j`.
+  // We keep a frequency map of characters in the current substring.
+  // We keep track of the maximum frequency (`maxCnt`) and the number of distinct characters (`distinct`).
+  // If `maxCnt * distinct == length of substring`, it means all present characters
+  // must have exactly `maxCnt` occurrences, making the string perfectly balanced.
+  //
+  // Dry run for "abba":
+  // i=0: `a`. maxCnt=1, dist=1. 1*1 == 1. res=1.
+  //      `ab`. map={a:1, b:1}. maxCnt=1, dist=2. 1*2 == 2. res=2.
+  //      `abb`. map={a:1, b:2}. maxCnt=2, dist=2. 2*2(4) != 3.
+  //      `abba`. map={a:2, b:2}. maxCnt=2, dist=2. 2*2 == 4. res=4.
+  // Result is 4.
   public static int longestBalanced(String s) {
     int n = s.length();
     HashMap<Character, Integer> hm = new HashMap<>();

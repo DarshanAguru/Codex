@@ -12,8 +12,17 @@ class Main {
     int n = 6;
     int set = 0;
 
-    // Count set bits using Brian Kernighan’s Algorithm
-    // Iterates only as many times as there are set bits
+    // Logic: Brian Kernighan’s Algorithm
+    // This algorithm efficiently counts the number of set bits (1s).
+    // The expression `n & (n - 1)` drops the lowest set bit of `n`.
+    // So, if we repeatedly perform this operation in a loop and increment a counter,
+    // the loop will only run exactly as many times as there are set bits in `n`.
+    //
+    // Dry run for n = 6 (binary 110):
+    // 1. n = 6 (110). n-1 = 5 (101). n = 110 & 101 = 100 (4). set = 1.
+    // 2. n = 4 (100). n-1 = 3 (011). n = 100 & 011 = 000 (0). set = 2.
+    // 3. n = 0. Loop ends.
+    // Result is 2.
     while (n != 0) {
       n = n & (n - 1);
       set++;

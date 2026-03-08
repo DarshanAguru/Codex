@@ -14,6 +14,35 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Double Pass Traversal (Track Max/Min)
+  // We want to find the shortest continuous subarray that, if sorted, makes the whole array sorted.
+  // If an array is completely sorted, `maxSoFar` will always be `<=` the current element.
+  // If we find an element `< maxSoFar`, it is out of place! The last such element dictates
+  // the `end` of the unsorted subarray.
+  // Similarly, traversing backwards, `minSoFar` should always be `>=` the current element.
+  // If we find an element `> minSoFar`, it's out of place! The last such element dictates
+  // the `start` of the unsorted subarray.
+  // 1. Traverse Left -> Right: Keep track of `maxSoFar`. Update `end` if `arr[i] < maxSoFar`.
+  // 2. Traverse Right -> Left: Keep track of `minSoFar`. Update `start` if `arr[i] > minSoFar`.
+  //
+  // Dry run for arr = [2, 6, 4, 8, 10, 9, 15]:
+  // L->R:
+  // i=0 (2): max=2.
+  // i=1 (6): max=6.
+  // i=2 (4): 4 < 6. end=2.
+  // i=3 (8): max=8.
+  // i=4 (10): max=10.
+  // i=5 (9): 9 < 10. end=5.
+  // i=6 (15): max=15.
+  // R->L:
+  // i=6 (15): min=15.
+  // i=5 (9): min=9.
+  // i=4 (10): 10 > 9. start=4.
+  // i=3 (8): min=8.
+  // i=2 (4): min=4.
+  // i=1 (6): 6 > 4. start=1.
+  // i=0 (2): min=2.
+  // Subarray is from start=1 to end=5. Length = 5 - 1 + 1 = 5.
   static int findUnsortedSubarray(int[] arr) {
     int n = arr.length;
     int end = -1;

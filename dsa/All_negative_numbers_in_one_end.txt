@@ -7,6 +7,19 @@ import java.util.ArrayList;
 
 class Main {
 
+  // Logic: Array Partitioning using Extra Space
+  // The goal is to separate positive and negative numbers. This solution uses O(N) space
+  // via a `temp` array.
+  // First, we iterate over the elements and add all positive numbers (>= 0) into `temp`.
+  // Then, we iterate again and add all negative numbers (< 0).
+  // Finally, we copy the updated `temp` array back to the original `arr`.
+  // (Note: To do this in O(1) space, a two-pointer approach akin to QuickSort partitioning
+  // or cycle sort can be used, though preserving order in O(1) space is generally O(N^2)).
+  //
+  // Dry run for arr = [1, -1, 3, -7]:
+  // 1. Positives pass: temp[0]=1, temp[1]=3. (l=2)
+  // 2. Negatives pass: temp[2]=-1, temp[3]=-7. (l=4)
+  // temp becomes [1, 3, -1, -7]. We copy this back to arr.
   public static void main(String[] args) {
     int[] arr = { 1, -1, 3, 2, -7, -5, 11, 6 };
     // Using an auxiliary array method (O(N) space)

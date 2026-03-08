@@ -10,8 +10,19 @@ class Main {
 
   public static void main(String[] args) {
     int[] arr = { 1, 2, 3, 4 };
-    // Note: This solution uses O(N) space.
-    // Floyd's Cycle Finding (Tortoise and Hare) can solve this in O(1) space.
+    // Logic: Hash Set
+    // We add elements to a HashSet one by one. If an element is already in the set,
+    // it's the duplicate. (This takes O(N) space).
+    // Note: To solve this in O(1) space and O(N) time without modifying the array,
+    // Floyd's Tortoise and Hare cycle detection algorithm can be used treating
+    // array values as pointers (since `nums[i] <= n` for an array of size n+1).
+    //
+    // Dry run for arr = [1, 2, 3, 4, 3]:
+    // 1. i=1. Set doesn't have 1. add 1.
+    // 2. i=2. Set doesn't have 2. add 2.
+    // ...
+    // 5. i=3. Set already has 3! Record "3" as the duplicate.
+    // Output: 3.
     String duplicate = null;
 
     HashSet<Integer> hs = new HashSet<>();

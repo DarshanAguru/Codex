@@ -13,6 +13,29 @@ class Main {
     System.out.println(minimumDeletions(s));
   }
 
+  // Logic: Greedy + Prefix Counting
+  // A string of 'a's and 'b's is balanced if no 'a' appears after a 'b'.
+  // This means the string must look like "aaa...bbb...".
+  // We iterate through the string from left to right.
+  // We maintain a count of 'b's seen so far (`countB`).
+  // When we see an 'a', it's "misplaced" IF we've seen any 'b's before it.
+  // To fix this, we have two choices:
+  // 1. Delete this 'a' (cost = 1 deletion).
+  // 2. Delete one of the preceding 'b's (cost = 1 deletion).
+  // Either way, it requires exactly 1 deletion to fix one "a-after-b" inversion.
+  // So we increment our deletion result `res` and *decrement* `countB` (simulating
+  // the deletion of a 'b', or pairing this 'a' with a 'b').
+  //
+  // Dry run for s = "aababbab":
+  // i=0 ('a'): countB=0. res=0.
+  // i=1 ('a'): countB=0. res=0.
+  // i=2 ('b'): countB=1. res=0.
+  // i=3 ('a'): countB > 0. Delete! res=1, countB=0.
+  // i=4 ('b'): countB=1. res=1.
+  // i=5 ('b'): countB=2. res=1.
+  // i=6 ('a'): countB > 0. Delete! res=2, countB=1.
+  // i=7 ('b'): countB=2. res=2.
+  // Returns 2.
   public static int minimumDeletions(String s) {
     int n = s.length();
     int countB = 0;

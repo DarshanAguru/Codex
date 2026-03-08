@@ -14,6 +14,23 @@ class Main {
     System.out.println(Arrays.toString(res));
   }
 
+  // Logic: Array Traversal / Math Carry
+  // We want to add 1 to a number represented as an array of digits.
+  // We iterate from the rightmost digit to the left.
+  // 1. If the current digit is `< 9`, we simply add 1 to it and return the array!
+  //    (Because no carry is generated, the rest of the digits remain unchanged).
+  // 2. If the current digit is `9`, adding 1 makes it `10`. So we set it to `0`
+  //    and the loop continues to the next digit (implicitly carrying over 1).
+  // 3. If the loop finishes entirely, it means all digits were `9` (like `999`).
+  //    In this case, the number becomes `1000`. We just need a new array of size `N+1`,
+  //    with the first element set to `1` (the rest are 0 by default in Java).
+  //
+  // Dry run for digits = [9, 9]:
+  // i=1 (9): Not < 9. Set digits[1] = 0.
+  // i=0 (9): Not < 9. Set digits[0] = 0.
+  // Loop ends. digits is [0, 0].
+  // All 9s! Create new array of size 3. Set index 0 to 1 -> [1, 0, 0].
+  // Returns [1, 0, 0].
   static int[] plusOne(int[] digits) {
     for (int i = digits.length - 1; i >= 0; i--) {
       if (digits[i] < 9) {

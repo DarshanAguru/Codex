@@ -16,6 +16,26 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Greedy / Math
+  // We need to schedule tasks with a cooldown `n` between the same tasks.
+  // The minimum time required is heavily dictated by the task with the MAXIMUM frequency.
+  // Let `maxFreq` be the max count of any task.
+  // We can imagine framing the schedule around these most frequent tasks:
+  // `A _ _ A _ _ A` (if A has frequency 3, n=2).
+  // There are exactly `maxFreq - 1` blocks of size `n + 1` (the task itself + `n` idle slots).
+  // The last block does not need trailing idles, so we just add the number of tasks that
+  // share this exact same `maxFreq` (`maxFreqTasks`).
+  // Formula: `(maxFreq - 1) * (n + 1) + maxFreqTasks`.
+  // What if `n` is so small that we don't need any idle time? Then the answer is simply
+  // the total number of tasks (`tasks.length`).
+  // We take the maximum of these two bounds.
+  //
+  // Dry run for tasks= [A, A, A, B, B, B], n=2:
+  // maxFreq = 3 (for A).
+  // Elements with maxFreq = 2 (Both A and B). So maxFreqTasks = 2.
+  // Formula = (3 - 1) * (2 + 1) + 2 = 2 * 3 + 2 = 8.
+  // Length bound = 6. Max(6, 8) = 8.
+  // Layout visualization: A B _ | A B _ | A B (Length 8).
   static int findMinCPUIntervals(char[] tasks, int n) {
     int[] taskCount = new int[26];
     int maxFreq = 0;

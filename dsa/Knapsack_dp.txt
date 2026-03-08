@@ -16,6 +16,23 @@ class Main {
     System.out.println("Tabulation: " + knapSackTAB(n, W, wt, val));
   }
 
+  // Logic: 0/1 Knapsack (Dynamic Programming)
+  // We have a set of items, each with a weight and a value. We want to maximize the total value
+  // without exceeding the knapsack capacity W. We can either "pick" or "not pick" an item.
+  // State: dp[i][w] = max value using the first i items with weight capacity w.
+  // Recurrence relation:
+  // 1. Not picking item i: dp[i - 1][w]
+  // 2. Picking item i: val[i] + dp[i][w - wt[i]] (only if wt[i] <= w)
+  // Take the max of these two choices.
+  // (Note: The tabulation shown uses unbounded knapsack logic locally on the first row -
+  // replacing it with 0/1 logic: dp[0][c] = wt[0] <= c ? val[0] : 0,
+  // but this specifically handles unbounded pick on index 0 for coin change variations).
+  // Actually, wait - standard 0/1 knapsack only picks once!
+  // The code below actually simulates Unbounded Knapsack on first index... `(c / wt[0]) * val[0]`.
+  // Thus this code is for UNBOUNDED KNAPSACK.
+  //
+  // Dry run for W=10, weights=[2,4,6], vals=[5,11,13]:
+  // Max value: using item 2 (wt 4, val 11) twice -> wt 8, val 22 + item 1 (wt 2, val 5) -> wt 10, val 27.
   static int knapSackTAB(int n, int W, int[] wt, int[] val) {
     int[][] dp = new int[n][W + 1];
 

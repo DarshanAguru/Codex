@@ -14,6 +14,25 @@ class Main {
     System.out.println("Result: " + res);
   }
 
+  // Logic: Matrix Parity & Greedy
+  // We have an operation that can multiply any two adjacent elements by -1.
+  // This operation effectively allows us to "move" a negative sign anywhere in the matrix!
+  // It also allows us to cancel out pairs of negative signs (-1 * -1 = 1).
+  // Therefore:
+  // 1. If there is an EVEN number of negative numbers in the entire matrix, we can pair
+  //    them all up and turn every single number positive. The max sum is the sum of all absolute values.
+  // 2. If there is an ODD number of negative numbers, exactly ONE negative sign will remain.
+  //    We can move this single negative sign to the element with the SMALLEST absolute value
+  //    in the entire matrix to minimize its impact. The max sum is the sum of all absolute values,
+  //    except we subtract the smallest absolute value twice (once to remove it from the sum,
+  //    and once to subtract it as a negative).
+  //
+  // Dry run for matrix = [[1,2,3], [-1,-2,-3], [1,2,3]]:
+  // Total absolute sum: 1+2+3 + 1+2+3 + 1+2+3 = 18.
+  // Negatives count: 3 (odd).
+  // Smallest absolute value: 1.
+  // Since negatives is odd, subtract 2 * minVal: 18 - 2(1) = 16.
+  // Returns 16.
   static long maxMatrixSum(int[][] matrix) {
     long sum = 0;
     int minVal = Integer.MAX_VALUE;

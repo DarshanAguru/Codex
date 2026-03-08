@@ -38,6 +38,24 @@ class Main {
     printInorder(node.right);
   }
 
+  // Logic: BST Deletion Cases
+  // To delete a node from a BST, we first find it using BST properties (left for smaller, right for larger).
+  // Once found, there are 3 cases:
+  // Case 1: Node is a leaf (both children null) -> Return null to parent.
+  // Case 2: Node has one child -> Return the non-null child to the parent.
+  // Case 3: Node has two children -> Find the inorder successor (smallest node in the right subtree).
+  //         Replace the node's value with the successor's value, and recursively delete the successor
+  //         from the right subtree.
+  //
+  // Dry run for root=[5,3,6,2,4,null,7], target=3:
+  // 3 < 5, go left to node(3). target == 3. Found it.
+  // Node(3) has two children (2 and 4).
+  // Inorder successor is getMin(node.right) -> getMin(node(4)) -> returns 4.
+  // Replace node(3).val with 4. Node is now 4.
+  // Call deleteNodeFromBST(node.right (which is 4), target=4).
+  // Inside recursive call: target==4. Found it. It's a leaf (both children null). Returns null.
+  // So node(4).right becomes null.
+  // Resulting subtree: 4 -> L:2, R:null.
   static Node deleteNodeFromBST(Node node, int target) {
     if (node == null) return null;
 

@@ -46,8 +46,23 @@ class Main {
     System.out.println(res);
   }
 
-  // Method to compute the Bottom View of a Binary Tree
-  // Bottom View consists of the nodes visible from the bottom (i.e., last node at each horizontal distance)
+  // Logic: BFS + Horizontal Distance (HD) Tracking
+  // We assign a horizontal distance to each node. Root is at HD = 0.
+  // Left child is at HD = parent.HD - 1. Right child is at HD = parent.HD + 1.
+  // To get the bottom view, for each HD, we want the node that appears LAST in a top-down traversal.
+  // A Level Order Traversal (BFS) perfectly achieves this.
+  // We maintain a `TreeMap` mapping HD -> Node value. Since we use BFS, if multiple nodes
+  // have the same HD, the one at the deepest level will overwrite the previous ones in the map.
+  // The `TreeMap` automatically keeps the HDs sorted from left to right.
+  //
+  // Dry run for root = 1, L=2, R=3:
+  // - q: [(1, HD=0)]. map: empty.
+  // - pop (1, 0). map[0] = 1. push (2, -1) and (3, 1).
+  // - pop (2, -1). map[-1] = 2. push L, R children of 2...
+  // - pop (3, 1). map[1] = 3. push L, R children of 3...
+  // If there's an overwrite, say HD=0 is reached again at a deeper level (e.g., node 10),
+  // map[0] will be updated to 10.
+  // Final map values in sorted HD order represent the bottom view.
   static List<Integer> getBottomViewOfTree(Node root) {
     if (root == null) return new ArrayList<>();
 

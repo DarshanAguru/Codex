@@ -14,6 +14,21 @@ class Main {
     System.out.println(hasAllCodes(s, k));
   }
 
+  // Logic: Sliding Window + HashSet
+  // A binary code of length `k` has exactly 2^k possible combinations.
+  // We can slide a window of size `k` across the string `s`, extract each substring of length `k`,
+  // and add it to a HashSet.
+  // If the HashSet eventually contains 2^k unique strings, then the string contains all possible codes.
+  // Optimization: If `s.length() < 2^k + k - 1`, it's impossible for `s` to contain
+  // 2^k unique strings of length `k`.
+  //
+  // Dry run for s = "00110", k = 2 (need 2^2 = 4 unique codes: "00", "01", "10", "11"):
+  // len = 5. (1<<2)+2-1 = 5. Length OK.
+  // i=0: sub="00", set={"00"}
+  // i=1: sub="01", set={"00", "01"}
+  // i=2: sub="11", set={"00", "01", "11"}
+  // i=3: sub="10", set={"00", "01", "11", "10"}
+  // Loop ends. set.size() = 4, which is (1<<2). Returns true.
   static boolean hasAllCodes(String s, int k) {
     HashSet<String> set = new HashSet<>();
     if (s.length() < (1 << k) + k - 1) {

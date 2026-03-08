@@ -18,6 +18,22 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Dynamic Programming (Memoization)
+  // We want to find the max dot product of non-empty subsequences of nums1 and nums2.
+  // State: `dp[i][j]` = max dot product using nums1[i...] and nums2[j...].
+  // At each pair (i, j), we have choices:
+  // 1. Take both: Multiply nums1[i]*nums2[j]. Then add the max product of the remaining
+  //    elements (helper(i+1, j+1)), BUT only if it's positive (using `Math.max(0, ...)`).
+  //    If it's negative, we just start fresh with the current product.
+  // 2. Skip i: Try helper(i+1, j).
+  // 3. Skip j: Try helper(i, j+1).
+  // The answer is the max of these three choices.
+  //
+  // Dry run intuition:
+  // For nums1=[2, 1, -2, 5], nums2=[3, 0, -6]:
+  // Pairs that give large positive products: 5 * 3 = 15. -2 * -6 = 12.
+  // Total max is taking 2*3=6, and -2*-6=12 -> 6+12=18.
+  // DP explores all these matching vs skipping decisions.
   static int maxDotProduct(int[] nums1, int[] nums2) {
     int n = nums1.length;
     int m = nums2.length;

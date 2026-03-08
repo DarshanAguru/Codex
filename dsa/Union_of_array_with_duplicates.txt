@@ -5,6 +5,19 @@ import java.util.*;
 
 class Main {
 
+  // Logic: HashSet
+  // To find the union of two arrays (which may contain duplicates), we want a set
+  // of all unique elements that appear in either array.
+  // A `HashSet` strictly maintains unique elements.
+  // We simply iterate over both arrays and `add` every element to the HashSet.
+  // The HashSet automatically ignores duplicates.
+  // Finally, we extract the elements from the HashSet into a result array.
+  //
+  // Dry run for a=[1, 2, 1, 1, 2], b=[2, 2, 1, 2, 1]:
+  // Iterate a: add 1 (hs={1}), add 2 (hs={1,2}), add 1 (ignored), etc.
+  // Iterate b: add 2 (ignored), add 1 (ignored)...
+  // Final hs = {1, 2}.
+  // Result array size = 2, populated with [1, 2].
   public static void main(String[] args) {
     int[] a = { 1, 2, 1, 1, 2 };
     int[] b = { 2, 2, 1, 2, 1 };

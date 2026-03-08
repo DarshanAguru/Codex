@@ -15,6 +15,23 @@ class Main {
     System.out.println(idx != -1);
   }
 
+  // Logic: Binary Search with Duplicates Handling
+  // Similar to standard search in a rotated array, but elements can be duplicated.
+  // The core issue with duplicates is when `arr[low] == arr[mid] == arr[high]`.
+  // In this edge case, we can't determine which half is sorted!
+  // E.g., arr = [3, 1, 2, 3, 3, 3, 3], mid is 3. Is the left half sorted?
+  // We just shrink the search space `low++` and `high--` until we can identify
+  // a sorted half.
+  // The rest of the logic is identical to normal rotated array binary search.
+  //
+  // Dry run for arr = [7, 8, 1, 2, 3, 3, 3, 4, 5, 6], k = 3:
+  // low=0, high=9. mid=4 (val=3).
+  // arr[mid] == k (3 == 3). Return 4!
+  // Example with duplicate trim: arr=[3, 1, 3, 3, 3], k=1.
+  // low=0, high=4. mid=2 (val=3).
+  // 3 == 3 == 3. Shrink! low=1, high=3.
+  // low=1, high=3. mid=2 (val=3). Wait, mid is now (1+3)/2 = 2.
+  // ... and so on until 1 is found or space exhausted.
   static int binarySearch(int[] arr, int low, int high, int k) {
     while (low <= high) {
       int mid = low + (high - low) / 2;

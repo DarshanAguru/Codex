@@ -17,6 +17,25 @@ class Main {
     }
   }
 
+  // Logic: Array Traversal / Math
+  // The "Next Permutation" is the lexicographically next strictly greater sequence of digits.
+  // 1. Find the "breakdown point": Traverse right to left. Find the first `i` where `arr[i] < arr[i+1]`.
+  //    Everything to the right of `i` is sorted in descending order (highest possible permutation).
+  // 2. If no breakdown point exists (i == -1), the array is fully descending. The next permutation
+  //    is the very first one (fully ascending). So, reverse the entire array.
+  // 3. Find the "swap candidate": Traverse right to left again. Find the first element `arr[j]`
+  //    that is strictly greater than `arr[i]`. This is the smallest element that is larger than `arr[i]`.
+  // 4. Swap `arr[i]` and `arr[j]`.
+  // 5. Reverse the sub-array from `i+1` to end. This changes the suffix from descending (highest)
+  //    to ascending (lowest) to get the very next lexicographical order.
+  //
+  // Dry run for arr = [1, 3, 2]:
+  // 1. Traverse R -> L: arr[1]=3 < arr[2]=2 (False). arr[0]=1 < arr[1]=3 (True!). Breakdown `idx = 0` (val 1).
+  // 2. Find swap candidate: R -> L: arr[2]=2 > arr[0]=1 (True!). Swap `idx=0` and `j=2`.
+  //    Array becomes [2, 3, 1].
+  // 3. Reverse from `idx+1` (index 1 to end):
+  //    Sub-array [3, 1] reversed becomes [1, 3].
+  // Array becomes [2, 1, 3]. Complete!
   static List<Integer> nextPerm(List<Integer> arr) {
     int idx = -1;
 

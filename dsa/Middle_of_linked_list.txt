@@ -60,7 +60,19 @@ class Main {
     System.out.println("Middle Element: " + res);
   }
 
-  // Tortoise and Hare approach
+  // Logic: Tortoise and Hare approach (Fast and Slow Pointers)
+  // We use two pointers that start at the head of the linked list.
+  // The `slow` pointer moves 1 step at a time.
+  // The `fast` pointer moves 2 steps at a time.
+  // When the `fast` pointer reaches the end of the list (or `null`), the `slow` pointer
+  // will be exactly at the middle of the list.
+  //
+  // Dry run for List 1 -> 2 -> 3 -> 4 -> 5:
+  // Init: slow=1, fast=1.
+  // Iter 1: slow moves to 2, fast moves to 3.
+  // Iter 2: slow moves to 3, fast moves to 5.
+  // Iter 3: fast.next is null, loop ends.
+  // Returns: slow.val which is 3. (Middle element).
   static int findMiddle(Node head) {
     Node slow = head;
     Node fast = head;

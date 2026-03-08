@@ -18,6 +18,28 @@ class Main {
     }
   }
 
+  // Logic: Sorting + One Pass
+  // To find the minimum absolute difference between any two elements in an array,
+  // the elements must be as close to each other in value as possible.
+  // When an array is sorted, the closest elements will ALWAYS be adjacent.
+  // Algorithm:
+  // 1. Sort the array.
+  // 2. Iterate through adjacent pairs `(arr[i-1], arr[i])`.
+  // 3. Keep track of the `min` difference seen so far.
+  // 4. If we find a *smaller* difference, clear out the result list, update `min`,
+  //    and add the new pair.
+  // 5. If we find a difference *equal* to `min`, just add the pair to the list.
+  //
+  // Dry run for arr = [3, 8, -10, 23, 19, -4, -14, 27]:
+  // Sort: [-14, -10, -4, 3, 8, 19, 23, 27].
+  // Pairs:
+  // (-14, -10): diff=4. min=4. res=[[-14,-10]].
+  // (-10, -4): diff=6. (6 > 4, skip).
+  // (-4, 3): diff=7. (skip)
+  // (3, 8): diff=5. (skip)
+  // (8, 19): diff=11. (skip)
+  // (19, 23): diff=4. min=4. res=[[-14,-10], [19,23]].
+  // (23, 27): diff=4. min=4. res=[[-14,-10], [19,23], [23,27]].
   static List<List<Integer>> minimumAbsDifference(int[] arr) {
     Arrays.sort(arr);
     int n = arr.length;

@@ -24,6 +24,22 @@ class LRUCache {
   Node tail;
   HashMap<Integer, Node> hm;
 
+  // Logic: HashMap + Doubly Linked List (DLL)
+  // To achieve O(1) time complexity for both `get` and `put` operations:
+  // - A HashMap provides O(1) access to nodes by their key.
+  // - A Doubly Linked List allows O(1) removal and insertion of nodes.
+  // We maintain a `head` (most recently used) and `tail` (least recently used) dummy node.
+  // When a node is accessed or inserted, we move it to the front (right after `head`).
+  // When capacity is exceeded, we remove the node right before `tail` (the LRU element).
+  //
+  // Dry run for capacity = 2:
+  // put(1,1): Cache=[(1,1)]. Map={1:node1}. DLL: head <-> (1,1) <-> tail.
+  // put(2,2): Cache=[(2,2), (1,1)]. Map={1:node1, 2:node2}. DLL: head <-> (2,2) <-> (1,1) <-> tail.
+  // get(1): Returns 1. Now (1,1) is accessed, so it moves to front.
+  //         Cache=[(1,1), (2,2)]. DLL: head <-> (1,1) <-> (2,2) <-> tail.
+  // put(3,3): Cache exceeds capacity. Remove LRU which is (2,2).
+  //           Cache=[(3,3), (1,1)]. Map={1:node1, 3:node3}
+  // get(2): Not in Map -> returns -1.
   LRUCache(int capacity) {
     this.capacity = capacity;
     this.head = new Node(-1, -1);

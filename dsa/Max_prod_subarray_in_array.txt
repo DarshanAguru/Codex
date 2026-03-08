@@ -11,7 +11,25 @@ class Main {
   public static void main(String[] args) {
     int[] arr = { 1, 2, 3, 4, 5, 0 };
 
-    // Maximum Product Subarray
+    // Logic: Modified Kadane's Algorithm
+    // When dealing with products, a negative number multiplied by a negative number becomes positive.
+    // So, a very small negative product can suddenly become the maximum product if we multiply it
+    // by another negative number.
+    // To handle this, we keep track of BOTH the maximum product so far (`prod1`) and
+    // the minimum product so far (`prod2`) at each element.
+    // At each step, the new max/min could be:
+    // 1. The current element alone (starts a new subarray).
+    // 2. The current element * previous max product.
+    // 3. The current element * previous min product.
+    //
+    // Dry run for arr = [1, 2, -3, 0, -4, -5]:
+    // i=0(1): max=1, min=1. res=1.
+    // i=1(2): max=max(2, 2*1, 2*1)=2. min=min(2, 2*1, 2*1)=2. res=2.
+    // i=2(-3): max=max(-3, -3*2, -3*2)=-3. min=min(-3, -3*2, -3*2)=-6. res=2.
+    // i=3(0): max=0, min=0. res=2.
+    // i=4(-4): max=-4, min=-4. res=2.
+    // i=5(-5): max=max(-5, -5*-4, -5*-4)=20. min=min(-5, -5*-4, -5*-4)=-5. res=20.
+    // Output: 20 (subarray: [-4, -5]).
     int prod1 = arr[0];
     int prod2 = arr[0];
     int res = arr[0];

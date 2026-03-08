@@ -29,6 +29,27 @@ class Main {
     System.out.println(ans);
   }
 
+  // Logic: Backtracking / DFS
+  // We need to find if a specific `word` can be constructed by connecting adjacent letters
+  // in the grid (horizontally or vertically). We cannot reuse the same cell in a single word path.
+  // 1. We iterate over the entire grid to find the first letter of our word.
+  // 2. Once found, we start a DFS `solve` from that cell.
+  //    - Base case 1: `idx == word.length()`, we found all letters! Return true.
+  //    - Base case 2: Out of bounds, or the current cell doesn't match `word.charAt(idx)`. Return false.
+  // 3. To prevent revisiting the same cell, we temporarily mark it with a special character (e.g., '*').
+  // 4. We recursively search all 4 directions (up, down, left, right) for the next letter (`idx + 1`).
+  // 5. BACKTRACK: After checking all directions, we restore the cell's original character so it
+  //    can be used in other valid paths if this current path fails.
+  // 6. If any direction returns true, we propagate true upwards.
+  //
+  // Dry run concept: (A) -> (E) -> (F) -> (G)
+  // i=0, j=0 ('A' matches). DFS(idx=0). Marks 'A' as '*'.
+  // Recursion goes down to 'A' (i=1), mismatch.
+  // Recursion goes right to 'B', mismatch.
+  // Wait, my grid has 'E' at i=1,j=1. So 'A' -> 'E' isn't adjacent if starting from (0,0)?
+  // Actually, (0,0) only borders (0,1)='B' and (1,0)='A'. Neither is 'E'. So (0,0) fails.
+  // Main loop tries again... finds 'A' at (1,0). Next is 'E' at (1,1). Matches! Then 'F' at (2,1). Matches!
+  // Then 'G' at (2,2). Matches! Length reached -> true.
   static boolean solve(char[][] grid, String word, int i, int j, int idx) {
     if (idx == word.length()) return true;
 

@@ -61,6 +61,25 @@ class Main {
     list.printList();
   }
 
+  // Logic: Merge Sort for Linked List (Divide and Conquer)
+  // Merge Sort is ideal for sorting Linked Lists in O(N log N) time and O(log N) recursive space.
+  // 1. Divide: Find the middle of the list using Slow and Fast pointers (`getMiddle`).
+  //    Split the list into two halves by setting `mid.next = null`.
+  // 2. Conquer: Recursively sort the left half and the right half.
+  // 3. Combine: Merge the two sorted halves back together (`sortedMerge`).
+  //    We compare nodes one by one and attach the smaller node to the result.
+  //
+  // Dry run for list: 3 -> 4 -> 2 -> 1 -> 5
+  // getMiddle finds 2. Splits into: [3 -> 4 -> 2] and [1 -> 5].
+  // Recurse on [3 -> 4 -> 2]:
+  //   getMiddle finds 4. Splits into: [3 -> 4] and [2].
+  //   Recurse on [3 -> 4] -> [3], [4]. Merged: [3 -> 4].
+  //   Merged [3 -> 4] and [2] -> [2 -> 3 -> 4].
+  // Recurse on [1 -> 5]:
+  //   Splits into [1] and [5]. Merged: [1 -> 5].
+  // Final merge: [2 -> 3 -> 4] and [1 -> 5].
+  // Compare 2 & 1 (pick 1), 2 & 5 (pick 2), 3 & 5 (pick 3), 4 & 5 (pick 4), remaining 5.
+  // Result: 1 -> 2 -> 3 -> 4 -> 5.
   static Node mergeSort(Node head) {
     if (head == null || head.next == null) return head;
 

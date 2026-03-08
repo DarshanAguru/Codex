@@ -64,8 +64,19 @@ class Main {
     Node a = headA;
     Node b = headB;
 
-    // Traverse both lists. When one ends, switch to the other list's head.
-    // If there's an intersection, they will meet. If not, they end at null.
+    // Logic: Two Pointers approach
+    // We want to find where two singly linked lists merge. They might be of different lengths.
+    // If we traverse both lists simultaneously, pointer A will finish before pointer B (or vice versa).
+    // To synchronize them, once a pointer reaches the end of its list, we redirect it to the head
+    // of the OTHER list.
+    // This way, both pointers will travel exactly `Length(A) + Length(B)` nodes in total.
+    // In the second traversal (after switching), they will perfectly align and meet at the
+    // intersection node simultaneously. If there's no intersection, they both meet at `null`.
+    //
+    // Dry run for List A length=5, List B length=6, intersecting at 3rd from end:
+    // A travels 5 nodes -> null -> Switches to head B. Total nodes until intersection = 5 + 3 = 8.
+    // B travels 6 nodes -> null -> Switches to head A. Total nodes until intersection = 6 + 2 = 8.
+    // They meet at the exactly same step.
     while (a != b) {
       a = (a == null) ? headB : a.next;
       b = (b == null) ? headA : b.next;

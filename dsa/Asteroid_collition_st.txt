@@ -16,6 +16,23 @@ class Main {
     System.out.println(Arrays.toString(res));
   }
 
+  // Logic: Stack Simulation
+  // We iterate through each asteroid.
+  // - If it's a positive asteroid, it moves right, so we just push it to the stack.
+  // - If it's a negative asteroid (moving left), it might collide with positive asteroids in the stack.
+  //   We continuously pop smaller positive asteroids from the stack because they explode.
+  //   If we find a positive asteroid of the same size, both explode (pop and do not push negative).
+  //   If the stack becomes empty or the top asteroid is also negative (moving left safely),
+  //   the negative asteroid survives, so we push it.
+  //
+  // Dry run for asteroids = [3, 2, -5]:
+  // 1. ast = 3 (positive): stack pushes -> [3]
+  // 2. ast = 2 (positive): stack pushes -> [3, 2]
+  // 3. ast = -5 (negative):
+  //    - top is 2. 2 < 5, so pop 2. Stack: [3]
+  //    - top is 3. 3 < 5, so pop 3. Stack: []
+  //    - Stack is empty. Push -5. Stack: [-5]
+  // Result is [-5].
   static int[] getStateAfterCollision(int[] asteroids) {
     Stack<Integer> st = new Stack<>();
 

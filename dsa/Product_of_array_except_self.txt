@@ -8,6 +8,23 @@ import java.util.*;
 
 class Main {
 
+  // Logic: Prefix and Suffix Products
+  // We need the product of all elements except `arr[i]` WITHOUT using division.
+  // The product except self for element `i` is exactly:
+  // (Product of all elements to its LEFT) * (Product of all elements to its RIGHT).
+  // We can precompute these!
+  // 1. `prefixMult[i]`: Stores the product of all elements to the left of `i`.
+  // 2. `suffixMult[i]`: Stores the product of all elements to the right of `i`.
+  // Finally, `res[i] = prefixMult[i] * suffixMult[i]`.
+  // Space can be optimized to O(1) by using the result array to store prefixes,
+  // and a single variable to keep track of the running suffix product.
+  //
+  // Dry run for arr = [10, 3, 5, 6, 2]:
+  // prefixMult (shifted by 1): [1, 10, 30, 150, 900, 1800]
+  // suffixMult (shifted by 1): [1800, 180, 60, 12, 2, 1]
+  // res[0] = prefix[0](1) * suffix[1](180) = 180 (which is 3*5*6*2)
+  // res[1] = prefix[1](10) * suffix[2](60) = 600 (which is 10*5*6*2)
+  // ...
   public static void main(String[] args) {
     int[] arr = { 10, 3, 5, 6, 2 };
 

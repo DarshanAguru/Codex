@@ -25,6 +25,34 @@ class Main {
     System.out.println("Result: " + res);
   }
 
+  // Logic: Topological Sort / Leaf-to-Root BFS
+  // We want to break as many edges as possible such that the sum of node values in
+  // each resulting connected component is divisible by `k`.
+  // First, we convert the edges into an adjacency list and calculate the degree of each node.
+  // We process the tree from the "leaves" (degree 1 nodes) upwards using a Queue.
+  // For each leaf node:
+  // 1. If its value (or accumulated value from its children) is divisible by `k`,
+  //    we can safely "detach" this component. We increment our `components` count.
+  //    The carry going to its parent is 0.
+  // 2. If it's NOT divisible by `k`, we MUST attach this node's value to its parent.
+  //    The carry going to its parent is its current value.
+  // Then we reduce the degree of its neighbor (parent) and update the neighbor's value with the carry.
+  // If the neighbor becomes a leaf (degree == 1), we add it to the queue.
+  //
+  // Dry run for k=3:
+  // Tree values: 0:3, 1:0, 2:6, 3:1, 4:5, 5:2, 6:1.
+  // Leaves (degree 1): 3, 4, 5, 6.
+  // n=3(val 1): not div by 3. Carry=1. Parent(1) val becomes 0+1=1.
+  // n=4(val 5): not div by 3. Carry=5. Parent(1) val becomes 1+5=6.
+  //   Node 1 is now a leaf. queue adds 1.
+  // n=5(val 2): not div by 3. Carry=2. Parent(2) val becomes 6+2=8.
+  // n=6(val 1): not div by 3. Carry=1. Parent(2) val becomes 8+1=9.
+  //   Node 2 is now a leaf. queue adds 2.
+  // n=1(val 6): Divisible by 3! components++. Carry=0. Parent(0) val=3+0=3.
+  // n=2(val 9): Divisible by 3! components++. Carry=0. Parent(0) val=3+0=3.
+  //   Node 0 is now a leaf. queue adds 0.
+  // n=0(val 3): Divisible by 3! components++.
+  // Total components = 3.
   static int maxKDivisibleComponents(
     int n,
     int[][] edges,

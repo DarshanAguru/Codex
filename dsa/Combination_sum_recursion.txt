@@ -20,6 +20,24 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Backtracking (Pick & Don't Pick pattern with unlimited supply)
+  // We want to find all unique combinations in `arr` that sum to `target`.
+  // Since we can use the same element any number of times, when we "pick" an element
+  // (if it's <= target), we recursively call the function but keep the *same* index `idx`.
+  // When we "don't pick", we advance to `idx + 1`.
+  // To build permutations back into the result list, we add elements into a `tmp` list before picking,
+  // and remove them (backtrack) after the recursive call finishes.
+  // If `target == 0`, we found a valid combination, so we add a copy of `tmp` to `res`.
+  //
+  // Dry run for arr = [2, 3], target=5:
+  // f(0, [2,3], 5):
+  //   Pick 2: tmp=[2], f(0, 3)
+  //     Pick 2: tmp=[2,2], f(0, 1)
+  //       Pick 2 doesn't fit (2>1).
+  //       Don't pick: f(1, 1). 3 doesn't fit.
+  //     Don't pick (Backtrack back to target=3): f(1, 3)
+  //       Pick 3: tmp=[2,3], f(1, 0) -> target==0, ADD [2,3] to res.
+  // ... and so on.
   static void getCombinationSum(
     int idx,
     int[] arr,

@@ -15,6 +15,29 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Recursion & Binary String Properties
+  // The string S_n is formed by: S_{n-1} + "1" + reverse(invert(S_{n-1})).
+  // The length of S_n is exactly 2^n - 1. Because of its symmetric structure:
+  // - The middle bit (at index `(length / 2) + 1` in 1-based indexing) is always '1'.
+  // - If `k` is less than the middle, the bit is identical to the `k`-th bit in S_{n-1}.
+  // - If `k` is greater than the middle, the bit is the inverted and mirrored bit from S_{n-1}.
+  //   Its mirrored position is `length - k + 1`.
+  //
+  // Dry run for n = 4, k = 11:
+  // length = 15, mid = 8.
+  // 11 > 8: so we find the mirrored position: 15 - 11 + 1 = 5.
+  // Call findKthBit(3, 5). Result will be inverted.
+  //   n=3, k=5. length = 7, mid = 4.
+  //   5 > 4: mirrored position: 7 - 5 + 1 = 3.
+  //   Call findKthBit(2, 3). Result inverted.
+  //     n=2, k=3. length=3, mid=2.
+  //     3 > 2: mirrored: 3 - 3 + 1 = 1.
+  //     Call findKthBit(1, 1). Result inverted.
+  //       n=1 returns '0'.
+  //     n=2 returns invert('0') = '1'.
+  //   n=3 returns invert('1') = '0'.
+  // n=4 returns invert('0') = '1'.
+  // Result is '1'.
   static char findKthBit(int n, int k) {
     if (n == 1) {
       return '0';

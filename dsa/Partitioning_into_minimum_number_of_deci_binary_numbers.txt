@@ -14,6 +14,21 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Greedy / Math
+  // A deci-binary number contains only 0s and 1s.
+  // We want to sum minimum number of deci-binary numbers to equal `n`.
+  // Look at any digit `d` in the target string `n`.
+  // We can only contribute at most `1` to this digit using a single deci-binary number.
+  // Therefore, to get a digit `d`, we need to use EXACTLY `d` deci-binary numbers
+  // that have a '1' in that position.
+  // The minimum number of deci-binary numbers required overall is simply bounded
+  // by the MAX digit present in the string `n`.
+  // So, the answer is just the maximum digit in the string!
+  //
+  // Dry run for n = "32":
+  // Digits are '3' and '2'. Max digit is 3.
+  // Returns 3.
+  // (Explanation: "32" = "11" + "11" + "10").
   static int minPartitions(String n) {
     int max = 0;
     for (char c : n.toCharArray()) {

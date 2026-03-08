@@ -16,6 +16,24 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Sorting + Two Pointers
+  // Generalization of 3Sum. We sort the array first.
+  // We use two nested loops for the first two numbers (`i` and `j`).
+  // For each pair (nums[i], nums[j]), we use a Two Pointer approach (`left` and `right`)
+  // for the remaining part of the array to find the other two numbers that sum up to `target`.
+  // To avoid duplicate quadruplets, we skip duplicate elements for all 4 pointers.
+  // (Use type `long` for the sum to avoid integer overflow).
+  //
+  // Dry run for arr = [1, 0, -1, 0, -2, 2], target = 0:
+  // Sort: [-2, -1, 0, 0, 1, 2]
+  // i=0 (-2):
+  //   j=1 (-1): left=2 (val 0), right=5 (val 2).
+  //             sum = -2 + -1 + 0 + 2 = -1 < 0. left++ (now left=3).
+  //             sum = -2 + -1 + 0 + 2 = -1 < 0. left++ (now 4).
+  //             sum = -2 + -1 + 1 + 2 = 0 == 0. Found [-2, -1, 1, 2]. left++, right--.
+  //   j=2 (0):  left=3 (val 0), right=5 (val 2).
+  //             sum = -2 + 0 + 0 + 2 = 0 == 0. Found [-2, 0, 0, 2].
+  // ... similar logic correctly identifies all combinations without duplicates.
   static List<List<Integer>> fourSum(int[] nums, int target) {
     List<List<Integer>> res = new ArrayList<>();
     if (nums == null || nums.length < 4) return res;

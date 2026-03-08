@@ -16,9 +16,20 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Greedy approach using Arrays.sort
+  // To maximize the number of satisfied students, we greedily assign the smallest possible
+  // cookie that can satisfy the least greedy student first.
+  // First, sort both the students' greed factors and the cookie sizes.
+  // Then, use two pointers (i for student, j for cookie).
+  // If `cookies[j] >= students[i]`, the student is satisfied. Move both pointers.
+  // If `cookies[j] < students[i]`, the cookie is too small. Move to the next cookie (j++).
+  //
+  // Dry run for students = [1, 2, 3], cookies = [1, 1]:
+  // Sort both: s=[1,2,3], c=[1,1]
+  // i=0, j=0: c[0] >= s[0] (1 >= 1). Student 0 satisfied. i=1, j=1, count=1.
+  // i=1, j=1: c[1] >= s[1] (1 >= 2) is False. Move j. j=2.
+  // End of loop (j >= cookies.length). Result is 1.
   static int findMaxNoStudentsWithCookies(int[] students, int[] cookies) {
-    // Greedy Strategy: Try to satisfy the child with the smallest greed factor
-    // using the smallest available cookie that meets the requirement.
     Arrays.sort(students);
     Arrays.sort(cookies);
 

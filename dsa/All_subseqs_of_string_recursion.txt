@@ -23,6 +23,19 @@ class Main {
     System.out.println("Bit Mask: " + res2);
   }
 
+  // Logic: Bit Manipulation for Subsequences
+  // A string of length `n` has 2^n subsequences. We can map each subsequence to a number
+  // from 0 to (2^n - 1) in binary.
+  // If the j-th bit of a number `i` is set (1), we include the j-th character of the string.
+  // If the j-th bit is unset (0), we skip it.
+  //
+  // Dry run for str = "ab" (n = 2):
+  // 2^n = 4. i goes from 0 to 3.
+  // i=0 (00): exclude 'a', exclude 'b' -> ""
+  // i=1 (01): include 'a', exclude 'b' -> "a"
+  // i=2 (10): exclude 'a', include 'b' -> "b"
+  // i=3 (11): include 'a', include 'b' -> "ab"
+
   // Method 2: Bit Manipulation
   // Total subsequences = 2^n. Each number from 0 to 2^n - 1 represents a unique subsequence.
   // If the j-th bit of 'i' is set, we include the j-th character.

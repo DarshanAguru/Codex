@@ -14,6 +14,27 @@ class Main {
     System.out.println(numSteps(s));
   }
 
+  // Logic: Bit Manipulation / Simulation (Right to Left)
+  // We want to reduce a binary string to '1'.
+  // Rules: If even (ends in '0'), divide by 2 (shift right). If odd (ends in '1'), add 1.
+  // Instead of simulating from the front (which takes O(N^2) due to carry propagation), 
+  // we can process the string from Right to Left!
+  // At each bit `i`:
+  // The effective bit value is `(s.charAt(i) - '0') + carry`.
+  // - If it's 1 (odd): We must Add 1 (1 step), which generates a carry (for the next bit), 
+  //   and THEN it becomes even so we Divide by 2 (1 step). Total = 2 steps.
+  // - If it's 0 (even): We just Divide by 2 (1 step). carry remains what it was.
+  // We stop at index 1 (since reducing to '1' means leaving the first bit alone).
+  // Finally, if there's a leftover carry, that means the final bit '1' became '10', 
+  // so we need 1 more division. We add `carry` to total steps.
+  //
+  // Dry run for s = "1101":
+  // i=3 ('1'): val = 1+0 = 1 (Odd). cnt += 2, carry = 1.
+  // i=2 ('0'): val = 0+1 = 1 (Odd). cnt += 2, carry = 1.
+  // i=1 ('1'): val = 1+1 = 2 -> '10' in binary, so current bit is 0 (Even). 
+  //            Notice 2 means 0 with carry 1. cnt += 1, carry = 1.
+  // Loop ends.
+  // Final cnt = 5 + carry(1) = 6.
   public static int numSteps(String s) {
     int cnt = 0;
     int carry = 0;

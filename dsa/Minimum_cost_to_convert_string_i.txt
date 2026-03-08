@@ -20,6 +20,23 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Floyd-Warshall Algorithm (All-Pairs Shortest Path)
+  // We need to find the minimum cost to convert each character in `source` to the
+  // corresponding character in `target`.
+  // Characters and conversion operations form a directed graph where nodes are
+  // 26 lowercase English letters and edges are the given valid conversions with their costs.
+  // Since we might need multiple steps to convert one character to another (e.g., 'a'->'b'->'c'),
+  // we use the Floyd-Warshall algorithm to precompute the shortest path (minimum cost)
+  // between ALL pairs of characters in O(26^3) time.
+  // After precomputing the `dist` matrix, we just iterate through `source` and `target`,
+  // and add `dist[source[i]][target[i]]` to our total cost. If any distance is INF, we return -1.
+  //
+  // Dry run for converting:
+  // original=['a','b','c'], changed=['b','c','e'], cost=[2,5,1].
+  // dist['a']['b'] = 2. dist['b']['c'] = 5. dist['c']['e'] = 1.
+  // Floyd-Warshall will discover: dist['a']['c'] = 2+5=7. dist['a']['e'] = 7+1=8.
+  // To convert source="a" to target="e":
+  // We just look up dist['a']['e'] which is 8. Total cost = 8.
   static long minimumCost(
     String source,
     String target,

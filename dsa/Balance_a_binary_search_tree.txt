@@ -37,6 +37,21 @@ class Main {
     System.out.println(result.val);
   }
 
+  // Logic: Inorder Traversal + Divide and Conquer
+  // A Binary Search Tree (BST) inorder traversal gives the nodes in sorted order.
+  // We first do an inorder traversal to store all node values in a list.
+  // Then, we build a balanced BST from the sorted list by picking the middle element
+  // as the root, the left half as the left subtree, and the right half as the right subtree
+  // recursively.
+  //
+  // Dry run for root = [1, null, 2, null, 3, null, 4] (skewed right):
+  // 1. Inorder traversal generates sortedList = [1, 2, 3, 4].
+  // 2. constructBalancedBST([1, 2, 3, 4], 0, 3):
+  //    - mid = (0 + 3) / 2 = 1. Root is 2.
+  //    - Left child: construct([1, 2, 3, 4], 0, 0) -> mid=0 -> Root is 1.
+  //    - Right child: construct([1, 2, 3, 4], 2, 3) -> mid=2 -> Root is 3.
+  //      - Right child's right child: construct(..., 3, 3) -> Root is 4.
+  // Final balanced tree: 2 -> L:1, R:3 -> R:4.
   public static TreeNode balanceBST(TreeNode root) {
     List<Integer> sortedList = new ArrayList<>();
     populateListFromBST(root, sortedList);

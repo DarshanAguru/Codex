@@ -16,6 +16,29 @@ class Main {
     int high = arr.length - 1;
     int ans = Integer.MAX_VALUE;
 
+    // Logic: Binary Search
+    // An array is sorted and rotated. We want to find the minimum element in O(log N).
+    // In any rotated sorted array, if we divide it in half using `mid`, at least one half
+    // will ALWAYS be sorted.
+    // 1. If the entire sub-array from `low` to `high` is already sorted (`arr[low] <= arr[high]`),
+    //    then `arr[low]` is the minimum of this segment. Update `ans` and break.
+    // 2. Otherwise, check which half is sorted.
+    //    - If Left half is sorted (`arr[low] <= arr[mid]`), the minimum in the left half
+    //      MUST be `arr[low]`. We update `ans` with it, and then discard the left half
+    //      by moving `low = mid + 1` to search the right half.
+    //    - If Right half is sorted (`arr[mid] <= arr[high]`), the minimum in the right half
+    //      MUST be `arr[mid]`. We update `ans` with it, and discard the right half
+    //      by moving `high = mid - 1` to search the left half.
+    //
+    // Dry run for arr = [3, 4, 5, 1, 2]:
+    // low=0, high=4. mid=2 (val 5).
+    // arr[0](3) <= arr[4](2)? False.
+    // Left sorted? arr[0](3) <= arr[2](5). True.
+    //   ans = min(INF, 3) = 3. Search right: low=3, high=4.
+    // Iter 2: low=3, high=4. mid=3 (val 1).
+    // arr[3](1) <= arr[4](2)? True! Subarray is completely sorted.
+    //   ans = min(3, arr[3](1)) = 1. Break.
+    // Output 1.
     while (low <= high) {
       int mid = low + (high - low) / 2;
 

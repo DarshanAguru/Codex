@@ -16,9 +16,32 @@ class Main {
     System.out.println(calcSum(a, b));
   }
 
+  // Logic: Bitwise Addition
+  // Addition involves two things: finding the sum of bits and finding the carry.
+  // 1. Sum of bits without carry can be achieved using the XOR (^) operator.
+  // 2. The carry can be calculated using the AND (&) operator, shifted left by 1 (<< 1).
+  // We keep updating `a` continuously with the sum without carry, and `b` with the carry
+  // until there is no carry left (`b` == 0).
+  //
+  // Dry run for a = 5 (0101), b = 3 (0011):
+  // 1st iteration:
+  //   carry = (0101 & 0011) << 1 = 0001 << 1 = 0010 (2)
+  //   a = (0101 ^ 0011) = 0110 (6)
+  //   b = 0010 (2)
+  // 2nd iteration:
+  //   carry = (0110 & 0010) << 1 = 0010 << 1 = 0100 (4)
+  //   a = (0110 ^ 0010) = 0100 (4)
+  //   b = 0100 (4)
+  // 3rd iteration:
+  //   carry = (0100 & 0100) << 1 = 0100 << 1 = 1000 (8)
+  //   a = (0100 ^ 0100) = 0000 (0)
+  //   b = 1000 (8)
+  // 4th iteration:
+  //   carry = (0000 & 1000) << 1 = 0000 << 1 = 0000 (0)
+  //   a = (0000 ^ 1000) = 1000 (8)
+  //   b = 0000 (0) // loop terminates.
+  // Result is 8.
   static int calcSum(int a, int b) {
-    // Use XOR for sum without carry, AND for carry
-    // Loop until no carry remains
     // Iterate until there is no carry left
     while (b != 0) {
       // 'carry' contains common set bits of a and b, shifted left by 1

@@ -13,6 +13,20 @@ class Main {
     System.out.println(longestBalanced(nums));
   }
 
+  // Logic: Brute Force Enumerable Subarrays
+  // This solution checks all possible subarrays (O(N^2)). Intended for small constraints.
+  // A subarray is balanced if the number of distinct even numbers equals the number of distinct odd numbers.
+  // We use two nested loops to iterate through all subarrays `nums[i...j]`.
+  // A HashMap tracks the count/presence of elements within the current inner loop.
+  // If we encounter a new element, we check if it is even or odd and increment the respective counter.
+  // If `evenCnt == oddCnt`, we update our maximum length result.
+  //
+  // Dry run for nums = [2, 5, 4, 3]:
+  // i=0: [2]: even=1, odd=0.
+  //      [2, 5]: even=1, odd=1. length=2. max_res=2.
+  //      [2, 5, 4]: even=2, odd=1.
+  //      [2, 5, 4, 3]: even=2, odd=2. length=4. max_res=4.
+  // Returns 4.
   public static int longestBalanced(int[] nums) {
     int n = nums.length;
     HashMap<Integer, Integer> hm = new HashMap<>(); // Used to store distinct elements and check odd/even

@@ -15,6 +15,24 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Monotonic Increasing Stack
+  // We use a stack to keep track of the indices of the bars in increasing order of their heights.
+  // For each bar `i`, if it's shorter than the bar at the top of the stack, it means we found the
+  // "right boundary" for the rectangle with height `heights[stack.top()]`.
+  // The "left boundary" of that rectangle is the new top of the stack after popping.
+  // The width of the rectangle is `i - left_boundary - 1`.
+  // We process all bars, and artificially add a bar of height 0 at the end to force all
+  // remaining elements in the stack to be processed.
+  //
+  // Dry run for heights = [2, 1, 5, 6, 2, 3]:
+  // i=0: h=2. Stack: [0].
+  // i=1: h=1. h < heights[0] (1 < 2). Pop 0. h_popped=2. Stack is empty -> width=1. Area=2. Stack pushes 1: [1].
+  // i=2: h=5. Stack: [1, 2].
+  // i=3: h=6. Stack: [1, 2, 3].
+  // i=4: h=2. h < heights[3] (2 < 6). Pop 3. h_popped=6. new top=2. width=(4-2-1)=1. Area=6.
+  //             h < heights[2] (2 < 5). Pop 2. h_popped=5. new top=1. width=(4-1-1)=2. Area=10.
+  //             Stack pushes 4: [1, 4].
+  // ... and so on. Max area will be 10.
   static int getAreaOfLargestRect(int[] heights) {
     int n = heights.length;
     // Monotonic Stack (Increasing order of heights)

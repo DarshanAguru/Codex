@@ -11,7 +11,25 @@ class Main {
   public static void main(String[] args) {
     int[] arr = { 2, 3, -8, 7, -1, 2, 3 };
 
-    // Kadane's Algorithm for Maximum Subarray Sum
+    // Logic: Kadane's Algorithm
+    // This algorithm efficiently finds the contiguous subarray with the largest sum in O(N).
+    // The fundamental idea is that at any element `arr[i]`, the maximum subarray sum ending at
+    // `arr[i]` is either:
+    // 1. The element `arr[i]` itself (starting a new subarray).
+    // 2. The element `arr[i]` + the maximum subarray sum ending at `arr[i-1]` (extending previous subarray).
+    // We keep a running total (`maxSumSoFar`). If `maxSumSoFar` ever drops below the current element,
+    // we discard the running total and start fresh from the current element.
+    // We update the overall maximum (`maxSum`) at each step.
+    //
+    // Dry run for arr = [2, 3, -8, 7, -1, 2, 3]:
+    // i=0: maxSoFar=2, max=2.
+    // i=1 (3): maxSoFar=max(2+3, 3)=5. max=5.
+    // i=2 (-8): maxSoFar=max(5-8, -8)=-3. max=5.
+    // i=3 (7): maxSoFar=max(-3+7, 7)=7. (Started fresh here). max=7.
+    // i=4 (-1): maxSoFar=max(7-1, -1)=6. max=7.
+    // i=5 (2): maxSoFar=max(6+2, 2)=8. max=8.
+    // i=6 (3): maxSoFar=max(8+3, 3)=11. max=11.
+    // Result is 11.
     int maxSumSoFar = arr[0];
     int maxSum = arr[0];
 

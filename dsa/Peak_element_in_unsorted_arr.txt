@@ -19,6 +19,23 @@ class Main {
     int l = 0;
     int r = arr.length - 1;
 
+    // Logic: Binary Search on Unsorted Array
+    // A peak element is greater than its neighbors.
+    // We can use Binary Search! Wait, on an unsorted array? Yes!
+    // Imagine the array as a terrain of mountains.
+    // We look at `mid` and `mid + 1`.
+    // - If `arr[mid] > arr[mid + 1]`: We are on a descending slope.
+    //   There MUST be a peak to the left of us (or `mid` itself is the peak).
+    //   So, we search the left half: `r = mid`.
+    // - If `arr[mid] <= arr[mid + 1]`: We are on an ascending slope.
+    //   There MUST be a peak to the right of us.
+    //   So, we search the right half: `l = mid + 1`.
+    // The loop converges to `l == r`, which is guaranteed to be a peak.
+    //
+    // Dry run for arr = [1, 2, 3, 4, 5]:
+    // 1. l=0, r=4. mid=2(3). arr[2](3) > arr[3](4)? False. Ascending. l=3.
+    // 2. l=3, r=4. mid=3(4). arr[3](4) > arr[4](5)? False. Ascending. l=4.
+    // l==r==4. Return 4 (element 5).
     while (l < r) {
       int mid = l + (r - l) / 2;
 

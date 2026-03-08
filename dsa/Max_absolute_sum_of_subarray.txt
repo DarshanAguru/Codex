@@ -14,6 +14,23 @@ class Main {
     System.out.println("Result: " + res);
   }
 
+  // Logic: Prefix Sum (Tracking Max and Min Prefix)
+  // The sum of any subarray from index `i` to `j` is `PrefixSum[j] - PrefixSum[i-1]`.
+  // To maximize the absolute sum, we need to find the maximum possible difference
+  // between any two prefix sums.
+  // This is simply the absolute difference between the Maximum Prefix Sum and the
+  // Minimum Prefix Sum encountered so far (including 0 as the initial prefix sum).
+  // So returning `MaxPrefix - MinPrefix` perfectly gives the highest absolute subarray sum.
+  //
+  // Dry run for arr = [2, -5, 1, -4, 3, -2]:
+  // Init: maxP=0, minP=0, curr=0.
+  // 1 (2): curr=2. maxP=2, minP=0.
+  // 2 (-5): curr=-3. maxP=2, minP=-3.
+  // 3 (1): curr=-2. maxP=2, minP=-3.
+  // 4 (-4): curr=-6. maxP=2, minP=-6.
+  // 5 (3): curr=-3. maxP=2, minP=-6.
+  // 6 (-2): curr=-5. maxP=2, minP=-6.
+  // Result = maxP - minP = 2 - (-6) = 8. (Subarray: [-5, 1, -4]).
   static int maxAbsoluteSumOfSubarray(int[] nums) {
     int maxPrefix = 0;
     int minPrefix = 0;

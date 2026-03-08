@@ -15,6 +15,25 @@ class Main {
     System.out.println("Result: " + res);
   }
 
+  // Logic: Two Pointers (Optimal)
+  // The amount of water trapped above any block `i` is determined by:
+  // `min(max_elevation_to_left, max_elevation_to_right) - arr[i]`.
+  // Instead of precomputing left and right max arrays (which takes O(N) space),
+  // we use two pointers (`left` and `right`) and variables `leftMax` and `rightMax`.
+  // 1. If `arr[left] <= arr[right]`: The limiting factor for water at `left` is `leftMax`.
+  //    (Because `arr[right]` is already taller, the right maximum is guaranteed to be at least `arr[right]`).
+  //    Update `leftMax` or add trapped water `leftMax - arr[left]`. Move `left++`.
+  // 2. If `arr[left] > arr[right]`: The limiting factor at `right` is `rightMax`.
+  //    Update `rightMax` or add trapped water `rightMax - arr[right]`. Move `right--`.
+  //
+  // Dry run for arr = [4, 2, 0, 3, 2, 5]:
+  // l=0(4), r=5(5). 4 <= 5. leftMax=4. l=1(2).
+  // l=1(2), r=5(5). 2 <= 5. trapped += (4 - 2) = 2. l=2(0).
+  // l=2(0), r=5(5). 0 <= 5. trapped += (4 - 0) = 4. Total = 6. l=3(3).
+  // l=3(3), r=5(5). 3 <= 5. trapped += (4 - 3) = 1. Total = 7. l=4(2).
+  // l=4(2), r=5(5). 2 <= 5. trapped += (4 - 2) = 2. Total = 9. l=5(5).
+  // l=5(5), r=5(5). 5 <= 5. leftMax=5. l=6. Loop ends.
+  // Result = 9.
   // Optimal Two-Pointer approach: O(N) Time, O(1) Space
   static int getTrappedWater(int[] arr) {
     int n = arr.length;

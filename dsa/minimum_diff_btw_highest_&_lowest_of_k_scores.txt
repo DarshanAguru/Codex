@@ -17,6 +17,24 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Sorting + Sliding Window
+  // We want to pick `k` students such that the difference between the highest and lowest
+  // score among them is minimized.
+  // If we pick any `k` elements, the difference between the max and min will be smallest
+  // if those `k` elements are as close to each other in value as possible.
+  // 1. Sort the array. This brings numbers with close values adjacent to each other.
+  // 2. Use a sliding window of size `k`. Since it's sorted, for any window from
+  //    `i` to `i + k - 1`, the lowest element is `nums[i]` and the highest is `nums[i + k - 1]`.
+  // 3. The difference for this window is simply `nums[i + k - 1] - nums[i]`.
+  // 4. Iterate over all possible windows of size `k` and track the minimum difference.
+  //
+  // Dry run for nums = [9, 4, 1, 7], k = 2:
+  // Sorted = [1, 4, 7, 9].
+  // Window (size 2):
+  // i=0: [1, 4]. Diff = 4 - 1 = 3. minDiff = 3.
+  // i=1: [4, 7]. Diff = 7 - 4 = 3. minDiff = 3.
+  // i=2: [7, 9]. Diff = 9 - 7 = 2. minDiff = 2.
+  // Result = 2.
   public static int minimumDifference(int[] nums, int k) {
     Arrays.sort(nums);
     int n = nums.length;

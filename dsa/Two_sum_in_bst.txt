@@ -31,6 +31,29 @@ class Main {
     System.out.println(res);
   }
 
+  // Logic: Depth-First Search (Inorder) + HashSet
+  // We need to find if there are two nodes in a BST that sum to `k`.
+  // We can traverse the tree (Inorder, Preorder, or Postorder) and keep track
+  // of the visited node values in a `HashSet`.
+  // To find a sum `target`, when we're at a node with value `x`, we need a node with value `target - x`.
+  // At each node:
+  // 1. Check if `target - root.val` exists in our `HashSet`. If yes, we found a pair! Return true.
+  // 2. Otherwise, add `root.val` to the `HashSet`.
+  // 3. Recursively check the left and right subtrees.
+  //
+  // Dry run for root=5, target=9:
+  // Initial set: []
+  // DFS(5):
+  //   DFS(3):
+  //     DFS(2):
+  //       DFS(null): false
+  //       9-2=7 in set? No. set.add(2). set=[2]
+  //       DFS(null): false
+  //     9-3=6 in set? No. set.add(3). set=[2, 3]
+  //     DFS(4):
+  //       9-4=5 in set? No. set.add(4). set=[2, 3, 4]
+  //   9-5=4 in set? YES! Return true!
+  // Result: true.
   static boolean findSum(Node root, int target, Set<Integer> set) {
     if (root == null) return false;
 

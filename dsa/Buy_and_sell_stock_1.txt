@@ -11,7 +11,22 @@ class Main {
   public static void main(String[] args) {
     int[] arr = { 17, 20, 11, 9, 12, 6 };
 
-    // Find maximum profit (Buy once, Sell once)
+    // Logic: Single pass keeping track of minimum
+    // To maximize profit, we want to buy at the lowest possible price and sell at the highest price
+    // *after* buying.
+    // We maintain a `minPrice` variable, updating it as we iterate if we find a lower price.
+    // At every step, we also check if selling at the current price (arr[i]) - minPrice yields
+    // a higher profit than our current `maxProfit`.
+    // This allows us to find the best buy/sell points in O(N) time.
+    //
+    // Dry run for arr = [17, 20, 11, 9, 12, 6]:
+    // i=0: minPrice = 17, maxProfit = 0.
+    // i=1 (20): profit = 20-17 = 3. maxProfit = max(0, 3) = 3. minPrice = min(17, 20) = 17.
+    // i=2 (11): profit = 11-17 = -6. maxProfit = 3. minPrice = 11.
+    // i=3 (9): profit = 9-11 = -2. maxProfit = 3. minPrice = 9.
+    // i=4 (12): profit = 12-9 = 3. maxProfit = max(3, 3) = 3. minPrice = 9.
+    // i=5 (6): profit = 6-9 = -3. maxProfit = 3. minPrice = 6.
+    // Result is 3.
     int maxProfit = 0;
     int minPrice = arr[0];
 
