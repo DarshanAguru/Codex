@@ -1,0 +1,59 @@
+// Date: 09/03/2026
+// Problem: Find All Possible Stable Binary Arrays I
+// Relevance: Dynamic Programming
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int zero = 1;
+    int one = 1;
+    int limit = 2;
+    System.out.println(numberOfStableArrays(zero, one, limit));
+  }
+
+  // Logic: Dynamic Programming (3D/2D State)
+  // We want to construct binary arrays with exactly `zero` 0s and `one` 1s, such that
+  // no contiguous subarray of identical elements exceeds `limit` in length.
+  // dp0[i][j] = number of valid arrays ending with '0', having `i` zeros and `j` ones.
+  // dp1[i][j] = number of valid arrays ending with '1', having `i` zeros and `j` ones.
+  // Base cases: Strings made entirely of '0' or '1' up to length `limit`.
+  // Transition:
+  // To form a valid string ending in '0' with `i` zeros and `j` ones, we can append
+  // `k` '0's (where 1 <= k <= min(limit, i)) to any valid string ending in '1' that has `i-k` zeros and `j` ones.
+  // dp0[i][j] = sum(dp1[i-k][j]) for 1 <= k <= min(limit, i).
+  // dp1[i][j] = sum(dp0[i][j-k]) for 1 <= k <= min(limit, j).
+  // Finally, the answer is dp0[zero][one] + dp1[zero][one].
+  // Time complexity: O(zero * one * limit). Space: O(zero * one).
+  //
+  // Dry run for zero = 1, one = 1, limit = 2:
+  // dp0[1][0] = 1, dp1[0][1] = 1
+  // i=1, j=1:
+  //   k=1 (for dp0): dp0[1][1] += dp1[0][1] -> dp0[1][1] = 1 (String: "10")
+  //   k=1 (for dp1): dp1[1][1] += dp0[1][0] -> dp1[1][1] = 1 (String: "01")
+  // Total = dp0[1][1] + dp1[1][1] = 2.
+  public static int numberOfStableArrays(int zero, int one, int limit) {
+    final int MOD = 1_000_000_007;
+
+    int[][] dp0 = new int[zero + 1][one + 1];
+    int[][] dp1 = new int[zero + 1][one + 1];
+
+    for (int i = 1; i <= Math.min(limit, zero); i++) dp0[i][0] = 1;
+    for (int j = 1; j <= Math.min(limit, one); j++) dp1[0][j] = 1;
+
+    for (int i = 1; i <= zero; i++) {
+      for (int j = 1; j <= one; j++) {
+        for (int k = 1; k <= Math.min(limit, i); k++) {
+          dp0[i][j] = (dp0[i][j] + dp1[i - k][j]) % MOD;
+        }
+
+        for (int k = 1; k <= Math.min(limit, j); k++) {
+          dp1[i][j] = (dp1[i][j] + dp0[i][j - k]) % MOD;
+        }
+      }
+    }
+
+    return (dp0[zero][one] + dp1[zero][one]) % MOD;
+  }
+}
