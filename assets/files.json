@@ -297,6 +297,18 @@
     "type": "file"
   },
   {
+    "name": "Complement_of_base_10_integer.txt",
+    "path": "dsa/Complement_of_base_10_integer.txt",
+    "size": 1225,
+    "timestamp": 1773187200000,
+    "displayDate": "11/03/2026",
+    "problemNo": null,
+    "topics": [
+      "Bit Manipulation"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Construst_tree_using_inorder_and_preorder_arrays.txt",
     "path": "dsa/Construst_tree_using_inorder_and_preorder_arrays.txt",
     "size": 2848,
