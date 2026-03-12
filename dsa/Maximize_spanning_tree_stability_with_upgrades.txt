@@ -1,0 +1,157 @@
+// Date: 12/03/2026
+// Problem: https://leetcode.com/problems/maximize-spanning-tree-stability-with-upgrades
+// Leetcode Problem No: 3600
+// Relevance: Graph, Minimum Spanning Tree, Disjoint Set Union (DSU), Binary Search
+
+class DSU {
+
+  int[] parent;
+  int[] size;
+
+  DSU(int n) {
+    parent = new int[n];
+    size = new int[n];
+    for (int i = 0; i < n; i++) {
+      parent[i] = i;
+      size[i] = 1;
+    }
+  }
+
+  DSU(DSU other) {
+    parent = other.parent.clone();
+    size = other.parent.clone();
+  }
+
+  public int find(int x) {
+    if (parent[x] == x) {
+      return x;
+    }
+    parent[x] = find(parent[x]);
+    return parent[x];
+  }
+
+  public boolean union(int x, int y) {
+    int px = find(x);
+    int py = find(y);
+
+    if (px == py) {
+      return false;
+    }
+
+    if (size[px] < size[py]) {
+      parent[px] = py;
+      size[py] += size[px];
+    } else {
+      parent[py] = px;
+      size[px] += size[py];
+    }
+    return true;
+  }
+}
+
+class Solution {
+
+  // Logic: Binary Search on Answer + DSU
+  // We need to form a spanning tree containing all "must" edges and maximize the minimum edge weight (stability).
+  // We can double the weight of up to `k` "optional" edges to help achieve a higher stability.
+  // 1. Filter edges into `mustEdges` and `optionalEdges`. Sort `optionalEdges` by weight descending.
+  // 2. Add all `mustEdges` to a base DSU. Keep track of their minimum weight as `minMustStability`.
+  //    If `mustEdges` form a cycle or exceed `n - 1`, a valid tree is impossible.
+  // 3. Binary search for the maximum stability `ans` in range `[0, minMustStability]`.
+  // 4. For a candidate stability `mid`, clone the base DSU and greedily add `optionalEdges`:
+  //    - If weight `s >= mid`, add it.
+  //    - If `s < mid` but `2 * s >= mid`, we can use an upgrade provided we have `k` upgrades left.
+  //    - If `2 * s < mid`, we stop early as remaining edges (sorted descending) will also not reach `mid`.
+  // 5. If we successfully connect `n - 1` edges, `mid` is achievable. Adjust bounds accordingly.
+  //
+  // Dry run idea:
+  // If n=5, mustEdges are required. Their minimum weight sets an upper limit `h = minMustStability`
+  // because we can't upgrade mustEdges. The binary search efficiently searches [0, h]. For each mid,
+  // the greedy DSU strategy optimally picks standard edges or consumes up to `k` allowed upgrades to
+  // complete the spanning tree without falling below the `mid` threshold weight.
+  public int maxStability(int n, int[][] edges, int k) {
+    int ans = -1;
+
+    if (edges.length < n - 1) {
+      return -1;
+    }
+
+    int[][] mustEdges = Arrays.stream(edges)
+      .filter(x -> x[3] == 1)
+      .toArray(int[][]::new);
+
+    int[][] optionalEdges = Arrays.stream(edges)
+      .filter(x -> x[3] != 1)
+      .toArray(int[][]::new);
+
+    Arrays.sort(optionalEdges, (a, b) -> Integer.compare(b[2], a[2]));
+
+    if (mustEdges.length > n - 1) {
+      return -1;
+    }
+
+    DSU dsu = new DSU(n);
+    int minMustStability = 1_000_000;
+    int selectedNodes = 0;
+
+    for (int[] edge : mustEdges) {
+      int u = edge[0];
+      int v = edge[1];
+      int s = edge[2];
+      int must = edge[3];
+
+      if (dsu.find(u) == dsu.find(v) || selectedNodes == n - 1) {
+        return -1;
+      }
+
+      dsu.union(u, v);
+      selectedNodes++;
+      minMustStability = Math.min(s, minMustStability);
+    }
+
+    int l = 0;
+    int h = minMustStability;
+
+    while (l < h) {
+      int mid = l + (h - l + 1) / 2;
+      DSU currDSU = new DSU(dsu);
+      int selected = selectedNodes;
+      int countK = 0;
+
+      for (int[] edge : optionalEdges) {
+        int u = edge[0];
+        int v = edge[1];
+        int s = edge[2];
+        int must = edge[3];
+
+        if (currDSU.find(u) == currDSU.find(v)) {
+          continue;
+        }
+
+        if (s >= mid) {
+          currDSU.union(u, v);
+          selected++;
+        } else if (countK < k && 2 * s >= mid) {
+          countK++;
+          currDSU.union(u, v);
+          selected++;
+        } else {
+          break;
+        }
+
+        if (selected == n - 1) {
+          break;
+        }
+      }
+
+      if (selected != n - 1) {
+        h = mid - 1;
+      } else {
+        ans = mid;
+        l = mid;
+      }
+    }
+
+    return ans;
+  }
+}

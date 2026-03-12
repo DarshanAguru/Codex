@@ -865,6 +865,21 @@
     "type": "file"
   },
   {
+    "name": "Maximize_spanning_tree_stability_with_upgrades.txt",
+    "path": "dsa/Maximize_spanning_tree_stability_with_upgrades.txt",
+    "size": 4227,
+    "timestamp": 1773273600000,
+    "displayDate": "12/03/2026",
+    "problemNo": 3600,
+    "topics": [
+      "Graph",
+      "Minimum Spanning Tree",
+      "Disjoint Set Union (DSU)",
+      "Binary Search"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Maximum_level_sum_of_a_binary_tree.txt",
     "path": "dsa/Maximum_level_sum_of_a_binary_tree.txt",
     "size": 2215,
