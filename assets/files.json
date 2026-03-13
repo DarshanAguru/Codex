@@ -1154,6 +1154,19 @@
     "type": "file"
   },
   {
+    "name": "Minimum_number_of_seconds_to_make_mountain_height_zero.txt",
+    "path": "dsa/Minimum_number_of_seconds_to_make_mountain_height_zero.txt",
+    "size": 2320,
+    "timestamp": 1773360000000,
+    "displayDate": "13/03/2026",
+    "problemNo": 3296,
+    "topics": [
+      "Binary Search on Answer",
+      "Math"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Minimum_path_sum_in_a_grid_dp.txt",
     "path": "dsa/Minimum_path_sum_in_a_grid_dp.txt",
     "size": 3339,
