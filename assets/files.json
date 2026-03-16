@@ -607,6 +607,20 @@
     "type": "file"
   },
   {
+    "name": "Get_biggest_three_rhombus_sums_in_a_grid.txt",
+    "path": "dsa/Get_biggest_three_rhombus_sums_in_a_grid.txt",
+    "size": 3052,
+    "timestamp": 1773619200000,
+    "displayDate": "16/03/2026",
+    "problemNo": 1878,
+    "topics": [
+      "Array",
+      "Math",
+      "Matrix"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Get_square_of_sorted_array.txt",
     "path": "dsa/Get_square_of_sorted_array.txt",
     "size": 1656,
