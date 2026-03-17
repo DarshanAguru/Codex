@@ -1,0 +1,58 @@
+// Date: 17/03/2026
+// Problem: https://leetcode.com/problems/largest-submatrix-with-rearrangements/
+// Leetcode Problem No: 1727
+// Relevance: Array, Greedy, Matrix, Sorting
+
+import java.util.Arrays;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[][] matrix = { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 0, 1 } };
+    System.out.println(largestSubmatrix(matrix));
+  }
+
+  // Logic: Histogram + Sorting
+  // The problem asks for the largest submatrix of 1s, where the columns can be rearranged.
+  // We can solve this by treating each row as the base of a histogram and calculating the
+  // number of consecutive 1s ending at that row for each column.
+  // 1. Iterate through the matrix row by row. For any cell `matrix[i][j] != 0` (and `i > 0`),
+  //    we accumulate height: `matrix[i][j] += matrix[i-1][j]`.
+  // 2. By doing this, row `i` contains the heights of consecutive 1s ending exactly at row `i`.
+  // 3. Since columns can be rearranged to form the largest rectangle, we sort the heights of
+  //    the current row in ascending order.
+  // 4. After sorting, the height at index `k` can be extended to all columns to its right.
+  //    The possible rectangle area formed using `tmp[k]` as the minimum height is:
+  //    `tmp[k] * (n - k)`.
+  // 5. We calculate this for every column `k` and track the maximum area seen so far.
+  //
+  // Dry run idea:
+  // matrix = [
+  //   [0, 0, 1],
+  //   [1, 1, 1]
+  // ]
+  // Row 0 Heights: `[0, 0, 1]`. Sorted: `[0, 0, 1]`. Areas: 0*3=0, 0*2=0, 1*1=1. Max = 1.
+  // Row 1 Heights (accumulated): `[1 + 0, 1 + 0, 1 + 1]` -> `[1, 1, 2]`.
+  // Row 1 Sorted: `[1, 1, 2]`. Areas: 1*3=3, 1*2=2, 2*1=2. Max = 3.
+  public static int largestSubmatrix(int[][] matrix) {
+    int m = matrix.length;
+    int n = matrix[0].length;
+
+    int res = 0;
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (matrix[i][j] != 0 && i > 0) {
+          matrix[i][j] += matrix[i - 1][j];
+        }
+      }
+
+      int[] tmp = matrix[i].clone();
+      Arrays.sort(tmp);
+      for (int k = 0; k < n; k++) {
+        res = Math.max(res, tmp[k] * (n - k));
+      }
+    }
+    return res;
+  }
+}

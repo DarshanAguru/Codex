@@ -730,6 +730,21 @@
     "type": "file"
   },
   {
+    "name": "Largest_submatrix_with_rearrangements.txt",
+    "path": "dsa/Largest_submatrix_with_rearrangements.txt",
+    "size": 2146,
+    "timestamp": 1773705600000,
+    "displayDate": "17/03/2026",
+    "problemNo": 1727,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Matrix",
+      "Sorting"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Longest_balanced_subarray_i.txt",
     "path": "dsa/Longest_balanced_subarray_i.txt",
     "size": 1810,
