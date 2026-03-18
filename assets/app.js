@@ -342,12 +342,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (state.sortMode === 'DATE_NEW') {
-                const diff = getSortValue(b.displayDate, 0) - getSortValue(a.displayDate, 0);
-                return diff !== 0 ? diff : nameComp;
+                const diff = getSortValue(b.displayDate, b.timestamp) - getSortValue(a.displayDate, a.timestamp);
+                const timestampDiff = b.timestamp - a.timestamp;
+                return diff !== 0 ? diff : (timestampDiff !== 0) ? timestampDiff : nameComp;
             }
             if (state.sortMode === 'DATE_OLD') {
-                const diff = getSortValue(a.displayDate, 99999999) - getSortValue(b.displayDate, 99999999);
-                return diff !== 0 ? diff : nameComp;
+                const diff = getSortValue(a.displayDate, a.timestamp) - getSortValue(b.displayDate, b.timestamp);
+                const timestampDiff = b.timestamp - a.timestamp;
+                return diff !== 0 ? diff : (timestampDiff !== 0) ? timestampDiff : nameComp;
             }
             if (state.sortMode === 'PROBLEM_ASC') {
                 const diff = (a.problemNo || 999999) - (b.problemNo || 999999);
