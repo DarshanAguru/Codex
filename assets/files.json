@@ -378,6 +378,20 @@
     "type": "file"
   },
   {
+    "name": "Count_submatrices_with_top_left_element_and_sum_less_than_k.txt",
+    "path": "dsa/Count_submatrices_with_top_left_element_and_sum_less_than_k.txt",
+    "size": 2234,
+    "timestamp": 1773792000000,
+    "displayDate": "18/03/2026",
+    "problemNo": 3070,
+    "topics": [
+      "Array",
+      "Matrix",
+      "Prefix Sum"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Daily_temperatures.txt",
     "path": "dsa/Daily_temperatures.txt",
     "size": 1897,
