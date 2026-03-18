@@ -333,12 +333,20 @@ document.addEventListener("DOMContentLoaded", () => {
     function sortFiles() {
         state.allFiles.sort((a, b) => {
             const nameComp = a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
+
+            function getSortValue(dateStr, fallback) {
+                if (!dateStr) return fallback;
+                const parts = dateStr.split('/');
+                if (parts.length === 3) return parseInt(parts[2] + parts[1] + parts[0], 10);
+                return fallback;
+            }
+
             if (state.sortMode === 'DATE_NEW') {
-                const diff = (b.timestamp || 0) - (a.timestamp || 0);
+                const diff = getSortValue(b.displayDate, 0) - getSortValue(a.displayDate, 0);
                 return diff !== 0 ? diff : nameComp;
             }
             if (state.sortMode === 'DATE_OLD') {
-                const diff = (a.timestamp || 2147483647000) - (b.timestamp || 2147483647000);
+                const diff = getSortValue(a.displayDate, 99999999) - getSortValue(b.displayDate, 99999999);
                 return diff !== 0 ? diff : nameComp;
             }
             if (state.sortMode === 'PROBLEM_ASC') {

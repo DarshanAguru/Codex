@@ -6,10 +6,7 @@
 class Main {
 
   public static void main(String[] args) {
-    int[][] grid = {
-      {7, 6, 3},
-      {6, 6, 1}
-    };
+    int[][] grid = { { 7, 6, 3 }, { 6, 6, 1 } };
     int k = 18;
     System.out.println(countSubmatrices(grid, k));
   }
@@ -17,14 +14,14 @@ class Main {
   // Logic: 2D Prefix Sum
   // We want to count the number of submatrices that include `grid[0][0]` whose sum is <= k.
   // 1. We process the grid cell-by-cell, converting it in-place into a 2D prefix sum array.
-  // 2. The value at `grid[i][j]` will represent the total sum of the submatrix from 
+  // 2. The value at `grid[i][j]` will represent the total sum of the submatrix from
   //    (0,0) to `(i,j)`.
   // 3. For any cell `(i, j)`, the submatrix sum can be constructed from previously computed
   //    prefix sums: the row above, the column left, minus the double-counted top-left overlap.
   //    Specifically: `grid[i][j] += grid[i-1][j] + grid[i][j-1] - grid[i-1][j-1]`.
-  // 4. If the newly computed standard prefix sum `grid[i][j]` is <= k, we increment our result. 
-  //    If it's already greater than `k`, and since cell constraints are generally positive 
-  //    in this problem variant, subsequent contiguous expansions would also exceed `k` 
+  // 4. If the newly computed standard prefix sum `grid[i][j]` is <= k, we increment our result.
+  //    If it's already greater than `k`, and since cell constraints are generally positive
+  //    in this problem variant, subsequent contiguous expansions would also exceed `k`
   //    (which makes it easy to process in passing without complex window sliding).
   //
   // Dry run idea:
