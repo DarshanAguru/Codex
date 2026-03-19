@@ -1,0 +1,70 @@
+// Date: 19/03/2026
+// Problem: https://leetcode.com/problems/count-submatrices-with-equal-frequency-of-x-and-y/
+// Leetcode Problem No: 3212
+// Relevance: Array, Matrix, Prefix Sum
+
+class Main {
+
+  public static void main(String[] args) {
+    char[][] grid = {
+      {'X', 'Y', '.'},
+      {'Y', '.', '.'}
+    };
+    System.out.println(numberOfSubmatrices(grid));
+  }
+
+  // Logic: 2D Prefix Sum (Space Optimized)
+  // We want to count the number of submatrices that include `grid[0][0]` which contain
+  // an equal number of 'X' and 'Y' characters, and at least one 'X'.
+  // 1. Instead of allocating a full 2D prefix sum array, we optimize space by keeping two 
+  //    1D arrays (`xSum` and `ySum`) representing the prefix sums for the columns.
+  // 2. We scan row by row. Inside each row, we keep running counters `rowSumX` and `rowSumY`
+  //    for the frequencies of 'X' and 'Y'.
+  // 3. For every cell `(i, j)`, we add the row prefix sums to the column prefix sums 
+  //    (`xSum[j] += rowSumX`, `ySum[j] += rowSumY`).
+  // 4. `xSum[j]` and `ySum[j]` now inherently represent the total count of 'X' and 'Y' 
+  //    in the submatrix defined from `(0, 0)` down to `(i, j)`.
+  // 5. If `xSum[j] > 0` and `xSum[j] == ySum[j]`, we have found a valid submatrix and 
+  //    increment the result count.
+  //
+  // Dry run idea:
+  // grid = [['X', 'Y', '.'], ['Y', '.', '.']]
+  // Row 0:
+  //   j=0 ('X'): rowSumX=1, xSum[0]=1, ySum[0]=0. (x>0 but x!=y)
+  //   j=1 ('Y'): rowSumX=1, rowSumY=1, xSum[1]=1, ySum[1]=1. (x>0 and x==y) -> res=1
+  //   j=2 ('.'): rowSumX=1, rowSumY=1, xSum[2]=1, ySum[2]=1. (x>0 and x==y) -> res=2
+  // Row 1:
+  //   j=0 ('Y'): rowSumY=1, xSum[0]=1, ySum[0]=1. (x>0 and x==y) -> res=3
+  //   j=1 ('.'): rowSumY=1, xSum[1]=1, ySum[1]=2. (x!=y)
+  //   j=2 ('.'): rowSumY=1, xSum[2]=1, ySum[2]=2. (x!=y)
+  // Total valid submatrices: 3
+  public static int numberOfSubmatrices(char[][] grid) {
+    int m = grid.length;
+    int n = grid[0].length;
+    int[] xSum = new int[n];
+    int[] ySum = new int[n];
+    int res = 0;
+
+    for (int i = 0; i < m; i++) {
+      int rowSumX = 0;
+      int rowSumY = 0;
+      for (int j = 0; j < n; j++) {
+        if (grid[i][j] == 'X') {
+          rowSumX++;
+        }
+        if (grid[i][j] == 'Y') {
+          rowSumY++;
+        }
+
+        xSum[j] += rowSumX;
+        ySum[j] += rowSumY;
+
+        if (xSum[j] > 0 && xSum[j] == ySum[j]) {
+          res++;
+        }
+      }
+    }
+
+    return res;
+  }
+}
