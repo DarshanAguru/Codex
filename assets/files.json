@@ -378,6 +378,20 @@
     "type": "file"
   },
   {
+    "name": "Count_submatrices_with_equal_frequency_of_x_and_y.txt",
+    "path": "dsa/Count_submatrices_with_equal_frequency_of_x_and_y.txt",
+    "size": 2461,
+    "timestamp": 1773878400000,
+    "displayDate": "19/03/2026",
+    "problemNo": 3212,
+    "topics": [
+      "Array",
+      "Matrix",
+      "Prefix Sum"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Count_submatrices_with_top_left_element_and_sum_less_than_k.txt",
     "path": "dsa/Count_submatrices_with_top_left_element_and_sum_less_than_k.txt",
     "size": 2219,
@@ -1112,6 +1126,21 @@
     "topics": [
       "Array",
       "Sorting"
+    ],
+    "type": "file"
+  },
+  {
+    "name": "Minimum_absolute_difference_in_sliding_submatrix.txt",
+    "path": "dsa/Minimum_absolute_difference_in_sliding_submatrix.txt",
+    "size": 2072,
+    "timestamp": 1773964800000,
+    "displayDate": "20/03/2026",
+    "problemNo": 3567,
+    "topics": [
+      "Array",
+      "Matrix",
+      "Sorting",
+      "Sliding Window"
     ],
     "type": "file"
   },
