@@ -621,6 +621,20 @@
     "type": "file"
   },
   {
+    "name": "Flip_square_submatrix_vertically.txt",
+    "path": "dsa/Flip_square_submatrix_vertically.txt",
+    "size": 1632,
+    "timestamp": 1774051200000,
+    "displayDate": "21/03/2026",
+    "problemNo": 3643,
+    "topics": [
+      "Array",
+      "Matrix",
+      "Simulation"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Four_sum.txt",
     "path": "dsa/Four_sum.txt",
     "size": 2485,

@@ -1,0 +1,53 @@
+// Date: 21/03/2026
+// Problem: https://leetcode.com/problems/flip-square-submatrix-vertically/
+// Leetcode Problem No: 3643
+// Relevance: Array, Matrix, Simulation
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[][] grid = { { 1, 2 }, { 3, 4 } };
+    int x = 0,
+      y = 0,
+      k = 2;
+    int[][] res = reverseSubmatrix(grid, x, y, k);
+    System.out.println(Arrays.deepToString(res));
+  }
+
+  // Logic: Vertical Flip Simulation
+  // A vertical flip of a submatrix means reversing the order of its rows.
+  // 1. Iterate through each column `i` from `y` to `y + k - 1`.
+  // 2. For each column, extract the elements from row `x` to `x + k - 1` into a temporary array.
+  // 3. Place the elements back into the same column in reverse row order.
+  //
+  // Dry run idea:
+  // grid = [[1, 2], [3, 4]], x = 0, y = 0, k = 2
+  // Column i = 0:
+  //    Rows 0 to 1 elements are [1, 3].
+  //    Temporary reversed array: [3, 1].
+  //    Update grid[0][0] = 3, grid[1][0] = 1.
+  // Column i = 1:
+  //    Rows 0 to 1 elements are [2, 4].
+  //    Temporary reversed array: [4, 2].
+  //    Update grid[0][1] = 4, grid[1][1] = 2.
+  // Final grid: [[3, 4], [1, 2]]
+  public static int[][] reverseSubmatrix(int[][] grid, int x, int y, int k) {
+    int m = grid.length;
+    int n = grid[0].length;
+    int newR = x + k;
+    int newC = y + k;
+
+    for (int i = y; i < newC; i++) {
+      int[] tmp = new int[k];
+      for (int l = x; l < newR; l++) {
+        tmp[k - (l - x) - 1] = grid[l][i];
+      }
+      for (int l = x; l < newR; l++) {
+        grid[l][i] = tmp[l - x];
+      }
+    }
+    return grid;
+  }
+}
