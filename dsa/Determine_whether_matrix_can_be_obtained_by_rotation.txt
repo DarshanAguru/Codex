@@ -1,0 +1,80 @@
+// Date: 22/03/2026
+// Problem: https://leetcode.com/problems/determine-whether-matrix-can-be-obtained-by-rotation/
+// Leetcode Problem No: 1886
+// Relevance: Array, Matrix, Rotation
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[][] mat = { { 0, 1 }, { 1, 0 } };
+    int[][] target = { { 1, 0 }, { 0, 1 } };
+    System.out.println(findRotation(mat, target)); // Expected: true
+  }
+
+  // Logic: Matrix Rotation Simulation
+  // To check if matrix `mat` can be rotated to match `target`, we can rotate it by 90 degrees up to 3 times.
+  // 1. First, check if `mat` is already equal to `target`.
+  // 2. Rotate `mat` by 90 degrees and check equality. Repeat this for 90, 180, and 270 degrees.
+  // 3. Rotation by 90 degrees involves:
+  //    a. Transposing the matrix (swapping element[i][j] with element[j][i]).
+  //    b. Reversing each row of the transposed matrix.
+  //
+  // Dry run idea:
+  // mat = [[0, 1], [1, 0]], target = [[1, 0], [0, 1]]
+  // 1. Initial check: mat != target
+  // 2. Rotate 90:
+  //    - Transpose: [[0, 1], [1, 0]]
+  //    - Reverse rows: [[1, 0], [0, 1]]
+  //    - Mat equals target? YES. Return true.
+  public static boolean findRotation(int[][] mat, int[][] target) {
+    if (isMatEqual(mat, target)) {
+      return true;
+    }
+
+    for (int i = 0; i < 3; i++) {
+      mat = rotate90Deg(mat);
+      if (isMatEqual(mat, target)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private static int[][] rotate90Deg(int[][] A) {
+    int n = A.length;
+
+    int[][] AT = new int[n][n];
+
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < n; j++) {
+        AT[i][j] = A[j][i];
+      }
+      int[] tmp = new int[n];
+      for (int k = 0; k < n; k++) {
+        tmp[k] = AT[i][k];
+      }
+      for (int k = 0; k < n; k++) {
+        AT[i][k] = tmp[n - k - 1];
+      }
+    }
+
+    return AT;
+  }
+
+  private static boolean isMatEqual(int[][] A, int[][] B) {
+    int n = A.length;
+
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < n; j++) {
+        if (A[i][j] != B[i][j]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+}
