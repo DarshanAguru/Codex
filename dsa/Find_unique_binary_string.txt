@@ -1,0 +1,42 @@
+// Date: 08/03/2026
+// Problem: https://leetcode.com/problems/find-unique-binary-string/
+// Leetcode Problem No: 1980
+// Relevance: Array, String, Backtracking
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String[] nums = { "01", "10" };
+    System.out.println(findDifferentBinaryString(nums));
+  }
+
+  // Logic: Cantor's Diagonalization Argument
+  // We need to find a binary string that does not appear in the given `nums` array.
+  // To construct such a string, we look at the i-th character of the i-th string in `nums`.
+  // By picking the opposite character (if '0' pick '1', if '1' pick '0'), we guarantee
+  // that our resulting string differs from the i-th string at the i-th position.
+  // Hence, it will be unique and not present in the array.
+  //
+  // Dry run for nums = ["01", "10"]:
+  // i = 0: nums[0] is "01". 0th char is '0'. We append '1' to sb.
+  // i = 1: nums[1] is "10". 1st char is '0'. We append '1' to sb.
+  // Return value: "11". "11" is distinct from both "01" and "10".
+  static String findDifferentBinaryString(String[] nums) {
+    StringBuilder sb = new StringBuilder();
+    int i = 0;
+    int n = nums[0].length();
+
+    for (String num : nums) {
+      if (i < n) {
+        char c = num.charAt(i);
+        sb.append((c == '0') ? '1' : '0');
+        i++;
+      }
+    }
+
+    return sb.toString();
+  }
+}

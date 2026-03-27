@@ -1,0 +1,82 @@
+// Date: 22/01/2026
+// Problem: https://leetcode.com/problems/minimum-pair-removal-to-sort-array-i/
+// Leetcode Problem No: 3507
+// Relevance: Array, Sorting
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] nums = { 5, 2, 3, 1 };
+    int res = minimumPairRemoval(nums);
+    System.out.println(res);
+  }
+
+  // Logic: Simulation & Greedy Merge
+  // The problem asks us to find the minimum number of "removals" (merging adjacent elements
+  // by summing them) to make the array sorted in non-decreasing order.
+  // In each step, if the array is not sorted, we find a pair of adjacent elements whose sum is minimum
+  // and merge them into a single element. We repeat this until the array becomes sorted.
+  // 1. `isSorted` checks if the current slice of length `n` is non-decreasing.
+  // 2. `sumAndMerge` finds the adjacent pair `(i, i+1)` that produces the smallest sum,
+  //    adds `arr[i+1]` to `arr[i]`, and shifts the rest of the array left by 1 position.
+  // We keep track of how many such merges/removals we perform.
+  //
+  // Dry run for nums = [5, 2, 3, 1]:
+  // Initial: sorted? No (5 > 2).
+  // Step 1: Pairs: 5+2=7, 2+3=5, 3+1=4. Min sum is 4 at (3, 1).
+  //   Merge 3+1 -> [5, 2, 4]. count=1.
+  // Step 2: sorted? No (5 > 2).
+  //   Pairs: 5+2=7, 2+4=6. Min sum is 6 at (2, 4).
+  //   Merge 2+4 -> [5, 6]. count=2.
+  // Step 3: sorted? Yes (5 <= 6).
+  // Loop ends. Returns 2.
+  public static int minimumPairRemoval(int[] nums) {
+    int n = nums.length;
+    int count = 0;
+
+    while (!isSorted(nums, n)) {
+      n = sumAndMerge(nums, n);
+      count++;
+    }
+
+    return count;
+  }
+
+  public static boolean isSorted(int[] arr, int n) {
+    for (int i = 0; i < n - 1; i++) {
+      if (arr[i] > arr[i + 1]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static int sumAndMerge(int[] arr, int n) {
+    int min = Integer.MAX_VALUE;
+    int pos = -1;
+
+    for (int i = 0; i < n - 1; i++) {
+      int sum = arr[i] + arr[i + 1];
+
+      if (sum < min) {
+        min = sum;
+        pos = i;
+      }
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+      if (i == pos) {
+        arr[i] += arr[i + 1];
+      }
+
+      if (i > pos) {
+        arr[i] = arr[i + 1];
+      }
+    }
+
+    return n - 1;
+  }
+}

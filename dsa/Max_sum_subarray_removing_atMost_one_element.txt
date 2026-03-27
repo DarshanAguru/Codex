@@ -1,0 +1,72 @@
+// Date: 05/01/2026
+// Problem: https://leetcode.com/problems/maximum-subarray-sum-with-one-deletion/
+// Leetcode Problem No: 1186
+// Relevance: Array, Dynamic Programming
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 6, -1, -8, 4, 5 };
+    int result = maxSumSubArrayRemovingOneElement(arr);
+    System.out.println("Result: " + result);
+  }
+
+  // Logic: Prefix/Suffix DP (Kadane's left & right)
+  // We want the max subarray sum, but we can optionally delete ONE element.
+  // If we don't delete any, it's just standard Kadane's algorithm.
+  // If we delete an element at index `i`, the new max sum will be the combination of:
+  // (max subarray sum ending exactly at `i-1`) + (max subarray sum starting exactly at `i+1`).
+  // We can precompute these using two arrays:
+  // 1. `forward[i]`: standard Kadane's ending at `i`.
+  // 2. `backward[i]`: reverse Kadane's starting at `i`.
+  // Finally, we iterate `i` from 1 to N-2, and compare `forward[i-1] + backward[i+1]`
+  // with our max without deletion.
+  //
+  // Dry run for arr = [6, -1, -8, 4, 5]:
+  // Max without deletion (Kadane's global max) = 9 (subarray [4, 5]).
+  // forward = [6, 5, -3, 4, 9]
+  // backward = [6, 0, 1, 9, 5]
+  // Try removing 'i':
+  // i=1 (remove -1): f[0]+b[2] = 6 + 1 = 7.
+  // i=2 (remove -8): f[1]+b[3] = 5 + 9 = 14. (Max!)
+  // i=3 (remove 4): f[2]+b[4] = -3 + 5 = 2.
+  // Result is 14. (Subarray [6, -1, 4, 5]).
+  static int maxSumSubArrayRemovingOneElement(int[] arr) {
+    // forward[i] stores max subarray sum ending at i
+    int[] forward = new int[arr.length];
+    // backward[i] stores max subarray sum starting at i
+    int[] backward = new int[arr.length];
+
+    int curr = arr[0];
+    int maxSoFar = arr[0];
+    forward[0] = arr[0];
+
+    // Fill forward array (Kadane's)
+    for (int i = 1; i < arr.length; i++) {
+      curr = Math.max(arr[i], curr + arr[i]);
+      maxSoFar = Math.max(maxSoFar, curr);
+      forward[i] = curr;
+    }
+
+    curr = arr[arr.length - 1];
+    backward[arr.length - 1] = arr[arr.length - 1];
+
+    // Fill backward array
+    for (int i = arr.length - 2; i >= 0; i--) {
+      curr = Math.max(arr[i], curr + arr[i]);
+      backward[i] = curr;
+    }
+
+    int res = maxSoFar;
+
+    // Try removing element at i, connecting forward[i-1] and backward[i+1]
+    for (int i = 1; i < arr.length - 1; i++) {
+      res = Math.max(res, forward[i - 1] + backward[i + 1]);
+    }
+
+    return res;
+  }
+}

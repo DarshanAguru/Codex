@@ -1,0 +1,77 @@
+// Date: 05/08/2025
+// Problem: https://leetcode.com/problems/find-missing-and-repeated-values/
+// Leetcode Problem No: 2965
+// Relevance: Hash Table, Array, Bit Manipulation, Math
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 3, 1, 2, 5, 3 };
+
+    // Logic: XOR + Bit Masking
+    // We want to find a repeating element `X` and a missing element `Y` from numbers 1 to N.
+    // 1. If we XOR all array elements and all numbers from 1 to N, the result is `X ^ Y`
+    //    (since everything else appears twice and cancels out).
+    // 2. We find the rightmost set bit in `xor` (which represents a bit that differs between X and Y).
+    // 3. We divide all elements (array elements + 1 to N) into two buckets based on this set bit.
+    //    One bucket will XOR to X, the other to Y.
+    // 4. Finally, iterate through the array to check which one is repeating and which is missing.
+    //
+    // Dry run for arr=[3, 1, 2, 5, 3]: (N=5)
+    // 1..5 = {1, 2, 3, 4, 5}.
+    // arr  = {1, 2, 3, 3, 5}.
+    // xor = (1^2^3^4^5) ^ (1^2^3^3^5) = 4 ^ 3 = 7 (111 in binary).
+    // differ bit = rightmost bit of 7 = 1 (001).
+    // Bucket 1 (bit is 1): arr: {1, 3, 3, 5}. 1..5: {1, 3, 5}. XOR sum = (1^3^3^5) ^ (1^3^5) = 3
+    // Bucket 2 (bit is 0): arr: {2}. 1..5: {2, 4}. XOR sum = (2) ^ (2^4) = 4
+    // We got {3, 4}. Check arr to find which is duplicate. 3 is present twice. So Repeats=3, Missing=4.
+    int xor = 0;
+    for (int i = 0; i < arr.length; i++) {
+      xor ^= arr[i];
+      xor ^= (i + 1);
+    }
+
+    // xor now contains (Repeating ^ Missing)
+    // Get the rightmost set bit to distinguish numbers
+    int diff = (xor & ~(xor - 1));
+
+    int zero = 0; // Bucket 1 (bit not set)
+    int one = 0; // Bucket 2 (bit set)
+
+    // Pass 1: Categorize array elements
+    for (int i = 0; i < arr.length; i++) {
+      if ((arr[i] & diff) != 0) {
+        one ^= arr[i];
+      } else {
+        zero ^= arr[i];
+      }
+    }
+
+    // Pass 2: Categorize numbers 1..N
+    for (int i = 1; i <= arr.length; i++) {
+      if ((i & diff) != 0) {
+        one ^= i;
+      } else {
+        zero ^= i;
+      }
+    }
+
+    // 'one' and 'zero' hold the two numbers.
+    // Need to identify which is repeating and which is missing.
+    int cnt = 0;
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == zero) {
+        cnt++;
+      }
+    }
+
+    if (cnt == 2) {
+      System.out.println("Repeating: " + zero + ", Missing: " + one);
+    } else {
+      System.out.println("Repeating: " + one + ", Missing: " + zero);
+    }
+  }
+}

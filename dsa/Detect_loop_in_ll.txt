@@ -1,0 +1,80 @@
+// Date: 12/08/2025
+// Problem: https://leetcode.com/problems/linked-list-cycle/
+// Leetcode Problem No: 141
+// Relevance: Linked List, Two Pointers
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+class LL {
+
+  public Node head;
+  public Node tail;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      tail = head;
+      return;
+    }
+    tail.next = new Node(n);
+    tail = tail.next;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    LL list = new LL();
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    list.add(4);
+    list.add(5);
+
+    // Create a loop for testing: 5 -> 3
+    list.tail.next = list.head.next.next;
+
+    boolean hasLoop = findLoop(list.head);
+    System.out.println(hasLoop);
+  }
+
+  // Logic: Floyd's Tortoise and Hare / Fast and Slow Pointers
+  // To detect a cycle in a linked list, we use two pointers traversing at different speeds.
+  // `slow` moves 1 step at a time, `fast` moves 2 steps at a time.
+  // If there is no cycle, `fast` will eventually reach `null`.
+  // If there is a cycle, `fast` will "lap" `slow` and eventually point to the same node as `slow`.
+  // When `slow == fast`, we know a cycle exists.
+  //
+  // Dry run for list = 1 -> 2 -> 3 -> 4 -> 5 -> (points back to 3):
+  // Init: slow=1, fast=1.
+  // Step 1: slow=2, fast=3.
+  // Step 2: slow=3, fast=5.
+  // Step 3: slow=4, fast=4. (Since from 5, next is 3, next.next is 4).
+  // slow == fast (4 == 4). Returns true.
+  static boolean findLoop(Node head) {
+    Node slow = head;
+    Node fast = head;
+
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+
+      if (slow == fast) {
+        return true;
+      }
+    }
+    return false;
+  }
+}

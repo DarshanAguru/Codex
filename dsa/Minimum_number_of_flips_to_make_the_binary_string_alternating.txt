@@ -1,0 +1,54 @@
+// Date: 07/03/2026
+// Problem: https://leetcode.com/problems/minimum-number-of-flips-to-make-the-binary-string-alternating/
+// Leetcode Problem No: 1888
+// Relevance: String, Sliding Window
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String s = "111000";
+    System.out.println(minFlips(s));
+  }
+
+  // Logic: Sliding Window + Pattern Matching
+  // We can do two operations:
+  // 1. Remove first character and append it to the end (equivalent to a cyclic shift).
+  // 2. Flip '0' to '1' or '1' to '0'.
+  // Notice that a cyclic shift of an alternating string is still an alternating string!
+  // There are only two alternating patterns of length `n`:
+  // P1: 010101...
+  // P2: 101010...
+  // A character at index `i` matches P1 if `(s.charAt(i) ^ i) & 1 == 0`.
+  // First, we count flips needed for the original string against both patterns using an array `operations`.
+  // Then we simulate the "remove and append" operation using a sliding window of size `n`.
+  // When we append the first character to the end, its new index is effectively `i + n`.
+  // We remove its contribution from its old index `i`, add its contribution at its new index `i+n`,
+  // and update the minimum flips required.
+  //
+  // Dry run for "111000", n=6:
+  // Initial mismatches: Pattern 010101 (ops[0]) and Pattern 101010 (ops[1]).
+  // Simulate rotation:
+  // Move '1' from idx 0 to idx 6. Subtract mismatch for idx 0, add for idx 6. Update min.
+  // Move '1' from idx 1 to idx 7. Update min...
+  // The minimum flips over all cyclic shifts is the answer.
+  static int minFlips(String s) {
+    int n = s.length();
+    int res = n;
+    int[] operations = { 0, 0 };
+
+    for (int i = 0; i < n; i++) {
+      operations[(s.charAt(i) ^ i) & 1]++;
+    }
+
+    for (int i = 0; i < n; i++) {
+      operations[(s.charAt(i) ^ i) & 1]--;
+      operations[(s.charAt(i) ^ (n + i)) & 1]++;
+      res = Math.min(res, Math.min(operations[0], operations[1]));
+    }
+
+    return res;
+  }
+}

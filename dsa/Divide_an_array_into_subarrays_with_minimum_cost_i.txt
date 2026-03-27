@@ -1,0 +1,52 @@
+// Date: 01/02/2026
+// Problem: https://leetcode.com/problems/divide-an-array-into-subarrays-with-minimum-cost-i/
+// Leetcode Problem No: 3010
+// Relevance: Array, Sorting, Enumeration
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] nums = { 1, 2, 3, 12 };
+
+    int res = minimumCost(nums);
+
+    System.out.println(res);
+  }
+
+  // Logic: Math / Enumeration
+  // We need to divide the array into exactly 3 contiguous, non-empty subarrays.
+  // The cost is the sum of the first elements of these 3 subarrays.
+  // Notice that the first element of the FIRST subarray will ALWAYS be `nums[0]`.
+  // The first elements of the second and third subarrays will simply be TWO OTHER elements
+  // picked from the rest of the array (nums[1] to nums[n-1]).
+  // To minimize the sum, we just need to find the two smallest elements in `nums[1...n-1]`.
+  //
+  // Dry run for nums = [1, 2, 3, 12]:
+  // fixed = nums[0] = 1.
+  // We look for 2 minimums in [2, 3, 12].
+  // min1 = INF, min2 = INF.
+  // i=1: 2 < INF -> min2=INF, min1=2.
+  // i=2: 3 < min2 (INF), but > min1 (2) -> min2=3.
+  // i=3: 12 > both -> skip.
+  // Return fixed + min1 + min2 = 1 + 2 + 3 = 6.
+  public static int minimumCost(int[] nums) {
+    int INF = Integer.MAX_VALUE;
+    int fixed = nums[0];
+    int min1 = INF;
+    int min2 = INF;
+
+    for (int i = 1; i < nums.length; i++) {
+      if (nums[i] < min1) {
+        min2 = min1;
+        min1 = nums[i];
+      } else if (nums[i] < min2) {
+        min2 = nums[i];
+      }
+    }
+
+    return fixed + min1 + min2;
+  }
+}

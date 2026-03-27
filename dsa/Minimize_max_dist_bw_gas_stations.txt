@@ -1,0 +1,81 @@
+// Date: 07/08/2025
+// Problem: https://leetcode.com/problems/minimize-max-distance-to-gas-station/
+// Leetcode Problem No: 774
+// Relevance: Binary Search, Array, Array
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 3, 4, 5 };
+    int k = 4;
+
+    // Solution using Binary Search (Correct approach for competitive limits)
+    double resBS = findMinOfMaxDistBS(arr, k);
+    System.out.println(resBS);
+  }
+
+  static int canFit(int[] arr, double width) {
+    int cnt = 0;
+    for (int i = 1; i < arr.length; i++) {
+      int inBetween = (int) ((arr[i] - arr[i - 1]) / width);
+
+      // If perfectly divisible, we don't need the extra station at end
+      if ((arr[i] - arr[i - 1]) == (width * inBetween)) {
+        inBetween--;
+      }
+      cnt += inBetween;
+    }
+    return cnt;
+  }
+
+  // Logic: Binary Search on Answer
+  // We want to add `k` new gas stations to minimize the maximum distance between adjacent stations.
+  // The maximum possible distance is the current max distance (before adding any stations).
+  // The minimum possible distance is 0.
+  // We binary search the `width` (maximum allowed distance) in continuous space `[0, Max_Dist]`.
+  // For a given `mid` width, we calculate how many stations we *must* place to ensure
+  // no two adjacent stations are further apart than `mid`.
+  // The number of stations needed between `arr[i]` and `arr[i-1]` is `floor((arr[i] - arr[i-1]) / mid)`.
+  // (If it divides perfectly, we need one less station).
+  // If the total stations needed `> k`, then `mid` is too small. We must increase distance `low = mid`.
+  // If total stations `<= k`, then `mid` is possible, but we try a smaller distance `high = mid`.
+  // We loop until `high - low < 1e-6` for precision.
+  //
+  // Dry run for arr = [1, 2, 3, 4, 5], k = 4:
+  // Original max dist = 1. `k`=4 new stations means we can insert 1 station between each existing pair.
+  // Range: [0, 1].
+  // mid = 0.5:
+  //   Between 1 and 2: dist=1. 1/0.5 = 2. Divides perfectly, so need 2-1 = 1 station.
+  //   Total needed for 4 gaps: 1 * 4 = 4 stations.
+  //   4 <= k(4). Feasible! high = 0.5.
+  // mid = 0.25:
+  //   dist=1. 1/0.25 = 4. Divides perfectly. Need 4-1 = 3 stations per gap.
+  //   Total needed: 3 * 4 = 12 stations. 12 > k(4). Not feasible. low = 0.25.
+  // Converges strictly to 0.5.
+  static double findMinOfMaxDistBS(int[] arr, int k) {
+    double low = 0;
+    double high = 0;
+
+    for (int i = 0; i < arr.length - 1; i++) {
+      high = Math.max(high, (double) (arr[i + 1] - arr[i]));
+    }
+
+    double eps = 1e-6; // Precision
+
+    while (high - low > eps) {
+      double mid = (high + low) / 2.0;
+
+      if (canFit(arr, mid) > k) {
+        // If we need > k stations, the max dist is too small
+        low = mid;
+      } else {
+        // Feasible
+        high = mid;
+      }
+    }
+    return high;
+  }
+}

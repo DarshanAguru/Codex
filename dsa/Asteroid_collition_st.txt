@@ -1,0 +1,65 @@
+// Date: 18/08/2025
+// Problem: https://leetcode.com/problems/asteroid-collision/
+// Leetcode Problem No: 735
+// Relevance: Stack, Array
+
+import java.lang.*;
+import java.util.*;
+import java.util.stream.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] asteroids = { 3, 2, -5 };
+
+    int[] res = getStateAfterCollision(asteroids);
+    System.out.println(Arrays.toString(res));
+  }
+
+  // Logic: Stack Simulation
+  // We iterate through each asteroid.
+  // - If it's a positive asteroid, it moves right, so we just push it to the stack.
+  // - If it's a negative asteroid (moving left), it might collide with positive asteroids in the stack.
+  //   We continuously pop smaller positive asteroids from the stack because they explode.
+  //   If we find a positive asteroid of the same size, both explode (pop and do not push negative).
+  //   If the stack becomes empty or the top asteroid is also negative (moving left safely),
+  //   the negative asteroid survives, so we push it.
+  //
+  // Dry run for asteroids = [3, 2, -5]:
+  // 1. ast = 3 (positive): stack pushes -> [3]
+  // 2. ast = 2 (positive): stack pushes -> [3, 2]
+  // 3. ast = -5 (negative):
+  //    - top is 2. 2 < 5, so pop 2. Stack: [3]
+  //    - top is 3. 3 < 5, so pop 3. Stack: []
+  //    - Stack is empty. Push -5. Stack: [-5]
+  // Result is [-5].
+  static int[] getStateAfterCollision(int[] asteroids) {
+    Stack<Integer> st = new Stack<>();
+
+    for (int ast : asteroids) {
+      if (ast > 0) {
+        // Positive asteroid always moves right, just push
+        st.push(ast);
+      } else {
+        // Negative asteroid moving left. Check for collisions with top of stack (right-moving asteroids).
+        // While stack has a positive asteroid (st.peek() > 0) and it is smaller than current (|ast| > st.peek())
+        while (!st.isEmpty() && st.peek() > 0 && st.peek() < -ast) {
+          st.pop(); // Positive asteroid explodes
+        }
+
+        if (!st.isEmpty() && st.peek() == -ast) {
+          // Same size: both explode
+          st.pop();
+        } else if (st.isEmpty() || st.peek() < 0) {
+          // Stack empty or only negative asteroids left: current one survives
+          st.push(ast);
+        }
+      }
+    }
+
+    return st
+      .stream()
+      .mapToInt(i -> i)
+      .toArray();
+  }
+}

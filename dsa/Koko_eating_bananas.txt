@@ -1,0 +1,68 @@
+// Date: 06/08/2025
+// Problem: https://leetcode.com/problems/koko-eating-bananas/
+// Leetcode Problem No: 875
+// Relevance: Binary Search, Array
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 25, 12, 8, 14, 19 };
+    int h = 5;
+
+    int max = 0;
+    for (int i : arr) {
+      max = Math.max(i, max);
+    }
+
+    // Binary Search for minimum eating speed 'k'
+    // Range: [1, max(piles)]
+    int res = binarySearch(arr, 1, max, h);
+    System.out.println(res);
+  }
+
+  static double getHoursNeeded(int[] arr, int speed) {
+    double hours = 0;
+    for (int pile : arr) {
+      hours += Math.ceil((double) pile / speed);
+    }
+    return hours;
+  }
+
+  // Logic: Binary Search on Answer
+  // Koko wants to eat all bananas within `h` hours, moving at a speed of `k` bananas per hour.
+  // The minimum possible speed is 1. The maximum possible speed is the size of the largest pile.
+  // Any speed greater than the largest pile still takes 1 hour for that pile, so it doesn't help.
+  // We can binary search the speed `k` in the range [1, max(piles)].
+  // For a speed `mid`, we check if Koko can finish all piles in <= `h` hours.
+  // If she can, `mid` is a valid speed, and we record it as a possible answer,
+  // but we try to find an even smaller (slower) speed by setting `r = mid - 1`.
+  // If she can't finish in time, she must eat faster, so `l = mid + 1`.
+  //
+  // Dry run for piles = [25, 12, 8, 14, 19], h = 5:
+  // (Total 5 piles, exactly 5 hours, so she must finish 1 pile per hour.
+  // This means the answer must clearly be the maximum element: 25).
+  // max = 25. Range: [1, 25].
+  // mid = 13: Time = ceil(25/13)+ceil(12/13)+... = 2+1+1+2+2 = 8 > 5. Too slow. l=14.
+  // mid = 19: Time = 2+1+1+1+1 = 6 > 5. Too slow. l=20.
+  // mid = 22: Time = 2+1+1+1+1 = 6 > 5. Too slow. l=23.
+  // mid = 25: Time = 1+1+1+1+1 = 5 <= 5. Valid. r=24.
+  // Eventually returns 25.
+  static int binarySearch(int[] arr, int l, int r, int h) {
+    int ans = r; // Initialize with max possible speed
+
+    while (l <= r) {
+      int mid = l + (r - l) / 2;
+
+      if (getHoursNeeded(arr, mid) <= h) {
+        ans = mid;
+        r = mid - 1; // Try slower speed
+      } else {
+        l = mid + 1; // Need faster speed
+      }
+    }
+    return ans;
+  }
+}

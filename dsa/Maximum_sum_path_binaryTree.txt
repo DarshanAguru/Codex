@@ -1,0 +1,63 @@
+// Date: 18/08/2025
+// Problem: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+// Leetcode Problem No: 124
+// Relevance: Tree, Depth-First Search, Dynamic Programming, Recursion
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    Node root = new Node(-10);
+    root.left = new Node(9);
+    root.right = new Node(20);
+    root.right.left = new Node(15);
+    root.right.right = new Node(7);
+
+    int[] maxSum = { Integer.MIN_VALUE };
+    findMaxSumPath(root, maxSum);
+
+    System.out.println("Max Path Sum: " + maxSum[0]);
+  }
+
+  // Logic: DFS (Post-order Traversal)
+  // A path can start and end at any node in the tree.
+  // The maximum path sum passing through a node is:
+  // `Node.val + max(0, LeftSubtreeMaxPath) + max(0, RightSubtreeMaxPath)`.
+  // We use `Math.max(0, ...)` because if a subtree's path sum is negative, we're better off
+  // not including it in our path at all.
+  // At each node, we update a global maximum `maxSum[0]`.
+  // However, the function must return the maximum path sum going down from the current node
+  // (i.e. we can only choose ONE branch to return to the parent: left or right).
+  // Return value: `Node.val + max(0, LeftSubtreeMaxPath, RightSubtreeMaxPath)`.
+  //
+  // Dry run for tree: -10, L=9, R=20(L=15, R=7).
+  // DFS(15): returns 15. max=15.
+  // DFS(7): returns 7. max=15.
+  // DFS(20): Left=15, Right=7. Passing through 20: 20+15+7 = 42. max=42.
+  //          Returns 20 + max(15, 7) = 35.
+  // DFS(9): returns 9. max=42.
+  // DFS(-10): Left=9, Right=35. Passing through -10: -10 + 9 + 35 = 34. max remains 42.
+  // Output: 42.
+  static int findMaxSumPath(Node node, int[] maxSum) {
+    if (node == null) return 0;
+
+    int leftSum = Math.max(0, findMaxSumPath(node.left, maxSum));
+    int rightSum = Math.max(0, findMaxSumPath(node.right, maxSum));
+
+    maxSum[0] = Math.max(maxSum[0], leftSum + rightSum + node.val);
+
+    return Math.max(leftSum, rightSum) + node.val;
+  }
+}

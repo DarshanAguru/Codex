@@ -1,0 +1,108 @@
+// Date: 27/01/2026
+// Problem: https://leetcode.com/problems/minimum-cost-path-with-edge-reversals/
+// Leetcode Problem No: 2662
+// Relevance: Graph, Dijkstra, Shortest Path
+
+import java.lang.*;
+import java.util.*;
+
+class Node implements Comparable<Node> {
+
+  int v;
+  int wt;
+
+  Node(int v, int wt) {
+    this.v = v;
+    this.wt = wt;
+  }
+
+  @Override
+  public int compareTo(Node other) {
+    if (this.v == other.v) {
+      return Integer.compare(this.wt, other.wt);
+    }
+    return Integer.compare(this.v, other.v);
+  }
+}
+
+class Main {
+
+  static final int INF = Integer.MAX_VALUE;
+
+  public static void main(String[] args) {
+    int[][] edges = { { 0, 1, 3 }, { 3, 1, 1 }, { 2, 3, 4 }, { 0, 2, 2 } };
+    int n = 4;
+
+    int res = minCost(n, edges);
+
+    System.out.println(res);
+  }
+
+  // Logic: Dijkstra's Algorithm (Shortest Path)
+  // We want to find the minimum cost to travel from 0 to N-1 on a directed weighted graph,
+  // where we are allowed to traverse edges in REVERSE, but at a higher cost.
+  // We model this by building an adjacency list where:
+  // 1. A directed edge from `u` to `v` has weight `wt`.
+  // 2. An artificial reverse edge from `v` to `u` has weight `2 * wt`.
+  // Once the graph is set up this way, the problem becomes finding the standard shortest path
+  // from node 0 to node N-1.
+  // We use Dijkstra's Algorithm with a PriorityQueue to find this path in O(E log V).
+  //
+  // Dry run for edges = [[0,1,3], [3,1,1], [2,3,4], [0,2,2]], n = 4:
+  // Graph:
+  // 0 -> 1 (w=3), 0 -> 2 (w=2).
+  // 1 -> 0 (w=6).
+  // 3 -> 1 (w=1). 1 -> 3 (w=2).
+  // 2 -> 3 (w=4). 3 -> 2 (w=8).
+  // Path from 0 to 3:
+  // Option A: 0 -> 1 (w=3) then reverse edge 1 -> 3 (w=2). Cost = 5.
+  // Option B: 0 -> 2 (w=2) then 2 -> 3 (w=4). Cost = 6.
+  // Option C: 0 -> 1 (w=3), traverse others.
+  // Dijkstra visits:
+  // 0: dist=0
+  // 2: dist=2 (via 0)
+  // 1: dist=3 (via 0)
+  // 3: dist=5 (via 1->3 reverse edge)
+  // 3: dist=6 (via 2->3 direct edge) - Ignored.
+  // Shortest to 3 is 5.
+  static int minCost(int n, int[][] edges) {
+    List<List<Node>> graph = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      graph.add(new ArrayList<>());
+    }
+
+    int[] distances = new int[n];
+    Arrays.fill(distances, INF);
+
+    for (int[] edge : edges) {
+      int u = edge[0];
+      int v = edge[1];
+      int wt = edge[2];
+
+      // Direct edge cost is wt, reverse edge cost is 2*wt
+      graph.get(u).add(new Node(v, wt));
+      graph.get(v).add(new Node(u, 2 * wt));
+    }
+
+    // Standard Dijkstra's to find min cost
+    PriorityQueue<Node> pq = new PriorityQueue<>();
+    pq.offer(new Node(0, 0));
+
+    while (!pq.isEmpty()) {
+      Node curr = pq.poll();
+      int u = curr.v;
+      int cost = curr.wt;
+
+      if (cost > distances[u]) continue;
+
+      for (Node node : graph.get(u)) {
+        if (distances[node.v] > cost + node.wt) {
+          distances[node.v] = cost + node.wt;
+          pq.offer(new Node(node.v, distances[node.v]));
+        }
+      }
+    }
+
+    return distances[n - 1] == INF ? -1 : distances[n - 1];
+  }
+}

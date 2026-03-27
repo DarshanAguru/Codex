@@ -1,0 +1,78 @@
+// Date: 23/03/2026
+// Problem: https://leetcode.com/problems/maximum-non-negative-product-in-a-matrix/
+// Leetcode Problem No: 1594
+// Relevance: DP, Matrix, Path, Negative Numbers
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[][] grid1 = { { 1, -2, 1 }, { 1, -2, 1 }, { 3, -4, 1 } };
+    System.out.println(maxProductPath(grid1)); // Expected: 8
+
+    int[][] grid2 = { { 1, 3 }, { 0, -4 } };
+    System.out.println(maxProductPath(grid2)); // Expected: 0
+  }
+
+  // Logic: DP for paths with positive and negative products.
+  // 1. Since paths can contain negative numbers, we need to track both the maximum product (positive)
+  //    and minimum product (negative) at each cell (i, j).
+  // 2. maxDp[i][j]: Maximum product from (0,0) to (i,j).
+  // 3. minDp[i][j]: Minimum product from (0,0) to (i,j).
+  // 4. For (i, j), the candidates are:
+  //    a. maxDp[i-1][j] * grid[i][j]
+  //    b. minDp[i-1][j] * grid[i][j]
+  //    c. maxDp[i][j-1] * grid[i][j]
+  //    d. minDp[i][j-1] * grid[i][j]
+  // 5. If grid[i][j] is negative, multiplying by minDp (which is likely negative) might result
+  //    in the new maximum product.
+  //
+  // Dry Run Idea (grid = [[1,-2,1],[1,-2,1],[3,-4,1]]):
+  // 1. (0,0): max=1, min=1
+  // 2. (0,j): max=[1,-2,-2], min=[1,-2,-2]
+  // 3. (i,0): max=[1,1,3], min=[1,1,3]
+  // 4. (1,1): grid[1][1]=-2. Candidates: 1*-2, 1*-2, -2*-2, -2*-2 -> max=4, min=-2
+  // 5. Final max product at (2,2) will be 8.
+
+  private static final long MOD = 1_000_000_007;
+
+  public static int maxProductPath(int[][] grid) {
+    int m = grid.length;
+    int n = grid[0].length;
+
+    long[][] maxDp = new long[m][n];
+    long[][] minDp = new long[m][n];
+
+    maxDp[0][0] = grid[0][0];
+    minDp[0][0] = grid[0][0];
+
+    for (int j = 1; j < n; j++) {
+      maxDp[0][j] = maxDp[0][j - 1] * grid[0][j];
+      minDp[0][j] = maxDp[0][j];
+    }
+
+    for (int i = 1; i < m; i++) {
+      maxDp[i][0] = maxDp[i - 1][0] * grid[i][0];
+      minDp[i][0] = maxDp[i][0];
+    }
+
+    for (int i = 1; i < m; i++) {
+      for (int j = 1; j < n; j++) {
+        long val = grid[i][j];
+
+        long a = maxDp[i - 1][j] * val;
+        long b = minDp[i - 1][j] * val;
+        long c = maxDp[i][j - 1] * val;
+        long d = minDp[i][j - 1] * val;
+
+        maxDp[i][j] = Math.max(Math.max(a, b), Math.max(c, d));
+        minDp[i][j] = Math.min(Math.min(a, b), Math.min(c, d));
+      }
+    }
+
+    long res = maxDp[m - 1][n - 1];
+    if (res < 0) return -1;
+    return (int) (res % MOD);
+  }
+}

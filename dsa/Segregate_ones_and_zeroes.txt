@@ -1,0 +1,54 @@
+// Date: 06/01/2026
+// Relevance: Array, Two Pointers
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 0, 0, 1, 1, 0 };
+    segregateOnesAndZeroes(arr);
+    System.out.println(Arrays.toString(arr));
+  }
+
+  // Logic: Two Pointers (Similar to QuickSort Partition)
+  // We want to segregate 0s to the left and 1s to the right in an array.
+  // We use two pointers: `left` starting at 0, `right` starting at `n-1`.
+  // 1. Increment `left` until it points to a 1. (0s are already on the left).
+  // 2. Decrement `right` until it points to a 0. (1s are already on the right).
+  // 3. If `left < right`, it means we have a 1 on the left and a 0 on the right.
+  //    So, we swap them! Then we move both pointers inward.
+  // Repeat until `left >= right`.
+  //
+  // Dry run for arr = [0, 0, 1, 1, 0]:
+  // left=0, right=4.
+  // Increment left until 1: arr[0]=0, arr[1]=0, arr[2]=1. left=2.
+  // Decrement right until 0: arr[4]=0. right=4.
+  // Swap(2, 4): arr becomes [0, 0, 0, 1, 1]. left=3, right=3.
+  // left < right is false. Loop ends.
+  static void segregateOnesAndZeroes(int[] arr) {
+    int left = 0;
+    int right = arr.length - 1;
+
+    while (left < right) {
+      while (arr[left] == 0 && left < right) {
+        left++;
+      }
+      while (arr[right] == 1 && left < right) {
+        right--;
+      }
+      if (left < right) {
+        swap(arr, left, right);
+        left++;
+        right--;
+      }
+    }
+  }
+
+  static void swap(int[] arr, int a, int b) {
+    int temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+  }
+}

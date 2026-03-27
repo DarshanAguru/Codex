@@ -1,0 +1,47 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/daily-temperatures/
+// Leetcode Problem No: 739
+// Relevance: Stack, Array, Monotonic Stack
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {}
+
+  // Logic: Monotonic Decreasing Stack
+  // We want to find the number of days until a warmer temperature.
+  // We can use a stack to store the INDICES of the temperatures.
+  // The stack will maintain temperatures in a monotonically decreasing order from bottom to top.
+  // As we iterate through the array:
+  // If the current temperature is > the temperature at the index stored at the top of the stack,
+  // it means the current day is the "next warmer day" for that top day.
+  // We pop the index from the stack, and the answer for that popped index is `current_day_index - popped_index`.
+  // We repeat this while the stack has a smaller temperature. Then we push the current index.
+  //
+  // Dry run for temperatures = [73, 74, 75, 71, 69, 72, 76, 73]:
+  // 1. i=0, T=73: stack pushes index 0. [0]
+  // 2. i=1, T=74: 74 > arr[0](73). Pop 0. res[0] = 1 - 0 = 1. push 1. [1]
+  // 3. i=2, T=75: 75 > arr[1](74). Pop 1. res[1] = 2 - 1 = 1. push 2. [2]
+  // 4. i=3, T=71: 71 < 75. push 3. [2, 3]
+  // 5. i=4, T=69: 69 < 71. push 4. [2, 3, 4]
+  // 6. i=5, T=72: 72 > arr[4](69). Pop 4. res[4] = 5 - 4 = 1.
+  //               72 > arr[3](71). Pop 3. res[3] = 5 - 3 = 2.
+  //               push 5. [2, 5]
+  // 7. i=6, T=76: 76 > arr[5](72). Pop 5... and so on.
+  public static int[] dailyTemperatures(int[] temperatures) {
+    int n = temperatures.length;
+    Stack<Integer> st = new Stack<>();
+    int[] res = new int[n];
+    for (int i = 0; i < n; i++) {
+      while (!st.isEmpty() && temperatures[st.peek()] < temperatures[i]) {
+        int idx = st.pop();
+        res[idx] = i - idx;
+      }
+      st.push(i);
+    }
+
+    return res;
+  }
+}

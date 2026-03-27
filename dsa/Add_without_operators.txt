@@ -1,0 +1,60 @@
+// Date: 05/08/2025
+// Problem: https://leetcode.com/problems/sum-of-two-integers/
+// Leetcode Problem No: 371
+// Relevance: Bit Manipulation, Math
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int a = 10;
+    int b = 20;
+
+    // Sum of two integers without using operators + or -
+    System.out.println(calcSum(a, b));
+  }
+
+  // Logic: Bitwise Addition
+  // Addition involves two things: finding the sum of bits and finding the carry.
+  // 1. Sum of bits without carry can be achieved using the XOR (^) operator.
+  // 2. The carry can be calculated using the AND (&) operator, shifted left by 1 (<< 1).
+  // We keep updating `a` continuously with the sum without carry, and `b` with the carry
+  // until there is no carry left (`b` == 0).
+  //
+  // Dry run for a = 5 (0101), b = 3 (0011):
+  // 1st iteration:
+  //   carry = (0101 & 0011) << 1 = 0001 << 1 = 0010 (2)
+  //   a = (0101 ^ 0011) = 0110 (6)
+  //   b = 0010 (2)
+  // 2nd iteration:
+  //   carry = (0110 & 0010) << 1 = 0010 << 1 = 0100 (4)
+  //   a = (0110 ^ 0010) = 0100 (4)
+  //   b = 0100 (4)
+  // 3rd iteration:
+  //   carry = (0100 & 0100) << 1 = 0100 << 1 = 1000 (8)
+  //   a = (0100 ^ 0100) = 0000 (0)
+  //   b = 1000 (8)
+  // 4th iteration:
+  //   carry = (0000 & 1000) << 1 = 0000 << 1 = 0000 (0)
+  //   a = (0000 ^ 1000) = 1000 (8)
+  //   b = 0000 (0) // loop terminates.
+  // Result is 8.
+  static int calcSum(int a, int b) {
+    // Iterate until there is no carry left
+    while (b != 0) {
+      // 'carry' contains common set bits of a and b, shifted left by 1
+      // This represents the carry-over for the next position
+      int carry = (a & b) << 1;
+
+      // 'a' becomes the sum of bits of a and b where at least one is not set (XOR)
+      // This simulates addition without carry
+      a = a ^ b;
+
+      // 'b' becomes the carry, to be added in the next iteration
+      b = carry;
+    }
+    return a;
+  }
+}

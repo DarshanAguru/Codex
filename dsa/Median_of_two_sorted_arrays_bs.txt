@@ -1,0 +1,81 @@
+// Date: 06/08/2025
+// Problem: https://leetcode.com/problems/median-of-two-sorted-arrays/
+// Leetcode Problem No: 4
+// Relevance: Array, Binary Search, Divide and Conquer
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr1 = { 2, 4, 6 };
+    int[] arr2 = { 1, 3 };
+
+    double res = binarySearch(arr1, arr2);
+    System.out.println(res);
+  }
+
+  // Logic: Binary Search on Partitions
+  // We want to find a partition line that cuts both arrays into two halves
+  // (Left Half and Right Half) such that:
+  // 1. Length of Left Half == Length of Right Half (or +1 if total length is odd)
+  // 2. Every element in Left Half <= Every element in Right Half.
+  // This means: `max(Left1, Left2) <= min(Right1, Right2)`.
+  // We perform Binary Search on the SMALLER array (`arr1`) to find `mid1` (the partition line).
+  // The partition line for `arr2` is derived as `mid2 = (total_elements + 1) / 2 - mid1`.
+  // - If `L1 > R2`: Our partition in arr1 is too far right (decrease high).
+  // - If `L2 > R1`: Our partition in arr1 is too far left (increase low).
+  // - If condition holds: we found the median!
+  //   (max of left elements if odd length, or avg of max(lefts) and min(rights) if even).
+  // Time Complexity: O(log(min(N1, N2))).
+  //
+  // Dry run for arr1=[2,4,6], arr2=[1,3]: Total 5. Left partition size = 3.
+  // Smaller array is arr2=[1,3] (n1=2), arr1=[2,4,6] (n2=3).
+  // low=0, high=2. mid1=1. mid2 = 3 - 1 = 2.
+  // Left1: arr2[0]=1. Right1: arr2[1]=3.
+  // Left2: arr1[1]=4. Right2: arr1[2]=6.
+  // Check: L1(1) <= R2(6) (True). L2(4) <= R1(3) (FALSE! 4 > 3).
+  // Move right: low=mid1+1=2.
+  // Iter 2: low=2, high=2. mid1=2. mid2 = 3 - 2 = 1.
+  // Left1: arr2[1]=3. Right1: INF.
+  // Left2: arr1[0]=2. Right2: arr1[1]=4.
+  // Check: L1(3) <= R2(4) (True). L2(2) <= R1(INF) (True).
+  // Odd total size -> Median is max(L1, L2) = max(3, 2) = 3.0.
+  static double binarySearch(int[] arr1, int[] arr2) {
+    int n1 = arr1.length;
+    int n2 = arr2.length;
+
+    // Ensure binary search is done on the smaller array
+    if (n1 > n2) return binarySearch(arr2, arr1);
+
+    int low = 0;
+    int high = n1;
+
+    int left = (n1 + n2 + 1) / 2;
+    int n = n1 + n2;
+
+    while (low <= high) {
+      int mid1 = (low + high) / 2;
+      int mid2 = left - mid1;
+
+      int l1 = (mid1 - 1 >= 0) ? arr1[mid1 - 1] : Integer.MIN_VALUE;
+      int l2 = (mid2 - 1 >= 0) ? arr2[mid2 - 1] : Integer.MIN_VALUE;
+      int r1 = (mid1 < n1) ? arr1[mid1] : Integer.MAX_VALUE;
+      int r2 = (mid2 < n2) ? arr2[mid2] : Integer.MAX_VALUE;
+
+      if (l1 <= r2 && l2 <= r1) {
+        if (n % 2 == 1) {
+          return (double) Math.max(l1, l2);
+        } else {
+          return (double) (Math.max(l1, l2) + Math.min(r1, r2)) / 2.0;
+        }
+      } else if (l1 > r2) {
+        high = mid1 - 1;
+      } else {
+        low = mid1 + 1;
+      }
+    }
+    return 0.0;
+  }
+}

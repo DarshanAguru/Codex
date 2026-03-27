@@ -1,0 +1,97 @@
+// Date: 18/08/2025
+// Problem: https://practice.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+// Leetcode Problem No: 987 (Related: Vertical Order Traversal)
+// Relevance: Tree, BFS, Hash Table
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class Pair {
+
+  Node node;
+  int hd; // horizontal distance
+
+  Pair(Node node, int hd) {
+    this.node = node;
+    this.hd = hd;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    Node root = new Node(1);
+    root.left = new Node(2);
+    root.left.left = new Node(4);
+    root.left.left.right = new Node(5);
+    root.left.left.right.right = new Node(6);
+    root.left.right = new Node(10);
+    root.right = new Node(3);
+    root.right.left = new Node(9);
+    root.right.right = new Node(11);
+
+    List<Integer> res = getBottomViewOfTree(root);
+    System.out.println(res);
+  }
+
+  // Logic: BFS + Horizontal Distance (HD) Tracking
+  // We assign a horizontal distance to each node. Root is at HD = 0.
+  // Left child is at HD = parent.HD - 1. Right child is at HD = parent.HD + 1.
+  // To get the bottom view, for each HD, we want the node that appears LAST in a top-down traversal.
+  // A Level Order Traversal (BFS) perfectly achieves this.
+  // We maintain a `TreeMap` mapping HD -> Node value. Since we use BFS, if multiple nodes
+  // have the same HD, the one at the deepest level will overwrite the previous ones in the map.
+  // The `TreeMap` automatically keeps the HDs sorted from left to right.
+  //
+  // Dry run for root = 1, L=2, R=3:
+  // - q: [(1, HD=0)]. map: empty.
+  // - pop (1, 0). map[0] = 1. push (2, -1) and (3, 1).
+  // - pop (2, -1). map[-1] = 2. push L, R children of 2...
+  // - pop (3, 1). map[1] = 3. push L, R children of 3...
+  // If there's an overwrite, say HD=0 is reached again at a deeper level (e.g., node 10),
+  // map[0] will be updated to 10.
+  // Final map values in sorted HD order represent the bottom view.
+  static List<Integer> getBottomViewOfTree(Node root) {
+    if (root == null) return new ArrayList<>();
+
+    // Map to store Horizontal Distance (HD) -> Node Value
+    // We use a TreeMap to keep the keys (HD) sorted from left to right (-ve to +ve)
+    Map<Integer, Integer> map = new TreeMap<>();
+
+    // BFS Queue storing Node and its Horizontal Distance
+    Queue<Pair> q = new LinkedList<>();
+
+    q.add(new Pair(root, 0));
+
+    while (!q.isEmpty()) {
+      Pair p = q.poll();
+      Node node = p.node;
+      int hd = p.hd;
+
+      // Update the map for this HD. Since we are doing BFS (level order),
+      // the last node processed for a given HD will be the "bottom-most" one.
+      map.put(hd, node.val);
+
+      if (node.left != null) {
+        q.add(new Pair(node.left, hd - 1));
+      }
+      if (node.right != null) {
+        q.add(new Pair(node.right, hd + 1));
+      }
+    }
+
+    return new ArrayList<>(map.values());
+  }
+}

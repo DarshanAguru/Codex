@@ -1,0 +1,57 @@
+// Date: 18/08/2025
+// Problem: https://leetcode.com/problems/kth-largest-element-in-an-array/
+// Leetcode Problem No: 215
+// Relevance: Queue, Heap (Priority Queue), Array
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 6, 4, 5, 3 };
+    int k = 3;
+
+    System.out.println("Kth Smallest: " + findKthSmallest(arr, k));
+    System.out.println("Kth Largest: " + findKthLargest(arr, k));
+  }
+
+  // Logic: Priority Queue (Heap)
+  // - To find the Kth Smallest Element: We use a Max-Heap of size K.
+  //   We add elements to the Max-Heap. If the size exceeds K, we remove the maximum element (the top).
+  //   At the end, the heap contains the K smallest elements, and the top is the Kth smallest.
+  // - To find the Kth Largest Element: We use a Min-Heap of size K.
+  //   We add elements to the Min-Heap. If the size exceeds K, we remove the minimum element (the top).
+  //   At the end, the heap contains the K largest elements, and the top is the Kth largest.
+  // Note: Quickselect can also solve this in O(N) average time. PriorityQueue takes O(N log K).
+  //
+  // Dry run for arr = [1, 2, 6, 4, 5, 3], k = 3 (Kth Largest, using Min-Heap):
+  // 1. insert 1: [1]
+  // 2. insert 2: [1, 2]
+  // 3. insert 6: [1, 2, 6]
+  // 4. insert 4: [1, 2, 4, 6] -> size 4 > 3 -> poll 1 -> [2, 4, 6]
+  // 5. insert 5: [2, 4, 5, 6] -> size 4 > 3 -> poll 2 -> [4, 5, 6]
+  // 6. insert 3: [3, 4, 5, 6] -> size 4 > 3 -> poll 3 -> [4, 5, 6]
+  // Return top: 4.
+  static int findKthSmallest(int[] arr, int k) {
+    PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+    for (int val : arr) {
+      pq.add(val);
+      if (pq.size() > k) {
+        pq.poll();
+      }
+    }
+    return pq.peek();
+  }
+
+  static int findKthLargest(int[] arr, int k) {
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    for (int val : arr) {
+      pq.add(val);
+      if (pq.size() > k) {
+        pq.poll();
+      }
+    }
+    return pq.peek();
+  }
+}

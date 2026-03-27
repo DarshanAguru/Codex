@@ -1,0 +1,61 @@
+// Date: 18/03/2026
+// Problem: https://leetcode.com/problems/count-submatrices-with-top-left-element-and-sum-less-than-k/
+// Leetcode Problem No: 3070
+// Relevance: Array, Matrix, Prefix Sum
+
+class Main {
+
+  public static void main(String[] args) {
+    int[][] grid = { { 7, 6, 3 }, { 6, 6, 1 } };
+    int k = 18;
+    System.out.println(countSubmatrices(grid, k));
+  }
+
+  // Logic: 2D Prefix Sum
+  // We want to count the number of submatrices that include `grid[0][0]` whose sum is <= k.
+  // 1. We process the grid cell-by-cell, converting it in-place into a 2D prefix sum array.
+  // 2. The value at `grid[i][j]` will represent the total sum of the submatrix from
+  //    (0,0) to `(i,j)`.
+  // 3. For any cell `(i, j)`, the submatrix sum can be constructed from previously computed
+  //    prefix sums: the row above, the column left, minus the double-counted top-left overlap.
+  //    Specifically: `grid[i][j] += grid[i-1][j] + grid[i][j-1] - grid[i-1][j-1]`.
+  // 4. If the newly computed standard prefix sum `grid[i][j]` is <= k, we increment our result.
+  //    If it's already greater than `k`, and since cell constraints are generally positive
+  //    in this problem variant, subsequent contiguous expansions would also exceed `k`
+  //    (which makes it easy to process in passing without complex window sliding).
+  //
+  // Dry run idea:
+  // grid = [[7, 6, 3], [6, 6, 1]], k = 18
+  // (0,0): 7 <= 18 -> res=1
+  // (0,1): 7 + 6 = 13 <= 18 -> res=2
+  // (0,2): 13 + 3 = 16 <= 18 -> res=3
+  // (1,0): 7 + 6 = 13 <= 18 -> res=4
+  // (1,1): (6) + grid[0][1](13) + grid[1][0](13) - grid[0][0](7) = 25 > 18
+  // Total answer is 4.
+  public static int countSubmatrices(int[][] grid, int k) {
+    int m = grid.length;
+    int n = grid[0].length;
+
+    int res = 0;
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (i > 0 && j == 0) {
+          grid[i][j] += grid[i - 1][j];
+        }
+        if (j > 0 && i == 0) {
+          grid[i][j] += grid[i][j - 1];
+        }
+        if (i > 0 && j > 0) {
+          grid[i][j] += (grid[i - 1][j] + grid[i][j - 1]) - grid[i - 1][j - 1];
+        }
+
+        if (grid[i][j] <= k) {
+          res++;
+        }
+      }
+    }
+
+    return res;
+  }
+}

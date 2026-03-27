@@ -1,0 +1,78 @@
+// Date: 24/03/2026
+// Problem: https://leetcode.com/problems/construct-product-matrix/
+// Leetcode Problem No: 2906
+// Relevance: Array, Matrix, Prefix Sum, Suffix Sum, Math, Modulo
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[][] grid1 = { { 1, 2 }, { 3, 4 } };
+    int[][] res1 = constructProductMatrix(grid1);
+    System.out.println("Result 1:");
+    printMatrix(res1);
+
+    int[][] grid2 = { { 12345, 2 }, { 1, 1 } };
+    int[][] res2 = constructProductMatrix(grid2);
+    System.out.println("\nResult 2:");
+    printMatrix(res2);
+  }
+
+  // Logic: Prefix and Suffix Products on flattened matrix
+  // 1. We need the product of all elements except grid[i][j], modulo 12345.
+  // 2. We can treat the n x m matrix as a flattened array of size n*m.
+  // 3. For any element at (i, j), the product except itself is:
+  //    (Product of all elements BEFORE (i, j) in row-major order) *
+  //    (Product of all elements AFTER (i, j) in row-major order).
+  // 4. We compute suffix products first and store them in the result matrix `p`.
+  //    `p[i][j]` will store the product of all elements after (i, j) in row-major order.
+  // 5. Then we traverse again from the beginning, keeping a running `prefix` product.
+  //    `p[i][j] = (p[i][j] * prefix) % 12345`.
+  //    Then update `prefix = (prefix * grid[i][j]) % 12345`.
+  //
+  // Dry Run (grid = [[1, 2], [3, 4]]):
+  // 1. Suffix traversal (backward):
+  //    - (1, 1): p[1][1] = 1, suffix = 1 * 4 = 4
+  //    - (1, 0): p[1][0] = 4, suffix = 4 * 3 = 12
+  //    - (0, 1): p[0][1] = 12, suffix = 12 * 2 = 24
+  //    - (0, 0): p[0][0] = 24, suffix = 24 * 1 = 24
+  //    p = [[24, 12], [4, 1]]
+  // 2. Prefix traversal (forward):
+  //    prefix = 1
+  //    - (0, 0): p[0][0] = 24 * 1 = 24, prefix = 1 * 1 = 1
+  //    - (0, 1): p[0][1] = 12 * 1 = 12, prefix = 1 * 2 = 2
+  //    - (1, 0): p[1][0] = 4 * 2 = 8, prefix = 2 * 3 = 6
+  //    - (1, 1): p[1][1] = 1 * 6 = 6, prefix = 6 * 4 = 24
+  //    Final p = [[24, 12], [8, 6]]
+  public static int[][] constructProductMatrix(int[][] grid) {
+    final int MOD = 12345;
+    int n = grid.length;
+    int m = grid[0].length;
+    int[][] p = new int[n][m];
+
+    long suffix = 1;
+    for (int i = n - 1; i >= 0; i--) {
+      for (int j = m - 1; j >= 0; j--) {
+        p[i][j] = (int) suffix;
+        suffix = (suffix * grid[i][j]) % MOD;
+      }
+    }
+
+    long prefix = 1;
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        p[i][j] = (int) (((long) p[i][j] * prefix) % MOD);
+        prefix = (prefix * grid[i][j]) % MOD;
+      }
+    }
+
+    return p;
+  }
+
+  private static void printMatrix(int[][] matrix) {
+    for (int[] row : matrix) {
+      System.out.println(Arrays.toString(row));
+    }
+  }
+}

@@ -1,0 +1,47 @@
+// Date: 25/02/2026
+// Problem: https://leetcode.com/problems/sort-integers-by-the-number-of-1-bits/
+// Leetcode Problem No: 1356
+// Relevance: Array, Bit Manipulation, Sorting
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+    int[] res = sortByBits(arr);
+    System.out.println(Arrays.toString(res));
+  }
+
+  // Logic: Custom Comparator + Bit Manipulation
+  // We want to sort the array primarily by the number of set bits ('1's).
+  // If two numbers have the SAME number of set bits, we sort them by their actual integer value.
+  // We convert `int[]` to `Integer[]` so we can use a custom Comparator in `Arrays.sort`.
+  // `Integer.bitCount(n)` efficiently returns the number of 1 bits.
+  //
+  // Dry run for arr = [0, 1, 2, 3, 4, 5, 6, 7, 8]:
+  // bitCount(0) = 0
+  // bitCount(1) = 1, bitCount(2) = 1, bitCount(4) = 1, bitCount(8) = 1
+  // bitCount(3) = 2, bitCount(5) = 2, bitCount(6) = 2
+  // bitCount(7) = 3
+  // Sorting groups by bit count:
+  // 0 bits: [0]
+  // 1 bits: [1, 2, 4, 8] (Sorted by value as tie-breaker)
+  // 2 bits: [3, 5, 6] (Sorted by value)
+  // 3 bits: [7]
+  // Final Result: [0, 1, 2, 4, 8, 3, 5, 6, 7].
+  static int[] sortByBits(int[] arr) {
+    Integer[] convertedArr = Arrays.stream(arr).boxed().toArray(Integer[]::new);
+    Arrays.sort(convertedArr, (a, b) -> {
+      int ca = Integer.bitCount(a);
+      int cb = Integer.bitCount(b);
+      if (ca != cb) {
+        return Integer.compare(ca, cb);
+      }
+      return Integer.compare(a, b);
+    });
+
+    return Arrays.stream(convertedArr).mapToInt(Integer::intValue).toArray();
+  }
+}

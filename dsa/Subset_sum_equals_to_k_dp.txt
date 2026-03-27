@@ -1,0 +1,109 @@
+// Date: 21/08/2025
+// Relevance: Dynamic Programming
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 3, 4 };
+    int target = 4;
+
+    System.out.println("Memoization: " + doesSubsetSumToKMEMO(arr, target));
+    System.out.println("Tabulation: " + doesSubsetSumToKTAB(arr, target));
+    System.out.println("Space Opt: " + doesSubsetSumToKSO(arr, target));
+  }
+
+  // Logic: 2D Dynamic Programming (0/1 Knapsack variation)
+  // We want to determine if any subset of `arr` sums EXACTLY to `target`.
+  // For each element, we have two choices:
+  // 1. Not Taken: Target remains the same, we check if it is possible with the remaining elements.
+  // 2. Taken: Target decreases by `arr[i]`, we check if `target - arr[i]` is possible with remaining elements.
+  // If EITHER choice is possible, then we can form the sum.
+  // State: `dp[i][k]` = True if we can form sum `k` using a subset of `arr[0...i]`.
+  //
+  // Three optimizations provided:
+  // 1. Memoization: Top-down recursion `helper` parsing `(idx, target)`.
+  // 2. Tabulation: Bottom-up DP table of size `N x (target + 1)`.
+  // 3. Space Optimization: Since `dp[i]` only depends on `dp[i-1]`, we just use two 1D arrays:
+  //    `prev` and `curr` of size `target + 1`.
+  //
+  // Dry run for arr = [1, 2, 3, 4], target = 4:
+  // Space Optimization init (i=0, arr[0]=1):
+  // prev[0] = T (sum 0 always possible)
+  // prev[1] = T (can make 1 using arr[0])
+  // i=1 (arr[1]=2):
+  // curr[0]=T, curr[1]=prev[1]=T, curr[2]=prev[2] || prev[0]=T.
+  // curr[3]=prev[3] || prev[1]=T.
+  // prev array becomes [T, T, T, T, F].
+  // Thus we slowly build whether a sum is possible. Finally return `prev[target]`.
+  // Space Optimization
+  static boolean doesSubsetSumToKSO(int[] arr, int target) {
+    boolean[] prev = new boolean[target + 1];
+    prev[0] = true;
+
+    if (arr[0] <= target) prev[arr[0]] = true;
+
+    for (int i = 1; i < arr.length; i++) {
+      boolean[] curr = new boolean[target + 1];
+      curr[0] = true;
+      for (int k = 1; k <= target; k++) {
+        boolean notTaken = prev[k];
+        boolean taken = false;
+        if (arr[i] <= k) {
+          taken = prev[k - arr[i]];
+        }
+        curr[k] = notTaken || taken;
+      }
+      prev = curr;
+    }
+    return prev[target];
+  }
+
+  // Tabulation
+  static boolean doesSubsetSumToKTAB(int[] arr, int target) {
+    int n = arr.length;
+    boolean[][] dp = new boolean[n][target + 1];
+
+    for (int i = 0; i < n; i++) dp[i][0] = true;
+
+    if (arr[0] <= target) dp[0][arr[0]] = true;
+
+    for (int i = 1; i < n; i++) {
+      for (int k = 1; k <= target; k++) {
+        boolean notTaken = dp[i - 1][k];
+        boolean taken = false;
+        if (arr[i] <= k) {
+          taken = dp[i - 1][k - arr[i]];
+        }
+        dp[i][k] = notTaken || taken;
+      }
+    }
+    return dp[n - 1][target];
+  }
+
+  // Memoization
+  static boolean doesSubsetSumToKMEMO(int[] arr, int target) {
+    int n = arr.length;
+    int[][] dp = new int[n][target + 1];
+    for (int[] row : dp) Arrays.fill(row, -1);
+    return helper(arr, n - 1, target, dp);
+  }
+
+  static boolean helper(int[] arr, int idx, int target, int[][] dp) {
+    if (target == 0) return true;
+    if (idx == 0) return arr[0] == target;
+
+    if (dp[idx][target] != -1) return dp[idx][target] == 1;
+
+    boolean notTaken = helper(arr, idx - 1, target, dp);
+    boolean taken = false;
+    if (arr[idx] <= target) {
+      taken = helper(arr, idx - 1, target - arr[idx], dp);
+    }
+
+    dp[idx][target] = (notTaken || taken) ? 1 : 0;
+    return notTaken || taken;
+  }
+}

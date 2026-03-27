@@ -1,0 +1,123 @@
+// Date: 12/08/2025
+// Problem: https://leetcode.com/problems/sort-list/
+// Leetcode Problem No: 148
+// Relevance: Linked List, Sorting, Divide and Conquer
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class LL {
+
+  public Node head;
+  public Node tail;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      tail = head;
+      return;
+    }
+    tail.next = new Node(n);
+    tail = tail.next;
+  }
+
+  public void printList() {
+    Node temp = head;
+    System.out.print("[ ");
+    while (temp != null) {
+      System.out.print(temp.val + " ");
+      temp = temp.next;
+    }
+    System.out.println("]");
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    LL list = new LL();
+    list.add(3);
+    list.add(4);
+    list.add(2);
+    list.add(1);
+    list.add(5);
+
+    System.out.println("Original:");
+    list.printList();
+
+    list.head = mergeSort(list.head);
+
+    System.out.println("Sorted:");
+    list.printList();
+  }
+
+  // Logic: Merge Sort for Linked List (Divide and Conquer)
+  // Merge Sort is ideal for sorting Linked Lists in O(N log N) time and O(log N) recursive space.
+  // 1. Divide: Find the middle of the list using Slow and Fast pointers (`getMiddle`).
+  //    Split the list into two halves by setting `mid.next = null`.
+  // 2. Conquer: Recursively sort the left half and the right half.
+  // 3. Combine: Merge the two sorted halves back together (`sortedMerge`).
+  //    We compare nodes one by one and attach the smaller node to the result.
+  //
+  // Dry run for list: 3 -> 4 -> 2 -> 1 -> 5
+  // getMiddle finds 2. Splits into: [3 -> 4 -> 2] and [1 -> 5].
+  // Recurse on [3 -> 4 -> 2]:
+  //   getMiddle finds 4. Splits into: [3 -> 4] and [2].
+  //   Recurse on [3 -> 4] -> [3], [4]. Merged: [3 -> 4].
+  //   Merged [3 -> 4] and [2] -> [2 -> 3 -> 4].
+  // Recurse on [1 -> 5]:
+  //   Splits into [1] and [5]. Merged: [1 -> 5].
+  // Final merge: [2 -> 3 -> 4] and [1 -> 5].
+  // Compare 2 & 1 (pick 1), 2 & 5 (pick 2), 3 & 5 (pick 3), 4 & 5 (pick 4), remaining 5.
+  // Result: 1 -> 2 -> 3 -> 4 -> 5.
+  static Node mergeSort(Node head) {
+    if (head == null || head.next == null) return head;
+
+    Node mid = getMiddle(head);
+    Node nextToMid = mid.next;
+    mid.next = null;
+
+    Node left = mergeSort(head);
+    Node right = mergeSort(nextToMid);
+
+    return sortedMerge(left, right);
+  }
+
+  static Node sortedMerge(Node a, Node b) {
+    Node result = null;
+    if (a == null) return b;
+    if (b == null) return a;
+
+    if (a.val <= b.val) {
+      result = a;
+      result.next = sortedMerge(a.next, b);
+    } else {
+      result = b;
+      result.next = sortedMerge(a, b.next);
+    }
+    return result;
+  }
+
+  static Node getMiddle(Node head) {
+    if (head == null) return head;
+
+    Node slow = head;
+    Node fast = head;
+
+    while (fast.next != null && fast.next.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow;
+  }
+}

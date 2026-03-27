@@ -1,0 +1,53 @@
+// Date: 25/02/2026
+// Problem: https://leetcode.com/problems/binary-gap/
+// Leetcode Problem No: 868
+// Relevance: Bit Manipulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int n = 22;
+    System.out.println(binaryGap(n));
+  }
+
+  // Logic: Bit Manipulation
+  // We want finding the longest distance between two consecutive 1s in the binary representation of n.
+  // We can iterate through the bits of `n`.
+  // `r` keeps track of the current position (index) of the bit from the right.
+  // `l` stores the position of the *last seen* 1. Initially -1.
+  // Every time we see a 1 (n & 1 == 1):
+  // - If it's the first 1 (l == -1), we just set l = r.
+  // - If we've seen a 1 before, the gap is `r - l`. We update the max gap `res = max(res, r - l)` and then set `l = r`.
+  // Finally, we shift n to the right (n >>= 1) to check the next bit.
+  //
+  // Dry run for n = 22 (binary 10110):
+  // Loop 1: n=22, r=1, bit=(22&1)=0. n becomes 11.
+  // Loop 2: n=11, r=2, bit=(11&1)=1. l=-1 -> l=2. n becomes 5.
+  // Loop 3: n=5, r=3, bit=(5&1)=1. l=2 -> res=max(0, 3-2)=1. l=3. n becomes 2.
+  // Loop 4: n=2, r=4, bit=(2&1)=0. n becomes 1.
+  // Loop 5: n=1, r=5, bit=(1&1)=1. l=3 -> res=max(1, 5-3)=2. l=5. n becomes 0.
+  // Result is 2.
+  static int binaryGap(int n) {
+    int r = 0,
+      l = -1;
+    int res = 0;
+    while (n != 0) {
+      r += 1;
+      int bit = n & 1;
+      if (bit == 1) {
+        if (l == -1) {
+          l = r;
+        } else {
+          res = Math.max(res, r - l);
+          l = r;
+        }
+      }
+
+      n >>= 1;
+    }
+    return res;
+  }
+}

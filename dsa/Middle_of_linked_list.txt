@@ -1,0 +1,86 @@
+// Date: 12/08/2025
+// Problem: https://leetcode.com/problems/middle-of-the-linked-list/
+// Leetcode Problem No: 876
+// Relevance: Linked List, Two Pointers
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+class LL {
+
+  public Node head;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      return;
+    }
+    Node temp = head;
+    while (temp.next != null) {
+      temp = temp.next;
+    }
+    temp.next = new Node(n);
+  }
+
+  public void printList() {
+    Node temp = head;
+    System.out.print("[ ");
+    while (temp != null) {
+      System.out.print(temp.val + " ");
+      temp = temp.next;
+    }
+    System.out.println("]");
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    LL list = new LL();
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    list.add(4);
+    list.add(5);
+
+    list.printList();
+
+    int res = findMiddle(list.head);
+    System.out.println("Middle Element: " + res);
+  }
+
+  // Logic: Tortoise and Hare approach (Fast and Slow Pointers)
+  // We use two pointers that start at the head of the linked list.
+  // The `slow` pointer moves 1 step at a time.
+  // The `fast` pointer moves 2 steps at a time.
+  // When the `fast` pointer reaches the end of the list (or `null`), the `slow` pointer
+  // will be exactly at the middle of the list.
+  //
+  // Dry run for List 1 -> 2 -> 3 -> 4 -> 5:
+  // Init: slow=1, fast=1.
+  // Iter 1: slow moves to 2, fast moves to 3.
+  // Iter 2: slow moves to 3, fast moves to 5.
+  // Iter 3: fast.next is null, loop ends.
+  // Returns: slow.val which is 3. (Middle element).
+  static int findMiddle(Node head) {
+    Node slow = head;
+    Node fast = head;
+
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow.val;
+  }
+}

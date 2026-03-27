@@ -1,0 +1,101 @@
+// Date: 18/08/2025
+// Problem: https://leetcode.com/problems/lru-cache/
+// Leetcode Problem No: 146
+// Relevance: Hash Table, Linked List, Design, Doubly-Linked List
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  public Node prev, next;
+  public int key, val;
+
+  Node(int key, int val) {
+    this.key = key;
+    this.val = val;
+  }
+}
+
+class LRUCache {
+
+  int capacity;
+  Node head;
+  Node tail;
+  HashMap<Integer, Node> hm;
+
+  // Logic: HashMap + Doubly Linked List (DLL)
+  // To achieve O(1) time complexity for both `get` and `put` operations:
+  // - A HashMap provides O(1) access to nodes by their key.
+  // - A Doubly Linked List allows O(1) removal and insertion of nodes.
+  // We maintain a `head` (most recently used) and `tail` (least recently used) dummy node.
+  // When a node is accessed or inserted, we move it to the front (right after `head`).
+  // When capacity is exceeded, we remove the node right before `tail` (the LRU element).
+  //
+  // Dry run for capacity = 2:
+  // put(1,1): Cache=[(1,1)]. Map={1:node1}. DLL: head <-> (1,1) <-> tail.
+  // put(2,2): Cache=[(2,2), (1,1)]. Map={1:node1, 2:node2}. DLL: head <-> (2,2) <-> (1,1) <-> tail.
+  // get(1): Returns 1. Now (1,1) is accessed, so it moves to front.
+  //         Cache=[(1,1), (2,2)]. DLL: head <-> (1,1) <-> (2,2) <-> tail.
+  // put(3,3): Cache exceeds capacity. Remove LRU which is (2,2).
+  //           Cache=[(3,3), (1,1)]. Map={1:node1, 3:node3}
+  // get(2): Not in Map -> returns -1.
+  LRUCache(int capacity) {
+    this.capacity = capacity;
+    this.head = new Node(-1, -1);
+    this.tail = new Node(-1, -1);
+    head.next = tail;
+    tail.prev = head;
+    this.hm = new HashMap<>();
+  }
+
+  public int get(int key) {
+    if (this.hm.containsKey(key)) {
+      Node node = this.hm.get(key);
+      remove(node);
+      insert(node);
+      return node.val;
+    }
+    return -1;
+  }
+
+  public void put(int key, int value) {
+    if (this.hm.containsKey(key)) {
+      remove(hm.get(key));
+    }
+    if (this.hm.size() == capacity) {
+      remove(this.tail.prev);
+    }
+    insert(new Node(key, value));
+  }
+
+  private void remove(Node n) {
+    this.hm.remove(n.key);
+    n.prev.next = n.next;
+    n.next.prev = n.prev;
+  }
+
+  private void insert(Node n) {
+    this.hm.put(n.key, n);
+    n.next = this.head.next;
+    n.next.prev = n;
+    this.head.next = n;
+    n.prev = this.head;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    LRUCache lru = new LRUCache(2);
+    lru.put(1, 1);
+    lru.put(2, 2);
+    System.out.println(lru.get(1)); // 1
+    lru.put(3, 3);
+    System.out.println(lru.get(2)); // -1 (evicted)
+    lru.put(4, 4);
+    System.out.println(lru.get(1)); // -1 (evicted)
+    System.out.println(lru.get(3)); // 3
+    System.out.println(lru.get(4)); // 4
+  }
+}

@@ -1,0 +1,75 @@
+// Date: 25/03/2026
+// Problem: https://leetcode.com/problems/equal-sum-grid-partition-i/
+// Leetcode Problem No: 3546
+// Relevance: Array, Matrix, Prefix Sum
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[][] grid1 = { { 1, 2 }, { 3, 2 } };
+    System.out.println("Test Case 1: " + canPartitionGrid(grid1)); // Expected: true (Total=8, Target=4, Col1=4)
+
+    int[][] grid2 = { { 1, 1 }, { 1, 1 } };
+    System.out.println("Test Case 2: " + canPartitionGrid(grid2)); // Expected: true (Total=4, Target=2, Row1=2)
+
+    int[][] grid3 = { { 1, 2, 3 }, { 4, 5, 6 } };
+    System.out.println("Test Case 3: " + canPartitionGrid(grid3)); // Expected: false (Total=21, Odd sum)
+  }
+
+  // Logic: One horizontal or vertical cut to partition grid into two equal sums.
+  // 1. Calculate total sum of the grid. If total sum is odd, return false.
+  // 2. targetSum = totalSum / 2.
+  // 3. We check for horizontal cuts first. A horizontal cut partitions the grid into
+  //    top and bottom parts. We accumulate row sums and check if it equals targetSum.
+  //    A cut between row i and row i+1 is valid if top part sum == targetSum.
+  // 4. We check for vertical cuts next. A vertical cut partitions the grid into
+  //    left and right parts. We accumulate column sums and check if it equals targetSum.
+  //    A cut between col j and col j+1 is valid if left part sum == targetSum.
+  // 5. Time Complexity: O(m * n) to calculate total sum and traverse rows/cols.
+  // 6. Space Complexity: O(1) beyond the input grid.
+  public static boolean canPartitionGrid(int[][] grid) {
+    int m = grid.length;
+    int n = grid[0].length;
+
+    long totalSum = 0;
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        totalSum += grid[i][j];
+      }
+    }
+
+    if (totalSum % 2 != 0) {
+      return false;
+    }
+
+    long target = totalSum / 2;
+
+    // Check Horizontal Cuts (between rows)
+    long horizontalSum = 0;
+    for (int i = 0; i < m - 1; i++) {
+      // m-1 to ensure non-empty sections
+      for (int j = 0; j < n; j++) {
+        horizontalSum += grid[i][j];
+      }
+      if (horizontalSum == target) {
+        return true;
+      }
+    }
+
+    // Check Vertical Cuts (between columns)
+    long verticalSum = 0;
+    for (int j = 0; j < n - 1; j++) {
+      // n-1 to ensure non-empty sections
+      for (int i = 0; i < m; i++) {
+        verticalSum += grid[i][j];
+      }
+      if (verticalSum == target) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+}

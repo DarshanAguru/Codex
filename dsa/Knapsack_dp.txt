@@ -1,0 +1,79 @@
+// Date: 21/08/2025
+// Relevance: Dynamic Programming
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] wt = { 2, 4, 6 };
+    int[] val = { 5, 11, 13 };
+    int W = 10;
+
+    int n = wt.length;
+    System.out.println("Memoization: " + knapSackMEMO(n, W, wt, val));
+    System.out.println("Tabulation: " + knapSackTAB(n, W, wt, val));
+  }
+
+  // Logic: 0/1 Knapsack (Dynamic Programming)
+  // We have a set of items, each with a weight and a value. We want to maximize the total value
+  // without exceeding the knapsack capacity W. We can either "pick" or "not pick" an item.
+  // State: dp[i][w] = max value using the first i items with weight capacity w.
+  // Recurrence relation:
+  // 1. Not picking item i: dp[i - 1][w]
+  // 2. Picking item i: val[i] + dp[i][w - wt[i]] (only if wt[i] <= w)
+  // Take the max of these two choices.
+  // (Note: The tabulation shown uses unbounded knapsack logic locally on the first row -
+  // replacing it with 0/1 logic: dp[0][c] = wt[0] <= c ? val[0] : 0,
+  // but this specifically handles unbounded pick on index 0 for coin change variations).
+  // Actually, wait - standard 0/1 knapsack only picks once!
+  // The code below actually simulates Unbounded Knapsack on first index... `(c / wt[0]) * val[0]`.
+  // Thus this code is for UNBOUNDED KNAPSACK.
+  //
+  // Dry run for W=10, weights=[2,4,6], vals=[5,11,13]:
+  // Max value: using item 2 (wt 4, val 11) twice -> wt 8, val 22 + item 1 (wt 2, val 5) -> wt 10, val 27.
+  static int knapSackTAB(int n, int W, int[] wt, int[] val) {
+    int[][] dp = new int[n][W + 1];
+
+    for (int i = wt[0]; i <= W; i++) {
+      dp[0][i] = (i / wt[0]) * val[0];
+    }
+
+    for (int i = 1; i < n; i++) {
+      for (int c = 0; c <= W; c++) {
+        int notTaken = dp[i - 1][c];
+        int taken = Integer.MIN_VALUE;
+
+        if (wt[i] <= c) {
+          taken = val[i] + dp[i][c - wt[i]];
+        }
+        dp[i][c] = Math.max(notTaken, taken);
+      }
+    }
+    return dp[n - 1][W];
+  }
+
+  static int knapSackMEMO(int n, int W, int[] wt, int[] val) {
+    int[][] dp = new int[n][W + 1];
+    for (int[] row : dp) Arrays.fill(row, -1);
+    return helper(wt, val, n - 1, W, dp);
+  }
+
+  static int helper(int[] wt, int[] val, int idx, int W, int[][] dp) {
+    if (idx == 0) {
+      return (W / wt[0]) * val[0];
+    }
+
+    if (dp[idx][W] != -1) return dp[idx][W];
+
+    int notTaken = helper(wt, val, idx - 1, W, dp);
+    int taken = Integer.MIN_VALUE;
+
+    if (wt[idx] <= W) {
+      taken = val[idx] + helper(wt, val, idx, W - wt[idx], dp);
+    }
+
+    return dp[idx][W] = Math.max(notTaken, taken);
+  }
+}

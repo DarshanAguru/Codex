@@ -1,0 +1,44 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/transformed-array/
+// Leetcode Problem No: 3379
+// Relevance: Array, Simulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] nums = { 3, -2, 1, 1 };
+    int[] res = constructTransformedArray(nums);
+    System.out.println(Arrays.toString(res));
+  }
+
+  // Logic: Array Simulation / Circular Indexing (Modulo Math)
+  // We want to transform each element based on its value.
+  // New index is purely an offset from the current index: `i + nums[i]`.
+  // Since the array behaves circularly:
+  // - If it goes beyond the right edge, it wraps around to the left (handled by `% n`).
+  // - If it goes beyond the left edge (negative value), it wraps around to the right.
+  // Formula `((i + nums[i]) % n + n) % n`:
+  //    1. `(i + nums[i]) % n` handles standard right wrap-around, but can yield a negative number in Java.
+  //    2. `+ n` shifts it into a definite positive range.
+  //    3. `% n` limits it back within `[0, n-1]`.
+  //
+  // Dry run for nums = [3, -2, 1, 1], n=4:
+  // i=0 (val 3): newIdx = ((0 + 3) % 4 + 4) % 4 = (3 + 4) % 4 = 3. res[0] = nums[3] = 1.
+  // i=1 (val -2): newIdx = ((1 - 2) % 4 + 4) % 4 = (-1 + 4) % 4 = 3. res[1] = nums[3] = 1.
+  // i=2 (val 1): newIdx = ((2 + 1) % 4 + 4) % 4 = (3 + 4) % 4 = 3. res[2] = nums[3] = 1.
+  // i=3 (val 1): newIdx = ((3 + 1) % 4 + 4) % 4 = (0 + 4) % 4 = 0. res[3] = nums[0] = 3.
+  // Result: [1, 1, 1, 3].
+  public static int[] constructTransformedArray(int[] nums) {
+    int n = nums.length;
+    int[] res = new int[n];
+
+    for (int i = 0; i < n; i++) {
+      res[i] = nums[(((i + nums[i]) % n) + n) % n];
+    }
+
+    return res;
+  }
+}

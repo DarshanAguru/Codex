@@ -1,0 +1,52 @@
+// Date: 06/08/2025
+// Problem: https://leetcode.com/problems/find-peak-element/
+// Leetcode Problem No: 162
+// Relevance: Array, Binary Search
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 1, 2, 3, 4, 5 };
+
+    int idx = findPeakElement(arr);
+    System.out.println(idx);
+  }
+
+  static int findPeakElement(int[] arr) {
+    int l = 0;
+    int r = arr.length - 1;
+
+    // Logic: Binary Search on Unsorted Array
+    // A peak element is greater than its neighbors.
+    // We can use Binary Search! Wait, on an unsorted array? Yes!
+    // Imagine the array as a terrain of mountains.
+    // We look at `mid` and `mid + 1`.
+    // - If `arr[mid] > arr[mid + 1]`: We are on a descending slope.
+    //   There MUST be a peak to the left of us (or `mid` itself is the peak).
+    //   So, we search the left half: `r = mid`.
+    // - If `arr[mid] <= arr[mid + 1]`: We are on an ascending slope.
+    //   There MUST be a peak to the right of us.
+    //   So, we search the right half: `l = mid + 1`.
+    // The loop converges to `l == r`, which is guaranteed to be a peak.
+    //
+    // Dry run for arr = [1, 2, 3, 4, 5]:
+    // 1. l=0, r=4. mid=2(3). arr[2](3) > arr[3](4)? False. Ascending. l=3.
+    // 2. l=3, r=4. mid=3(4). arr[3](4) > arr[4](5)? False. Ascending. l=4.
+    // l==r==4. Return 4 (element 5).
+    while (l < r) {
+      int mid = l + (r - l) / 2;
+
+      if (arr[mid] > arr[mid + 1]) {
+        // We are in descending part of peak, so peak is to left (or mid)
+        r = mid;
+      } else {
+        // Ascending part, peak is to right
+        l = mid + 1;
+      }
+    }
+    return l;
+  }
+}

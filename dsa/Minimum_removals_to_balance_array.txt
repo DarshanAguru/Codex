@@ -1,0 +1,51 @@
+// Date: 06/02/2026
+// Problem: https://leetcode.com/problems/minimum-removals-to-balance-array/
+// Leetcode Problem No: 3634
+// Relevance: Array, Sorting, Sliding Window
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] nums = { 2, 1, 5 };
+    int k = 2;
+    System.out.println(minRemoval(nums, k));
+  }
+
+  // Logic: Sorting + Sliding Window
+  // An array is balanced if `maxElement <= k * minElement`.
+  // We want to remove the MINIMUM number of elements to make the array balanced.
+  // This is equivalent to finding the MAXIMUM length of a balanced subarray AFTER sorting.
+  // 1. Sort the array.
+  // 2. Use a sliding window `[left, right]`. `nums[left]` is the min, `nums[right]` is the max.
+  // 3. Expand `right`. If the balanced condition `nums[right] <= nums[left] * k` is broken,
+  //    it means our current min (`nums[left]`) is too small to pair with the current max.
+  //    We must shrink the window by incrementing `left` until the condition is met again.
+  // 4. Track the maximum window size (`right - left + 1`).
+  // The minimum removals will be `Total Length - Maximum Balanced Length`.
+  //
+  // Dry run for nums = [2, 1, 5], k = 2:
+  // Sort: [1, 2, 5].
+  // r=0(1): 1 <= 1*2 (T). maxLen=1.
+  // r=1(2): 2 <= 1*2 (T). maxLen=2.
+  // r=2(5): 5 <= 1*2 (F). left++ (left becomes 1, min is 2).
+  //         5 <= 2*2 (F). left++ (left becomes 2, min is 5).
+  //         5 <= 5*2 (T). maxLen=max(2, 2-2+1=1)=2.
+  // Max balanced length is 2 (e.g., [1, 2]).
+  // Min removals = 3 - 2 = 1.
+  public static int minRemoval(int[] nums, int k) {
+    int n = nums.length;
+    Arrays.sort(nums);
+    int left = 0;
+    int res = Integer.MIN_VALUE;
+    for (int right = 0; right < n; right++) {
+      while ((long) nums[right] > (long) nums[left] * k) {
+        left++;
+      }
+      res = Math.max(res, right - left + 1);
+    }
+    return n - res;
+  }
+}

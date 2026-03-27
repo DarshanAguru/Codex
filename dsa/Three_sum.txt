@@ -1,0 +1,74 @@
+// Date: 05/08/2025
+// Problem: https://leetcode.com/problems/3sum/
+// Leetcode Problem No: 15
+// Relevance: Array, Sorting, Two Pointers
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { -1, 0, 1, 0 };
+
+    // Find all unique triplets that sum to 0
+    List<List<Integer>> res = threeSum(arr);
+
+    for (List<Integer> triplet : res) {
+      System.out.println(triplet);
+    }
+  }
+
+  // Logic: Sorting + Two Pointers
+  // We want to find all unique triplets `[a, b, c]` that sum to 0.
+  // 1. Sort the array. Sorting helps efficiently use two pointers and skip duplicates quickly.
+  // 2. Iterate through the array with pointer `i` as the first element.
+  //    To avoid duplicate triplets, if `arr[i] == arr[i-1]`, skip to the next `i`.
+  // 3. Use two pointers for the remaining sum `k`: `j = i + 1` (left) and `k = n - 1` (right).
+  // 4. If `sum < 0`, we need a larger value, so we increment `j`.
+  // 5. If `sum > 0`, we need a smaller value, so we decrement `k`.
+  // 6. If `sum == 0`, we found a triplet! Add it to the answer.
+  //    Then, to avoid duplicate triplets, advance `j` while `arr[j] == arr[j-1]` and
+  //    decrement `k` while `arr[k] == arr[k+1]`.
+  //
+  // Dry run for arr = [-1, 0, 1, 0], Sorted = [-1, 0, 0, 1]:
+  // i=0 (-1): j=1 (0), k=3 (1).
+  //   sum = -1 + 0 + 1 = 0. Found [-1, 0, 1]!
+  //   j++ (j=2, val=0). It's a duplicate of arr[1], so j moves to 3? Wait, the inner skips:
+  //   j++, k--. j=2, k=2. Loop condition j < k breaks.
+  // i=1 (0): j=2 (0), k=3 (1).
+  //   sum = 0 + 0 + 1 = 1 > 0. k--. k=2, j=2. Loop breaks.
+  // Result: [[-1, 0, 1]].
+  static List<List<Integer>> threeSum(int[] arr) {
+    List<List<Integer>> ans = new ArrayList<>();
+    Arrays.sort(arr);
+    int n = arr.length;
+
+    for (int i = 0; i < n; i++) {
+      // Skip duplicates for 'i'
+      if (i > 0 && arr[i] == arr[i - 1]) continue;
+
+      int j = i + 1;
+      int k = n - 1;
+
+      while (j < k) {
+        int sum = arr[i] + arr[j] + arr[k];
+
+        if (sum < 0) {
+          j++;
+        } else if (sum > 0) {
+          k--;
+        } else {
+          ans.add(Arrays.asList(arr[i], arr[j], arr[k]));
+          j++;
+          k--;
+
+          // Skip duplicates for 'j' and 'k'
+          while (j < k && arr[j] == arr[j - 1]) j++;
+          while (j < k && arr[k] == arr[k + 1]) k--;
+        }
+      }
+    }
+    return ans;
+  }
+}

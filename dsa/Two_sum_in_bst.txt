@@ -1,0 +1,69 @@
+// Date: 20/08/2025
+// Problem: https://leetcode.com/problems/two-sum-iv-input-is-a-bst/
+// Leetcode Problem No: 653
+// Relevance: Tree, Hash Table, Depth-First Search, Binary Search Tree
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    Node root = new Node(5);
+    root.left = new Node(3);
+    root.left.left = new Node(2);
+    root.left.right = new Node(4);
+    root.right = new Node(6);
+    root.right.right = new Node(7);
+
+    int k = 9;
+    boolean res = findSum(root, k, new HashSet<>());
+    System.out.println(res);
+  }
+
+  // Logic: Depth-First Search (Inorder) + HashSet
+  // We need to find if there are two nodes in a BST that sum to `k`.
+  // We can traverse the tree (Inorder, Preorder, or Postorder) and keep track
+  // of the visited node values in a `HashSet`.
+  // To find a sum `target`, when we're at a node with value `x`, we need a node with value `target - x`.
+  // At each node:
+  // 1. Check if `target - root.val` exists in our `HashSet`. If yes, we found a pair! Return true.
+  // 2. Otherwise, add `root.val` to the `HashSet`.
+  // 3. Recursively check the left and right subtrees.
+  //
+  // Dry run for root=5, target=9:
+  // Initial set: []
+  // DFS(5):
+  //   DFS(3):
+  //     DFS(2):
+  //       DFS(null): false
+  //       9-2=7 in set? No. set.add(2). set=[2]
+  //       DFS(null): false
+  //     9-3=6 in set? No. set.add(3). set=[2, 3]
+  //     DFS(4):
+  //       9-4=5 in set? No. set.add(4). set=[2, 3, 4]
+  //   9-5=4 in set? YES! Return true!
+  // Result: true.
+  static boolean findSum(Node root, int target, Set<Integer> set) {
+    if (root == null) return false;
+
+    if (findSum(root.left, target, set)) return true;
+
+    if (set.contains(target - root.val)) {
+      return true;
+    }
+    set.add(root.val);
+
+    return findSum(root.right, target, set);
+  }
+}

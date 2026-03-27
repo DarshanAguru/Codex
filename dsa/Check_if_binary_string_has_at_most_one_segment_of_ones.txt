@@ -1,0 +1,55 @@
+// Date: 06/03/2026
+// Problem: https://leetcode.com/problems/check-if-binary-string-has-at-most-one-segment-of-ones/
+// Leetcode Problem No: 1784
+// Relevance: String
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String s = "1001";
+    boolean res = checkOnesSegment(s);
+    System.out.println(res);
+  }
+
+  // Logic: Simulation / String Parsing
+  // We want to verify if the string has at most one contiguous segment of '1's.
+  // We can just iterate linearly:
+  // 1. First loop counts leading '1's.
+  // 2. Second loop counts consecutive '0's immediately following those '1's.
+  // If the string contains at most one segment of '1's, the length of leading '1's + the length
+  // of the trailing '0's must equal the total length of the string.
+  // E.g., if there's >1 segment (like "1001"), then leadingOnes + zeroCount < string length.
+  // (An easier 1-liner is checking if `s.contains("01")` is false, but this loop method is explicit).
+  //
+  // Dry run for s = "1001":
+  // n = 4.
+  // i=0: s[0]='1' -> leadingOnes=1, i=1.
+  // s[1]='0' (breaks first loop).
+  // i=1: s[1]='0' -> zeroCount=1, i=2.
+  // i=2: s[2]='0' -> zeroCount=2, i=3.
+  // s[3]='1' (breaks second loop).
+  // Returns (2 == 4) || (1 == 4) || (1+2 == 4) -> 3 == 4 is False. Result false.
+  static boolean checkOnesSegment(String s) {
+    int n = s.length();
+    int zeroCount = 0;
+    int leadingOnes = 0;
+    int i = 0;
+
+    while (i < n && s.charAt(i) == '1') {
+      leadingOnes++;
+      i++;
+    }
+
+    while (i < n && s.charAt(i) == '0') {
+      zeroCount++;
+      i++;
+    }
+
+    return (
+      (zeroCount == n) || (leadingOnes == n) || (leadingOnes + zeroCount == n)
+    );
+  }
+}

@@ -1,0 +1,117 @@
+// Date: 12/08/2025
+// Problem: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+// Leetcode Problem No: 19
+// Relevance: Linked List, Two Pointers
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class LL {
+
+  public Node head;
+  public Node tail;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      tail = head;
+      return;
+    }
+    tail.next = new Node(n);
+    tail = tail.next;
+  }
+
+  public void printList() {
+    Node temp = head;
+    System.out.print("[ ");
+    while (temp != null) {
+      System.out.print(temp.val + " ");
+      temp = temp.next;
+    }
+    System.out.println("]");
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    LL list = new LL();
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    list.add(4);
+    list.add(5);
+
+    int N = 2; // Remove 2nd from last
+    System.out.println("Original:");
+    list.printList();
+
+    list.head = deleteNthNode(list.head, N);
+
+    System.out.println("After Removal:");
+    list.printList();
+  }
+
+  // Logic: Two Pointers (Slow and Fast)
+  // To reach the N-th node from the END in a single pass:
+  // Let `fast` move exactly `N` steps ahead of `slow`.
+  // Then, move both `slow` and `fast` one step at a time until `fast` reaches the end of the list.
+  // At this point, `slow` will be exactly `N` steps behind the end, which is the exact node we want to remove!
+  // To make removal easy, we use a `dummy` node placed before `head`.
+  // We set both `slow` and `fast` to `dummy`.
+  // We move `fast` `N+1` steps ahead. This ensures that when `fast` reaches `null`,
+  // `slow` is sitting exactly right BEFORE the node to be deleted.
+  // Then we perform `slow.next = slow.next.next` to delete the node.
+  //
+  // Dry run for list: 1->2->3->4->5. N=2.
+  // dummy -> 1 -> 2 -> 3 -> 4 -> 5 -> null.
+  // Initial: fast=dummy, slow=dummy.
+  // Move fast N+1=3 steps. fast is now at Node(2).
+  // Move both until fast == null:
+  // Step 1: fast(3), slow(1)
+  // Step 2: fast(4), slow(2)
+  // Step 3: fast(5), slow(3)
+  // Step 4: fast(null), slow(4). Wait, the loop stops here?
+  // Let's trace again. fast=dummy. N+1=3 steps. i=0(dummy), 1(1), 2(2), 3(3). fast is at 3!
+  // Move: fast(4), slow(1)
+  // Move: fast(5), slow(2)
+  // Move: fast(null), slow(3).
+  // slow is at Node(3). The node to delete is slow.next which is Node(4).
+  // Node(4) is indeed the 2nd from the end! We bypass it: slow.next = slow.next.next (which is 5).
+  // Returns head.
+  static Node deleteNthNode(Node head, int N) {
+    if (head == null) return null;
+
+    Node dummy = new Node(-1);
+    dummy.next = head;
+    Node fast = dummy;
+    Node slow = dummy;
+
+    // Move fast ahead by N+1 (including dummy)
+    for (int i = 0; i <= N; i++) {
+      if (fast == null) return head; // N > Length
+      fast = fast.next;
+    }
+
+    // Move both until fast reaches end
+    while (fast != null) {
+      fast = fast.next;
+      slow = slow.next;
+    }
+
+    // Remove the node
+    slow.next = slow.next.next;
+
+    return dummy.next;
+  }
+}

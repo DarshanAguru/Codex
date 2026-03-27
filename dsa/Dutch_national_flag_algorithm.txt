@@ -1,0 +1,60 @@
+// Date: 07/01/2026
+// Problem: https://leetcode.com/problems/sort-colors/
+// Leetcode Problem No: 75
+// Relevance: Array, Sorting, Two Pointers
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 2, 0, 2, 1, 1, 0 };
+    sortColors(arr);
+    System.out.println(Arrays.toString(arr));
+  }
+
+  // Logic: Dutch National Flag Algorithm (3-way partitioning)
+  // We want to sort an array of 0s, 1s, and 2s in O(N) time and O(1) space.
+  // We use three pointers: `low`, `mid`, and `high`.
+  // - `low` keeps track of the boundary for 0s.
+  // - `mid` traverses the array.
+  // - `high` keeps track of the boundary for 2s.
+  // When arr[mid] == 0: swap with arr[low], increment both low and mid.
+  // When arr[mid] == 1: just increment mid.
+  // When arr[mid] == 2: swap with arr[high], decrement high (but keep mid same to re-evaluate the swapped element).
+  //
+  // Dry run for arr = [2, 0, 2, 1, 1, 0]:
+  // Init: low=0, mid=0, high=5.
+  // arr[0]=2: swap(0, 5) -> [0, 0, 2, 1, 1, 2]. high=4. (mid=0)
+  // arr[0]=0: swap(0, 0). low=1, mid=1.
+  // arr[1]=0: swap(1, 1). low=2, mid=2.
+  // arr[2]=2: swap(2, 4) -> [0, 0, 1, 1, 2, 2]. high=3. (mid=2)
+  // arr[2]=1: mid=3.
+  // arr[3]=1: mid=4.
+  // mid(4) > high(3). Loop ends. Array is sorted.
+  static void sortColors(int[] arr) {
+    int low = 0;
+    int mid = 0;
+    int high = arr.length - 1;
+
+    while (mid <= high) {
+      if (arr[mid] == 0) {
+        swap(arr, low, mid);
+        low++;
+        mid++;
+      } else if (arr[mid] == 1) {
+        mid++;
+      } else {
+        swap(arr, mid, high);
+        high--;
+      }
+    }
+  }
+
+  static void swap(int[] arr, int a, int b) {
+    int temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+  }
+}

@@ -1,0 +1,79 @@
+// Date: 06/01/2026
+// Problem: https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/
+// Leetcode Problem No: 1161
+// Relevance: Tree, Breadth-First Search, Queue
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    Node root = new Node(1);
+    root.left = new Node(1);
+    root.left.left = new Node(7);
+    root.left.right = new Node(-8);
+    root.right = new Node(0);
+    root.right.left = new Node(-7);
+    root.right.right = new Node(9);
+
+    int res = maxLevelSum(root);
+    System.out.println("Max Sum Level: " + res);
+  }
+
+  // Logic: Breadth-First Search (BFS) / Level Order Traversal
+  // To find the level with the maximum sum, we traverse the tree level by level using a Queue.
+  // For each level, we find how many nodes are in the queue (`size`).
+  // We loop `size` times, dequeueing nodes, adding their values to a `currentSum`, and
+  // enqueueing their children for the next level.
+  // After processing all nodes of the current level, we compare `currentSum` with `maxSum`.
+  // If it's greater, we update `maxSum` and record the current `level`.
+  // We return the `maxLevel` that had the highest sum.
+  //
+  // Dry run:
+  // Level 1: [1]. sum=1. maxSum=1, maxLevel=1.
+  // Level 2: [1, 0]. sum=1+0=1. maxSum stays 1. (q now has [7,-8,-7,9]).
+  // Level 3: [7, -8, -7, 9]. sum=7-8-7+9=1. maxSum stays 1.
+  // Looks like all levels sum to 1! Returning smallest level, which is 1.
+  static int maxLevelSum(Node root) {
+    if (root == null) return 0;
+
+    Queue<Node> q = new LinkedList<>();
+    q.offer(root);
+
+    int level = 1;
+    int maxLevel = 1;
+    int maxSum = Integer.MIN_VALUE;
+
+    while (!q.isEmpty()) {
+      int size = q.size();
+      int currentSum = 0;
+
+      for (int i = 0; i < size; i++) {
+        Node node = q.poll();
+        currentSum += node.val;
+
+        if (node.left != null) q.offer(node.left);
+        if (node.right != null) q.offer(node.right);
+      }
+
+      if (currentSum > maxSum) {
+        maxSum = currentSum;
+        maxLevel = level;
+      }
+      level++;
+    }
+
+    return maxLevel;
+  }
+}

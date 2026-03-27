@@ -1,0 +1,62 @@
+// Date: 31/07/2025
+// Problem: https://leetcode.com/problems/intersection-of-two-arrays/
+// Leetcode Problem No: 349
+// Relevance: Hash Table, Array
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] a = { 1, 2, 3, 2, 1 };
+    int[] b = { 3, 2, 2, 3, 3, 2 };
+
+    ArrayList<Integer> res = new ArrayList<>();
+
+    // Store first array in HashSet for quick lookup (Unique elements only)
+    HashSet<Integer> hs = new HashSet<>();
+    for (int i : a) {
+      hs.add(i);
+    }
+
+    // Logic: Hash Set
+    // We want the unique intersection of two arrays.
+    // 1. Add all elements of the first array to a Hash Set.
+    //    Sets automatically handle duplicates, storing only unique values.
+    // 2. Iterate through the second array. If an element exists in our Hash Set,
+    //    it is part of the intersection. We add it to our result list.
+    // 3. To avoid adding the same intersecting element multiple times (if it's duplicated in the
+    //    second array), we MUST REMOVE the element from the Hash Set after adding it to the result.
+    //
+    // Dry run for a=[1, 2, 3, 2, 1], b=[3, 2, 2, 3, 3, 2]:
+    // hs = {1, 2, 3}.
+    // b[0]=3: hs contains 3? Yes. res=[3]. Remove 3 from hs -> hs={1, 2}.
+    // b[1]=2: hs contains 2? Yes. res=[3, 2]. Remove 2 from hs -> hs={1}.
+    // b[2]=2: hs contains 2? No.
+    // b[3]=3: hs contains 3? No.
+    // Result is [3, 2].
+    for (int i : b) {
+      // Logic: If found in Set, add to result and remove from Set to prevent duplicates in result.
+      // This logic produces Unique Intersection (Problem 349).
+      if (hs.contains(i)) {
+        res.add(i);
+        hs.remove(i);
+      }
+    }
+
+    printRes(res);
+  }
+
+  private static void printRes(ArrayList<?> arr) {
+    // wildcard for cleaner generic warning safety
+    System.out.print("[");
+    for (int i = 0; i < arr.size(); i++) {
+      if (i == arr.size() - 1) {
+        System.out.print(arr.get(i));
+      } else {
+        System.out.print(arr.get(i) + ", ");
+      }
+    }
+    System.out.println("]");
+  }
+}

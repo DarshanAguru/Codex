@@ -1,0 +1,86 @@
+// Date: 07/01/2026
+// Problem: https://leetcode.com/problems/backspace-string-compare/
+// Leetcode Problem No: 844
+// Relevance: String, Stack, Two Pointers, Simulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String s = "ab##";
+    String t = "c#d#";
+    boolean res = backspaceCompare(s, t);
+    System.out.println(res);
+  }
+
+  // Logic: Two Pointers from Right to Left (O(1) Space)
+  // Instead of using a Stack (which takes O(N) space) to build the final string,
+  // we can iterate from the end of both strings to the beginning.
+  // By going backwards, whenever we see a backspace ('#'), we know the *next* character
+  // we encounter (which is actually the character before it in the string) should be skipped.
+  // We keep a count of `skipS` and `skipT`.
+  // - If char is '#', increment skip count.
+  // - If char is normal but skip count > 0, decrement skip count and ignore char.
+  // - Otherwise, compare the valid characters.
+  //
+  // Dry run for s = "ab##", t = "c#d#":
+  // Both point to the end.
+  // s: 'i' points to '#'. skipS = 1. i--.
+  //    'i' points to '#'. skipS = 2. i--.
+  //    'i' points to 'b'. skipS > 0. skipS = 1. i-- (ignored 'b').
+  //    'i' points to 'a'. skipS > 0. skipS = 0. i-- (ignored 'a').
+  // s is empty.
+  // t: same logic, ignores 'd', ignores 'c'. t is empty.
+  // Both empty simultaneously, return true.
+  static boolean backspaceCompare(String s, String t) {
+    int i = s.length() - 1;
+    int j = t.length() - 1;
+    int skipS = 0;
+    int skipT = 0;
+
+    while (i >= 0 || j >= 0) {
+      // Find the next valid char in S
+      while (i >= 0) {
+        if (s.charAt(i) == '#') {
+          skipS++;
+          i--;
+        } else if (skipS > 0) {
+          skipS--; // Skip current char as it is deleted
+          i--;
+        } else {
+          break; // Found a valid char
+        }
+      }
+
+      // Find the next valid char in T
+      while (j >= 0) {
+        if (t.charAt(j) == '#') {
+          skipT++;
+          j--;
+        } else if (skipT > 0) {
+          skipT--;
+          j--;
+        } else {
+          break;
+        }
+      }
+
+      // Compare current valid characters
+      if (i >= 0 && j >= 0 && s.charAt(i) != t.charAt(j)) {
+        return false;
+      }
+
+      // If one string exhausted but other isn't
+      if ((i >= 0) != (j >= 0)) {
+        return false;
+      }
+
+      i--;
+      j--;
+    }
+
+    return true;
+  }
+}

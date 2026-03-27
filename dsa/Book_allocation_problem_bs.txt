@@ -1,0 +1,76 @@
+// Date: 06/08/2025
+// Problem: https://leetcode.com/problems/split-array-largest-sum/
+// Leetcode Problem No: 410
+// Relevance: Array, Binary Search
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 25, 46, 28, 49, 24 };
+    int m = 4;
+
+    int min = Arrays.stream(arr).max().getAsInt(); // Lower bound: Max pages in one book
+    int max = Arrays.stream(arr).sum(); // Upper bound: Sum of all pages
+
+    // Binary Search on Answer: The answer lines between max(arr) and sum(arr).
+    // Monotonic property: If we can allocate with 'x' max pages, we can also do it with 'x+1'.
+    int res = binarySearch(arr, min, max, m);
+    System.out.println(res);
+  }
+
+  static int countStudents(int[] arr, int pages) {
+    int count = 1;
+    int curr = 0;
+
+    for (int i = 0; i < arr.length; i++) {
+      if (curr + arr[i] <= pages) {
+        curr += arr[i];
+      } else {
+        count++;
+        curr = arr[i];
+      }
+    }
+    return count;
+  }
+
+  // Logic: Binary Search on Answer
+  // We want to minimize the maximum number of pages allocated to a single student.
+  // The answer must lie between the max single book size (minimum possible max)
+  // and the sum of all books (maximum possible max).
+  // We binary search for the optimal max pages (`mid`).
+  // For a given `mid`, we greedily assign books to students. If the current assigned pages
+  // exceeds `mid`, we give the current book to a new student.
+  // If the total students needed <= `m`, then `mid` is a valid answer. We try to find a smaller `mid` (high = mid - 1).
+  // Else, `mid` is too small, so we must increase it (low = mid + 1).
+  //
+  // Dry run for arr = [25, 46, 28, 49, 24], m = 4:
+  // low = 49 (max), high = 172 (sum).
+  // Mid points get tested. Let's say we test 71:
+  // countStudents(71):
+  // - stu1 gets 25, 46 (sum 71).
+  // - stu2 gets 28. Next is 49. 28+49 > 71.
+  // - stu3 gets 49.
+  // - stu4 gets 24.
+  // Total students = 4. 4 <= 4 is True. 71 is a possible answer. Try smaller.
+  static int binarySearch(int[] arr, int low, int high, int m) {
+    if (m > arr.length) return -1;
+
+    int ans = -1;
+    while (low <= high) {
+      int mid = (low + high) / 2;
+
+      if (countStudents(arr, mid) <= m) {
+        // If possible to allocate with 'mid' max pages, try smaller max
+        ans = mid;
+        high = mid - 1;
+      } else {
+        // Need more pages per student or fewer students
+        low = mid + 1;
+      }
+    }
+    return ans == -1 ? low : ans;
+  }
+}

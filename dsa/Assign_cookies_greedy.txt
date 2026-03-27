@@ -1,0 +1,54 @@
+// Date: 21/08/2025
+// Problem: https://leetcode.com/problems/assign-cookies/
+// Leetcode Problem No: 455
+// Relevance: Array, Sorting, Greedy
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] students = { 1, 2, 3 }; // Greed factor of children
+    int[] cookies = { 1, 1 }; // Size of cookies
+
+    int res = findMaxNoStudentsWithCookies(students, cookies);
+    System.out.println(res);
+  }
+
+  // Logic: Greedy approach using Arrays.sort
+  // To maximize the number of satisfied students, we greedily assign the smallest possible
+  // cookie that can satisfy the least greedy student first.
+  // First, sort both the students' greed factors and the cookie sizes.
+  // Then, use two pointers (i for student, j for cookie).
+  // If `cookies[j] >= students[i]`, the student is satisfied. Move both pointers.
+  // If `cookies[j] < students[i]`, the cookie is too small. Move to the next cookie (j++).
+  //
+  // Dry run for students = [1, 2, 3], cookies = [1, 1]:
+  // Sort both: s=[1,2,3], c=[1,1]
+  // i=0, j=0: c[0] >= s[0] (1 >= 1). Student 0 satisfied. i=1, j=1, count=1.
+  // i=1, j=1: c[1] >= s[1] (1 >= 2) is False. Move j. j=2.
+  // End of loop (j >= cookies.length). Result is 1.
+  static int findMaxNoStudentsWithCookies(int[] students, int[] cookies) {
+    Arrays.sort(students);
+    Arrays.sort(cookies);
+
+    int i = 0; // Pointer for students
+    int j = 0; // Pointer for cookies
+    int count = 0;
+
+    while (i < students.length && j < cookies.length) {
+      if (cookies[j] >= students[i]) {
+        // If cookie j satisfies student i, assign it and move to next student
+        count++;
+        i++;
+        j++;
+      } else {
+        // If cookie j is too small, try the next larger cookie (j++)
+        // Student i still needs to be satisfied
+        j++;
+      }
+    }
+    return count;
+  }
+}

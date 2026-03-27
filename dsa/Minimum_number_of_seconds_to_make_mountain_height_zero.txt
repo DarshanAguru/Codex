@@ -1,0 +1,58 @@
+// Date: 13/03/2026
+// Problem: https://leetcode.com/problems/minimum-number-of-seconds-to-make-mountain-height-zero/
+// Leetcode Problem No: 3296
+// Relevance: Binary Search on Answer, Math
+
+class Solution {
+
+  // Logic: Binary Search on Answer
+  // We want to find the minimum time required to reduce the mountain height to 0.
+  // 1. A single worker with base time `t` takes `t*(1) + t*(2) + ... + t*(x)` seconds
+  //    to reduce `x` units of the mountain's height.
+  // 2. The sum is `t * (x * (x + 1) / 2)`, and we are looking for the maximum height `x`
+  //    that can be reduced in a given total time `mid`.
+  // 3. This is solved via the quadratic inequality: `x^2 + x - 2 * (mid / t) <= 0`.
+  //    Using the quadratic formula, the maximum valid root gives the allowed height.
+  // 4. We binary search the overall time limit `mid`. For each `mid`, calculate the
+  //    total amount of work (height reduced) all given workers can jointly accomplish.
+  // 5. If the total height reduced across all workers is >= `mountainHeight`, the given
+  //    time `mid` is valid, and we can attempt a smaller time constraint (`high = mid - 1`).
+  //    Otherwise, we discard this time (`low = mid + 1`).
+  //
+  // Dry run idea:
+  // If worker times = [1, 2], height = 4.
+  // For a `mid` candidate, say 5 seconds:
+  // Worker 1 can reduce max `x` where 1 * (x*(x+1)/2) <= 5. Since 1*(2*3/2)=3 <= 5 and 1*(3*4/2)=6 > 5, x=2.
+  // Worker 2 can reduce max `x` where 2 * (x*(x+1)/2) <= 5. Since 2*(1*2/2)=2 <= 5 and 2*(2*3/2)=6 > 5, x=1.
+  // Total reduced: 2 + 1 = 3, which is < 4 height. We'd need more time, thus low = mid + 1.
+  public long minNumberOfSeconds(int mountainHeight, int[] workerTimes) {
+    int max = 0;
+    double eps = 1e-7;
+    for (int time : workerTimes) {
+      max = Math.max(max, time);
+    }
+
+    long low = 1;
+    long high = ((long) max * mountainHeight * (mountainHeight + 1)) / 2;
+    long res = 0;
+
+    while (low <= high) {
+      long mid = (low + high) / 2;
+      long cnt = 0;
+
+      for (int time : workerTimes) {
+        long w = mid / time;
+        long k = (long) ((-1.0 + Math.sqrt(1 + w * 8)) / 2 + eps);
+        cnt += k;
+      }
+
+      if (cnt >= mountainHeight) {
+        res = mid;
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
+    }
+    return res;
+  }
+}

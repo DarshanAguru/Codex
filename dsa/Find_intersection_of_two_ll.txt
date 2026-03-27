@@ -1,0 +1,87 @@
+// Date: 12/08/2025
+// Problem: https://leetcode.com/problems/intersection-of-two-linked-lists/
+// Leetcode Problem No: 160
+// Relevance: Linked List, Two Pointers
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class LL {
+
+  public Node head;
+  public Node tail;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      tail = head;
+      return;
+    }
+    tail.next = new Node(n);
+    tail = tail.next;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    // Create Intersection for testing
+    Node intersect = new Node(8);
+    intersect.next = new Node(4);
+    intersect.next.next = new Node(5);
+
+    Node headA = new Node(4);
+    headA.next = new Node(1);
+    headA.next.next = intersect;
+
+    Node headB = new Node(5);
+    headB.next = new Node(6);
+    headB.next.next = new Node(1);
+    headB.next.next.next = intersect;
+
+    Node res = getIntersectionNode(headA, headB);
+
+    if (res != null) {
+      System.out.println("Intersected at '" + res.val + "'");
+    } else {
+      System.out.println("No intersection");
+    }
+  }
+
+  static Node getIntersectionNode(Node headA, Node headB) {
+    if (headA == null || headB == null) return null;
+
+    Node a = headA;
+    Node b = headB;
+
+    // Logic: Two Pointers approach
+    // We want to find where two singly linked lists merge. They might be of different lengths.
+    // If we traverse both lists simultaneously, pointer A will finish before pointer B (or vice versa).
+    // To synchronize them, once a pointer reaches the end of its list, we redirect it to the head
+    // of the OTHER list.
+    // This way, both pointers will travel exactly `Length(A) + Length(B)` nodes in total.
+    // In the second traversal (after switching), they will perfectly align and meet at the
+    // intersection node simultaneously. If there's no intersection, they both meet at `null`.
+    //
+    // Dry run for List A length=5, List B length=6, intersecting at 3rd from end:
+    // A travels 5 nodes -> null -> Switches to head B. Total nodes until intersection = 5 + 3 = 8.
+    // B travels 6 nodes -> null -> Switches to head A. Total nodes until intersection = 6 + 2 = 8.
+    // They meet at the exactly same step.
+    while (a != b) {
+      a = (a == null) ? headB : a.next;
+      b = (b == null) ? headA : b.next;
+    }
+
+    return a;
+  }
+}

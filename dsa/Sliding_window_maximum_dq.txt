@@ -1,0 +1,69 @@
+// Date: 18/08/2025
+// Problem: https://leetcode.com/problems/sliding-window-maximum/
+// Leetcode Problem No: 239
+// Relevance: Queue, Array, Sliding Window, Monotonic Queue
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 4, 0, -1, 3, 5, 3, 6, 8 };
+    int k = 3;
+
+    int[] res = getMaxSlidingWindow(arr, k);
+    System.out.println(Arrays.toString(res));
+  }
+
+  // Logic: Monotonic Queue (Deque)
+  // We want to find the maximum element in every sliding window of size `k`.
+  // A naive approach takes O(N*K). We can do it in O(N) using a Deque.
+  // The Deque stores `indices` of elements and maintains them in strictly DECREASING order of their values.
+  // Meaning: The element at `dq.peekFirst()` is ALWAYS the maximum of the current window.
+  // 1. Traverse the array.
+  // 2. Remove indices that are strictly out of the current window (`dq.peek() == i - k`).
+  // 3. To maintain monotonic property, remove all elements from `dq.pollLast()` that are `< arr[i]`.
+  //    (Because they are smaller and come before `arr[i]`, they can NEVER be the max of any future window).
+  // 4. Offer current index `i` to the deque.
+  // 5. Once we hit `i >= k - 1` (first full window formed), add `arr[dq.peek()]` to the result.
+  //
+  // Dry run for arr = [4, 0, -1, 3], k = 3:
+  // i=0 (4): dq=[0]. (Window not full)
+  // i=1 (0): 0 < 4. dq=[0, 1]. (Window not full)
+  // i=2 (-1): -1 < 0. dq=[0, 1, 2]. Window full! res[0] = arr[dq[0]](4).
+  // i=3 (3):
+  //   - clean window: index `0` is out (3 - 3 == 0). poll! dq=[1, 2].
+  //   - clean smaller: arr[dq.last]=arr[2]=-1. -1 < 3. poll! dq=[1].
+  //   - clean smaller: arr[dq.last]=arr[1]=0. 0 < 3. poll! dq=[].
+  //   - add current: dq=[3].
+  //   res[1] = arr[dq[0]](3). Result is [4, 3].
+  static int[] getMaxSlidingWindow(int[] arr, int k) {
+    int n = arr.length;
+    if (n == 0) return new int[0];
+
+    int[] res = new int[n - k + 1];
+    int idx = 0;
+    Deque<Integer> dq = new ArrayDeque<>();
+
+    for (int i = 0; i < n; i++) {
+      // Remove indices out of window
+      if (!dq.isEmpty() && dq.peek() == i - k) {
+        dq.poll();
+      }
+
+      // Maintain monotonic decreasing queue
+      while (!dq.isEmpty() && arr[dq.peekLast()] < arr[i]) {
+        dq.pollLast();
+      }
+
+      dq.offer(i);
+
+      // Store result once window size is reached
+      if (i >= k - 1) {
+        res[idx++] = arr[dq.peek()];
+      }
+    }
+    return res;
+  }
+}

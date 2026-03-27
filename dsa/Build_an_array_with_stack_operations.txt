@@ -1,0 +1,44 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/build-an-array-with-stack-operations/
+// Leetcode Problem No: 1441
+// Relevance: Stack, Array, Simulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] target = { 1, 3 };
+    int n = 3;
+    List<String> res = buildArray(target, n);
+    System.out.println(res);
+  }
+
+  // Logic: Simulation of Stack array building
+  // We stream integers from 1 to `n`. We use a pointer `k` to track the current element in `target`.
+  // - If the current integer `i` equals `target[k]`, we push it to the stack ("Push") and move `k`.
+  // - If `target[k]` > `i`, it means the integer `i` shouldn't remain in the array.
+  //   Hence, we simulate pushing it then popping it immediately ("Push", "Pop").
+  // We stop automatically because we only iterate up to `n`, and target is guaranteed to be <= n.
+  //
+  // Dry run for target = [1, 3], n = 3:
+  // - i=1: target[0]=1. Matches. Res: ["Push"]. k=1.
+  // - i=2: target[1]=3. 3 > 2. Res: ["Push", "Push", "Pop"].
+  // - i=3: target[1]=3. Matches. Res: ["Push", "Push", "Pop", "Push"]. k=2.
+  // Loop ends.
+  public static List<String> buildArray(int[] target, int n) {
+    List<String> res = new ArrayList<>();
+    int k = 0;
+    for (int i = 1; i <= n; i++) {
+      if (k < target.length && i == target[k]) {
+        res.add("Push");
+        k++;
+      } else if (k < target.length && target[k] > i) {
+        res.add("Push");
+        res.add("Pop");
+      }
+    }
+    return res;
+  }
+}

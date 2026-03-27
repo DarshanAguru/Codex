@@ -1,0 +1,71 @@
+// Date: 05/08/2025
+// Problem: https://leetcode.com/problems/search-in-rotated-sorted-array/
+// Leetcode Problem No: 33
+// Relevance: Array, Sorting, Binary Search
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 4, 5, 6, 7, 0, 1, 2 };
+    int target = 3;
+
+    System.out.println(search(arr, target));
+  }
+
+  // Logic: Modified Binary Search
+  // We need to find an element in O(log n) time, so we must use Binary Search.
+  // The array is rotated, but a key property remains: when you cut the array in half,
+  // AT LEAST ONE of the halves (left or right) will ALWAYS be strictly sorted.
+  // 1. Find the mid point. Check if `arr[mid] == target`.
+  // 2. Identify the sorted half:
+  //    - If `arr[low] <= arr[mid]`: The LEFT half is strictly sorted.
+  //      Check if `target` lies within this sorted range `[arr[low], arr[mid])`.
+  //      If yes, search in left half (`high = mid - 1`). If no, it must be in the right half.
+  //    - If `arr[low] > arr[mid]`: The RIGHT half must be strictly sorted.
+  //      Check if `target` lies within this sorted range `(arr[mid], arr[high]]`.
+  //      If yes, search in right half (`low = mid + 1`). If no, it must be in the left half.
+  //
+  // Dry run for arr = [4, 5, 6, 7, 0, 1, 2], target = 3:
+  // low=0, high=6. mid=3 (val=7).
+  // Left sorted? arr[0] <= arr[3] (4 <= 7) -> YES!
+  // Is target (3) between 4 and 7? NO. So it must be in the right half.
+  // low = mid + 1 = 4.
+  // low=4, high=6. mid=5 (val=1).
+  // Left sorted? arr[4] <= arr[5] (0 <= 1) -> YES!
+  // Is target (3) between 0 and 1? NO. Must be in right half.
+  // low = mid + 1 = 6.
+  // low=6, high=6. mid=6 (val=2). 2 != 3. Right half exhausted -> loop ends.
+  // return -1.
+  static int search(int[] arr, int target) {
+    int low = 0;
+    int high = arr.length - 1;
+
+    while (low <= high) {
+      int mid = low + (high - low) / 2;
+
+      if (arr[mid] == target) return mid;
+
+      // Check if left half is sorted
+      if (arr[low] <= arr[mid]) {
+        if (target >= arr[low] && target < arr[mid]) {
+          high = mid - 1;
+        } else {
+          low = mid + 1;
+        }
+      }
+      // Right half must be sorted
+      else {
+        if (target > arr[mid] && target <= arr[high]) {
+          low = mid + 1;
+        } else {
+          high = mid - 1;
+        }
+      }
+    }
+
+    return -1;
+  }
+}

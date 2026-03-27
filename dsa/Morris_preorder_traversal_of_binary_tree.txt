@@ -1,0 +1,82 @@
+// Date: 19/08/2025
+// Problem: https://leetcode.com/problems/binary-tree-preorder-traversal/
+// Leetcode Problem No: 144
+// Relevance: Tree, Depth-First Search, Array
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    Node root = new Node(4);
+    root.left = new Node(2);
+    root.left.left = new Node(3);
+    root.left.left.right = new Node(9);
+    root.left.left.right.left = new Node(1);
+    root.right = new Node(5);
+    root.right.left = new Node(7);
+    root.right.right = new Node(6);
+    root.right.right.left = new Node(8);
+
+    List<Integer> res = getMorrisPreorder(root);
+    System.out.println(res);
+  }
+
+  // Logic: Morris Traversal (O(1) Space Preorder)
+  // Morris traversal modifies the tree structure temporarily to avoid using a Stack or Recursion.
+  // We use the concept of "Threaded Binary Trees".
+  // For any node, its PREDECESSOR in Inorder traversal is the rightmost node in its left subtree.
+  // 1. If `left == null`, process current node and move right.
+  // 2. If `left != null`, find the predecessor `prev`.
+  //    - If `prev.right == null`: We haven't visited this left subtree yet.
+  //      Create a thread: `prev.right = curr`.
+  //      Since it's PREORDER (Root, Left, Right), process `curr` NOW! Then move `curr = curr.left`.
+  //    - If `prev.right == curr`: Thread already exists, meaning we are returning from the left subtree.
+  //      Remove thread: `prev.right = null`. Move `curr = curr.right`.
+  //
+  // Dry run for tree: root=4, L=2, R=5.
+  // curr=4. L!=null. prev=2. prev.right=null.
+  //   prev.right=4. add(4). curr=2.
+  // curr=2. L=null. add(2). curr=2.right -> which is 4!
+  // curr=4. L!=null. prev=2. prev.right=4 (thread exists!).
+  //   prev.right=null. curr=curr.right=5.
+  // curr=5. L=null. add(5). curr=5.right=null. Loop ends.
+  // Result: [4, 2, 5].
+  static List<Integer> getMorrisPreorder(Node root) {
+    List<Integer> preorder = new ArrayList<>();
+    Node curr = root;
+
+    while (curr != null) {
+      if (curr.left == null) {
+        preorder.add(curr.val);
+        curr = curr.right;
+      } else {
+        Node prev = curr.left;
+        while (prev.right != null && prev.right != curr) {
+          prev = prev.right;
+        }
+
+        if (prev.right == null) {
+          prev.right = curr; // Create thread
+          preorder.add(curr.val); // Process current (Preorder)
+          curr = curr.left;
+        } else {
+          prev.right = null; // Remove thread
+          curr = curr.right;
+        }
+      }
+    }
+    return preorder;
+  }
+}

@@ -1,0 +1,76 @@
+// Date: 06/01/2026
+// Problem: https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+// Leetcode Problem No: 83
+// Relevance: Linked List
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+    this.next = null;
+  }
+
+  Node(int val, Node next) {
+    this.val = val;
+    this.next = next;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    Node head = new Node(1);
+    head.next = new Node(1);
+    head.next.next = new Node(2);
+    head.next.next.next = new Node(3);
+    head.next.next.next.next = new Node(3);
+
+    Node res = removeDuplicatesFromSortedList(head);
+    printList(res);
+  }
+
+  static void printList(Node head) {
+    Node temp = head;
+    while (temp != null) {
+      System.out.print(temp.val + " ");
+      temp = temp.next;
+    }
+    System.out.println();
+  }
+
+  // Logic: Single Pass Linked List Traversal
+  // Since the linked list is SORTED, all duplicate values will be strictly adjacent.
+  // We can just iterate through the list with a single pointer `curr`.
+  // 1. If `curr.val == curr.next.val`, we've found a duplicate!
+  //    To remove it, we skip `curr.next` by pointing `curr.next` to `curr.next.next`.
+  //    Note: We DO NOT move `curr` forward yet, because the newly pointed adjacent node
+  //    might also be a duplicate (e.g., 3 -> 3 -> 3).
+  // 2. If the values are different, it's safe to move `curr` forward (`curr = curr.next`).
+  //
+  // Dry run for list: 1 -> 1 -> 2 -> 3 -> 3
+  // curr(1): curr.val == curr.next.val (1 == 1).
+  //   Skip! List becomes: 1 -> 2 -> 3 -> 3. curr is still at the first 1.
+  // curr(1): curr.val != curr.next.val (1 != 2). Move curr to 2.
+  // curr(2): curr.val != curr.next.val (2 != 3). Move curr to 3.
+  // curr(3): curr.val == curr.next.val (3 == 3).
+  //   Skip! List becomes: 1 -> 2 -> 3 -> null.
+  // Returns: 1 -> 2 -> 3.
+  static Node removeDuplicatesFromSortedList(Node head) {
+    Node curr = head;
+
+    while (curr != null && curr.next != null) {
+      if (curr.val == curr.next.val) {
+        curr.next = curr.next.next;
+      } else {
+        curr = curr.next;
+      }
+    }
+    return head;
+  }
+}

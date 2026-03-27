@@ -1,0 +1,56 @@
+// Date: 25/02/2026
+// Problem: https://leetcode.com/problems/prime-number-of-set-bits-in-binary-representation/
+// Leetcode Problem No: 762
+// Relevance: Math, Bit Manipulation
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int left = 6;
+    int right = 10;
+    System.out.println(countPrimeSetBits(left, right));
+  }
+
+  // Logic: Bit Manipulation + Math
+  // For each number in the range `[left, right]`:
+  // 1. Calculate the number of set bits ('1's in binary representation).
+  //    Java's `Integer.bitCount(n)` internally uses Brian Kernighan's or parallel grouping
+  //    to count set bits efficiently.
+  // 2. Check if this count is a prime number.
+  // Since `right` goes up to 10^6, which is < 2^20, a number can have AT MOST 19 set bits.
+  // Thus, the possible prime counts are very limited: 2, 3, 5, 7, 11, 13, 17, 19.
+  // We can just hardcode these values in `isPrime()` for O(1) checks.
+  //
+  // Dry run for left=6, right=10:
+  // i=6  (110):  bits=2 (Prime) -> count=1
+  // i=7  (111):  bits=3 (Prime) -> count=2
+  // i=8  (1000): bits=1 (Not Prime)
+  // i=9  (1001): bits=2 (Prime) -> count=3
+  // i=10 (1010): bits=2 (Prime) -> count=4
+  // Result is 4.
+  static int countPrimeSetBits(int left, int right) {
+    int count = 0;
+    for (int i = left; i <= right; i++) {
+      if (isPrime(Integer.bitCount(i))) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  static boolean isPrime(int n) {
+    return (
+      n == 2 ||
+      n == 3 ||
+      n == 5 ||
+      n == 7 ||
+      n == 11 ||
+      n == 13 ||
+      n == 17 ||
+      n == 19
+    );
+  }
+}

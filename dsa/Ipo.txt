@@ -1,0 +1,66 @@
+// Date: 05/02/2026
+// Problem: https://leetcode.com/problems/ipo/
+// Leetcode Problem No: 502
+// Relevance: Heap, Greedy, Sorting
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int k = 2;
+    int w = 0;
+    int[] profits = { 1, 2, 3 };
+    int[] capital = { 0, 1, 1 };
+    int res = findMaximizedCapital(k, w, profits, capital);
+    System.out.println(res);
+  }
+
+  // Logic: Greedy + Two Heaps / Priority Queue
+  // We want to maximize capital `w` by taking at most `k` projects.
+  // We can only afford projects where `capital[i] <= w`.
+  // From all the affordable projects, we greedily want to pick the one with the MAXIMUM profit.
+  // 1. Combine `capital` and `profits` into a list of pairs and sort it by `capital` (ascending).
+  // 2. We use a Max-Heap to keep track of the available profits of all currently affordable projects.
+  // 3. Loop `k` times:
+  //    - Add the profits of all newly affordable projects (where `capital[i] <= w`) to the Max-Heap.
+  //    - If the Max-Heap is empty, we can't afford anything else, so break early.
+  //    - Pop the largest profit from the Max-Heap and add it to our current capital `w`.
+  //
+  // Dry run for k=2, w=0, profits=[1,2,3], capital=[0,1,1]:
+  // Sorted projects by capital: (0, 1), (1, 2), (1, 3).
+  // Loop 1 (k=2): Max-Heap gets affordable proj (cap 0 <= 0): adds profit 1. Heap=[1].
+  //               Take max: w = 0 + 1 = 1.
+  // Loop 2 (k=1): Max-Heap gets new affordable projs (cap 1 <= 1): adds profits 2, 3. Heap=[3, 2].
+  //               Take max: w = 1 + 3 = 4.
+  // Result is 4.
+  public static int findMaximizedCapital(
+    int k,
+    int w,
+    int[] profits,
+    int[] capital
+  ) {
+    int n = profits.length;
+    List<int[]> projs = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      projs.add(new int[] { capital[i], profits[i] });
+    }
+    projs.sort((a, b) -> Integer.compare(a[0], b[0]));
+    PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+    int i = 0;
+
+    while (k > 0) {
+      while (i < n && projs.get(i)[0] <= w) {
+        pq.offer(projs.get(i)[1]);
+        i++;
+      }
+      if (pq.isEmpty()) {
+        break;
+      }
+      w += pq.poll();
+      k--;
+    }
+    return w;
+  }
+}

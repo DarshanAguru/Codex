@@ -1,0 +1,63 @@
+// Date: 10/01/2026
+// Problem: https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/
+// Leetcode Problem No: 712
+// Relevance: Dynamic Programming, String, Array
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String s1 = "sea";
+    String s2 = "eat";
+    System.out.println(minimumDeleteSum(s1, s2));
+  }
+
+  // Logic: Longest Common Subsequence (LCS) variant + DP
+  // Instead of finding the length of the longest common subsequence, we want to find
+  // the common subsequence that has the MAXIMUM ASCII sum.
+  // Let `dp[i][j]` be the maximum ASCII sum of common characters using `s1[0..i-1]` and `s2[0..j-1]`.
+  // If `s1[i] == s2[j]`: We can include this character in our common subsequence.
+  //    `dp[i+1][j+1] = dp[i][j] + (ASCII value of s1[i])`.
+  // If `s1[i] != s2[j]`: We must skip a character from either s1 or s2. We take the max.
+  //    `dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j])`.
+  // The characters we MUST delete are exactly those NOT in the maximum common subsequence.
+  // Total cost = (Total ASCII sum of s1) + (Total ASCII sum of s2) - 2 * (Max Common ASCII Sum).
+  //
+  // Dry run for s1="sea", s2="eat":
+  // 'e' and 'a' are common.
+  // dp["sea"]["eat"] = ASCII('e') + ASCII('a') = 101 + 97 = 198.
+  // Total s1 = s(115) + e(101) + a(97) = 313.
+  // Total s2 = e(101) + a(97) + t(116) = 314.
+  // Delete Cost = 313 + 314 - 2*(198) = 627 - 396 = 231.
+  // (Which is deleting 's' from s1 and 't' from s2: 115 + 116 = 231).
+  static int minimumDeleteSum(String s1, String s2) {
+    int n = s1.length();
+    int m = s2.length();
+
+    int[][] dp = new int[n + 1][m + 1];
+
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        if (s1.charAt(i) == s2.charAt(j)) {
+          dp[i + 1][j + 1] = dp[i][j] + s1.charAt(i);
+        } else {
+          dp[i + 1][j + 1] = Math.max(dp[i][j + 1], dp[i + 1][j]);
+        }
+      }
+    }
+
+    // Calculate total ASCII sum of both strings
+    int total = 0;
+    for (char c : s1.toCharArray()) {
+      total += c;
+    }
+    for (char c : s2.toCharArray()) {
+      total += c;
+    }
+
+    // The result is total sum minus twice the maximum common ASCII sum.
+    return total - 2 * dp[n][m];
+  }
+}

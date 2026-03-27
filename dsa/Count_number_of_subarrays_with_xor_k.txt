@@ -1,0 +1,58 @@
+// Date: 05/08/2025
+// Relevance: Array, Hash Table, Prefix Sum
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] arr = { 5, 6, 7, 8, 9 };
+    int k = 5;
+
+    // Logic: Prefix XOR and Hash Map
+    // To find the number of subarrays with XOR equal to `k`, we can use a running prefix XOR (`xr`).
+    // If a subarray from index `i` to `j` has an XOR of `k`, then:
+    // `PREFIX_XOR[j] ^ PREFIX_XOR[i-1] = k`.
+    // XORing both sides by `k` gives:
+    // `PREFIX_XOR[i-1] = PREFIX_XOR[j] ^ k`.
+    // So, at any index `j`, we calculate `x = xr ^ k`.
+    // If `x` exists in our Hash Map of past prefix XORs, it means there are
+    // `map.get(x)` valid subarrays ending at `j`. Add this to our count.
+    // We then add the current prefix XOR to the Hash Map.
+    //
+    // Dry run for [5, 6, 7, 8, 9], k=5:
+    // Start hm={0: 1}. xr=0.
+    // 1. (val 5): xr = 0^5 = 5. x = 5^5 = 0. hm has 0? Yes (1 time). count += 1 = 1. Add 5 to hm.
+    // 2. (val 6): xr = 5^6 = 3. x = 3^5 = 6. hm has 6? No. Add 3 to hm.
+    // 3. (val 7): xr = 3^7 = 4. x = 4^5 = 1. hm has 1? No. Add 4 to hm.
+    // 4. (val 8): xr = 4^8 = 12. x = 12^5 = 9. hm has 9? No. Add 12 to hm.
+    // 5. (val 9): xr = 12^9 = 5. x = 5^5 = 0. hm has 0? Yes (1 time). count += 1 = 2. Add 5 to hm.
+    // Result is 2. (Subarrays: [5], [6,7,8,9]).
+    int xr = 0;
+    HashMap<Integer, Integer> hm = new HashMap<>();
+
+    // Initial state: XOR 0 seen once
+    hm.put(xr, 1);
+    int cnt = 0;
+
+    for (int i = 0; i < arr.length; i++) {
+      xr = xr ^ arr[i]; // Prefix XOR
+
+      // Formula: PrefixXOR ^ Target = PrevXOR
+      int x = xr ^ k;
+
+      if (hm.containsKey(x)) {
+        cnt += hm.get(x);
+      }
+
+      if (hm.containsKey(xr)) {
+        hm.put(xr, hm.get(xr) + 1);
+      } else {
+        hm.put(xr, 1);
+      }
+    }
+
+    System.out.println(cnt);
+  }
+}

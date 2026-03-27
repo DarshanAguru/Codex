@@ -1,0 +1,107 @@
+// Date: 19/08/2025
+// Problem: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+// Leetcode Problem No: 105
+// Relevance: Tree, Array, Hash Table, Divide and Conquer
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  public Node left, right;
+  public int val;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    int[] inorder = { 40, 20, 50, 10, 60, 30 };
+    int[] preorder = { 10, 20, 40, 50, 30, 60 };
+
+    Node root = constructTree(inorder, preorder);
+    printInorder(root);
+  }
+
+  static void printInorder(Node root) {
+    if (root == null) return;
+    printInorder(root.left);
+    System.out.print(root.val + " ");
+    printInorder(root.right);
+  }
+
+  // Logic: Divide and Conquer + Hash Map
+  // Preorder traversal visits: Root -> Left -> Right.
+  // Inorder traversal visits: Left -> Root -> Right.
+  // Thus, the first element of `preorder` is always the root of the tree.
+  // By locating this root value in the `inorder` array, we can divide `inorder` into a left subtree
+  // and a right subtree. We count `numsLeft` (number of nodes in the left subtree).
+  // We can then recursively determine the left and right subtrees in both arrays.
+  // To quickly find the root in `inorder` without linear search, we use a Hash Map storing value:index.
+  //
+  // Dry run for in=[40, 20, 50, 10, 60, 30], pre=[10, 20, 40, 50, 30, 60]:
+  // 1. Root = pre[0] = 10.
+  // 2. Find 10 in `inorder` map -> index 3.
+  // 3. Left subtree size `numsLeft` = 3 - 0 = 3 elements.
+  // 4. Recursive calls:
+  //    - Left child: build(preorder[1 to 3], inorder[0 to 2]). Root will be 20.
+  //    - Right child: build(preorder[4 to 5], inorder[4 to 5]). Root will be 30.
+  // Process repeats until arrays are empty. Result is a correctly constructed tree.
+  static Node constructTree(int[] inorder, int[] preorder) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < inorder.length; i++) {
+      map.put(inorder[i], i);
+    }
+    return build(
+      preorder,
+      0,
+      preorder.length - 1,
+      inorder,
+      0,
+      inorder.length - 1,
+      map
+    );
+  }
+
+  static Node build(
+    int[] preorder,
+    int preStart,
+    int preEnd,
+    int[] inorder,
+    int inStart,
+    int inEnd,
+    Map<Integer, Integer> map
+  ) {
+    if (preStart > preEnd || inStart > inEnd) return null;
+
+    Node root = new Node(preorder[preStart]);
+
+    int inRoot = map.get(root.val);
+    int numsLeft = inRoot - inStart;
+
+    root.left = build(
+      preorder,
+      preStart + 1,
+      preStart + numsLeft,
+      inorder,
+      inStart,
+      inRoot - 1,
+      map
+    );
+
+    root.right = build(
+      preorder,
+      preStart + numsLeft + 1,
+      preEnd,
+      inorder,
+      inRoot + 1,
+      inEnd,
+      map
+    );
+
+    return root;
+  }
+}

@@ -1,0 +1,126 @@
+// Date: 12/08/2025
+// Problem: https://leetcode.com/problems/odd-even-linked-list/
+// Leetcode Problem No: 328
+// Relevance: Linked List
+
+import java.lang.*;
+import java.util.*;
+
+class Node {
+
+  int val;
+  Node next;
+
+  Node(int val) {
+    this.val = val;
+  }
+}
+
+class LL {
+
+  public Node head;
+  public Node tail;
+
+  public void add(int n) {
+    if (head == null) {
+      head = new Node(n);
+      tail = head;
+      return;
+    }
+    tail.next = new Node(n);
+    tail = tail.next;
+  }
+
+  public void printList() {
+    Node temp = head;
+    System.out.print("[ ");
+    while (temp != null) {
+      System.out.print(temp.val + " ");
+      temp = temp.next;
+    }
+    System.out.println("]");
+  }
+}
+
+class Main {
+
+  public static void main(String[] args) {
+    LL list = new LL();
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    list.add(4);
+    list.add(5);
+    list.add(6);
+
+    System.out.println("Original:");
+    list.printList();
+
+    list.head = segregateEvenOdd(list.head);
+
+    System.out.println("Segregated (Even first):");
+    list.printList();
+  }
+
+  // Logic: 4 Pointers (Multiple Lists Creation)
+  // We want to segregate even and odd numbers such that all even nodes come before odd nodes,
+  // and their relative order is maintained.
+  // We maintain two separate linked lists during traversal:
+  // 1. `evenStart` and `evenEnd` for the even numbers list.
+  // 2. `oddStart` and `oddEnd` for the odd numbers list.
+  // We iterate `curr` through the original list.
+  // If `curr.val` is even, we append it to the even list.
+  // If odd, we append it to the odd list.
+  // Finally, we connect the end of the even list (`evenEnd`) to the start of the odd list (`oddStart`),
+  // and terminate the odd list (`oddEnd.next = null`).
+  // Time: O(N), Space: O(1).
+  //
+  // Dry run for list: 1->2->3->4->5->6:
+  // curr(1): Odd list starts -> oddStart=1, oddEnd=1.
+  // curr(2): Even list starts -> evenStart=2, evenEnd=2.
+  // curr(3): Odd list appends -> oddEnd.next=3. oddEnd=3.
+  // ...
+  // even list: 2->4->6
+  // odd list: 1->3->5
+  // Final merge: evenEnd(6).next = oddStart(1).
+  // oddEnd(5).next = null.
+  // Result starts at `evenStart` -> 2->4->6->1->3->5.
+  static Node segregateEvenOdd(Node head) {
+    Node evenStart = null;
+    Node evenEnd = null;
+    Node oddStart = null;
+    Node oddEnd = null;
+
+    Node curr = head;
+
+    while (curr != null) {
+      int element = curr.val;
+
+      if (element % 2 == 0) {
+        if (evenStart == null) {
+          evenStart = curr;
+          evenEnd = evenStart;
+        } else {
+          evenEnd.next = curr;
+          evenEnd = evenEnd.next;
+        }
+      } else {
+        if (oddStart == null) {
+          oddStart = curr;
+          oddEnd = oddStart;
+        } else {
+          oddEnd.next = curr;
+          oddEnd = oddEnd.next;
+        }
+      }
+      curr = curr.next;
+    }
+
+    if (oddStart == null || evenStart == null) return head;
+
+    evenEnd.next = oddStart;
+    oddEnd.next = null;
+
+    return evenStart;
+  }
+}
