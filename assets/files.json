@@ -284,6 +284,19 @@
     "type": "file"
   },
   {
+    "name": "Check_if_strings_can_be_made_equal_with_operations_i.txt",
+    "path": "dsa/Check_if_strings_can_be_made_equal_with_operations_i.txt",
+    "size": 1472,
+    "timestamp": 0,
+    "displayDate": "03/29/2026",
+    "problemNo": 2839,
+    "topics": [
+      "String",
+      "Greedy"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Combination_sum_recursion.txt",
     "path": "dsa/Combination_sum_recursion.txt",
     "size": 2177,

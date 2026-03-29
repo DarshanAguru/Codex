@@ -1,0 +1,44 @@
+// Date: 03/29/2026
+// Problem: https://leetcode.com/problems/check-if-strings-can-be-made-equal-with-operations-i/
+// Leetcode Problem No: 2839
+// Relevance: String, Greedy
+
+import java.lang.*;
+import java.util.*;
+
+class Main {
+
+  // Logic: Swapping at dist 2
+  // Since we can only swap characters 2 positions apart:
+  // 1. Even indices (0, 2) can only be swapped with each other.
+  // 2. Odd indices (1, 3) can only be swapped with each other.
+  //
+  // For s1 and s2 (length 4) to be equal:
+  // - {s1[0], s1[2]} must be the same set of characters as {s2[0], s2[2]}.
+  // - {s1[1], s1[3]} must be the same set of characters as {s2[1], s2[3]}.
+  //
+  // Dry run for s1 = "abcd", s2 = "cdab":
+  // Even s1: {a, c}, Even s2: {c, a} -> Match!
+  // Odd s1: {b, d}, Odd s2: {d, b} -> Match!
+  // Result: true.
+  public static void main(String[] args) {
+    String s1 = "abcd";
+    String s2 = "cdab";
+
+    System.out.println(canBeEqual(s1, s2) ? "YES" : "NO");
+  }
+
+  public static boolean canBeEqual(String s1, String s2) {
+    // Check even positions (0 and 2)
+    boolean evenMatch =
+      (s1.charAt(0) == s2.charAt(0) && s1.charAt(2) == s2.charAt(2)) ||
+      (s1.charAt(0) == s2.charAt(2) && s1.charAt(2) == s2.charAt(0));
+
+    // Check odd positions (1 and 3)
+    boolean oddMatch =
+      (s1.charAt(1) == s2.charAt(1) && s1.charAt(3) == s2.charAt(3)) ||
+      (s1.charAt(1) == s2.charAt(3) && s1.charAt(3) == s2.charAt(1));
+
+    return evenMatch && oddMatch;
+  }
+}
