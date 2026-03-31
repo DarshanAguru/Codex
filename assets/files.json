@@ -297,6 +297,21 @@
     "type": "file"
   },
   {
+    "name": "Check_if_strings_can_be_made_equal_with_operations_ii.txt",
+    "path": "dsa/Check_if_strings_can_be_made_equal_with_operations_ii.txt",
+    "size": 2100,
+    "timestamp": 0,
+    "displayDate": "03/31/2026",
+    "problemNo": 2840,
+    "topics": [
+      "String",
+      "Greedy",
+      "Counting",
+      "Hash Table"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Combination_sum_recursion.txt",
     "path": "dsa/Combination_sum_recursion.txt",
     "size": 2177,

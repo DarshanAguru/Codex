@@ -1,0 +1,56 @@
+// Date: 03/31/2026
+// Problem: https://leetcode.com/problems/check-if-strings-can-be-made-equal-with-operations-ii/
+// Leetcode Problem No: 2840
+// Relevance: String, Greedy, Counting, Hash Table
+
+import java.util.*;
+
+class Main {
+
+  public static void main(String[] args) {
+    String s1 = "abcdba";
+    String s2 = "cabdab";
+    System.out.println(checkStrings(s1, s2) ? "YES" : "NO");
+
+    String s1_2 = "abe";
+    String s2_2 = "bea";
+    System.out.println(checkStrings(s1_2, s2_2) ? "YES" : "NO");
+  }
+
+  // Logic: Swapping at even distance
+  // 1. Any character at an even index can be moved to any other even index by
+  // swapping adjacent even positions (like bubble sort).
+  // 2. Same applies to odd positions.
+  // 3. Elements at even indices cannot move to odd indices and vice versa.
+  // 4. Thus, s1 can be transformed into s2 iff:
+  //    - Set of characters (with counts) at even indices of s1 == even indices of s2.
+  //    - Set of characters (with counts) at odd indices of s1 == odd indices of s2.
+  //
+  // Implementation Trick:
+  // - Use a single array of size 256.
+  // - Even indices use range [0-127].
+  // - Odd indices use range [128-255] by adding an offset 128.
+  //
+  // Dry Run (s1 = "abcdba", s2 = "cabdab"):
+  // Even s1: chars at 0, 2, 4 -> 'a', 'c', 'b' -> count['a']=1, count['c']=1, count['b']=1
+  // Even s2: chars at 0, 2, 4 -> 'c', 'b', 'a' -> count['c']=1, count['b']=1, count['a']=1 (Match)
+  // Odd s1: chars at 1, 3, 5 -> 'b', 'd', 'a' -> count[128+'b']=1, count[128+'d']=1, count[128+'a']=1
+  // Odd s2: chars at 1, 3, 5 -> 'a', 'd', 'b' -> count[128+'a']=1, count[128+'d']=1, count[128+'b']=1 (Match)
+  // Result: true.
+  public static boolean checkStrings(String s1, String s2) {
+    if (s1.length() != s2.length()) {
+      return false;
+    }
+
+    int[] count1 = new int[256];
+    int[] count2 = new int[256];
+
+    for (int i = 0; i < s1.length(); i++) {
+      int offset = (i & 1) << 7; // 0 for even, 128 for odd
+      count1[offset + s1.charAt(i)]++;
+      count2[offset + s2.charAt(i)]++;
+    }
+
+    return Arrays.equals(count1, count2);
+  }
+}
