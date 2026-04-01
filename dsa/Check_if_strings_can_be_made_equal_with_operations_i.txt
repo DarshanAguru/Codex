@@ -1,4 +1,4 @@
-// Date: 03/29/2026
+// Date: 29/03/2026
 // Problem: https://leetcode.com/problems/check-if-strings-can-be-made-equal-with-operations-i/
 // Leetcode Problem No: 2839
 // Relevance: String, Greedy
