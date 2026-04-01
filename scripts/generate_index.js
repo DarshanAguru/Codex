@@ -30,7 +30,7 @@ try {
                 const content = fs.readFileSync(fullPath, 'utf8');
 
                 // Parse Date
-                const dateMatch = content.match(/\/\/\s*Date:\s*(.*)/i);
+                const dateMatch = content.match(/(?:\/\/|#)\s*Date:\s*(.*)/i);
                 if (dateMatch) {
                     const rawDate = dateMatch[1].trim();
                     customDate = rawDate; // Keep raw for reference or specific display
@@ -53,13 +53,13 @@ try {
                 }
 
                 // Parse Leetcode Problem No
-                const problemMatch = content.match(/\/\/\s*Leetcode\s*Problem\s*No:\s*(\d+)/i);
+                const problemMatch = content.match(/(?:\/\/|#)\s*Leetcode\s*Problem\s*No:\s*(\d+)/i);
                 if (problemMatch) {
                     problemNo = parseInt(problemMatch[1], 10);
                 }
 
                 // Parse Relevance (Topics)
-                const relevanceMatch = content.match(/\/\/\s*Relevance:\s*(.*)/i);
+                const relevanceMatch = content.match(/(?:\/\/|#)\s*Relevance:\s*(.*)/i);
                 if (relevanceMatch) {
                     topics = relevanceMatch[1].split(',').map(t => t.trim()).filter(t => t.length > 0);
                 }

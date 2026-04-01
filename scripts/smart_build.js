@@ -38,14 +38,38 @@ function getChangedFiles() {
 
 const changedFiles = getChangedFiles();
 
+function getLanguage(filePath) {
+    if (filePath.endsWith('.java')) return 'java';
+    if (filePath.endsWith('.py')) return 'python';
+    if (filePath.endsWith('.txt')) {
+        try {
+            const fullPath = path.join(__dirname, '..', filePath);
+            const content = fs.readFileSync(fullPath, 'utf8');
+            // If it starts with #, assume it's Python
+            if (content.trim().startsWith('#')) return 'python';
+        } catch (e) {}
+    }
+    return 'java'; // Default for this repo's DSA txt files
+}
+
 // 1. Format
 if (changedFiles) {
     const dsaFiles = changedFiles.filter(f => f.startsWith('dsa/') && (f.endsWith('.java') || f.endsWith('.txt')));
-    if (dsaFiles.length > 0) {
-        console.log(`Formatting ${dsaFiles.length} files...`);
-        // Use npx prettier directly on the files
-        run(`npx prettier --write ${dsaFiles.map(f => `"${f}"`).join(' ')}`);
-    } else {
+    
+    // Filter out Python files from Prettier as it uses the Java plugin for .txt files
+    const filesToFormat = dsaFiles.filter(f => getLanguage(f) === 'java');
+    const pythonFiles = dsaFiles.filter(f => getLanguage(f) === 'python');
+
+    if (filesToFormat.length > 0) {
+        console.log(`Formatting ${filesToFormat.length} Java files...`);
+        run(`npx prettier --write ${filesToFormat.map(f => `"${f}"`).join(' ')}`);
+    }
+
+    if (pythonFiles.length > 0) {
+        console.log(`Skipping Prettier for ${pythonFiles.length} Python files (Java parser incompatible).`);
+    }
+    
+    if (dsaFiles.length === 0) {
         console.log('No DSA files changed. Skipping format.');
     }
 } else {

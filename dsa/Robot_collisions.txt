@@ -1,0 +1,73 @@
+# Date: 04/02/2026
+# Problem: https://leetcode.com/problems/robot-collisions/
+# Leetcode Problem No: 2751
+# Relevance: Stack, Array, Sorting, Simulation
+
+from collections import deque
+from typing import List
+
+class Solution:
+
+    # Logic: Stack-based Simulation
+    # 1. Store original indices to retrieve healths in the correct order later.
+    # 2. Sort robots by their positions (ascending) to simulate movement from left to right.
+    # 3. Use a stack to track robots moving Right ('R').
+    # 4. When a robot moving Left ('L') is encountered:
+    #    - It may collide with Right-moving robots currently in the stack.
+    #    - If Left health > Right health: Right robot is destroyed, Left robot loses 1 health and continues.
+    #    - If Left health < Right health: Left robot is destroyed, Right robot loses 1 health.
+    #    - If healths are equal: Both are destroyed.
+    # 5. After processing all robots, collecting the health of survivors in their original order.
+    #
+    # Dry run for positions=[3, 5, 2, 6], healths=[10, 10, 15, 12], directions="RLRL":
+    # Robots: [(2, 15, 'L'), (3, 10, 'R'), (5, 10, 'L'), (6, 12, 'L')]  (sorted by position)
+    # 1. pos=2 (L): stack empty, no collision. Survivor.
+    # 2. pos=3 (R): push to stack.
+    # 3. pos=5 (L): hits stack (pos=3, health=10). Equal health! Both destroyed.
+    # 4. pos=6 (L): stack empty, no collision. Survivor.
+    # Result healths: index 2: 15, index 3: 12. Final output: [15, 12].
+
+    def survivedRobotsHealths(self, positions: List[int], healths: List[int], directions: str) -> List[int]:
+        n = len(positions)
+        idxs = list(range(n))
+        stack = deque()
+
+        # Sort indices by robot positions
+        idxs.sort(key = lambda x: positions[x])
+
+        for i in idxs:
+            if directions[i] == 'R':
+                stack.append(i)
+            else:
+                while stack and healths[i] > 0:
+                    top = stack.pop()
+                    if healths[top] > healths[i]:
+                        # Right-moving robot wins
+                        healths[top] -= 1
+                        healths[i] = 0
+                        stack.append(top)
+                    elif healths[top] < healths[i]:
+                        # Left-moving robot wins
+                        healths[i] -= 1
+                        healths[top] = 0
+                    else:
+                        # Tie: both destroyed
+                        healths[i] = 0
+                        healths[top] = 0
+        
+        # Pull healths of survivors in their original positions
+        res = []
+        for i in range(n):
+            if healths[i] > 0:
+                res.append(healths[i])
+        
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+    
+    # Example: positions = [3, 5, 2, 6], healths = [10, 10, 15, 12], directions = "RLRL"
+    pos = [3, 5, 2, 6]
+    hlth = [10, 10, 15, 12]
+    dirs = "RLRL"
+    print(f"Result: {sol.survivedRobotsHealths(pos, hlth, dirs)}")

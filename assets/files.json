@@ -1553,6 +1553,21 @@
     "type": "file"
   },
   {
+    "name": "Robot_collisions.txt",
+    "path": "dsa/Robot_collisions.txt",
+    "size": 2995,
+    "timestamp": 1770163200000,
+    "displayDate": "04/02/2026",
+    "problemNo": 2751,
+    "topics": [
+      "Stack",
+      "Array",
+      "Sorting",
+      "Simulation"
+    ],
+    "type": "file"
+  },
+  {
     "name": "Rotate_array_by_one.txt",
     "path": "dsa/Rotate_array_by_one.txt",
     "size": 1669,
