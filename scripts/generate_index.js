@@ -25,9 +25,17 @@ try {
             let timestamp = stats.mtimeMs; // Default to file modification time
             let problemNo = null;
             let topics = [];
+            let language = 'java';
 
             try {
                 const content = fs.readFileSync(fullPath, 'utf8');
+
+                // Detect Language
+                if (file.endsWith('.py')) language = 'python';
+                else if (file.endsWith('.java')) language = 'java';
+                else if (file.endsWith('.cpp')) language = 'cpp';
+                else if (content.trim().startsWith('#')) language = 'python';
+                else if (content.trim().startsWith('//') || content.includes('import java.')) language = 'java';
 
                 // Parse Date
                 const dateMatch = content.match(/(?:\/\/|#)\s*Date:\s*(.*)/i);
@@ -74,8 +82,9 @@ try {
                 size: stats.size,
                 timestamp: timestamp || 0,
                 displayDate: customDate,
-                problemNo: problemNo, // New field
-                topics: topics,       // New field
+                problemNo: problemNo,
+                topics: topics,
+                language: language,
                 type: 'file'
             });
         }

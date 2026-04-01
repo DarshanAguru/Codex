@@ -261,6 +261,9 @@
   .\!m-0 {
     margin: calc(var(--spacing) * 0) !important;
   }
+  .m-1 {
+    margin: calc(var(--spacing) * 1);
+  }
   .mx-auto {
     margin-inline: auto;
   }

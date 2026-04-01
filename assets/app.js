@@ -411,15 +411,17 @@ document.addEventListener("DOMContentLoaded", () => {
             elements.codePre.classList.remove('hidden');
             if (!state.currentFile) elements.codePre.classList.add('hidden');
             elements.markdownContent.classList.add('hidden');
-            document.getElementById('lang-indicator').textContent = "JAVA";
 
             renderList(state.allFiles);
             if (state.currentFile) {
                 const fileObj = state.allFiles.find(f => f.name === state.currentFile);
-                if (fileObj) loadContent(fileObj);
+                if (fileObj) {
+                    loadContent(fileObj);
+                }
             } else {
                 elements.emptyState.classList.remove('hidden');
                 elements.codePre.classList.add('hidden');
+                document.getElementById('lang-indicator').textContent = "NONE";
             }
         } else {
             elements.modeSummaryBtn.className = "px-3 py-1 rounded bg-brand-600 text-white transition-all shadow-sm";
@@ -457,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
             elements.markdownContent.classList.add('hidden');
 
             if (isCacheValid) {
-                renderCode(cachedItem.content);
+                renderCode(cachedItem.content, fileItem.language || 'java');
                 return;
             }
 
@@ -469,17 +471,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (!res.ok) throw new Error("File not found");
                     const content = await res.text();
                     CacheService.save(cacheKey, { timestamp: fileItem.timestamp, content: content });
-                    renderCode(content);
+                    renderCode(content, fileItem.language || 'java');
                 } else if (cachedItem) {
-                    renderCode(cachedItem.content);
+                    renderCode(cachedItem.content, fileItem.language || 'java');
                     showToast("Offline: Showing cached version", "warning");
                 } else {
                     throw new Error("Offline & No Cache");
                 }
             } catch (e) {
-                renderCode(`// Error loading file content:\n// ${e.message}`);
+                renderCode(`// Error loading file content:\n// ${e.message}`, 'java');
             }
         } else {
+            // ... (Markdown handling remains same)
             elements.codePre.classList.add('hidden');
             elements.markdownContent.classList.remove('hidden');
 
@@ -518,6 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleSearch(query) {
+        // ... (Search remains same)
         const q = query.toLowerCase();
         const dataset = state.currentMode === 'CODE' ? state.allFiles : state.summaries;
 
@@ -541,6 +545,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderList(files, highlightQuery = "") {
+        // ... (List rendering remains same)
         elements.fileList.innerHTML = "";
         elements.fileCount.textContent = files.length;
 
@@ -636,8 +641,16 @@ document.addEventListener("DOMContentLoaded", () => {
         elements.fileList.appendChild(fragment);
     }
 
-    function renderCode(code) {
+    function renderCode(code, language = 'java') {
         elements.codeContent.textContent = code;
+        
+        // Update language class for Prism
+        elements.codeContent.className = `language-${language}`;
+        
+        // Update footer indicator
+        const langIndicator = document.getElementById('lang-indicator');
+        if (langIndicator) langIndicator.textContent = language.toUpperCase();
+
         if (window.Prism) {
             Prism.highlightElement(elements.codeContent);
             setTimeout(linkifyComments, 0);
