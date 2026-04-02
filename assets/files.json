@@ -1114,6 +1114,21 @@
     "type": "file"
   },
   {
+    "name": "Maximum_amount_of_money_robot_can_earn.txt",
+    "path": "dsa/Maximum_amount_of_money_robot_can_earn.txt",
+    "size": 3444,
+    "timestamp": 1775088000000,
+    "displayDate": "02/04/2026",
+    "problemNo": 3418,
+    "topics": [
+      "Dynamic Programming",
+      "Array",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_level_sum_of_a_binary_tree.txt",
     "path": "dsa/Maximum_level_sum_of_a_binary_tree.txt",
     "size": 2215,
