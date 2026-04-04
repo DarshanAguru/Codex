@@ -499,6 +499,21 @@
     "type": "file"
   },
   {
+    "name": "Decode_the_slanted_ciphertext.txt",
+    "path": "dsa/Decode_the_slanted_ciphertext.txt",
+    "size": 2126,
+    "timestamp": 1775260800000,
+    "displayDate": "04/04/2026",
+    "problemNo": 2075,
+    "topics": [
+      "String",
+      "Simulation",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Delete_a_node_from_BST.txt",
     "path": "dsa/Delete_a_node_from_BST.txt",
     "size": 2593,
