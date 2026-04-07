@@ -43,7 +43,7 @@ def main():
     print("📝 Generating commit message...")
     message = generate_message()
 
-    print(f"💾 Committing: {message}")
+    print(f'💾 Committing (with message): "{message}"')
     run_command(f'git commit -m "{message}"')
     
     print("📤 Pushing to origin main...")
