@@ -1,0 +1,82 @@
+# Date: 07/04/2026
+# Problem: https://leetcode.com/problems/walking-robot-simulation-ii/
+# Leetcode Problem No: 2069
+# Relevance: Design, Simulation, Math
+
+from typing import List
+
+class Robot:
+
+    # Logic: Simulation on Rectangular Perimeter
+    # 1. The robot only moves along the outer boundary (perimeter) of a width x height grid.
+    # 2. Total perimeter steps: 2 * (width + height - 2).
+    # 3. For any large number of steps, we use `num % perimeter`.
+    # 4. Special Case: If `num > 0` and `num % perimeter == 0` and the robot ends up at (0,0), 
+    #    it technically reached (0,0) from the South, so its direction becomes "South" (3).
+    # 5. The `step` method moves the robot direction-by-direction, turning when it hits boundaries.
+    #
+    # Dry run for Robot(6, 3), step(2), step(2):
+    # 1. Init: w=6, h=3, peri=14, x=0, y=0, dir=0 (East)
+    # 2. step(2): moves East to (2,0).
+    # 3. step(2): moves East to (4,0).
+    # 4. Final Pos: [4,0], Dir: "East"
+
+    def __init__(self, width: int, height: int):
+        self.w = width
+        self.h = height
+        self.peri = 2 * (width + height - 2)
+        self.x = 0
+        self.y = 0
+        self.dir = 0
+        
+
+    def step(self, num: int) -> None:
+        # Special case for origin after a full cycle
+        if num > 0 and num % self.peri == 0 and self.x == 0 and self.y == 0:
+            self.dir = 3
+
+        num = num % self.peri
+
+        while num:
+            if self.dir == 0: # East
+                steps = self.w - self.x - 1
+                can_move = min(steps, num)
+                self.x += can_move
+                num -= can_move
+            elif self.dir == 1: # North
+                steps = self.h - self.y - 1
+                can_move = min(steps, num)
+                self.y += can_move
+                num -= can_move
+            elif self.dir == 2: # West
+                can_move = min(self.x, num)
+                self.x -= can_move
+                num -= can_move
+            else: # South
+                can_move = min(self.y, num)
+                self.y -= can_move
+                num -= can_move
+            
+            if num:
+                self.dir = (self.dir + 1) % 4   
+
+
+    def getPos(self) -> List[int]:
+        return [self.x, self.y]
+
+    def getDir(self) -> str:
+        dirs = ["East", "North", "West", "South"]
+        return dirs[self.dir]
+
+if __name__ == "__main__":
+    # Example 1
+    robot = Robot(6, 3)
+    robot.step(2)
+    robot.step(2)
+    print(f"Pos: {robot.getPos()}, Dir: {robot.getDir()}") # Expected: [4, 0], East
+    
+    robot.step(2)
+    print(f"Pos: {robot.getPos()}, Dir: {robot.getDir()}") # Expected: [5, 1], North
+    
+    robot.step(5)
+    print(f"Pos: {robot.getPos()}, Dir: {robot.getDir()}") # Expected: [1, 2], West
