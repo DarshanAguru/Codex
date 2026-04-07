@@ -2067,6 +2067,36 @@
     "type": "file"
   },
   {
+    "name": "Walking_robot_simulation.txt",
+    "path": "dsa/Walking_robot_simulation.txt",
+    "size": 2396,
+    "timestamp": 1775433600000,
+    "displayDate": "06/04/2026",
+    "problemNo": 874,
+    "topics": [
+      "Array",
+      "Simulation",
+      "Hash Set"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Walking_robot_simulation_ii.txt",
+    "path": "dsa/Walking_robot_simulation_ii.txt",
+    "size": 2769,
+    "timestamp": 1775520000000,
+    "displayDate": "07/04/2026",
+    "problemNo": 2069,
+    "topics": [
+      "Design",
+      "Simulation",
+      "Math"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Word_search.txt",
     "path": "dsa/Word_search.txt",
     "size": 2857,
