@@ -32,24 +32,24 @@ def generate_message():
     return message
 
 def main():
-    print("🚀 Staging all changes...")
+    print("1. Staging all changes...")
     run_command("git add .")
     
     status = run_command("git status --short")
     if not status:
-        print("✅ No changes to commit.")
+        print("No changes to commit.")
         return
 
-    print("📝 Generating commit message...")
+    print("2. Generating commit message...")
     message = generate_message()
 
-    print(f'💾 Committing (with message): "{message}"')
+    print(f'3. Committing (with message): "{message}"')
     run_command(f'git commit -m "{message}"')
     
-    print("📤 Pushing to origin main...")
+    print("4. Pushing to origin main...")
     run_command("git push -u origin main")
     
-    print("✨ Successfully committed and pushed!")
+    print("5. Successfully committed and pushed!")
 
 if __name__ == "__main__":
     main()
