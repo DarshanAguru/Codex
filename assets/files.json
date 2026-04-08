@@ -2112,6 +2112,21 @@
     "type": "file"
   },
   {
+    "name": "Xor_after_range_multiplication_queries_i.txt",
+    "path": "dsa/Xor_after_range_multiplication_queries_i.txt",
+    "size": 1817,
+    "timestamp": 1775606400000,
+    "displayDate": "08/04/2026",
+    "problemNo": null,
+    "topics": [
+      "Array",
+      "Simulation",
+      "XOR"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
     "path": "dsa/minimum_diff_btw_highest_&_lowest_of_k_scores.txt",
     "size": 1710,

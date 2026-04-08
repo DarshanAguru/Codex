@@ -7,6 +7,8 @@ def run_command(command):
     except subprocess.CalledProcessError as e:
         if "nothing to commit" in e.stderr:
             return None
+        if "Build failed" in e.stderr:
+            return None
         print(f"Error running command: {e.cmd}")
         print(f"Error output: {e.stderr}")
         sys.exit(1)
@@ -32,7 +34,18 @@ def generate_message():
     return message
 
 def main():
-    print("1. Staging all changes...")
+    print("1. Running build command...")
+    output = run_command("npm run build")
+    if not output:
+        print("Build Failed")
+        sys.exit(1)
+    else:
+        for line in output.split("\n"):
+            if "Successfully" in line:
+                print(line)
+        print("Build Successful")
+
+    print("2. Staging all changes...")
     run_command("git add .")
     
     status = run_command("git status --short")
@@ -40,16 +53,16 @@ def main():
         print("No changes to commit.")
         return
 
-    print("2. Generating commit message...")
+    print("3. Generating commit message...")
     message = generate_message()
 
-    print(f'3. Committing (with message): "{message}"')
+    print(f'4. Committing (with message): "{message}"')
     run_command(f'git commit -m "{message}"')
     
-    print("4. Pushing to origin main...")
+    print("5. Pushing to origin main...")
     run_command("git push -u origin main")
     
-    print("5. Successfully committed and pushed!")
+    print("6. Successfully committed and pushed!")
 
 if __name__ == "__main__":
     main()
