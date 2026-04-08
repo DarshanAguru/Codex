@@ -2114,10 +2114,10 @@
   {
     "name": "Xor_after_range_multiplication_queries_i.txt",
     "path": "dsa/Xor_after_range_multiplication_queries_i.txt",
-    "size": 1817,
+    "size": 1831,
     "timestamp": 1775606400000,
     "displayDate": "08/04/2026",
-    "problemNo": null,
+    "problemNo": 3653,
     "topics": [
       "Array",
       "Simulation",

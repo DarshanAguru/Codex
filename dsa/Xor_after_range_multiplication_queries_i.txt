@@ -1,6 +1,6 @@
 # Date: 08/04/2026
-# Problem: XOR After Range Multiplication Queries I
-# Leetcode Problem No: N/A (Custom/Contest)
+# Problem: https://leetcode.com/problems/xor-after-range-multiplication-queries-i
+# Leetcode Problem No: 3653
 # Relevance: Array, Simulation, XOR
 
 from typing import List
