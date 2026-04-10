@@ -37,13 +37,14 @@ def main():
     print("1. Running build command...")
     output = run_command("npm run build")
     if not output:
-        print("Build Failed")
+        print("  --Build Failed")
         sys.exit(1)
     else:
+        print("  --", "Printing build output:")
         for line in output.split("\n"):
             if "Successfully" in line:
                 print("    --",line)
-        print("Build Successful")
+        print("  --","Build Successful")
 
     print("2. Staging all changes...")
     run_command("git add .")
