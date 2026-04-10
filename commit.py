@@ -42,7 +42,7 @@ def main():
     else:
         for line in output.split("\n"):
             if "Successfully" in line:
-                print(line)
+                print("    --",line)
         print("Build Successful")
 
     print("2. Staging all changes...")
