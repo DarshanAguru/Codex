@@ -1456,6 +1456,20 @@
     "type": "file"
   },
   {
+    "name": "Minimum_distance_between_three_equal_elements_i.txt",
+    "path": "dsa/Minimum_distance_between_three_equal_elements_i.txt",
+    "size": 2115,
+    "timestamp": 1775779200000,
+    "displayDate": "10/04/2026",
+    "problemNo": 3740,
+    "topics": [
+      "Array",
+      "Hash Table"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "path": "dsa/Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "size": 2013,
