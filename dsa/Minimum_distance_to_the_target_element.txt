@@ -1,0 +1,42 @@
+# Date: 13/04/2026
+# Problem: https://leetcode.com/problems/minimum-distance-to-the-target-element/
+# Leetcode Problem No: 1848
+# Relevance: Array
+
+from typing import List
+
+class Solution:
+
+    # Logic: Simple Linear Scan
+    # 1. We iterate through the array 'nums'.
+    # 2. For each element that matches the 'target', we calculate its absolute distance from the 'start' index.
+    # 3. We keep track of the minimum distance found so far using 'res'.
+    # 4. The absolute distance is calculated as abs(i - start).
+    #
+    # Example for nums = [1, 2, 3, 4, 5], target = 5, start = 3:
+    # 1. i=4: nums[4]=5, dist = abs(4-3) = 1.
+    # 2. res = min(inf, 1) = 1.
+    # Result: 1
+    def getMinDistance(self, nums: List[int], target: int, start: int) -> int:
+        n = len(nums)
+        res = n
+        
+        for i in range(n):
+            if nums[i] == target:
+                res = min(res, abs(i - start))
+                if res == 0:
+                    break
+
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+    
+    # Example 1: nums = [1,2,3,4,5], target = 5, start = 3
+    print(f"Example 1 Result: {sol.getMinDistance([1,2,3,4,5], 5, 3)}") # Expected: 1
+    
+    # Example 2: nums = [1], target = 1, start = 0
+    print(f"Example 2 Result: {sol.getMinDistance([1], 1, 0)}") # Expected: 0
+    
+    # Example 3: nums = [1,1,1,1,1], target = 1, start = 0
+    print(f"Example 3 Result: {sol.getMinDistance([1,1,1,1,1], 1, 0)}") # Expected: 0
