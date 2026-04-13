@@ -7,27 +7,30 @@ from typing import List
 
 class Solution:
 
-    # Logic: Simple Linear Scan
-    # 1. We iterate through the array 'nums'.
-    # 2. For each element that matches the 'target', we calculate its absolute distance from the 'start' index.
-    # 3. We keep track of the minimum distance found so far using 'res'.
-    # 4. The absolute distance is calculated as abs(i - start).
+    # Logic: Radial Expansion
+    # 1. We want to find the minimum distance from 'start', so we search outwards radially.
+    # 2. We expand a distance 'd' starting from 0 up to 'n'.
+    # 3. For each distance 'd', we check both 'start - d' and 'start + d' simultaneously.
+    # 4. This guarantees that the first time we encounter the 'target', it must be at the absolute minimum possible distance.
     #
     # Example for nums = [1, 2, 3, 4, 5], target = 5, start = 3:
-    # 1. i=4: nums[4]=5, dist = abs(4-3) = 1.
-    # 2. res = min(inf, 1) = 1.
+    # 1. d=0: left=3 (val=4), right=3 (val=4)
+    # 2. d=1: left=2 (val=3), right=4 (val=5). right matches target!
     # Result: 1
     def getMinDistance(self, nums: List[int], target: int, start: int) -> int:
         n = len(nums)
-        res = n
-        
-        for i in range(n):
-            if nums[i] == target:
-                res = min(res, abs(i - start))
-                if res == 0:
-                    break
 
-        return res
+        for d in range(n):
+            left = start - d
+            right = start + d
+
+            if left >= 0 and nums[left] == target:
+                return d
+
+            if right < n and nums[right] == target:
+                return d
+        
+        return n
 
 if __name__ == "__main__":
     sol = Solution()
