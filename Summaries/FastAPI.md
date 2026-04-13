@@ -233,3 +233,88 @@ Never use `os.environ.get()` scattered across files. Abstract environment variab
 
 #### 4. Server-Sent Events (SSE)
 When generating one-directional data streams (like typing out ChatGPT tokens dynamically), do not over-engineer with WebSockets. Utilize Server-Sent Events (via `sse-starlette` wrapping a `StreamingResponse`). WebSockets are inherently stateful, heavy, and require bi-directional connections, which is overkill for 80% of streaming scenarios.
+
+---
+
+## 8. Production-Grade Lifecycle & Engineering
+
+### Advanced Lifespan Events (Startup / Shutdown)
+In production, you need to establish Database Connection Pools, initiate Kafka Producers, or load heavy Machine Learning matrices into RAM *before* receiving client traffic, and cleanly destroy them when scaling down. The deprecated `@app.on_event("startup")` is replaced by the strictly scoped Async Context Manager `lifespan`.
+
+```python
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 1. STARTUP phase (Executes before Uvicorn binds the port)
+    print("Initializing Database Pools & Loading ML Models into App State...")
+    app.state.ml_model = load_massive_transformer_model()
+    
+    yield # The Application is running! Serving requests.
+    
+    # 2. SHUTDOWN phase (Executes on SIGTERM gracefully)
+    print("Destroying ML models and cleanly severing DB connections...")
+    app.state.ml_model.clear()
+
+app = FastAPI(lifespan=lifespan)
+```
+*Architect Note: This guarantees your container never resolves its readiness probe while the app is half-booted, preventing 502 Bad Gateways.*
+
+### Global Exception Interception
+Leaking stack traces or internal SQL constraint jargon in a 500 error is a severe security vulnerability. Standardize all unhandled errors via global interception.
+
+```python
+from fastapi import Request
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    # Log securely into observability platforms (Datadog, Sentry)
+    logger.critical(f"System Failure on {request.url} - {str(exc)}")
+    
+    # Return a sanitized payload to the user
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "A critical internal error occurred. Our engineers have been alerted."}
+    )
+```
+
+### Expert Functional Testing (Dependency Overriding)
+In robust CI/CD test pipelines, you must mock out calls to external APIs (like Stripe or AWS S3) and swap out the production Database for an ephemeral SQLite or Docker Testcontainer. FastAPI handles this elegantly via `dependency_overrides`.
+
+```python
+from fastapi.testclient import TestClient
+from core.main import app, get_db_session
+
+# Create a mock session that uses SQLite in memory
+def override_get_db():
+    yield SQLiteTestSession()
+
+# Temporarily patch the dependency for the test runtime
+app.dependency_overrides[get_db_session] = override_get_db
+client = TestClient(app)
+
+def test_create_user_flow():
+    # This request bypasses the real Postgres DB entirely
+    response = client.post("/api/users", json={"email": "hacker@test.com"})
+    assert response.status_code == 200
+```
+
+### Rate Limiting & Throttling
+For internet-facing apps, you must throttle requests to neutralize simple DDoS attacks, brute force login attempts, or aggressive web scrapers. The industry standard wrapper is `slowapi`.
+
+```python
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+
+# Tracks hits per unique IP address natively
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(429, _rate_limit_exceeded_handler)
+
+@app.post("/auth/login")
+@limiter.limit("5/minute")  # Strict lock for sensitive routes
+async def process_login(request: Request, body: LoginSchema):
+    return {"token": "secure_jwt"}
+```
