@@ -1841,6 +1841,20 @@
     "type": "file"
   },
   {
+    "name": "Shortest_distance_to_target_string_in_a_circular_array.txt",
+    "path": "dsa/Shortest_distance_to_target_string_in_a_circular_array.txt",
+    "size": 1993,
+    "timestamp": 1776297600000,
+    "displayDate": "16/04/2026",
+    "problemNo": 2515,
+    "topics": [
+      "Array",
+      "String"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Shortest_unsorted_continuous_subarray.txt",
     "path": "dsa/Shortest_unsorted_continuous_subarray.txt",
     "size": 2196,

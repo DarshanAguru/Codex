@@ -1,0 +1,45 @@
+# Date: 16/04/2026
+# Problem: https://leetcode.com/problems/shortest-distance-to-target-string-in-a-circular-array/
+# Leetcode Problem No: 2515
+# Relevance: Array, String
+
+from typing import List
+
+class Solution:
+
+    # Logic: Circular Array Traversal
+    # 1. We iterate through the array 'words'.
+    # 2. For every occurrence of the 'target' string at index 'i', we calculate two distances:
+    #    - Direct distance: abs(i - startIndex)
+    #    - Circular distance (wrap-around): n - abs(i - startIndex)
+    # 3. The shortest distance for that specific occurrence is min(direct, circular).
+    # 4. We maintain a global minimum 'res' across all occurrences.
+    # 5. If the target is not found, 'res' remains its initial value, and we return -1.
+    #
+    # Example: words = ["hello","i","am","leetcode","hello"], target = "hello", startIndex = 1
+    # n = 5
+    # i=0: words[0]=="hello". dist=abs(0-1)=1. res=min(5, 1, 5-1)=1.
+    # i=4: words[4]=="hello". dist=abs(4-1)=3. res=min(1, 3, 5-3)=1.
+    # Result: 1
+    def closestTarget(self, words: List[str], target: str, startIndex: int) -> int:
+        n = len(words)
+        res = n
+        
+        for i in range(n):
+            if words[i] == target:
+                dist = abs(i - startIndex)
+                res = min(res, dist, n - dist)
+        
+        return res if res < n else -1
+
+if __name__ == "__main__":
+    sol = Solution()
+    
+    # Example 1: words = ["hello","i","am","leetcode","hello"], target = "hello", startIndex = 1
+    print(f"Example 1 Result: {sol.closestTarget(['hello','i','am','leetcode','hello'], 'hello', 1)}") # Expected: 1
+    
+    # Example 2: words = ["a","b","leetcode"], target = "leetcode", startIndex = 0
+    print(f"Example 2 Result: {sol.closestTarget(['a','b','leetcode'], 'leetcode', 0)}") # Expected: 1
+    
+    # Example 3: words = ["i","eat","leetcode"], target = "eat", startIndex = 0
+    print(f"Example 3 Result: {sol.closestTarget(['i','eat','leetcode'], 'eat', 0)}") # Expected: 1
