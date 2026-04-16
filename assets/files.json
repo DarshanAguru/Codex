@@ -335,6 +335,22 @@
     "type": "file"
   },
   {
+    "name": "Closest_equal_element_queries.txt",
+    "path": "dsa/Closest_equal_element_queries.txt",
+    "size": 2856,
+    "timestamp": 1776297600000,
+    "displayDate": "16/04/2026",
+    "problemNo": 3488,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Binary Search",
+      "Circular Array"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Combination_sum_recursion.txt",
     "path": "dsa/Combination_sum_recursion.txt",
     "size": 2177,

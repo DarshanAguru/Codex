@@ -1,0 +1,70 @@
+# Date: 16/04/2026
+# Problem: https://leetcode.com/problems/closest-equal-element-queries/
+# Leetcode Problem No: 3488
+# Relevance: Array, Hash Table, Binary Search, Circular Array
+
+from typing import List
+from collections import defaultdict
+import bisect
+
+class Solution:
+
+    # Logic: Precompute Indices + Binary Search on Circular Array
+    # 1. Build a map 'num_idx_map' storing all indices where each number occurs.
+    # 2. For each query 'q', retrieve the target value's sorted index list.
+    #    - If only one occurrence exists, no equal neighbor exists -> return -1.
+    # 3. Use binary search (bisect_left) to find the position of 'q' in the index list.
+    #    - 'left' candidate: the index immediately before 'q' in sorted order.
+    #      If 'q' is at position 0, wrap around to the LAST occurrence (circular).
+    #    - 'right' candidate: the index immediately after 'q' in sorted order.
+    #      If 'q' is at the last position, wrap around to the FIRST occurrence (circular).
+    # 4. For each candidate, compute the minimum of direct vs wrap-around circular distance.
+    # 5. Append min(d1, d2) to result.
+    #
+    # Example: nums = [1, 3, 1, 3, 2], queries = [0, 1, 2, 3]
+    # num_idx_map = {1: [0, 2], 3: [1, 3], 2: [4]}
+    # q=0: val=1, idxs=[0,2]. pos=0. left=idxs[-1]=2(wrap). right=idxs[1]=2.
+    #       d1=min(2-0=2, 5-2=3)=2. d2=min(2-0=2, 5-2=3)=2. res=2.
+    # q=1: val=3, idxs=[1,3]. pos=0. left=idxs[-1]=3(wrap). right=idxs[1]=3.
+    #       d1=min(3-1=2, 5-2=3)=2. d2=2. res=2.
+    # Result: [2, 2, 2, 2]
+    def solveQueries(self, nums: List[int], queries: List[int]) -> List[int]:
+        n = len(nums)
+        num_idx_map = defaultdict(list)
+        for i, num in enumerate(nums):
+            num_idx_map[num].append(i)
+
+        res = []
+
+        for q in queries:
+            val = nums[q]
+            idxs = num_idx_map[val]
+
+            if len(idxs) == 1:
+                res.append(-1)
+                continue
+
+            pos = bisect.bisect_left(idxs, q)
+
+            # Circular neighbors: wrap if at boundary
+            left = idxs[pos - 1] if pos > 0 else idxs[-1]
+            right = idxs[pos + 1] if pos < len(idxs) - 1 else idxs[0]
+
+            d1 = min(abs(q - left), n - abs(q - left))
+            d2 = min(abs(q - right), n - abs(q - right))
+
+            res.append(min(d1, d2))
+
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [1,3,1,3,2], queries = [0,1,2,3]
+    print(f"Example 1 Result: {sol.solveQueries([1,3,1,3,2], [0,1,2,3])}") # Expected: [2,2,2,2]
+
+    # Example 2: nums = [1,2,3,1,2,3], queries = [0,1,2]
+    print(f"Example 2 Result: {sol.solveQueries([1,2,3,1,2,3], [0,1,2])}") # Expected: [3,3,3]
+
+    # Example 3: nums = [1,1,1], queries = [0,1,2]
+    print(f"Example 3 Result: {sol.solveQueries([1,1,1], [0,1,2])}") # Expected: [1,1,1]
