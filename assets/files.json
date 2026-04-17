@@ -1399,6 +1399,21 @@
     "type": "file"
   },
   {
+    "name": "Minimum_absolute_distance_between_mirror_pairs.txt",
+    "path": "dsa/Minimum_absolute_distance_between_mirror_pairs.txt",
+    "size": 2106,
+    "timestamp": 1776384000000,
+    "displayDate": "17/04/2026",
+    "problemNo": 3761,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "String"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_ascii_delete_sum_for_two_strings.txt",
     "path": "dsa/Minimum_ascii_delete_sum_for_two_strings.txt",
     "size": 2253,
