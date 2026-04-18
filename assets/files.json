@@ -1602,6 +1602,20 @@
     "type": "file"
   },
   {
+    "name": "Mirror_distance_of_an_integer.txt",
+    "path": "dsa/Mirror_distance_of_an_integer.txt",
+    "size": 1363,
+    "timestamp": 1776470400000,
+    "displayDate": "18/04/2026",
+    "problemNo": 3783,
+    "topics": [
+      "Math",
+      "String"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Morris_preorder_traversal_of_binary_tree.txt",
     "path": "dsa/Morris_preorder_traversal_of_binary_tree.txt",
     "size": 2676,
