@@ -1,0 +1,45 @@
+# Date: 27/04/2026
+# Problem: https://leetcode.com/problems/maximum-distance-between-a-pair-of-values/
+# Leetcode Problem No: 1855
+# Relevance: Two Pointers, Array, Greedy
+
+from typing import List
+
+class Solution:
+
+    # Logic: Two Pointers
+    # We want to find the maximum j - i such that i <= j and nums1[i] <= nums2[j].
+    # Since both arrays are non-increasing, we use two pointers starting at i=0, j=0.
+    # At each step, we advance j to explore further valid pairs.
+    # If nums1[i] > nums2[j], the current i can never form a valid pair with j or beyond
+    # (since nums2 is non-increasing), so we advance i (without counting any distance).
+    # The answer is max(0, j - i - 1) after j goes out of bounds, because j was
+    # incremented one extra time before the loop ended or i was incremented last.
+
+    def maxDistance(self, nums1: List[int], nums2: List[int]) -> int:
+        i = 0
+        j = 0
+
+        while i < len(nums1) and j < len(nums2):
+            i += 1 if nums1[i] > nums2[j] else 0
+            j += 1
+
+        return max(0, j - i - 1)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums1 = [55,30,5,4,2], nums2 = [100,20,10,10,5] -> Expected Result: 2
+    nums1 = [55, 30, 5, 4, 2]
+    nums2 = [100, 20, 10, 10, 5]
+    print(f"Result: {sol.maxDistance(nums1, nums2)}")
+
+    # Example 2: nums1 = [2,2,2], nums2 = [10,10,1] -> Expected Result: 1
+    nums1 = [2, 2, 2]
+    nums2 = [10, 10, 1]
+    print(f"Result: {sol.maxDistance(nums1, nums2)}")
+
+    # Example 3: nums1 = [30,29,19,5], nums2 = [25,25,25,25,25] -> Expected Result: 2
+    nums1 = [30, 29, 19, 5]
+    nums2 = [25, 25, 25, 25, 25]
+    print(f"Result: {sol.maxDistance(nums1, nums2)}")

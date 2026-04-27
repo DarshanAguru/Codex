@@ -1,0 +1,30 @@
+# Date: 27/04/2026
+# Problem: https://leetcode.com/problems/furthest-point-from-origin/
+# Leetcode Problem No: 2833
+# Relevance: String, Greedy
+
+class Solution:
+
+    # Logic: Greedy
+    # We start at position 0 on a number line.
+    # 'L' moves left (-1), 'R' moves right (+1), '_' can go either way.
+    # Net displacement ignoring '_' = count('R') - count('L').
+    # All '_' wildcards should be assigned to whichever direction the net displacement favors
+    # (or either direction if net == 0), maximizing the absolute distance.
+    # Therefore: furthest distance = abs(count('R') - count('L')) + count('_')
+
+    def furthestDistanceFromOrigin(self, moves: str) -> int:
+        return abs(moves.count('R') - moves.count('L')) + moves.count('_')
+
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: moves = "L_RL__R" -> Expected Result: 3
+    print(f"Result: {sol.furthestDistanceFromOrigin('L_RL__R')}")
+
+    # Example 2: moves = "_R__LL_" -> Expected Result: 5
+    print(f"Result: {sol.furthestDistanceFromOrigin('_R__LL_')}")
+
+    # Example 3: moves = "_______" -> Expected Result: 7
+    print(f"Result: {sol.furthestDistanceFromOrigin('_______')}")

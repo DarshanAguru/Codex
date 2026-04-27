@@ -806,6 +806,20 @@
     "type": "file"
   },
   {
+    "name": "Furthest_point_from_origin.txt",
+    "path": "dsa/Furthest_point_from_origin.txt",
+    "size": 1170,
+    "timestamp": 1777248000000,
+    "displayDate": "27/04/2026",
+    "problemNo": 2833,
+    "topics": [
+      "String",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Get_biggest_three_rhombus_sums_in_a_grid.txt",
     "path": "dsa/Get_biggest_three_rhombus_sums_in_a_grid.txt",
     "size": 3052,
@@ -1160,6 +1174,21 @@
     "type": "file"
   },
   {
+    "name": "Maximum_distance_between_a_pair_of_values.txt",
+    "path": "dsa/Maximum_distance_between_a_pair_of_values.txt",
+    "size": 1695,
+    "timestamp": 1777248000000,
+    "displayDate": "27/04/2026",
+    "problemNo": 1855,
+    "topics": [
+      "Two Pointers",
+      "Array",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_level_sum_of_a_binary_tree.txt",
     "path": "dsa/Maximum_level_sum_of_a_binary_tree.txt",
     "size": 2215,
@@ -1306,6 +1335,21 @@
     "problemNo": 1266,
     "topics": [],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Minimize_hamming_distance_after_swap_operations.txt",
+    "path": "dsa/Minimize_hamming_distance_after_swap_operations.txt",
+    "size": 2981,
+    "timestamp": 1777248000000,
+    "displayDate": "27/04/2026",
+    "problemNo": 1722,
+    "topics": [
+      "Union Find",
+      "Array",
+      "Graph"
+    ],
+    "language": "python",
     "type": "file"
   },
   {
@@ -2018,6 +2062,21 @@
     "type": "file"
   },
   {
+    "name": "Sum_of_distances.txt",
+    "path": "dsa/Sum_of_distances.txt",
+    "size": 2017,
+    "timestamp": 1777248000000,
+    "displayDate": "27/04/2026",
+    "problemNo": 2615,
+    "topics": [
+      "Array",
+      "Hash Map",
+      "Prefix Sum"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Sum_of_root_to_leaf_binary_numbers.txt",
     "path": "dsa/Sum_of_root_to_leaf_binary_numbers.txt",
     "size": 2417,
@@ -2105,6 +2164,20 @@
       "Array"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Two_furthest_houses_with_different_colors.txt",
+    "path": "dsa/Two_furthest_houses_with_different_colors.txt",
+    "size": 1817,
+    "timestamp": 1777248000000,
+    "displayDate": "27/04/2026",
+    "problemNo": 2078,
+    "topics": [
+      "Array",
+      "Greedy"
+    ],
+    "language": "python",
     "type": "file"
   },
   {

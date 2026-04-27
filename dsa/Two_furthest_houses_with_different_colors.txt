@@ -1,0 +1,53 @@
+# Date: 27/04/2026
+# Problem: https://leetcode.com/problems/two-furthest-houses-with-different-colors/
+# Leetcode Problem No: 2078
+# Relevance: Array, Greedy
+
+from typing import List
+
+class Solution:
+
+    # Logic: Greedy - Check from both ends
+    # The maximum distance between two houses with different colors must involve
+    # either the first house (index 0) or the last house (index n-1).
+    # Reason: If the optimal pair is (i, j), extending it to either end can only
+    # improve or maintain the distance, unless they share the same color.
+    #
+    # So we do two passes:
+    # 1. From the END backwards: find the furthest index from the start (index 0)
+    #    that has a different color than colors[0]. That distance = fromStart.
+    # 2. From the START forwards: find the furthest index from the end (index n-1)
+    #    that has a different color than colors[-1]. That distance = n - fromEnd - 1.
+    # Return the max of both.
+
+    def maxDistance(self, colors: List[int]) -> int:
+        n = len(colors)
+
+        fromStart = 0
+        for i in range(n - 1, -1, -1):
+            if colors[i] != colors[0]:
+                fromStart = i
+                break
+
+        fromEnd = 0
+        for i in range(n):
+            if colors[i] != colors[-1]:
+                fromEnd = i
+                break
+
+        return max(n - fromEnd - 1, fromStart)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: colors = [1,1,1,6,1,1,1] -> Expected Result: 3
+    colors = [1, 1, 1, 6, 1, 1, 1]
+    print(f"Result: {sol.maxDistance(colors)}")
+
+    # Example 2: colors = [1,8,3,8,3] -> Expected Result: 4
+    colors = [1, 8, 3, 8, 3]
+    print(f"Result: {sol.maxDistance(colors)}")
+
+    # Example 3: colors = [0,1] -> Expected Result: 1
+    colors = [0, 1]
+    print(f"Result: {sol.maxDistance(colors)}")
