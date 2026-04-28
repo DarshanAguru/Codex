@@ -1601,6 +1601,23 @@
     "type": "file"
   },
   {
+    "name": "Minimum_operations_to_make_a_uni_value_grid.txt",
+    "path": "dsa/Minimum_operations_to_make_a_uni_value_grid.txt",
+    "size": 1937,
+    "timestamp": 1777334400000,
+    "displayDate": "28/04/2026",
+    "problemNo": 2033,
+    "topics": [
+      "Array",
+      "Math",
+      "Sorting",
+      "Greedy",
+      "Median"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_path_sum_in_a_grid_dp.txt",
     "path": "dsa/Minimum_path_sum_in_a_grid_dp.txt",
     "size": 3339,

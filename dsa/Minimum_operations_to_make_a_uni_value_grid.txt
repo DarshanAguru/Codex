@@ -1,0 +1,55 @@
+# Date: 28/04/2026
+# Problem: https://leetcode.com/problems/minimum-operations-to-make-a-uni-value-grid/
+# Leetcode Problem No: 2033
+# Relevance: Array, Math, Sorting, Greedy, Median
+
+from typing import List
+
+class Solution:
+
+    # Logic: Median and Greedy
+    # 1. To minimize the total operations to make all elements equal, the target value
+    #    should be the median of all elements in the grid.
+    # 2. First, flatten the grid into a 1D list and sort it to find the median.
+    # 3. For any two elements to be reachable from each other using steps of size 'x',
+    #    they must have the same remainder when divided by 'x'. If they don't, it's
+    #    impossible to make them equal, so return -1.
+    # 4. Calculate the sum of absolute differences between each element and the median,
+    #    divided by 'x', to get the total operations.
+
+    def minOperations(self, grid: List[List[int]], x: int) -> int:
+        nums = []
+        for row in grid:
+            for num in row:
+                nums.append(num)
+        
+        nums.sort()
+
+        length = len(nums)
+        res = 0
+        mid = nums[length // 2]
+        for num in nums:
+            # Check if it's possible to reach mid from num using increments/decrements of x
+            if (num - mid) % x != 0:
+                return -1
+            res += abs(mid - num) // x
+        
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: grid = [[2,4],[6,8]], x = 2 -> Expected Result: 4
+    grid1 = [[2, 4], [6, 8]]
+    x1 = 2
+    print(f"Example 1 Result: {sol.minOperations(grid1, x1)}")
+
+    # Example 2: grid = [[1,5],[2,3]], x = 1 -> Expected Result: 5
+    grid2 = [[1, 5], [2, 3]]
+    x2 = 1
+    print(f"Example 2 Result: {sol.minOperations(grid2, x2)}")
+
+    # Example 3: grid = [[1,2],[3,4]], x = 2 -> Expected Result: -1
+    grid3 = [[1, 2], [3, 4]]
+    x3 = 2
+    print(f"Example 3 Result: {sol.minOperations(grid3, x3)}")
