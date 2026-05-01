@@ -1890,6 +1890,21 @@
     "type": "file"
   },
   {
+    "name": "Rotate_function.txt",
+    "path": "dsa/Rotate_function.txt",
+    "size": 1476,
+    "timestamp": 1777593600000,
+    "displayDate": "01/05/2026",
+    "problemNo": 396,
+    "topics": [
+      "Array",
+      "Math",
+      "Dynamic Programming"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Search_element_in_rotated_array.txt",
     "path": "dsa/Search_element_in_rotated_array.txt",
     "size": 2402,
