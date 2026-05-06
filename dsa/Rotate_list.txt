@@ -1,0 +1,97 @@
+# Date: 06/05/2026
+# Problem: https://leetcode.com/problems/rotate-list/
+# Leetcode Problem No: 61
+# Relevance: Linked List, Two Pointers
+
+from typing import Optional
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+
+    # Logic: Circular Linked List Approach
+    # To rotate a linked list to the right by k places:
+    # 1. Handle base cases: if head is null or list has 1 node, return head.
+    # 2. Calculate the length of the list and find the last node.
+    # 3. Connect the last node to the head, making the list circular.
+    # 4. Find the actual number of rotations needed: k = k % length.
+    # 5. The new tail will be at position (length - k - 1) from the start.
+    # 6. The new head will be new_tail.next.
+    # 7. Break the circular connection by setting new_tail.next = None.
+    #
+    # Time Complexity: O(N) where N is the number of nodes.
+    # Space Complexity: O(1).
+
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head or not head.next or k == 0:
+            return head
+
+        # Step 1: Find length and last node
+        length = 1
+        tail = head
+        while tail.next:
+            tail = tail.next
+            length += 1
+
+        # Step 2: Connect tail to head to make it circular
+        tail.next = head
+
+        # Step 3: Find new tail and new head
+        k = k % length
+        steps_to_new_tail = length - k - 1
+        new_tail = head
+        for _ in range(steps_to_new_tail):
+            new_tail = new_tail.next
+            
+        new_head = new_tail.next
+        
+        # Step 4: Break the circle
+        new_tail.next = None
+        
+        return new_head
+
+def create_linked_list(arr):
+    if not arr: return None
+    head = ListNode(arr[0])
+    curr = head
+    for i in range(1, len(arr)):
+        curr.next = ListNode(arr[i])
+        curr = curr.next
+    return head
+
+def print_linked_list(head):
+    vals = []
+    curr = head
+    while curr:
+        vals.append(str(curr.val))
+        curr = curr.next
+    print(" -> ".join(vals) if vals else "None")
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: head = [1,2,3,4,5], k = 2 -> Expected: [4,5,1,2,3]
+    arr1 = [1, 2, 3, 4, 5]
+    k1 = 2
+    head1 = create_linked_list(arr1)
+    print(f"Original 1 (k={k1}): ", end="")
+    print_linked_list(head1)
+    result1 = sol.rotateRight(head1, k1)
+    print("Rotated 1: ", end="")
+    print_linked_list(result1)
+
+    print("-" * 20)
+
+    # Example 2: head = [0,1,2], k = 4 -> Expected: [2,0,1]
+    arr2 = [0, 1, 2]
+    k2 = 4
+    head2 = create_linked_list(arr2)
+    print(f"Original 2 (k={k2}): ", end="")
+    print_linked_list(head2)
+    result2 = sol.rotateRight(head2, k2)
+    print("Rotated 2: ", end="")
+    print_linked_list(result2)

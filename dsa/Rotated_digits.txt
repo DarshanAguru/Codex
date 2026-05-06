@@ -1,0 +1,56 @@
+# Date: 06/05/2026
+# Problem: https://leetcode.com/problems/rotated-digits/
+# Leetcode Problem No: 788
+# Relevance: Math, String, Dynamic Programming
+
+class Solution:
+
+    # Logic: Brute force approach (O(N * log N))
+    # An integer is "good" if after rotating each digit by 180 degrees, it forms a valid 
+    # but different integer.
+    # 1. Valid digits after rotation: 0, 1, 8 (remain same); 2, 5, 6, 9 (change).
+    # 2. Invalid digits: 3, 4, 7 (rotation is not a digit).
+    #
+    # A number is "good" if:
+    # - It does NOT contain 3, 4, or 7.
+    # - It contains AT LEAST ONE of 2, 5, 6, or 9.
+    #
+    # Example: n = 10
+    # 1: [1] -> same (not good)
+    # 2: [2] -> 5 (good)
+    # ...
+    # 5: [5] -> 2 (good)
+    # 6: [6] -> 9 (good)
+    # 8: [8] -> 8 (not good)
+    # 9: [9] -> 6 (good)
+    # 10: [1, 0] -> [1, 0] (not good)
+    # Output: 4 (2, 5, 6, 9)
+
+    def rotatedDigits(self, n: int) -> int:
+        count = 0
+
+        def rotates(x: int) -> bool:
+            val = str(x)
+            # Check if it contains at least one of 2, 5, 6, 9
+            # and none of 3, 4, 7
+            return any(c in '2569' for c in val) and not any(c in '347' for c in val)
+        
+        for i in range(1, n + 1):
+            if rotates(i):
+                count += 1
+        return count
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: n = 10 -> Expected: 4
+    n1 = 10
+    print(f"Result for n={n1}: {sol.rotatedDigits(n1)}")
+
+    # Example 2: n = 1 -> Expected: 0
+    n2 = 1
+    print(f"Result for n={n2}: {sol.rotatedDigits(n2)}")
+
+    # Example 3: n = 2 -> Expected: 1
+    n3 = 2
+    print(f"Result for n={n3}: {sol.rotatedDigits(n3)}")

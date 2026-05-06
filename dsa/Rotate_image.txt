@@ -1,0 +1,56 @@
+# Date: 06/05/2026
+# Problem: https://leetcode.com/problems/rotate-image/
+# Leetcode Problem No: 48
+# Relevance: Array, Math, Matrix
+
+from typing import List
+
+class Solution:
+
+    # Logic: Two-step transformation
+    # Rotating a matrix by 90 degrees clockwise can be achieved by:
+    # 1. Transposing the matrix: Swap matrix[i][j] with matrix[j][i].
+    #    This flips the matrix over its main diagonal.
+    # 2. Reversing each row: Reverse the order of elements in each row.
+    #    This completes the 90-degree clockwise rotation.
+    #
+    # Example:
+    # [1,2,3]    Transpose    [1,4,7]    Reverse    [7,4,1]
+    # [4,5,6]  ----------->  [2,5,8]  ----------->  [8,5,2]
+    # [7,8,9]                [3,6,9]                [9,6,3]
+    #
+    # Time Complexity: O(N^2) where N is the number of rows/cols.
+    # Space Complexity: O(1) as we rotate in-place.
+
+    def rotate(self, matrix: List[List[int]]) -> None:
+        n = len(matrix)
+        
+        # Step 1: Transpose the matrix
+        for i in range(n):
+            for j in range(i + 1, n):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        
+        # Step 2: Reverse each row
+        for row in matrix:
+            row.reverse()
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: 3x3 matrix
+    matrix1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    print("Original Matrix 1:")
+    for r in matrix1: print(r)
+    sol.rotate(matrix1)
+    print("Rotated Matrix 1:")
+    for r in matrix1: print(r)
+
+    print("-" * 20)
+
+    # Example 2: 4x4 matrix
+    matrix2 = [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]]
+    print("Original Matrix 2:")
+    for r in matrix2: print(r)
+    sol.rotate(matrix2)
+    print("Rotated Matrix 2:")
+    for r in matrix2: print(r)

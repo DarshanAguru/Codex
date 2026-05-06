@@ -1,0 +1,71 @@
+# Date: 06/05/2026
+# Problem: https://leetcode.com/problems/rotating-the-box/
+# Leetcode Problem No: 1861
+# Relevance: Array, Two Pointers, Matrix
+
+from typing import List
+
+class Solution:
+
+    # Logic: Gravity simulation followed by 90-degree rotation
+    # 1. Gravity Simulation:
+    #    For each row, we move stones ('#') to the right as far as possible.
+    #    Stones are stopped by obstacles ('*') or the edge of the box.
+    #    We use a pointer `empty` to keep track of the rightmost available spot.
+    # 2. 90-degree Clockwise Rotation:
+    #    A matrix rotation can be done by transposing (swap i,j) and then 
+    #    reversing each row.
+    #    Original (m x n) becomes (n x m).
+    #
+    # Time Complexity: O(M * N) where M is rows and N is columns.
+    # Space Complexity: O(M * N) to store the rotated result.
+
+    def rotateTheBox(self, boxGrid: List[List[str]]) -> List[List[str]]:
+        m, n = len(boxGrid), len(boxGrid[0])
+
+        # Step 1: Apply gravity to each row (moving stones to the right)
+        for i in range(m):
+            empty = n - 1
+            for j in range(n - 1, -1, -1):
+                if boxGrid[i][j] == "#":
+                    # Move stone to the rightmost empty spot
+                    boxGrid[i][j] = "."
+                    boxGrid[i][empty] = "#"
+                    empty -= 1
+                elif boxGrid[i][j] == "*":
+                    # Obstacle found, reset empty pointer to the spot before it
+                    empty = j - 1
+
+        # Step 2: Rotate the box 90 degrees clockwise
+        # Transpose (using a new matrix of size n x m)
+        res = [["" for _ in range(m)] for _ in range(n)]
+        for i in range(m):
+            for j in range(n):
+                res[j][i] = boxGrid[i][j]
+        
+        # Reverse each row to complete rotation
+        for row in res:
+            row.reverse()
+            
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: Simple 1x3 box
+    box1 = [["#", ".", "*"]]
+    print("Original Box 1:")
+    for r in box1: print(r)
+    result1 = sol.rotateTheBox(box1)
+    print("Rotated Box 1 (after gravity):")
+    for r in result1: print(r)
+
+    print("-" * 20)
+
+    # Example 2: 3x3 box
+    box2 = [["#","#","*"],[".","#","."],[".",".","."]]
+    print("Original Box 2:")
+    for r in box2: print(r)
+    result2 = sol.rotateTheBox(box2)
+    print("Rotated Box 2 (after gravity):")
+    for r in result2: print(r)

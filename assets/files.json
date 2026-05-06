@@ -1905,6 +1905,79 @@
     "type": "file"
   },
   {
+    "name": "Rotate_image.txt",
+    "path": "dsa/Rotate_image.txt",
+    "size": 1774,
+    "timestamp": 1778025600000,
+    "displayDate": "06/05/2026",
+    "problemNo": 48,
+    "topics": [
+      "Array",
+      "Math",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Rotate_list.txt",
+    "path": "dsa/Rotate_list.txt",
+    "size": 2866,
+    "timestamp": 1778025600000,
+    "displayDate": "06/05/2026",
+    "problemNo": 61,
+    "topics": [
+      "Linked List",
+      "Two Pointers"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Rotate_string.txt",
+    "path": "dsa/Rotate_string.txt",
+    "size": 1142,
+    "timestamp": 1778025600000,
+    "displayDate": "06/05/2026",
+    "problemNo": 796,
+    "topics": [
+      "String",
+      "String Matching"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Rotated_digits.txt",
+    "path": "dsa/Rotated_digits.txt",
+    "size": 1667,
+    "timestamp": 1778025600000,
+    "displayDate": "06/05/2026",
+    "problemNo": 788,
+    "topics": [
+      "Math",
+      "String",
+      "Dynamic Programming"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Rotating_the_box.txt",
+    "path": "dsa/Rotating_the_box.txt",
+    "size": 2450,
+    "timestamp": 1778025600000,
+    "displayDate": "06/05/2026",
+    "problemNo": 1861,
+    "topics": [
+      "Array",
+      "Two Pointers",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Search_element_in_rotated_array.txt",
     "path": "dsa/Search_element_in_rotated_array.txt",
     "size": 2402,

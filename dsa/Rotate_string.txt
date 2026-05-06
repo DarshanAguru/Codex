@@ -1,0 +1,33 @@
+# Date: 06/05/2026
+# Problem: https://leetcode.com/problems/rotate-string/
+# Leetcode Problem No: 796
+# Relevance: String, String Matching
+
+class Solution:
+
+    # Logic: String Concatenation Trick
+    # If we concatenate `s` with itself (`s + s`), the resulting string contains all 
+    # possible rotations of `s` as substrings of length `len(s)`.
+    # 
+    # For example, if s = "abcde":
+    # s + s = "abcdeabcde"
+    # Rotations: "abcde", "bcdea", "cdeab", "deabc", "eabcd"
+    # All these are present in "abcdeabcde".
+    #
+    # Thus, we just need to check:
+    # 1. len(s) == len(goal)
+    # 2. goal is a substring of (s + s)
+
+    def rotateString(self, s: str, goal: str) -> bool:
+        return len(s) == len(goal) and goal in (s + s)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "abcde", goal = "cdeab" -> Expected: True
+    s1, goal1 = "abcde", "cdeab"
+    print(f"Result for '{s1}' and '{goal1}': {sol.rotateString(s1, goal1)}")
+
+    # Example 2: s = "abcde", goal = "abced" -> Expected: False
+    s2, goal2 = "abcde", "abced"
+    print(f"Result for '{s2}' and '{goal2}': {sol.rotateString(s2, goal2)}")
