@@ -1573,6 +1573,21 @@
     "type": "file"
   },
   {
+    "name": "Minimum_initial_energy_to_finish_tasks.txt",
+    "path": "dsa/Minimum_initial_energy_to_finish_tasks.txt",
+    "size": 2670,
+    "timestamp": 1778544000000,
+    "displayDate": "12/05/2026",
+    "problemNo": 1665,
+    "topics": [
+      "Greedy",
+      "Array",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "path": "dsa/Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "size": 2013,
@@ -2032,6 +2047,21 @@
       "Two Pointers"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Separate_the_digits_in_an_array.txt",
+    "path": "dsa/Separate_the_digits_in_an_array.txt",
+    "size": 1482,
+    "timestamp": 1778544000000,
+    "displayDate": "12/05/2026",
+    "problemNo": 2553,
+    "topics": [
+      "Array",
+      "Simulation",
+      "String"
+    ],
+    "language": "python",
     "type": "file"
   },
   {
