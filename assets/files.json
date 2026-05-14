@@ -292,6 +292,21 @@
     "type": "file"
   },
   {
+    "name": "Check_if_array_is_good.txt",
+    "path": "dsa/Check_if_array_is_good.txt",
+    "size": 2012,
+    "timestamp": 1778716800000,
+    "displayDate": "14/05/2026",
+    "problemNo": 2784,
+    "topics": [
+      "Array",
+      "Counting",
+      "Hash Table"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Check_if_binary_string_has_at_most_one_segment_of_ones.txt",
     "path": "dsa/Check_if_binary_string_has_at_most_one_segment_of_ones.txt",
     "size": 1720,
