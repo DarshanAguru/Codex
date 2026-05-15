@@ -1,6 +1,6 @@
 import subprocess
 import sys
-def run_command(command):
+def run_command(command: str) -> str | None:
     try:
         result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
         return result.stdout.strip()
@@ -13,8 +13,7 @@ def run_command(command):
         print(f"Error output: {e.stderr}")
         sys.exit(1)
 
-def generate_message():
-    status = run_command("git status --short")
+def generate_message(status: str) -> str:
     status_list = status.split("\n")
     
     all_files = []
@@ -33,7 +32,7 @@ def generate_message():
     
     return message
 
-def main():
+def main() -> None:
     print("1. Running build command...")
     output = run_command("npm run build")
     if not output:
@@ -55,7 +54,7 @@ def main():
         return
 
     print("3. Generating commit message...")
-    message = generate_message()
+    message = generate_message(status)
 
     print(f'4. Committing (with message): "{message}"')
     run_command(f'git commit -m "{message}"')
