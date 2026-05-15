@@ -760,6 +760,20 @@
     "type": "file"
   },
   {
+    "name": "Find_minimum_in_rotated_sorted_array.txt",
+    "path": "dsa/Find_minimum_in_rotated_sorted_array.txt",
+    "size": 1880,
+    "timestamp": 1778803200000,
+    "displayDate": "15/05/2026",
+    "problemNo": 153,
+    "topics": [
+      "Array",
+      "Binary Search"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Find_repeating_and_missing_element.txt",
     "path": "dsa/Find_repeating_and_missing_element.txt",
     "size": 2585,
