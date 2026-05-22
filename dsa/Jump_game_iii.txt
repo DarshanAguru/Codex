@@ -1,0 +1,65 @@
+# Date: 22/05/2026
+# Problem: https://leetcode.com/problems/jump-game-iii/
+# Leetcode Problem No: 1306
+# Relevance: Array, Depth-First Search, Breadth-First Search
+
+from collections import deque
+from typing import List
+
+class Solution:
+
+    # Logic: Breadth-First Search (O(N) Time, O(N) Space)
+    # 1. Use a queue to perform BFS starting from the `start` index.
+    # 2. Maintain a `visited` set to prevent infinite loops / processing the same index multiple times.
+    # 3. In each step, pop the index `i` from the queue.
+    # 4. If `i` is out of bounds or has already been visited, continue to the next index.
+    # 5. If `arr[i] == 0`, we have successfully reached a zero value. Return `True`.
+    # 6. Add `i` to `visited` and enqueue both possible next jumps: `i + arr[i]` and `i - arr[i]`.
+    # 7. If BFS finishes without finding a 0, return `False`.
+    #
+    # Dry run for arr = [4, 2, 3, 0, 3, 1, 2], start = 5:
+    # 1. Initialize q = [5], visited = {}
+    # 2. Pop 5. arr[5] = 1. visited = {5}. Enqueue 5 + 1 = 6, 5 - 1 = 4. q = [6, 4].
+    # 3. Pop 6. arr[6] = 2. visited = {5, 6}. Enqueue 6 + 2 = 8, 6 - 2 = 4. q = [4, 8, 4].
+    # 4. Pop 4. arr[4] = 3. visited = {4, 5, 6}. Enqueue 4 + 3 = 7, 4 - 3 = 1. q = [8, 4, 7, 1].
+    # 5. Pop 8 (out of bounds -> skip), Pop 4 (already visited -> skip), Pop 7 (out of bounds -> skip).
+    # 6. Pop 1. arr[1] = 2. visited = {1, 4, 5, 6}. Enqueue 1 + 2 = 3, 1 - 2 = -1. q = [3, -1].
+    # 7. Pop 3. arr[3] = 0! Return True.
+
+    def canReach(self, arr: List[int], start: int) -> bool:
+        n = len(arr)
+        visited = set()
+        q = deque([start])
+
+        while q:
+            i = q.popleft()
+
+            if i < 0 or i >= n or i in visited:
+                continue
+
+            if arr[i] == 0:
+                return True
+
+            visited.add(i)
+            q.append(i + arr[i])
+            q.append(i - arr[i])
+
+        return False
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: arr = [4, 2, 3, 0, 3, 1, 2], start = 5 -> Expected: True
+    arr1 = [4, 2, 3, 0, 3, 1, 2]
+    start1 = 5
+    print(f"Result for {arr1} starting at {start1}: {sol.canReach(arr1, start1)}")
+
+    # Example 2: arr = [4, 2, 3, 0, 3, 1, 2], start = 0 -> Expected: True
+    arr2 = [4, 2, 3, 0, 3, 1, 2]
+    start2 = 0
+    print(f"Result for {arr2} starting at {start2}: {sol.canReach(arr2, start2)}")
+
+    # Example 3: arr = [3, 0, 2, 1, 2], start = 2 -> Expected: False
+    arr3 = [3, 0, 2, 1, 2]
+    start3 = 2
+    print(f"Result for {arr3} starting at {start3}: {sol.canReach(arr3, start3)}")

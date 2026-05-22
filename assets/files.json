@@ -774,6 +774,20 @@
     "type": "file"
   },
   {
+    "name": "Find_minimum_in_rotated_sorted_array_ii.txt",
+    "path": "dsa/Find_minimum_in_rotated_sorted_array_ii.txt",
+    "size": 2162,
+    "timestamp": 1779408000000,
+    "displayDate": "22/05/2026",
+    "problemNo": 154,
+    "topics": [
+      "Array",
+      "Binary Search"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Find_repeating_and_missing_element.txt",
     "path": "dsa/Find_repeating_and_missing_element.txt",
     "size": 2585,
@@ -787,6 +801,37 @@
       "Math"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Find_the_length_of_the_longest_common_prefix.txt",
+    "path": "dsa/Find_the_length_of_the_longest_common_prefix.txt",
+    "size": 2607,
+    "timestamp": 1779408000000,
+    "displayDate": "22/05/2026",
+    "problemNo": 3043,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "String",
+      "Trie"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Find_the_prefix_common_array_of_two_arrays.txt",
+    "path": "dsa/Find_the_prefix_common_array_of_two_arrays.txt",
+    "size": 2382,
+    "timestamp": 1779408000000,
+    "displayDate": "22/05/2026",
+    "problemNo": 2657,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Bit Manipulation"
+    ],
+    "language": "python",
     "type": "file"
   },
   {
@@ -905,6 +950,36 @@
       "Sorting"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Jump_game_iii.txt",
+    "path": "dsa/Jump_game_iii.txt",
+    "size": 2562,
+    "timestamp": 1779408000000,
+    "displayDate": "22/05/2026",
+    "problemNo": 1306,
+    "topics": [
+      "Array",
+      "Depth-First Search",
+      "Breadth-First Search"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Jump_game_iv.txt",
+    "path": "dsa/Jump_game_iv.txt",
+    "size": 3649,
+    "timestamp": 1779408000000,
+    "displayDate": "22/05/2026",
+    "problemNo": 1345,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Breadth-First Search"
+    ],
+    "language": "python",
     "type": "file"
   },
   {
@@ -1512,6 +1587,22 @@
       "String"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Minimum_common_value.txt",
+    "path": "dsa/Minimum_common_value.txt",
+    "size": 1608,
+    "timestamp": 1779408000000,
+    "displayDate": "22/05/2026",
+    "problemNo": 2540,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Two Pointers",
+      "Binary Search"
+    ],
+    "language": "python",
     "type": "file"
   },
   {

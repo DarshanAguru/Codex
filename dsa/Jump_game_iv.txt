@@ -1,0 +1,90 @@
+# Date: 22/05/2026
+# Problem: https://leetcode.com/problems/jump-game-iv/
+# Leetcode Problem No: 1345
+# Relevance: Array, Hash Table, Breadth-First Search
+
+from collections import deque, defaultdict
+from typing import List
+
+class Solution:
+
+    # Logic: Breadth-First Search on a Graph (O(N) Time, O(N) Space)
+    # 1. We want to find the shortest path from index 0 to index n - 1 in an unweighted graph, making BFS the ideal choice.
+    # 2. To optimize jumping to nodes with the same value, we precompute a adjacency list `graph` mapping values to indices.
+    # 3. Use a queue `dq` for BFS, tracking the current step count `res`.
+    # 4. In each layer of BFS:
+    #    - If `idx == n - 1`, we have reached the destination. Return `res`.
+    #    - Explore all unvisited indices with the same value `arr[idx]`.
+    #    - Crucially, delete `graph[arr[idx]]` once processed to prevent redundant explorations, maintaining O(N) runtime.
+    #    - Explore forward jump (`idx + 1`) and backward jump (`idx - 1`) if within bounds and not visited.
+    #
+    # Dry run for arr = [100, -23, -23, 404, 100, 23, 23, 23, 3, 404]:
+    # 1. n = 10. `graph` maps 100 -> [0, 4], -23 -> [1, 2], 404 -> [3, 9], etc.
+    # 2. BFS starts at index 0. dq = [0], vis[0] = True, res = 0.
+    # 3. Layer 0 (size 1):
+    #    - Pop 0. Check same-value indices for 100: [0, 4]. Enqueue 4 (vis[4]=True).
+    #    - Delete graph[100] to avoid re-visiting.
+    #    - Enqueue 0 + 1 = 1 (vis[1]=True).
+    #    - dq = [4, 1], res = 1.
+    # 4. Layer 1 (size 2):
+    #    - Pop 4. Enqueue 4 + 1 = 5, 4 - 1 = 3 (vis[5]=vis[3]=True).
+    #    - Pop 1. Check same-value indices for -23: [1, 2]. Enqueue 2 (vis[2]=True). Delete graph[-23].
+    #    - dq = [5, 3, 2], res = 2.
+    # 5. Layer 2 (size 3):
+    #    - Pop 5. Enqueue 6, 7 (same-value 23). Delete graph[23].
+    #    - Pop 3. Check same-value indices for 404: [3, 9]. Enqueue 9 (vis[9]=True). Delete graph[404].
+    #    - dq = [6, 7, 9], res = 3.
+    # 6. Layer 3:
+    #    - ... eventually pop 9. idx == 9 == n - 1. Return res = 3.
+
+    def minJumps(self, arr: List[int]) -> int:
+        n = len(arr)
+        if n == 1:
+            return 0
+        graph = defaultdict(list)
+        for idx, val in enumerate(arr):
+            graph[val].append(idx)
+        dq = deque()
+        vis = [False] * n
+        dq.append(0)
+        vis[0] = True
+        res = 0
+        while dq:
+            size = len(dq)
+            for _ in range(size):
+                idx = dq.popleft()
+                if idx == n - 1:
+                    return res
+                if arr[idx] in graph:
+                    for i in graph[arr[idx]]:
+                        if not vis[i]:
+                            vis[i] = True
+                            dq.append(i)
+                    del graph[arr[idx]]
+                     
+                if idx + 1 < n and not vis[idx + 1]:
+                    vis[idx+1] = True
+                    dq.append(idx + 1)
+            
+                if idx - 1 >= 0 and not vis[idx - 1]:
+                    vis[idx-1] = True
+                    dq.append(idx - 1)
+
+            res += 1
+
+        return -1
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: arr = [100,-23,-23,404,100,23,23,23,3,404] -> Expected: 3
+    arr1 = [100, -23, -23, 404, 100, 23, 23, 23, 3, 404]
+    print(f"Result for {arr1}: {sol.minJumps(arr1)}")
+
+    # Example 2: arr = [7] -> Expected: 0
+    arr2 = [7]
+    print(f"Result for {arr2}: {sol.minJumps(arr2)}")
+
+    # Example 3: arr = [7, 6, 9, 6, 9, 6, 9, 7] -> Expected: 1
+    arr3 = [7, 6, 9, 6, 9, 6, 9, 7]
+    print(f"Result for {arr3}: {sol.minJumps(arr3)}")

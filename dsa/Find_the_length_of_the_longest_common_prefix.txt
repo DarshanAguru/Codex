@@ -1,0 +1,78 @@
+# Date: 22/05/2026
+# Problem: https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/
+# Leetcode Problem No: 3043
+# Relevance: Array, Hash Table, String, Trie
+
+from typing import List
+from collections import defaultdict
+
+class Node:
+    def __init__(self):
+        self.children = defaultdict(Node)
+        self.end = False
+
+class Trie:
+    def __init__(self):
+        self.root = Node()
+
+    def insert(self, word):
+        curr = self.root
+        for s in word:
+            curr = curr.children[s]
+        curr.end = True
+    
+    def prefix(self, word):
+        curr = self.root
+        count = 0
+        for s in word:
+            if s not in curr.children:
+                break
+            curr = curr.children[s]
+            count += 1
+        return count
+
+class Solution:
+
+    # Logic: Trie (Prefix Tree)
+    # 1. Insert all numbers from `arr1` as strings into a Trie (Prefix Tree).
+    # 2. For each number in `arr2`, convert it to a string and traverse the Trie.
+    # 3. Find the longest matching prefix length for each number and update the maximum.
+    # 
+    # Complexity:
+    # - Time Complexity: O(N * L + M * L), where N is len(arr1), M is len(arr2), and L is the average length/digits of the numbers.
+    # - Space Complexity: O(N * L) for storing characters of numbers from `arr1` in the Trie.
+    #
+    # Dry run for arr1 = [1, 10, 100], arr2 = [1000]:
+    # 1. Trie is populated with "1", "10", "100".
+    # 2. Querying "1000" in Trie:
+    #    - character '1' matches, count = 1, current moves to node for '1'
+    #    - character '0' matches, count = 2, current moves to node for '0'
+    #    - character '0' matches, count = 3, current moves to node for '0'
+    #    - character '0' is not in children of current node, break.
+    #    - returns count = 3.
+    # 3. Max result is updated to max(0, 3) = 3.
+
+    def longestCommonPrefix(self, arr1: List[int], arr2: List[int]) -> int:
+        trie = Trie()
+
+        for num in arr1:
+            trie.insert(str(num))
+        
+        res = 0
+        for num in arr2:
+            cnt = trie.prefix(str(num))
+            res = max(res, cnt)
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: arr1 = [1, 10, 100], arr2 = [1000] -> Expected: 3
+    arr1_1 = [1, 10, 100]
+    arr2_1 = [1000]
+    print(f"Result for {arr1_1} and {arr2_1}: {sol.longestCommonPrefix(arr1_1, arr2_1)}")
+
+    # Example 2: arr1 = [1, 2, 3], arr2 = [4, 4, 4] -> Expected: 0
+    arr1_2 = [1, 2, 3]
+    arr2_2 = [4, 4, 4]
+    print(f"Result for {arr1_2} and {arr2_2}: {sol.longestCommonPrefix(arr1_2, arr2_2)}")

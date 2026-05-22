@@ -1,0 +1,39 @@
+# Date: 22/05/2026
+# Problem: https://leetcode.com/problems/minimum-common-value/
+# Leetcode Problem No: 2540
+# Relevance: Array, Hash Table, Two Pointers, Binary Search
+
+from typing import List
+
+class Solution:
+
+    # Logic: Set Intersection & Disjoint Check (O(N + M) Time, O(N + M) Space)
+    # 1. Convert `nums1` and `nums2` to sets to eliminate duplicates and enable fast set operations.
+    # 2. Check if the two sets are disjoint using `.isdisjoint()`.
+    # 3. If there are no common elements (i.e. they are disjoint), return `-1`.
+    # 4. Otherwise, compute the set intersection using the `&` operator.
+    # 5. Find and return the minimum element from the intersection set using `min()`.
+    #
+    # Dry run for nums1 = [1, 2, 3], nums2 = [2, 4]:
+    # 1. set(nums1) = {1, 2, 3}
+    # 2. set(nums2) = {2, 4}
+    # 3. set(nums1).isdisjoint(set(nums2)) -> False (as both contain 2)
+    # 4. Intersection: {1, 2, 3} & {2, 4} = {2}
+    # 5. min(list({2})) -> 2.
+    # Returns 2.
+
+    def getCommon(self, nums1: List[int], nums2: List[int]) -> int:
+        return -1 if set(nums1).isdisjoint(set(nums2)) else min(list(set(nums1) & set(nums2)))
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums1 = [1, 2, 3], nums2 = [2, 4] -> Expected: 2
+    nums1_1 = [1, 2, 3]
+    nums2_1 = [2, 4]
+    print(f"Result for {nums1_1} and {nums2_1}: {sol.getCommon(nums1_1, nums2_1)}")
+
+    # Example 2: nums1 = [1, 2, 3, 6], nums2 = [2, 3, 4, 5] -> Expected: 2
+    nums1_2 = [1, 2, 3, 6]
+    nums2_2 = [2, 3, 4, 5]
+    print(f"Result for {nums1_2} and {nums2_2}: {sol.getCommon(nums1_2, nums2_2)}")
