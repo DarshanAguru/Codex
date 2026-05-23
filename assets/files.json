@@ -307,6 +307,19 @@
     "type": "file"
   },
   {
+    "name": "Check_if_array_is_sorted_and_rotated.txt",
+    "path": "dsa/Check_if_array_is_sorted_and_rotated.txt",
+    "size": 1626,
+    "timestamp": 1779494400000,
+    "displayDate": "23/05/2026",
+    "problemNo": 1752,
+    "topics": [
+      "Array"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Check_if_binary_string_has_at_most_one_segment_of_ones.txt",
     "path": "dsa/Check_if_binary_string_has_at_most_one_segment_of_ones.txt",
     "size": 1720,

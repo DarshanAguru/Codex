@@ -1,0 +1,46 @@
+# Date: 23/05/2026
+# Problem: https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/
+# Leetcode Problem No: 1752
+# Relevance: Array
+
+from typing import List
+
+class Solution:
+
+    # Logic: Count Decreasing Pairs (O(N) Time, O(1) Space)
+    # 1. A sorted and rotated array can have at most one element that is larger than the next element (including the last element compared to the first).
+    # 2. Iterate through the array and check if nums[i] > nums[(i + 1) % n].
+    # 3. Keep a count of these 'changes' (drops/decreasing pairs).
+    # 4. If the count of changes is 1 or 0, return True. Otherwise, return False.
+    #
+    # Dry run for nums = [3, 4, 5, 1, 2]:
+    # n = 5
+    # 1. i = 0: nums[0] (3) <= nums[1] (4)
+    # 2. i = 1: nums[1] (4) <= nums[2] (5)
+    # 3. i = 2: nums[2] (5) > nums[3] (1) -> change = 1
+    # 4. i = 3: nums[3] (1) <= nums[4] (2)
+    # 5. i = 4: nums[4] (2) <= nums[0] (3)
+    # Total change = 1 <= 1 -> Returns True.
+
+    def check(self, nums: List[int]) -> bool:
+        n = len(nums)
+        change = 0
+        for i in range(n):
+            if nums[i] > nums[(i + 1) % n]:
+                change += 1
+        return change <= 1
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [3, 4, 5, 1, 2] -> Expected: True
+    nums1 = [3, 4, 5, 1, 2]
+    print(f"Result for {nums1}: {sol.check(nums1)}")
+
+    # Example 2: nums = [2, 1, 3, 4] -> Expected: False
+    nums2 = [2, 1, 3, 4]
+    print(f"Result for {nums2}: {sol.check(nums2)}")
+
+    # Example 3: nums = [1, 2, 3] -> Expected: True
+    nums3 = [1, 2, 3]
+    print(f"Result for {nums3}: {sol.check(nums3)}")
