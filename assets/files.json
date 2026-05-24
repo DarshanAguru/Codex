@@ -996,6 +996,21 @@
     "type": "file"
   },
   {
+    "name": "Jump_game_v.txt",
+    "path": "dsa/Jump_game_v.txt",
+    "size": 4251,
+    "timestamp": 1779580800000,
+    "displayDate": "24/05/2026",
+    "problemNo": 1340,
+    "topics": [
+      "Array",
+      "Dynamic Programming",
+      "Depth-First Search"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Kadanes_algorithm.txt",
     "path": "dsa/Kadanes_algorithm.txt",
     "size": 1735,

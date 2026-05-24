@@ -1,0 +1,102 @@
+# Date: 24/05/2026
+# Problem: https://leetcode.com/problems/jump-game-v/
+# Leetcode Problem No: 1340
+# Relevance: Array, Dynamic Programming, Depth-First Search
+
+from typing import List
+
+class Solution:
+
+    # Logic: Dynamic Programming with Memoization (DFS) (O(N * d) Time, O(N) Space)
+    # 1. We want to find the maximum number of indices we can visit starting from any index.
+    # 2. Since we can only jump to index `j` if `arr[j] < arr[i]` and all elements between `i` and `j` are strictly smaller than `arr[i]`,
+    #    the problem can be modeled as a Directed Acyclic Graph (DAG) where edges go from higher values to lower values.
+    # 3. We use DFS with memoization (`dp` array) to find the longest path in this DAG.
+    # 4. For each index `idx`, we scan to the right up to `idx + d` and to the left down to `idx - d`.
+    #    - If we encounter an element greater than or equal to `arr[idx]`, we must stop scanning in that direction.
+    #    - Otherwise, we can jump to that index and transition our DP state: `dfs(idx) = max(dfs(idx), 1 + dfs(j))`.
+    # 5. Finally, the answer is the maximum value in the `dp` array.
+    #
+    # Dry run for arr = [6, 4, 14, 6, 8], d = 2:
+    # 1. Initialize dp = [-1] * 5.
+    # 2. Iterate i from 0 to 4 and call dfs(i):
+    #    - dfs(0) [arr[0]=6]:
+    #      - Right jumps:
+    #        - j = 1 [arr[1]=4]: Valid jump. dfs(1) is called.
+    #          - dfs(1) [arr[1]=4]:
+    #            - Right jumps: j = 2 [arr[2]=14 >= 4], break.
+    #            - Left jumps: j = 0 [arr[0]=6 >= 4], break.
+    #            - dp[1] = 1. Returns 1.
+    #          - res = max(1, 1 + dfs(1)) = 2.
+    #        - j = 2 [arr[2]=14 >= 6], break.
+    #      - Left jumps: None within bounds.
+    #      - dp[0] = 2. Returns 2.
+    #    - dfs(1): already computed, returns dp[1] = 1.
+    #    - dfs(2) [arr[2]=14]:
+    #      - Right jumps:
+    #        - j = 3 [arr[3]=6]: Valid. dfs(3) is called.
+    #          - dfs(3) [arr[3]=6]:
+    #            - Right jumps: j = 4 [arr[4]=8 >= 6], break.
+    #            - Left jumps: j = 2 [arr[2]=14 >= 6], break.
+    #            - dp[3] = 1. Returns 1.
+    #          - res = max(1, 1 + dfs(3)) = 2.
+    #        - j = 4 [arr[4]=8]: Valid. dfs(4) is called.
+    #          - dfs(4) [arr[4]=8]:
+    #            - Left jumps: j = 3 [arr[3]=6]: Valid. dfs(3) is already computed, returns 1.
+    #              - res = max(1, 1 + 1) = 2.
+    #            - dp[4] = 2. Returns 2.
+    #          - res = max(2, 1 + dfs(4)) = 3.
+    #      - Left jumps:
+    #        - j = 1 [arr[1]=4]: Valid. dfs(1) is already computed, returns 1.
+    #          - res = max(3, 1 + dfs(1)) = 3.
+    #        - j = 0 [arr[0]=6]: Valid. dfs(0) is already computed, returns 2.
+    #          - res = max(3, 1 + dfs(0)) = 3.
+    #      - dp[2] = 3. Returns 3.
+    # 3. max(dp) returns 3.
+
+    def maxJumps(self, arr: List[int], d: int) -> int:
+        n = len(arr)
+        dp = [-1] * n
+    
+        def dfs(idx: int) -> int:
+            if dp[idx] != -1:
+                return dp[idx]
+            
+            res = 1
+            # Jump to the right
+            for j in range(idx + 1, min(n, idx + d + 1)):
+                if arr[j] >= arr[idx]:
+                    break
+                res = max(res, 1 + dfs(j))
+
+            # Jump to the left
+            for j in range(idx - 1, max(-1, idx - d - 1), -1):
+                if arr[j] >= arr[idx]:
+                    break
+                res = max(res, 1 + dfs(j))
+                
+            dp[idx] = res
+            return dp[idx]
+        
+        for i in range(n):
+            dfs(i)
+        
+        return max(dp)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: arr = [6, 4, 14, 6, 8, 13, 9, 7, 10, 6, 12], d = 2 -> Expected: 4
+    arr1 = [6, 4, 14, 6, 8, 13, 9, 7, 10, 6, 12]
+    d1 = 2
+    print(f"Result for {arr1} with d={d1}: {sol.maxJumps(arr1, d1)}")
+
+    # Example 2: arr = [3, 3, 3, 3, 3], d = 3 -> Expected: 1
+    arr2 = [3, 3, 3, 3, 3]
+    d2 = 3
+    print(f"Result for {arr2} with d={d2}: {sol.maxJumps(arr2, d2)}")
+
+    # Example 3: arr = [7, 6, 5, 4, 3, 2, 1], d = 1 -> Expected: 7
+    arr3 = [7, 6, 5, 4, 3, 2, 1]
+    d3 = 1
+    print(f"Result for {arr3} with d={d3}: {sol.maxJumps(arr3, d3)}")
