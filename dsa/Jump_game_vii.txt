@@ -1,0 +1,66 @@
+# Date: 25/05/2026
+# Problem: https://leetcode.com/problems/jump-game-vii/
+# Leetcode Problem No: 1871
+# Relevance: Two Pointers, String, Dynamic Programming, Sliding Window
+
+class Solution:
+
+    # Logic: DP with Sliding Window / Two Pointers Optimization (O(N) Time, O(N) Space)
+    # 1. We use a dynamic programming table `dp` of size `n`, where `dp[i]` represents whether we can reach index `i`.
+    # 2. We initialize `dp[0] = True` because we always start at index 0.
+    # 3. For any index `i` that is reachable (`dp[i] == True`), we can jump to any index `j` in the range `[i + minJump, i + maxJump]` if `s[j] == '0'`.
+    # 4. A naive iteration would result in O(N * (maxJump - minJump)) time complexity, which leads to Time Limit Exceeded (TLE).
+    # 5. To optimize, we maintain the furthest index `end` we have ever reached.
+    # 6. When processing index `i`, we only iterate `j` starting from `max(i + minJump, end + 1)`.
+    #    This ensures we never re-evaluate indices that have already been considered in previous steps.
+    # 7. As a result, each index is visited at most once, bringing the total time complexity down to O(N).
+    #
+    # Dry run for s = "011010", minJump = 2, maxJump = 3:
+    # 1. n = 6. dp = [True, False, False, False, False, False], st = 0, end = 0.
+    # 2. i = 0: dp[0] is True.
+    #    - st = max(0 + 2, 0 + 1) = 2.
+    #    - end = min(0 + 3, 5) = 3.
+    #    - Range [2, 3]:
+    #      - j = 2: s[2] == '1', dp[2] remains False.
+    #      - j = 3: s[3] == '0', dp[3] = True.
+    #    - dp = [True, False, False, True, False, False]
+    # 3. i = 1: dp[1] is False.
+    # 4. i = 2: dp[2] is False.
+    # 5. i = 3: dp[3] is True.
+    #    - st = max(3 + 2, 3 + 1) = 5.
+    #    - end = min(3 + 3, 5) = 5.
+    #    - Range [5, 5]:
+    #      - j = 5: s[5] == '0', dp[5] = True.
+    #    - dp = [True, False, False, True, False, True]
+    # 6. i = 4: dp[4] is False.
+    # 7. i = 5: dp[5] is True.
+    #    - Loop terminates.
+    # 8. Return dp[5] = True.
+
+    def canReach(self, s: str, minJump: int, maxJump: int) -> bool:
+        n = len(s)
+        dp = [False] * n
+        dp[0] = True
+        st = 0
+        end = 0
+        for i in range(n):
+            if dp[i]:
+                st = max(i + minJump, end + 1)
+                end = min(i + maxJump, n - 1)
+                for j in range(st, end + 1):
+                    if s[j] == '0':
+                        dp[j] = True
+        return dp[n - 1]
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "011010", minJump = 2, maxJump = 3 -> Expected: True
+    s1 = "011010"
+    minJump1, maxJump1 = 2, 3
+    print(f"Result for '{s1}' (min={minJump1}, max={maxJump1}): {sol.canReach(s1, minJump1, maxJump1)}")
+
+    # Example 2: s = "01101110", minJump = 2, maxJump = 3 -> Expected: False
+    s2 = "01101110"
+    minJump2, maxJump2 = 2, 3
+    print(f"Result for '{s2}' (min={minJump2}, max={maxJump2}): {sol.canReach(s2, minJump2, maxJump2)}")

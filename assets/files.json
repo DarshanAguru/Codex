@@ -1011,6 +1011,22 @@
     "type": "file"
   },
   {
+    "name": "Jump_game_vii.txt",
+    "path": "dsa/Jump_game_vii.txt",
+    "size": 2958,
+    "timestamp": 1779667200000,
+    "displayDate": "25/05/2026",
+    "problemNo": 1871,
+    "topics": [
+      "Two Pointers",
+      "String",
+      "Dynamic Programming",
+      "Sliding Window"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Kadanes_algorithm.txt",
     "path": "dsa/Kadanes_algorithm.txt",
     "size": 1735,
