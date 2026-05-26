@@ -1,0 +1,62 @@
+# Date: 26/05/2026
+# Problem: https://leetcode.com/problems/count-the-number-of-special-characters-i/
+# Leetcode Problem No: 3120
+# Relevance: Hash Table, String
+
+class Solution:
+
+    # Logic: Hash Table / Frequency Array (O(N) Time, O(1) Space)
+    # 1. We want to find the number of characters that appear in both lowercase and uppercase within the given `word`.
+    # 2. We initialize a boolean array `arr` of size 52 to track the presence of both lowercase and uppercase English letters.
+    #    - Lowercase letters ('a' - 'z') occupy indices [0 - 25].
+    #    - Uppercase letters ('A' - 'Z') occupy indices [26 - 51].
+    # 3. We iterate through the string and map each character to its respective index in `arr`, setting it to `True`.
+    # 4. Finally, we iterate from 0 to 25. If both `arr[i]` (lowercase) and `arr[i + 26]` (uppercase) are `True`,
+    #    we increment our result count.
+    #
+    # Dry run for word = "aaAbcBC":
+    # 1. Initialize arr = [False] * 52, res = 0.
+    # 2. Process characters:
+    #    - 'a': index 0 -> arr[0] = True
+    #    - 'a': index 0 -> arr[0] = True
+    #    - 'A': index 26 -> arr[26] = True
+    #    - 'b': index 1 -> arr[1] = True
+    #    - 'c': index 2 -> arr[2] = True
+    #    - 'B': index 27 -> arr[27] = True
+    #    - 'C': index 28 -> arr[28] = True
+    # 3. Check pairs (i from 0 to 25):
+    #    - i = 0 ('a'/'A'): arr[0] and arr[26] are True -> res = 1
+    #    - i = 1 ('b'/'B'): arr[1] and arr[27] are True -> res = 2
+    #    - i = 2 ('c'/'C'): arr[2] and arr[28] are True -> res = 3
+    #    - Other indices do not have both True.
+    # 4. Return res = 3.
+
+    def numberOfSpecialChars(self, word: str) -> int:
+        arr = [False] * 52
+        for char in word:
+            if 'a' <= char <= 'z':
+                val = ord(char) - ord('a')
+            else:
+                val = ord(char) - ord('A') + 26
+            arr[val] = True
+        
+        res = 0
+        for i in range(26):
+            if arr[i] and arr[i + 26]:
+                res += 1
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: word = "aaAbcBC" -> Expected: 3
+    word1 = "aaAbcBC"
+    print(f"Result for '{word1}': {sol.numberOfSpecialChars(word1)}")
+
+    # Example 2: word = "abc" -> Expected: 0
+    word2 = "abc"
+    print(f"Result for '{word2}': {sol.numberOfSpecialChars(word2)}")
+
+    # Example 3: word = "abBCab" -> Expected: 1
+    word3 = "abBCab"
+    print(f"Result for '{word3}': {sol.numberOfSpecialChars(word3)}")
