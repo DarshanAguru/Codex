@@ -542,6 +542,20 @@
     "type": "file"
   },
   {
+    "name": "Count_the_number_of_special_characters_ii.txt",
+    "path": "dsa/Count_the_number_of_special_characters_ii.txt",
+    "size": 3027,
+    "timestamp": 1779840000000,
+    "displayDate": "27/05/2026",
+    "problemNo": 3121,
+    "topics": [
+      "Hash Table",
+      "String"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Daily_temperatures.txt",
     "path": "dsa/Daily_temperatures.txt",
     "size": 1897,

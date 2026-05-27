@@ -1,0 +1,72 @@
+# Date: 27/05/2026
+# Problem: https://leetcode.com/problems/count-the-number-of-special-characters-ii/
+# Leetcode Problem No: 3121
+# Relevance: Hash Table, String
+
+class Solution:
+
+    # Logic: Single-Pass Index Tracking (O(N) Time, O(1) Space)
+    # 1. A character is special if its first uppercase occurrence is strictly after its last lowercase occurrence.
+    # 2. We can maintain a hash map (or fixed-size array) to store the indices of interest:
+    #    - For lowercase letters: we want the *last* occurrence index.
+    #    - For uppercase letters: we want the *first* occurrence index.
+    # 3. We iterate through the string `word`:
+    #    - If it's a lowercase letter, we continuously update its entry in our map to capture the last occurrence.
+    #    - If it's an uppercase letter, we only record its index if it has not been recorded yet (to capture the first occurrence).
+    # 4. Finally, we iterate through all 26 alphabets. For each, we check:
+    #    - If both the lowercase and uppercase forms exist in our map.
+    #    - If the last occurrence of the lowercase form is strictly less than the first occurrence of the uppercase form.
+    # 5. Count and return the number of such characters.
+    #
+    # Dry run for word = "aaAbcBC":
+    # 1. Initialize char_idx_map = {}
+    # 2. Iterating through word:
+    #    - i = 0, c = 'a': set 'a' -> 0.
+    #    - i = 1, c = 'a': update 'a' -> 1.
+    #    - i = 2, c = 'A': set 'A' -> 2.
+    #    - i = 3, c = 'b': set 'b' -> 3.
+    #    - i = 4, c = 'c': set 'c' -> 4.
+    #    - i = 5, c = 'B': set 'B' -> 5.
+    #    - i = 6, c = 'C': set 'C' -> 6.
+    # 3. Map contains: {'a': 1, 'A': 2, 'b': 3, 'c': 4, 'B': 5, 'C': 6}
+    # 4. Checking characters:
+    #    - 'a'/'A': idx_small = 1, idx_cap = 2. Since 1 < 2, res = 1.
+    #    - 'b'/'B': idx_small = 3, idx_cap = 5. Since 3 < 5, res = 2.
+    #    - 'c'/'C': idx_small = 4, idx_cap = 6. Since 4 < 6, res = 3.
+    # 5. Returns 3.
+
+    def numberOfSpecialChars(self, word: str) -> int:
+        char_idx_map = {}
+        
+        for i, c in enumerate(word):
+            if c.isupper():
+                if c not in char_idx_map:
+                    char_idx_map[c] = i
+            else:
+                char_idx_map[c] = i
+
+        res = 0
+        for i in range(26):
+            small = chr(i + ord('a'))
+            cap = chr(i + ord('A'))
+            
+            if small in char_idx_map and cap in char_idx_map:
+                if char_idx_map[small] < char_idx_map[cap]:
+                    res += 1
+                    
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: word = "aaAbcBC" -> Expected: 3
+    word1 = "aaAbcBC"
+    print(f"Result for '{word1}': {sol.numberOfSpecialChars(word1)}")
+
+    # Example 2: word = "abc" -> Expected: 0
+    word2 = "abc"
+    print(f"Result for '{word2}': {sol.numberOfSpecialChars(word2)}")
+
+    # Example 3: word = "AbBCab" -> Expected: 0
+    word3 = "AbBCab"
+    print(f"Result for '{word3}': {sol.numberOfSpecialChars(word3)}")
