@@ -1,0 +1,115 @@
+# Date: 28/05/2026
+# Problem: https://leetcode.com/problems/longest-common-suffix-queries/
+# Leetcode Problem No: 3093
+# Relevance: Trie, String, Hash Table
+
+from typing import List
+
+class Node:
+    def __init__(self):
+        self.children = {}
+        # Stores the index of the best matching word in wordsContainer for the current suffix path
+        self.idx = -1
+
+class Trie:
+    def __init__(self, words: List[str]):
+        self.root = Node()
+        self.words = words
+
+    def _get_best_idx(self, curr_idx: int, new_idx: int) -> int:
+        """
+        Helper to return the better word index based on the rules:
+        1. Shorter word length.
+        2. Smaller index in wordsContainer in case of a tie.
+        """
+        if curr_idx == -1:
+            return new_idx
+            
+        len_new = len(self.words[new_idx])
+        len_curr = len(self.words[curr_idx])
+        
+        if len_new < len_curr:
+            return new_idx
+        elif len_new == len_curr:
+            return min(curr_idx, new_idx)
+            
+        return curr_idx
+
+    def insert(self, idx: int, word: str) -> None:
+        curr = self.root
+        curr.idx = self._get_best_idx(curr.idx, idx)
+        
+        # Traverse reversed word to build suffix path
+        for char in reversed(word):
+            if char not in curr.children:
+                curr.children[char] = Node()
+            curr = curr.children[char]
+            curr.idx = self._get_best_idx(curr.idx, idx)
+
+    def search(self, word: str) -> int:
+        curr = self.root
+        
+        # Match as many characters of the reversed query suffix as possible
+        for char in reversed(word):
+            if char not in curr.children:
+                break
+            curr = curr.children[char]
+            
+        return curr.idx
+
+class Solution:
+
+    # Logic: Suffix Trie with Greedy Metadata (O((N + Q) * L) Time, O(N * L) Space)
+    # where N = len(wordsContainer), Q = len(wordsQuery), and L = max length of a word.
+    #
+    # 1. Since we want to find the longest common suffix, we can reverse the words and use a Trie (prefix tree).
+    #    A common suffix in original words becomes a common prefix in reversed words.
+    # 2. As we insert each word into the Trie, we maintain the optimal word index (`idx`) at every node.
+    #    An index `i` is better than index `j` if:
+    #    - len(wordsContainer[i]) < len(wordsContainer[j])
+    #    - or len(wordsContainer[i]) == len(wordsContainer[j]) and i < j (tie-breaker).
+    # 3. The root node stores the index of the overall optimal word in `wordsContainer` (the fallback choice if no common suffix exists).
+    # 4. For each query, we reverse it and walk down the Trie.
+    #    We stop when we cannot match further. The `idx` stored at the last matched node is the result for that query.
+    #
+    # Dry run for wordsContainer = ["abcd", "bcd", "xbcd"], wordsQuery = ["cd", "bcd", "xyz"]:
+    # 1. Initialize Trie: root.idx = -1.
+    # 2. Insert "abcd" (idx 0, len 4):
+    #    - Reversed: "dcba".
+    #    - Path: root -> d -> c -> b -> a. All set to idx 0.
+    # 3. Insert "bcd" (idx 1, len 3):
+    #    - Reversed: "dcb".
+    #    - root.idx = _get_best_idx(0, 1) -> 1 (since len 3 < len 4).
+    #    - Path nodes d, c, b indices updated to 1.
+    # 4. Insert "xbcd" (idx 2, len 4):
+    #    - Reversed: "dcbx".
+    #    - root.idx remains 1. Path nodes d, c, b remain 1. Node x gets idx 2.
+    # 5. Queries:
+    #    - "cd" -> reversed "dc". Matches root -> d -> c. c.idx is 1. Output: 1.
+    #    - "bcd" -> reversed "dcb". Matches root -> d -> c -> b. b.idx is 1. Output: 1.
+    #    - "xyz" -> reversed "zyx". Match fails at root. root.idx is 1. Output: 1.
+
+    def stringIndices(self, wordsContainer: List[str], wordsQuery: List[str]) -> List[int]:
+        trie = Trie(wordsContainer)
+        
+        for idx, word in enumerate(wordsContainer):
+            trie.insert(idx, word)
+            
+        res = []
+        for query in wordsQuery:
+            res.append(trie.search(query))
+            
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: wordsContainer = ["abcd","bcd","xbcd"], wordsQuery = ["cd","bcd","xyz"] -> Expected: [1, 1, 1]
+    container1 = ["abcd", "bcd", "xbcd"]
+    query1 = ["cd", "bcd", "xyz"]
+    print(f"Result 1: {sol.stringIndices(container1, query1)}")
+
+    # Example 2: wordsContainer = ["abcdefgh","poiuyt","gh","gh"], wordsQuery = ["gh","acbfgh","acb"] -> Expected: [2, 2, 1]
+    container2 = ["abcdefgh", "poiuyt", "gh", "gh"]
+    query2 = ["gh", "acbfgh", "acb"]
+    print(f"Result 2: {sol.stringIndices(container2, query2)}")

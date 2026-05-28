@@ -1174,6 +1174,21 @@
     "type": "file"
   },
   {
+    "name": "Longest_common_suffix_queries.txt",
+    "path": "dsa/Longest_common_suffix_queries.txt",
+    "size": 4636,
+    "timestamp": 1779926400000,
+    "displayDate": "28/05/2026",
+    "problemNo": 3093,
+    "topics": [
+      "Trie",
+      "String",
+      "Hash Table"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Longest_repeating_character_replacement.txt",
     "path": "dsa/Longest_repeating_character_replacement.txt",
     "size": 2116,
