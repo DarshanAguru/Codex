@@ -1664,8 +1664,8 @@
     "type": "file"
   },
   {
-    "name": "Minimum_changes_to_make_alternating_binary_string.txt.",
-    "path": "dsa/Minimum_changes_to_make_alternating_binary_string.txt.",
+    "name": "Minimum_changes_to_make_alternating_binary_string.txt",
+    "path": "dsa/Minimum_changes_to_make_alternating_binary_string.txt",
     "size": 1811,
     "timestamp": 1777766400000,
     "displayDate": "03/05/2026",
@@ -1775,6 +1775,20 @@
     "problemNo": 1848,
     "topics": [
       "Array"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Minimum_element_after_replacement_with_digit_sum.txt",
+    "path": "dsa/Minimum_element_after_replacement_with_digit_sum.txt",
+    "size": 2097,
+    "timestamp": 1780012800000,
+    "displayDate": "29/05/2026",
+    "problemNo": 3300,
+    "topics": [
+      "Array",
+      "Math"
     ],
     "language": "python",
     "type": "file"
@@ -1956,9 +1970,9 @@
     "type": "file"
   },
   {
-    "name": "Number_of_steps_to_reduce_a_number_in_binary_representation_to_one",
-    "path": "dsa/Number_of_steps_to_reduce_a_number_in_binary_representation_to_one",
-    "size": 1901,
+    "name": "Number_of_steps_to_reduce_a_number_in_binary_representation_to_one.txt",
+    "path": "dsa/Number_of_steps_to_reduce_a_number_in_binary_representation_to_one.txt",
+    "size": 1898,
     "timestamp": 1772064000000,
     "displayDate": "26/02/2026",
     "problemNo": 1404,

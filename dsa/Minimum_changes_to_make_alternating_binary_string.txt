@@ -17,7 +17,7 @@ class Main {
   // For a binary string to be alternating, it can ONLY follow one of two patterns:
   // Pattern 1: Starts with 0 (e.g., 010101...) -> Even indices are '0', Odd are '1'.
   // Pattern 2: Starts with 1 (e.g., 101010...) -> Even indices are '1', Odd are '0'.
-  // We can just iterate through the given string and count how many characters 
+  // We can just iterate through the given string and count how many characters
   // differ from Pattern 1 (`startWithZero`), and how many differ from Pattern 2 (`startWithOne`).
   // The answer is the minimum of these two counts.
   //
