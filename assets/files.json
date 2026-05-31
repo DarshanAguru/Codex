@@ -600,6 +600,21 @@
     "type": "file"
   },
   {
+    "name": "Destroying_asteroids.txt",
+    "path": "dsa/Destroying_asteroids.txt",
+    "size": 2208,
+    "timestamp": 1780185600000,
+    "displayDate": "31/05/2026",
+    "problemNo": 2126,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Detect_loop_in_ll.txt",
     "path": "dsa/Detect_loop_in_ll.txt",
     "size": 1838,

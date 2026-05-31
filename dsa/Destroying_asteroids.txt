@@ -1,0 +1,48 @@
+# Date: 31/05/2026
+# Problem: https://leetcode.com/problems/destroying-asteroids/
+# Leetcode Problem No: 2126
+# Relevance: Array, Greedy, Sorting
+
+from typing import List
+
+class Solution:
+
+    # Logic: Greedy Approach with Sorting (O(N log N) Time, O(1) Space)
+    # 1. We want to destroy all asteroids. Destroying an asteroid of mass `ast` increases our planet's mass by `ast`.
+    # 2. To maximize the chance of destroying subsequent larger asteroids, we should always start by destroying the smallest available asteroids.
+    # 3. Therefore, a greedy approach is optimal: sort the `asteroids` list in non-decreasing order.
+    # 4. Iterate through the sorted list:
+    #    - If our current mass is strictly less than the asteroid's mass (`mass < ast`), we cannot destroy it. Return `False`.
+    #    - Otherwise, destroy the asteroid and add its mass to our current mass (`mass += ast`).
+    # 5. If we successfully iterate through all asteroids without failure, return `True`.
+    #
+    # Dry run for mass = 10, asteroids = [3, 9, 19, 5, 21]:
+    # 1. Sort asteroids -> [3, 5, 9, 19, 21].
+    # 2. Loop through:
+    #    - ast = 3: mass (10) >= 3. New mass = 10 + 3 = 13.
+    #    - ast = 5: mass (13) >= 5. New mass = 13 + 5 = 18.
+    #    - ast = 9: mass (18) >= 9. New mass = 18 + 9 = 27.
+    #    - ast = 19: mass (27) >= 19. New mass = 27 + 19 = 46.
+    #    - ast = 21: mass (46) >= 21. New mass = 46 + 21 = 67.
+    # 3. All asteroids destroyed. Return True.
+
+    def asteroidsDestroyed(self, mass: int, asteroids: List[int]) -> bool:
+        asteroids.sort()
+        for ast in asteroids:
+            if mass < ast:
+                return False
+            mass += ast
+        return True
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: mass = 10, asteroids = [3, 9, 19, 5, 21] -> Expected: True
+    mass1 = 10
+    asteroids1 = [3, 9, 19, 5, 21]
+    print(f"Result for mass={mass1}, asteroids={asteroids1}: {sol.asteroidsDestroyed(mass1, asteroids1)}")
+
+    # Example 2: mass = 5, asteroids = [4, 9, 23, 4] -> Expected: False
+    mass2 = 5
+    asteroids2 = [4, 9, 23, 4]
+    print(f"Result for mass={mass2}, asteroids={asteroids2}: {sol.asteroidsDestroyed(mass2, asteroids2)}")
