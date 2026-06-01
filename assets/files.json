@@ -1708,6 +1708,21 @@
     "type": "file"
   },
   {
+    "name": "Minimum_cost_of_buying_candies_with_discount.txt",
+    "path": "dsa/Minimum_cost_of_buying_candies_with_discount.txt",
+    "size": 2431,
+    "timestamp": 1780272000000,
+    "displayDate": "01/06/2026",
+    "problemNo": 2144,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_cost_path_with_edge_reversals.txt",
     "path": "dsa/Minimum_cost_path_with_edge_reversals.txt",
     "size": 3052,

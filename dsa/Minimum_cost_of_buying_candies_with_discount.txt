@@ -1,0 +1,63 @@
+# Date: 01/06/2026
+# Problem: https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/
+# Leetcode Problem No: 2144
+# Relevance: Array, Greedy, Sorting
+
+from typing import List
+
+class Solution:
+
+    # Logic: Greedy Triplet Accumulation (O(N log N) Time, O(1) Space)
+    # 1. To minimize the total cost, we should try to get the most expensive candies for free.
+    # 2. Since buying any two candies allows us to get a third candy for free (whose cost is <= both),
+    #    the optimal strategy is to sort the candies in descending order.
+    # 3. We process the sorted candies in groups of three using a while loop:
+    #    - Add the cost of the first candy (most expensive in the group) to our total cost.
+    #    - If there is a second candy in the group, add its cost to our total cost.
+    #    - Skip the third candy (the free candy) by incrementing our index pointer.
+    #
+    # Dry run for cost = [6, 5, 7, 9, 2, 2]:
+    # 1. Sort descending -> cost = [9, 7, 6, 5, 2, 2].
+    # 2. Iterate (len(cost) = 6):
+    #    - i = 0: first = cost[0] = 9. res = 9. Increment i to 1.
+    #      - Since i < 6: second = cost[1] = 7. res = 9 + 7 = 16. Increment i to 2.
+    #      - Increment i to 3 (skipping the third candy, cost[2] = 6).
+    #    - i = 3: first = cost[3] = 5. res = 16 + 5 = 21. Increment i to 4.
+    #      - Since i < 6: second = cost[4] = 2. res = 21 + 2 = 23. Increment i to 5.
+    #      - Increment i to 6 (skipping the third candy, cost[5] = 2).
+    # 3. Loop terminates as i = 6 is not < 6.
+    # 4. Return total cost = 23.
+
+    def minimumCost(self, cost: List[int]) -> int:
+        n = len(cost)
+        cost.sort(reverse=True)
+
+        res = 0
+        i = 0
+        
+        while i < len(cost):
+            first = cost[i]
+            res += first
+            i += 1
+            if i < len(cost):
+                second = cost[i]
+                res += second
+                i += 1
+            i += 1
+        
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: cost = [6, 5, 7, 9, 2, 2] -> Expected: 23
+    cost1 = [6, 5, 7, 9, 2, 2]
+    print(f"Result for {cost1}: {sol.minimumCost(cost1)}")
+
+    # Example 2: cost = [5, 5] -> Expected: 10
+    cost2 = [5, 5]
+    print(f"Result for {cost2}: {sol.minimumCost(cost2)}")
+
+    # Example 3: cost = [1, 2, 3] -> Expected: 5
+    cost3 = [1, 2, 3]
+    print(f"Result for {cost3}: {sol.minimumCost(cost3)}")
