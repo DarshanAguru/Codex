@@ -702,6 +702,20 @@
     "type": "file"
   },
   {
+    "name": "Earliest_finish_time_for_land_and_water_rides_i.txt",
+    "path": "dsa/Earliest_finish_time_for_land_and_water_rides_i.txt",
+    "size": 3299,
+    "timestamp": 1780358400000,
+    "displayDate": "02/06/2026",
+    "problemNo": 3633,
+    "topics": [
+      "Array",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Equal_sum_grid_partition_i.txt",
     "path": "dsa/Equal_sum_grid_partition_i.txt",
     "size": 2516,

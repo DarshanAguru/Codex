@@ -1,0 +1,66 @@
+# Date: 02/06/2026
+# Problem: https://leetcode.com/problems/earliest-finish-time-for-land-and-water-rides-i/
+# Leetcode Problem No: 3633
+# Relevance: Array, Greedy
+
+import math
+from typing import List
+
+class Solution:
+
+    # Logic: Greedy Two-Pass Optimization (O(N + M) Time, O(1) Space)
+    # 1. We must take exactly one land ride and one water ride.
+    # 2. We can board the first ride at its opening time. If we complete it at time T, we can board the second ride at max(T, opening_time_of_second_ride).
+    # 3. There are two potential ride orders:
+    #    - Order A: Land ride first, then Water ride.
+    #      - To minimize the finish time of the Water ride, we should complete the Land ride as early as possible.
+    #      - We compute `minLand = min(landStartTime[i] + landDuration[i])` in a single pass.
+    #      - For each water ride `j`, the completion time is `max(minLand, waterStartTime[j]) + waterDuration[j]`.
+    #    - Order B: Water ride first, then Land ride.
+    #      - To minimize the finish time of the Land ride, we should complete the Water ride as early as possible.
+    #      - We compute `minWater = min(waterStartTime[j] + waterDuration[j])`.
+    #      - For each land ride `i`, the completion time is `max(minWater, landStartTime[i]) + landDuration[i]`.
+    # 4. By taking the minimum possible completion time across all scenarios, we find the earliest overall finish time.
+    #
+    # Dry run for landStartTime = [2, 5], landDuration = [3, 2], waterStartTime = [4], waterDuration = [3]:
+    # 1. minLand = min(2+3, 5+2) = min(5, 7) = 5.
+    # 2. Iterate water rides (j = 0):
+    #    - minWater = min(inf, 4+3) = 7.
+    #    - res = min(inf, max(5, 4) + 3) = min(inf, 5 + 3) = 8.
+    # 3. Iterate land rides (i = 0, 1):
+    #    - i = 0: res = min(8, max(7, 2) + 3) = min(8, 7 + 3) = 8.
+    #    - i = 1: res = min(8, max(7, 5) + 2) = min(8, 7 + 2) = min(8, 9) = 8.
+    # 4. Returns 8.
+
+    def earliestFinishTime(self, landStartTime: List[int], landDuration: List[int], waterStartTime: List[int], waterDuration: List[int]) -> int:
+        n, m = len(landStartTime), len(waterStartTime)
+        minLand, minWater, res = math.inf, math.inf, math.inf
+        
+        for i in range(n):
+            minLand = min(minLand, landStartTime[i] + landDuration[i])
+        
+        for j in range(m):
+            minWater = min(minWater, waterStartTime[j] + waterDuration[j])
+            res = min(res, max(minLand, waterStartTime[j]) + waterDuration[j])
+        
+        for i in range(n):
+            res = min(res, max(minWater, landStartTime[i]) + landDuration[i])
+        
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: landStartTime = [2, 5], landDuration = [3, 2], waterStartTime = [4], waterDuration = [3] -> Expected: 8
+    landStart1 = [2, 5]
+    landDur1 = [3, 2]
+    waterStart1 = [4]
+    waterDur1 = [3]
+    print(f"Result: {sol.earliestFinishTime(landStart1, landDur1, waterStart1, waterDur1)}")
+
+    # Example 2: landStartTime = [1, 2, 3], landDuration = [1, 1, 1], waterStartTime = [10], waterDuration = [2] -> Expected: 12
+    landStart2 = [1, 2, 3]
+    landDur2 = [1, 1, 1]
+    waterStart2 = [10]
+    waterDur2 = [2]
+    print(f"Result: {sol.earliestFinishTime(landStart2, landDur2, waterStart2, waterDur2)}")
