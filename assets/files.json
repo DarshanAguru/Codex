@@ -556,6 +556,21 @@
     "type": "file"
   },
   {
+    "name": "Create_binary_tree_from_descriptions.txt",
+    "path": "dsa/Create_binary_tree_from_descriptions.txt",
+    "size": 3477,
+    "timestamp": 1780790400000,
+    "displayDate": "07/06/2026",
+    "problemNo": 2196,
+    "topics": [
+      "Hash Table",
+      "Tree",
+      "Binary Tree"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Daily_temperatures.txt",
     "path": "dsa/Daily_temperatures.txt",
     "size": 1897,

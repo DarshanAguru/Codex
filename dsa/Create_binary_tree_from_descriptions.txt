@@ -1,0 +1,83 @@
+# Date: 07/06/2026
+# Problem: https://leetcode.com/problems/create-binary-tree-from-descriptions/
+# Leetcode Problem No: 2196
+# Relevance: Hash Table, Tree, Binary Tree
+
+from typing import List, Optional
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+
+    # Logic: Hash Map with XOR-based Root Finder (O(N) Time, O(N) Space)
+    # 1. We use a hash map `mapp` to map values to their corresponding `TreeNode` objects.
+    # 2. To find the root node without extra sets, we use a bitwise XOR variable `root`.
+    # 3. For each description `[p, c, isl]`:
+    #    - If `p` is not in `mapp`, we create it and XOR it into `root`.
+    #    - If `c` is not in `mapp`, we create it and XOR it into `root`.
+    #    - Since `c` is a child node, we XOR it into `root` again.
+    # 4. Each node that is a child of some parent will be XORed an even number of times:
+    #    - Once when it is first encountered/created.
+    #    - Once when we mark it as a child.
+    # 5. The root node is never a child, so it is XORed exactly once (when first encountered).
+    # 6. Thus, after processing all descriptions, `root` will hold the value of the root node.
+    # 7. We return `mapp[root]`.
+    #
+    # Dry run for descriptions = [[20,15,1],[20,17,0],[50,20,1]]:
+    # 1. Initialize mapp = {}, root = 0.
+    # 2. p=20, c=15, isl=1:
+    #    - 20 not in mapp: mapp[20] = TreeNode(20), root ^= 20 -> root = 20.
+    #    - 15 not in mapp: mapp[15] = TreeNode(15), root ^= 15 -> root = 20 ^ 15.
+    #    - Connect mapp[20].left = mapp[15].
+    #    - root ^= 15 -> root = 20 ^ 15 ^ 15 = 20.
+    # 3. p=20, c=17, isl=0:
+    #    - 20 in mapp: skip.
+    #    - 17 not in mapp: mapp[17] = TreeNode(17), root ^= 17 -> root = 20 ^ 17.
+    #    - Connect mapp[20].right = mapp[17].
+    #    - root ^= 17 -> root = 20 ^ 17 ^ 17 = 20.
+    # 4. p=50, c=20, isl=1:
+    #    - 50 not in mapp: mapp[50] = TreeNode(50), root ^= 50 -> root = 20 ^ 50.
+    #    - 20 in mapp: skip.
+    #    - Connect mapp[50].left = mapp[20].
+    #    - root ^= 20 -> root = 20 ^ 50 ^ 20 = 50.
+    # 5. Loop ends. root = 50. Return mapp[50].
+
+    def createBinaryTree(self, descriptions: List[List[int]]) -> Optional[TreeNode]:
+        mapp = dict()
+        root = 0
+        for p, c, isl in descriptions:
+            if p not in mapp:
+                mapp[p] = TreeNode(p)
+                root ^= p
+            if c not in mapp:
+                mapp[c] = TreeNode(c)
+                root ^= c
+
+            if isl == 1:
+                mapp[p].left = mapp[c]
+            else:
+                mapp[p].right = mapp[c]
+            
+            root ^= c
+        
+        return mapp[root]
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: descriptions = [[20,15,1],[20,17,0],[50,20,1]] -> Expected Root: 50
+    desc1 = [[20, 15, 1], [20, 17, 0], [50, 20, 1]]
+    root1 = sol.createBinaryTree(desc1)
+    print(f"Root val: {root1.val if root1 else None}")
+    print(f"Root.left val: {root1.left.val if root1 and root1.left else None}")
+    print(f"Root.left.left val: {root1.left.left.val if root1 and root1.left and root1.left.left else None}")
+
+    # Example 2: descriptions = [[1,2,1],[2,3,0],[3,4,1]] -> Expected Root: 1
+    desc2 = [[1, 2, 1], [2, 3, 0], [3, 4, 1]]
+    root2 = sol.createBinaryTree(desc2)
+    print(f"Root val: {root2.val if root2 else None}")
