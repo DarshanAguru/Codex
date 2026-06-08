@@ -1,0 +1,80 @@
+# Date: 08/06/2026
+# Problem: https://leetcode.com/problems/partition-array-according-to-given-pivot/
+# Leetcode Problem No: 2161
+# Relevance: Two Pointers, Array, Simulation
+
+from typing import List
+
+class Solution:
+
+    # Logic: Two Pointers Single-Pass Partitioning (O(N) Time, O(N) Space)
+    # 1. We want to rearrange the array such that all elements less than `pivot` come first,
+    #    followed by all elements equal to `pivot`, and then all elements greater than `pivot`.
+    #    The relative order of elements in each category must be preserved.
+    # 2. We initialize a result array `res` of size `n`.
+    # 3. We use two pointers on `nums`:
+    #    - `i` moves from left to right (0 to n - 1) to identify elements strictly less than `pivot`.
+    #      We place them from the left using pointer `l` (starting at 0).
+    #    - `j` moves from right to left (n - 1 to 0) to identify elements strictly greater than `pivot`.
+    #      We place them from the right using pointer `r` (starting at n - 1).
+    # 4. Because `j` processes elements from right to left and places them from right to left in `res`,
+    #    their relative order is naturally preserved.
+    # 5. After the loop, the remaining unfilled indices in `res` between `l` and `r` are filled with `pivot`.
+    #
+    # Dry run for nums = [9, 12, 5, 10, 14, 3, 10], pivot = 10:
+    # 1. n = 7, res = [0, 0, 0, 0, 0, 0, 0], l = 0, r = 6, i = 0, j = 6.
+    # 2. Loop iteration:
+    #    - i = 0 (nums[0]=9 < 10): res[0] = 9, l = 1.
+    #    - j = 6 (nums[6]=10): skip.
+    #    - i = 1 (nums[1]=12): skip.
+    #    - j = 5 (nums[5]=3): skip.
+    #    - i = 2 (nums[2]=5 < 10): res[1] = 5, l = 2.
+    #    - j = 4 (nums[4]=14 > 10): res[6] = 14, r = 5.
+    #    - i = 3 (nums[3]=10): skip.
+    #    - j = 3 (nums[3]=10): skip.
+    #    - i = 4 (nums[4]=14): skip.
+    #    - j = 2 (nums[2]=5): skip.
+    #    - i = 5 (nums[5]=3 < 10): res[2] = 3, l = 3.
+    #    - j = 1 (nums[1]=12 > 10): res[5] = 12, r = 4.
+    #    - i = 6 (nums[6]=10): skip.
+    #    - j = 0 (nums[0]=9): skip.
+    # 3. Post-loop state: res = [9, 5, 3, 0, 0, 12, 14], l = 3, r = 4.
+    # 4. Fill pivots from l = 3 to r = 4:
+    #    - res[3] = 10, l = 4.
+    #    - res[4] = 10, l = 5.
+    # 5. Return res = [9, 5, 3, 10, 10, 12, 14].
+
+    def pivotArray(self, nums: List[int], pivot: int) -> List[int]:
+        n = len(nums)
+        res = [0] * n
+        l, r = 0, n - 1
+        i, j = 0, n - 1
+        
+        while j >= 0 and i < n:
+            if nums[i] < pivot:
+                res[l] = nums[i]
+                l += 1
+            if nums[j] > pivot:
+                res[r] = nums[j]
+                r -= 1
+            i += 1
+            j -= 1
+        
+        while l <= r:
+            res[l] = pivot
+            l += 1 
+            
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [9, 12, 5, 10, 14, 3, 10], pivot = 10 -> Expected: [9, 5, 3, 10, 10, 12, 14]
+    nums1 = [9, 12, 5, 10, 14, 3, 10]
+    pivot1 = 10
+    print(f"Result for {nums1} (pivot={pivot1}): {sol.pivotArray(nums1, pivot1)}")
+
+    # Example 2: nums = [-3, 4, 3, 2], pivot = 2 -> Expected: [-3, 2, 4, 3]
+    nums2 = [-3, 4, 3, 2]
+    pivot2 = 2
+    print(f"Result for {nums2} (pivot={pivot2}): {sol.pivotArray(nums2, pivot2)}")
