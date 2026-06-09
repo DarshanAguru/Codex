@@ -1518,6 +1518,20 @@
     "type": "file"
   },
   {
+    "name": "Maximum_total_subarray_value_i.txt",
+    "path": "dsa/Maximum_total_subarray_value_i.txt",
+    "size": 1505,
+    "timestamp": 1780963200000,
+    "displayDate": "09/06/2026",
+    "problemNo": 3689,
+    "topics": [
+      "Array",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Median_of_two_sorted_arrays_bs.txt",
     "path": "dsa/Median_of_two_sorted_arrays_bs.txt",
     "size": 2917,
