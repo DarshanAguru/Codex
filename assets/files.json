@@ -1532,6 +1532,22 @@
     "type": "file"
   },
   {
+    "name": "Maximum_total_subarray_value_ii.txt",
+    "path": "dsa/Maximum_total_subarray_value_ii.txt",
+    "size": 3920,
+    "timestamp": 1781049600000,
+    "displayDate": "10/06/2026",
+    "problemNo": 3691,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Heap (Priority Queue)",
+      "Sparse Table"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Median_of_two_sorted_arrays_bs.txt",
     "path": "dsa/Median_of_two_sorted_arrays_bs.txt",
     "size": 2917,
