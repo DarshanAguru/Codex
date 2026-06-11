@@ -2073,6 +2073,21 @@
     "type": "file"
   },
   {
+    "name": "Number_of_ways_to_assign_edge_weights_i.txt",
+    "path": "dsa/Number_of_ways_to_assign_edge_weights_i.txt",
+    "size": 2458,
+    "timestamp": 1781136000000,
+    "displayDate": "11/06/2026",
+    "problemNo": 3558,
+    "topics": [
+      "Tree",
+      "Depth-First Search",
+      "Combinatorics"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Partition_array_according_to_given_pivot.txt",
     "path": "dsa/Partition_array_according_to_given_pivot.txt",
     "size": 3293,
