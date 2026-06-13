@@ -1,0 +1,60 @@
+# Date: 13/06/2026
+# Problem: https://leetcode.com/problems/weighted-word-mapping/
+# Leetcode Problem No: 3838
+# Relevance: Array, String, Hash Table
+
+from typing import List
+
+class Solution:
+
+    # Logic: Linear Scan with Character Weight Summing (O(L) Time, O(1) Auxiliary Space)
+    # where L is the total number of characters across all words.
+    # 1. We process each word in the `words` array one by one.
+    # 2. For each word, we calculate its total weight by summing the weights of its characters.
+    #    - Character `char`'s index in the `weights` array is computed as `ord(char) - ord('a')`.
+    # 3. Once we get the total weight of the word, we apply a modulo 26 operation (`word_weight % 26`).
+    # 4. The remainder is mapped to a character in reverse alphabetical order:
+    #    - 0 maps to 'z'
+    #    - 1 maps to 'y'
+    #    - ...
+    #    - 25 maps to 'a'
+    #    This mapping is calculated as: `chr(ord('z') - remainder)`.
+    # 5. We append the mapped character to our result string `res`.
+    # 6. Finally, we return the accumulated result string.
+    #
+    # Dry run for words = ["abc"], weights = [1, 2, 3, 0, 0, ..., 0]:
+    # 1. Initialize res = "".
+    # 2. Process "abc":
+    #    - 'a': idx = 0 -> weight += weights[0] = 1.
+    #    - 'b': idx = 1 -> weight += weights[1] = 2. Total = 3.
+    #    - 'c': idx = 2 -> weight += weights[2] = 3. Total = 6.
+    #    - Remainder = 6 % 26 = 6.
+    #    - Mapped char = chr(ord('z') - 6) = chr(122 - 6) = chr(116) = 't'.
+    #    - Append 't' to res.
+    # 3. Returns "t".
+
+    def mapWordWeights(self, words: List[str], weights: List[int]) -> str:
+        res = ""
+        for word in words:
+            word_weight = 0
+            for char in word:
+                idx = ord(char) - ord('a')
+                word_weight += weights[idx]
+            word_weight = word_weight % 26
+            res += chr(ord('z') - word_weight)
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: words = ["abc"], weights = [1, 2, 3] + [0]*23 -> Expected: "t" (sum 6 -> 'z'-6 = 't')
+    words1 = ["abc"]
+    weights1 = [1, 2, 3] + [0] * 23
+    print(f"Result for {words1}: {sol.mapWordWeights(words1, weights1)}")
+
+    # Example 2: words = ["leetcode", "code"], weights = [1]*26 -> Expected: "sz"
+    # "leetcode" sum = 8 -> remainder 8 -> 'z'-8 = 'r'
+    # "code" sum = 4 -> remainder 4 -> 'z'-4 = 'v'
+    words2 = ["leetcode", "code"]
+    weights2 = [1] * 26
+    print(f"Result for {words2}: {sol.mapWordWeights(words2, weights2)}")

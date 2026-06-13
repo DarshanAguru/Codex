@@ -2746,6 +2746,21 @@
     "type": "file"
   },
   {
+    "name": "Weighted_word_mapping.txt",
+    "path": "dsa/Weighted_word_mapping.txt",
+    "size": 2527,
+    "timestamp": 1781308800000,
+    "displayDate": "13/06/2026",
+    "problemNo": 3838,
+    "topics": [
+      "Array",
+      "String",
+      "Hash Table"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Word_search.txt",
     "path": "dsa/Word_search.txt",
     "size": 2857,
