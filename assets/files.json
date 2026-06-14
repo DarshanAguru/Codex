@@ -1548,6 +1548,21 @@
     "type": "file"
   },
   {
+    "name": "Maximum_twin_sum_of_a_linked_list.txt",
+    "path": "dsa/Maximum_twin_sum_of_a_linked_list.txt",
+    "size": 2970,
+    "timestamp": 1781395200000,
+    "displayDate": "14/06/2026",
+    "problemNo": 2130,
+    "topics": [
+      "Linked List",
+      "Two Pointers",
+      "Stack"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Median_of_two_sorted_arrays_bs.txt",
     "path": "dsa/Median_of_two_sorted_arrays_bs.txt",
     "size": 2917,
