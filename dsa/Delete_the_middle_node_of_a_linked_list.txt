@@ -1,0 +1,99 @@
+# Date: 15/06/2026
+# Problem: https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/
+# Leetcode Problem No: 2095
+# Relevance: Linked List, Two Pointers
+
+from typing import Optional
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+
+    # Logic: Slow/Fast Pointers for Middle Deletion (O(N) Time, O(1) Space)
+    # 1. We want to delete the middle node of a singly linked list.
+    # 2. We use two pointers: `curr` (which acts as the slow pointer) and `fast` (the fast pointer).
+    #    We also track `prev`, which is the node immediately preceding `curr`.
+    # 3. If the list is empty (`head == None`), we return it as is.
+    # 4. If the list contains only a single node (`fast.next == None`), deleting the middle node (which is the only node) results in an empty list. We return `None`.
+    # 5. Otherwise, we traverse the list:
+    #    - `fast` moves forward by two nodes at a time.
+    #    - `curr` moves forward by one node.
+    #    - `prev` keeps track of `curr`'s previous position.
+    # 6. When `fast` reaches the end of the list, `curr` points to the middle node.
+    # 7. We bypass `curr` by pointing `prev.next` to `curr.next`.
+    # 8. We return `head`.
+    #
+    # Dry run for head = [1, 3, 4, 7, 1, 2, 6]:
+    # 1. Initialize: curr = 1, fast = 1, prev = None.
+    # 2. Since fast.next (3) != None, enter loop:
+    #    - Iteration 1:
+    #      - fast.next != None -> fast moves to 4.
+    #      - prev = 1, curr = 3.
+    #    - Iteration 2:
+    #      - fast.next (7) != None -> fast moves to 1.
+    #      - prev = 3, curr = 4.
+    #    - Iteration 3:
+    #      - fast.next (2) != None -> fast moves to 6.
+    #      - prev = 4, curr = 7.
+    #    - Iteration 4:
+    #      - fast.next (None) is None -> break loop.
+    # 3. After loop: prev = 4, curr = 7.
+    # 4. Bypass middle node: prev.next = curr.next -> Node 4 points to Node 1.
+    # 5. Returns head of [1, 3, 4, 1, 2, 6].
+
+    def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        curr = head
+        fast = head
+        prev = None
+        if head == None:
+            return head
+        if fast.next != None:
+            while fast != None:
+                if fast.next != None:
+                    fast = fast.next.next
+                else:
+                    break
+                prev = curr
+                curr = curr.next
+            prev.next = curr.next
+            return head
+        return None
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Helper to build list
+    def build_list(arr):
+        if not arr:
+            return None
+        head = ListNode(arr[0])
+        curr = head
+        for val in arr[1:]:
+            curr.next = ListNode(val)
+            curr = curr.next
+        return head
+
+    # Helper to print list
+    def print_list(head):
+        res = []
+        curr = head
+        while curr:
+            res.append(curr.val)
+            curr = curr.next
+        print(res)
+
+    # Example 1: head = [1,3,4,7,1,2,6] -> Expected: [1,3,4,1,2,6]
+    head1 = build_list([1, 3, 4, 7, 1, 2, 6])
+    print_list(sol.deleteMiddle(head1))
+
+    # Example 2: head = [1,2,3,4] -> Expected: [1,2,4]
+    head2 = build_list([1, 2, 3, 4])
+    print_list(sol.deleteMiddle(head2))
+
+    # Example 3: head = [2,1] -> Expected: [2]
+    head3 = build_list([2, 1])
+    print_list(sol.deleteMiddle(head3))

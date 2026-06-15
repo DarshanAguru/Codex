@@ -615,6 +615,20 @@
     "type": "file"
   },
   {
+    "name": "Delete_the_middle_node_of_a_linked_list.txt",
+    "path": "dsa/Delete_the_middle_node_of_a_linked_list.txt",
+    "size": 3456,
+    "timestamp": 1781481600000,
+    "displayDate": "15/06/2026",
+    "problemNo": 2095,
+    "topics": [
+      "Linked List",
+      "Two Pointers"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Destroying_asteroids.txt",
     "path": "dsa/Destroying_asteroids.txt",
     "size": 2208,
