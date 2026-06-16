@@ -2188,6 +2188,20 @@
     "type": "file"
   },
   {
+    "name": "Process_string_with_special_operations_i.txt",
+    "path": "dsa/Process_string_with_special_operations_i.txt",
+    "size": 2017,
+    "timestamp": 1781568000000,
+    "displayDate": "16/06/2026",
+    "problemNo": 3612,
+    "topics": [
+      "String",
+      "Simulation"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Product_of_array_except_self.txt",
     "path": "dsa/Product_of_array_except_self.txt",
     "size": 1974,

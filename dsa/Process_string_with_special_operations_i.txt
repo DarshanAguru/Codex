@@ -1,0 +1,52 @@
+# Date: 16/06/2026
+# Problem: https://leetcode.com/problems/process-string-with-special-operations-i/
+# Leetcode Problem No: 3612
+# Relevance: String, Simulation
+
+class Solution:
+
+    # Logic: Direct Simulation using String Operations (O(N) Time where N is the length of s, or O(L) where L is final length)
+    # 1. We process each character `c` of the input string `s` from left to right.
+    # 2. We maintain a `result` string and update it based on the character type:
+    #    - If `c == '#'`: We duplicate the current `result` and append it to itself (`result += result`).
+    #    - If `c == '%'`: We reverse the current `result` string (`result = result[::-1]`).
+    #    - If `c == '*'`: We remove the last character from `result` (`result = result[:-1]`).
+    #    - Otherwise (lowercase English letters): We append `c` to `result` (`result += c`).
+    # 3. Finally, we return the processed `result` string.
+    #
+    # Dry run for s = "a#b%*":
+    # 1. Initialize result = "".
+    # 2. Process 'a': result = "a".
+    # 3. Process '#': result = "a" + "a" = "aa".
+    # 4. Process 'b': result = "aa" + "b" = "aab".
+    # 5. Process '%': result = "aab"[::-1] = "baa".
+    # 6. Process '*': result = "baa"[:-1] = "ba".
+    # 7. Returns "ba".
+
+    def processStr(self, s: str) -> str:
+        result = ""
+        for c in s:
+            if c == '#':
+                result += result
+            elif c == '%':
+                result = result[::-1]
+            elif c == "*":
+                result = result[:-1]
+            else:
+                result += c
+        return result
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "a#b%*" -> Expected: "ba"
+    s1 = "a#b%*"
+    print(f"Result for '{s1}': '{sol.processStr(s1)}'")
+
+    # Example 2: s = "abc*de#%" -> Expected: "edbaedba"
+    # Process:
+    # "a" -> "ab" -> "abc" -> "ab" (due to '*') -> "abd" -> "abde"
+    # '#' -> "abdeabde"
+    # '%' -> "edbaedba"
+    s2 = "abc*de#%"
+    print(f"Result for '{s2}': '{sol.processStr(s2)}'")
