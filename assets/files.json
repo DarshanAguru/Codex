@@ -60,6 +60,19 @@
     "type": "file"
   },
   {
+    "name": "Angle_between_hands_of_a_clock.txt",
+    "path": "dsa/Angle_between_hands_of_a_clock.txt",
+    "size": 1929,
+    "timestamp": 1781740800000,
+    "displayDate": "18/06/2026",
+    "problemNo": 1344,
+    "topics": [
+      "Math"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Area_of_largest_rectangle_in_hist.txt",
     "path": "dsa/Area_of_largest_rectangle_in_hist.txt",
     "size": 2933,

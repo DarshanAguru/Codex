@@ -1,0 +1,40 @@
+# Date: 18/06/2026
+# Problem: https://leetcode.com/problems/angle-between-hands-of-a-clock/
+# Leetcode Problem No: 1344
+# Relevance: Math
+
+class Solution:
+
+    # Logic: Closed-Form Mathematical Position Calculation (O(1) Time, O(1) Space)
+    # 1. We want to find the smaller angle between the hour and minute hands of a clock.
+    # 2. We can compute the degrees of each hand relative to the 12:00 mark (0 degrees):
+    #    - The minute hand moves 360 degrees in 60 minutes, which is 6 degrees per minute.
+    #      Minute hand angle = 6 * minutes.
+    #    - The hour hand moves 360 degrees in 12 hours, which is 30 degrees per hour.
+    #      Additionally, the hour hand moves 30 degrees over 60 minutes, which is 0.5 degrees per minute.
+    #      Hour hand angle = 30 * hour + 0.5 * minutes.
+    # 3. The absolute difference between the two angles is:
+    #    abs(hour_angle - minute_angle) = abs((30 * hour + 0.5 * minutes) - 6 * minutes)
+    #                                   = abs(30 * hour - 5.5 * minutes).
+    # 4. If this difference is greater than 180 degrees, the smaller angle is 360 minus the difference.
+    #    Otherwise, the smaller angle is the difference itself.
+    #
+    # Dry run for hour = 12, minutes = 30:
+    # 1. Calculate angle: abs((30 * 12) - (5.5 * 30)) = abs(360 - 165) = 195.
+    # 2. Since 195 >= 180, return 360 - 195 = 165.0.
+
+    def angleClock(self, hour: int, minutes: int) -> float:
+        angle = abs((30 * hour) - (5.5 * minutes))
+        return angle if angle < 180 else 360 - angle
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: hour = 12, minutes = 30 -> Expected: 165.0
+    print(f"Result for 12:30: {sol.angleClock(12, 30)}")
+
+    # Example 2: hour = 3, minutes = 30 -> Expected: 75.0
+    print(f"Result for 3:30: {sol.angleClock(3, 30)}")
+
+    # Example 3: hour = 3, minutes = 15 -> Expected: 7.5
+    print(f"Result for 3:15: {sol.angleClock(3, 15)}")
