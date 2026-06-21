@@ -1451,6 +1451,22 @@
     "type": "file"
   },
   {
+    "name": "Maximum_ice_cream_bars.txt",
+    "path": "dsa/Maximum_ice_cream_bars.txt",
+    "size": 2501,
+    "timestamp": 1782000000000,
+    "displayDate": "21/06/2026",
+    "problemNo": 1833,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Sorting",
+      "Counting Sort"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_level_sum_of_a_binary_tree.txt",
     "path": "dsa/Maximum_level_sum_of_a_binary_tree.txt",
     "size": 2215,
