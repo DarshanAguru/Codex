@@ -1,0 +1,59 @@
+# Date: 21/06/2026
+# Problem: https://leetcode.com/problems/maximum-number-of-balloons/
+# Leetcode Problem No: 1189
+# Relevance: Frequency Array, Hash Map, Min/Max
+
+from typing import List
+from collections import Counter
+
+class Solution:
+
+    # Logic: Frequency Array / Counter Optimization (O(N) Time, O(1) Space)
+    # 1. Initialize a frequency map for the target word 'balloon': { 'b': 1, 'a': 1, 'l': 2, 'o': 2, 'n': 1 }.
+    # 2. Count the frequency of each character in the input `text` using `collections.Counter`.
+    # 3. Iterate through the required characters of 'balloon'.
+    #    - For 'l' and 'o', we need 2 occurrences. We calculate `freq[char] // 2`.
+    #    - For 'b', 'a', 'n', we need 1 occurrence. We take `freq[char]`.
+    # 4. Find the minimum of these counts. This minimum represents the maximum number of "balloons" we can form.
+    #
+    # Dry run for text = "nlaebolko":
+    # freq = { 'n': 2, 'l': 2, 'a': 1, 'e': 1, 'b': 1, 'o': 2 }
+    # Required counts:
+    # b: freq['b'] // 1 = 1
+    # a: freq['a'] // 1 = 1
+    # l: freq['l'] // 2 = 2 // 2 = 1
+    # o: freq['o'] // 2 = 2 // 2 = 1
+    # n: freq['n'] // 1 = 2
+    # Result = min(1, 1, 1, 1, 2) = 1.
+
+    def maxNumberOfBalloons(self, text: str) -> int:
+        freq = Counter(text)
+        
+        # Required frequencies for "balloon": b:1, a:1, l:2, o:2, n:1
+        # We can pre-calculate this in a map or just calculate inline.
+        
+        # Check 'l' and 'o' which need 2 occurrences
+        count_l = freq['l'] // 2
+        count_o = freq['o'] // 2
+        
+        # Check 'b', 'a', 'n' which need 1 occurrence
+        count_b = freq['b']
+        count_a = freq['a']
+        count_n = freq['n']
+        
+        return min(count_b, count_a, count_l, count_o, count_n)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: text = "nlaebolko" -> Expected: 1
+    text1 = "nlaebolko"
+    print(f"Result for '{text1}': {sol.maxNumberOfBalloons(text1)}")
+
+    # Example 2: text = "loonbalxballpoon" -> Expected: 2
+    text2 = "loonbalxballpoon"
+    print(f"Result for '{text2}': {sol.maxNumberOfBalloons(text2)}")
+
+    # Example 3: text = "leetcode" -> Expected: 0
+    text3 = "leetcode"
+    print(f"Result for '{text3}': {sol.maxNumberOfBalloons(text3)}")

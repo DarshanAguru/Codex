@@ -1513,6 +1513,21 @@
     "type": "file"
   },
   {
+    "name": "Maximum_number_of_balloons.txt",
+    "path": "dsa/Maximum_number_of_balloons.txt",
+    "size": 2259,
+    "timestamp": 1782000000000,
+    "displayDate": "21/06/2026",
+    "problemNo": 1189,
+    "topics": [
+      "Frequency Array",
+      "Hash Map",
+      "Min/Max"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_number_of_k-divisible_components.txt",
     "path": "dsa/Maximum_number_of_k-divisible_components.txt",
     "size": 3507,
