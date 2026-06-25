@@ -511,6 +511,20 @@
     "type": "file"
   },
   {
+    "name": "Count_subarrays_with_majority_element_i.txt",
+    "path": "dsa/Count_subarrays_with_majority_element_i.txt",
+    "size": 2538,
+    "timestamp": 1782345600000,
+    "displayDate": "25/06/2026",
+    "problemNo": 3737,
+    "topics": [
+      "Array",
+      "Prefix Sum"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Count_submatrices_with_equal_frequency_of_x_and_y.txt",
     "path": "dsa/Count_submatrices_with_equal_frequency_of_x_and_y.txt",
     "size": 2461,

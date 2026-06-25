@@ -1,0 +1,66 @@
+# Date: 25/06/2026
+# Problem: https://leetcode.com/problems/count-subarrays-with-majority-element-i/
+# Leetcode Problem No: 3737
+# Relevance: Array, Prefix Sum
+
+from typing import List
+
+class Solution:
+
+    # Logic: Prefix Sum (O(N^2) Time, O(N) Space)
+    # 1. Transform the array conceptually where elements equal to target are +1, and other elements are -1.
+    # 2. Compute a prefix sum array `pref` of size `n + 1`, where `pref[i+1]` holds the running sum up to index `i`.
+    # 3. For any subarray from index `i` to `j`, `target` is the majority element if the sum of the transformed
+    #    elements in `nums[i...j]` is positive, which is equivalent to `pref[j+1] > pref[i]`.
+    # 4. Use two loops to check all possible subarrays and increment `res` when the condition is met.
+    #
+    # Dry run for nums = [3, 2, 3], target = 3:
+    # n = 3
+    # pref = [0, 0, 0, 0]
+    # Build pref:
+    # - i = 0: nums[0] == 3 -> pref[1] = 0 + 1 = 1
+    # - i = 1: nums[1] == 2 -> pref[2] = 1 - 1 = 0
+    # - i = 2: nums[2] == 3 -> pref[3] = 0 + 1 = 1
+    # pref = [0, 1, 0, 1]
+    # Nested loops:
+    # - i = 0:
+    #   - j = 0: pref[1](1) > pref[0](0) -> True, res = 1
+    #   - j = 1: pref[2](0) > pref[0](0) -> False
+    #   - j = 2: pref[3](1) > pref[0](0) -> True, res = 2
+    # - i = 1:
+    #   - j = 1: pref[2](0) > pref[1](1) -> False
+    #   - j = 2: pref[3](1) > pref[1](1) -> False
+    # - i = 2:
+    #   - j = 2: pref[3](1) > pref[2](0) -> True, res = 3
+    # Returns 3.
+
+    def countMajoritySubarrays(self, nums: List[int], target: int) -> int:
+        n = len(nums)
+        res = 0
+        pref = [0] * (n + 1)
+        for i in range(n):
+            pref[i + 1] = pref[i] + (1 if nums[i] == target else -1)
+        
+        for i in range(n):
+            for j in range(i, n):
+                if pref[j + 1] > pref[i]:
+                    res += 1
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [3, 2, 3], target = 3 -> Expected: 3
+    nums1 = [3, 2, 3]
+    target1 = 3
+    print(f"Result for {nums1} with target={target1}: {sol.countMajoritySubarrays(nums1, target1)}")
+
+    # Example 2: nums = [2, 2, 3, 2], target = 2 -> Expected: 7
+    nums2 = [2, 2, 3, 2]
+    target2 = 2
+    print(f"Result for {nums2} with target={target2}: {sol.countMajoritySubarrays(nums2, target2)}")
+
+    # Example 3: nums = [1, 2, 3], target = 1 -> Expected: 1
+    nums3 = [1, 2, 3]
+    target3 = 1
+    print(f"Result for {nums3} with target={target3}: {sol.countMajoritySubarrays(nums3, target3)}")
