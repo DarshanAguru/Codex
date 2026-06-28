@@ -1465,6 +1465,21 @@
     "type": "file"
   },
   {
+    "name": "Maximum_element_after_decreasing_and_rearranging.txt",
+    "path": "dsa/Maximum_element_after_decreasing_and_rearranging.txt",
+    "size": 1933,
+    "timestamp": 1782604800000,
+    "displayDate": "28/06/2026",
+    "problemNo": 1846,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_ice_cream_bars.txt",
     "path": "dsa/Maximum_ice_cream_bars.txt",
     "size": 2501,
