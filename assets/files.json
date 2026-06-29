@@ -2175,6 +2175,20 @@
     "type": "file"
   },
   {
+    "name": "Number_of_strings_that_appear_as_substrings_in_word.txt",
+    "path": "dsa/Number_of_strings_that_appear_as_substrings_in_word.txt",
+    "size": 2070,
+    "timestamp": 1782691200000,
+    "displayDate": "29/06/2026",
+    "problemNo": 1967,
+    "topics": [
+      "String",
+      "String Matching"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Number_of_ways_to_assign_edge_weights_i.txt",
     "path": "dsa/Number_of_ways_to_assign_edge_weights_i.txt",
     "size": 2458,

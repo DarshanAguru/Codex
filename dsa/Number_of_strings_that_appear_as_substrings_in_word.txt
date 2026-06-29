@@ -1,0 +1,48 @@
+# Date: 29/06/2026
+# Problem: https://leetcode.com/problems/number-of-strings-that-appear-as-substrings-in-word/
+# Leetcode Problem No: 1967
+# Relevance: String, String Matching
+
+from typing import List
+
+class Solution:
+
+    # Logic: Substring Search (O(N * M) Time, where N is total length of patterns and M is length of word, O(1) Space)
+    # 1. Initialize a counter `cnt` to 0.
+    # 2. Iterate through each string `pattern` in the `patterns` list.
+    # 3. For each `pattern`, check if it is a substring of `word` using Python's `word.find(pattern)`.
+    #    - If `word.find(pattern) != -1`, the pattern is found, so we increment `cnt` by 1.
+    #    - Otherwise, we add 0.
+    # 4. Return the total count `cnt`.
+    #
+    # Dry run for patterns = ["a", "abc", "bc", "d"], word = "abc":
+    # 1. cnt = 0
+    # 2. pattern = "a":   word.find("a") = 0 != -1   -> cnt += 1 (cnt = 1)
+    # 3. pattern = "abc": word.find("abc") = 0 != -1 -> cnt += 1 (cnt = 2)
+    # 4. pattern = "bc":  word.find("bc") = 1 != -1  -> cnt += 1 (cnt = 3)
+    # 5. pattern = "d":   word.find("d") = -1        -> cnt += 0 (cnt = 3)
+    # 6. Returns 3.
+
+    def numOfStrings(self, patterns: List[str], word: str) -> int:
+        cnt = 0
+        for pattern in patterns:
+            cnt += 1 if word.find(pattern) != -1 else 0
+        return cnt
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: patterns = ["a", "abc", "bc", "d"], word = "abc" -> Expected: 3
+    patterns1 = ["a", "abc", "bc", "d"]
+    word1 = "abc"
+    print(f"Result for patterns={patterns1}, word='{word1}': {sol.numOfStrings(patterns1, word1)}")
+
+    # Example 2: patterns = ["a", "b", "c"], word = "aaaaabbbbb" -> Expected: 2
+    patterns2 = ["a", "b", "c"]
+    word2 = "aaaaabbbbb"
+    print(f"Result for patterns={patterns2}, word='{word2}': {sol.numOfStrings(patterns2, word2)}")
+
+    # Example 3: patterns = ["a", "a", "a"], word = "ab" -> Expected: 3
+    patterns3 = ["a", "a", "a"]
+    word3 = "ab"
+    print(f"Result for patterns={patterns3}, word='{word3}': {sol.numOfStrings(patterns3, word3)}")
