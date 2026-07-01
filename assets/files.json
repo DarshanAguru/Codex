@@ -961,6 +961,22 @@
     "type": "file"
   },
   {
+    "name": "Find_the_safest_path_in_a_grid.txt",
+    "path": "dsa/Find_the_safest_path_in_a_grid.txt",
+    "size": 4400,
+    "timestamp": 1782864000000,
+    "displayDate": "01/07/2026",
+    "problemNo": 2812,
+    "topics": [
+      "Array",
+      "Breadth-First Search",
+      "Heap (Priority Queue)",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Find_unique_binary_string.txt",
     "path": "dsa/Find_unique_binary_string.txt",
     "size": 1388,

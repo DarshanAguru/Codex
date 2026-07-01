@@ -1,0 +1,103 @@
+# Date: 01/07/2026
+# Problem: https://leetcode.com/problems/find-the-safest-path-in-a-grid/
+# Leetcode Problem No: 2812
+# Relevance: Array, Breadth-First Search, Heap (Priority Queue), Matrix
+
+import heapq
+from collections import deque
+from typing import List
+
+class Solution:
+
+    # Logic: Multi-source BFS + Modified Dijkstra (O(N^2 log N) Time, O(N^2) Space)
+    # 1. First, we need to find the minimum distance from each cell to any thief (cells with value 1).
+    #    We use a multi-source BFS starting with all thieves. This fills the `dist` table where
+    #    `dist[i][j]` is the shortest Manhattan distance to the nearest thief.
+    # 2. Next, we want to find a path from (0,0) to (n-1,n-1) that maximizes the minimum cell-safeness value.
+    #    We use a max-heap (implemented via negative values since Python has a min-heap) to explore cells.
+    #    At each step, we pop the cell with the highest current safeness factor.
+    # 3. For every neighbor we push `min(val, dist[nx][ny])` to the priority queue.
+    # 4. The first time we reach (n-1, n-1), the popped value will be the maximum safeness factor of the safest path.
+    #
+    # Dry run for grid = [[0,0,1],[0,0,0],[0,0,0]]:
+    # Thieves at (0, 2).
+    # 1. Multi-source BFS starting from (0, 2):
+    #    - dist = [[2, 1, 0],
+    #              [3, 2, 1],
+    #              [4, 3, 2]]
+    # 2. Dijkstra starts at (0, 0):
+    #    - pq = [(-dist[0][0], 0, 0)] = [(-2, 0, 0)]
+    #    - Pop (-2, 0, 0) -> val = 2. Neighbors of (0, 0):
+    #      - (0, 1): push (-min(2, dist[0][1]), 0, 1) = (-1, 0, 1)
+    #      - (1, 0): push (-min(2, dist[1][0]), 1, 0) = (-2, 1, 0)
+    #    - pq = [(-2, 1, 0), (-1, 0, 1)]
+    #    - Pop (-2, 1, 0) -> val = 2. Neighbors of (1, 0):
+    #      - (1, 1): push (-min(2, dist[1][1]), 1, 1) = (-2, 1, 1)
+    #      - (2, 0): push (-min(2, dist[2][0]), 2, 0) = (-2, 2, 0)
+    #    - pq = [(-2, 1, 1), (-2, 2, 0), (-1, 0, 1)]
+    #    - Pop (-2, 1, 1) -> val = 2. Neighbors of (1, 1):
+    #      - (1, 2): push (-min(2, dist[1][2]), 1, 2) = (-1, 1, 2)
+    #      - (2, 1): push (-min(2, dist[2][1]), 2, 1) = (-2, 2, 1)
+    #    - pq = [(-2, 2, 0), (-2, 2, 1), (-1, 0, 1), (-1, 1, 2)]
+    #    - Pop (-2, 2, 0) -> val = 2. Neighbors of (2, 0):
+    #      - already visited/pushed.
+    #    - Pop (-2, 2, 1) -> val = 2. Neighbors of (2, 1):
+    #      - (2, 2): push (-min(2, dist[2][2]), 2, 2) = (-2, 2, 2)
+    #    - pq = [(-2, 2, 2), (-1, 0, 1), (-1, 1, 2)]
+    #    - Pop (-2, 2, 2) -> val = 2. Target (2, 2) reached.
+    # 3. Returns 2.
+
+    def maximumSafenessFactor(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        dist = [[-1] * n for _ in range(n)]
+        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        dq = deque()
+
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    dist[i][j] = 0
+                    dq.append((i, j))
+
+        while dq:
+            x, y = dq.popleft()
+            for dx, dy in dirs:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < n and 0 <= ny < n and dist[nx][ny] == -1:
+                    dist[nx][ny] = dist[x][y] + 1
+                    dq.append((nx, ny))
+        
+        pq = [(-dist[0][0], 0, 0)]
+        vis = [[False] * n for _ in range(n)]
+
+        while pq:
+            val, x, y = heapq.heappop(pq)
+            val = -val
+
+            if vis[x][y]:
+                continue
+            vis[x][y] = True
+
+            if x == n - 1 and y == n - 1:
+                return val
+            
+            for dx, dy in dirs:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < n and 0 <= ny < n and not vis[nx][ny]:
+                    heapq.heappush(pq, (-min(val, dist[nx][ny]), nx, ny))
+        return 0
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: grid = [[1,0,0],[0,0,0],[0,0,1]] -> Expected: 0
+    grid1 = [[1, 0, 0], [0, 0, 0], [0, 0, 1]]
+    print(f"Result for {grid1}: {sol.maximumSafenessFactor(grid1)}")
+
+    # Example 2: grid = [[0,0,1],[0,0,0],[0,0,0]] -> Expected: 2
+    grid2 = [[0, 0, 1], [0, 0, 0], [0, 0, 0]]
+    print(f"Result for {grid2}: {sol.maximumSafenessFactor(grid2)}")
+
+    # Example 3: grid = [[0,0,0,1],[0,0,0,0],[0,0,0,0],[0,0,0,0]] -> Expected: 2
+    grid3 = [[0, 0, 0, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+    print(f"Result for {grid3}: {sol.maximumSafenessFactor(grid3)}")
