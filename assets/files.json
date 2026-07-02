@@ -801,6 +801,23 @@
     "type": "file"
   },
   {
+    "name": "Find_a_safe_walk_through_a_grid.txt",
+    "path": "dsa/Find_a_safe_walk_through_a_grid.txt",
+    "size": 3932,
+    "timestamp": 1782950400000,
+    "displayDate": "02/07/2026",
+    "problemNo": 3286,
+    "topics": [
+      "Array",
+      "Breadth-First Search",
+      "Graph",
+      "Matrix",
+      "Shortest Path"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Find_all_numbers_disappeared_in_an_array.txt",
     "path": "dsa/Find_all_numbers_disappeared_in_an_array.txt",
     "size": 1879,

@@ -1,0 +1,87 @@
+# Date: 02/07/2026
+# Problem: https://leetcode.com/problems/find-a-safe-walk-through-a-grid/
+# Leetcode Problem No: 3286
+# Relevance: Array, Breadth-First Search, Graph, Matrix, Shortest Path
+
+from collections import deque
+from typing import List
+
+class Solution:
+
+    # Logic: BFS with Max Health Tracking (O(M * N) Time, O(M * N) Space)
+    # 1. We want to find if there exists a path from (0,0) to (m-1,n-1) such that the remaining health is > 0.
+    #    We use a 2D array `dist` initialized to -1, where `dist[x][y]` stores the maximum health we can have
+    #    when reaching cell `(x, y)`.
+    # 2. We start from `(0,0)` with initial health `health - grid[0][0]` and push `(health - grid[0][0], 0, 0)` to the deque.
+    # 3. During BFS, for each popped `(h, x, y)`, if the popped health `h` is less than the best health recorded
+    #    for `(x, y)` (`dist[x][y]`), we discard this state.
+    # 4. Otherwise, we explore the 4-directional neighbors `(nx, ny)`.
+    #    The new health `nh` is `h - grid[nx][ny]`. If `nh` is strictly greater than the recorded `dist[nx][ny]`,
+    #    we update `dist[nx][ny] = nh` and append the new state to the deque.
+    # 5. Finally, we return True if `dist[m-1][n-1] > 0`, else False.
+    #
+    # Dry run for grid = [[1,1,1],[1,0,1],[1,1,1]], health = 5:
+    # m = 3, n = 3
+    # dist initialized to 3x3 of -1.
+    # dist[0][0] = grid[0][0] = 1
+    # Push (5 - 1, 0, 0) = (4, 0, 0) to dq.
+    #
+    # Loop 1: Pop (4, 0, 0)
+    # - Neighbors of (0,0):
+    #   - (0,1): nh = 4 - 1 = 3. 3 > -1 -> dist[0][1] = 3, append (3, 0, 1)
+    #   - (1,0): nh = 4 - 1 = 3. 3 > -1 -> dist[1][0] = 3, append (3, 1, 0)
+    #
+    # Loop 2: Pop (3, 0, 1)
+    # - Neighbors of (0,1):
+    #   - (0,2): nh = 3 - 1 = 2. 2 > -1 -> dist[0][2] = 2, append (2, 0, 2)
+    #   - (1,1): nh = 3 - 0 = 3. 3 > -1 -> dist[1][1] = 3, append (3, 1, 1)
+    #
+    # Loop 3: Pop (3, 1, 0)
+    # - Neighbors of (1,0):
+    #   - (2,0): nh = 3 - 1 = 2. 2 > -1 -> dist[2][0] = 2, append (2, 2, 0)
+    #
+    # Loop 4: Pop (3, 1, 1)
+    # - Neighbors of (1,1):
+    #   - (1,2): nh = 3 - 1 = 2. 2 > -1 -> dist[1][2] = 2, append (2, 1, 2)
+    #   - (2,1): nh = 3 - 1 = 2. 2 > -1 -> dist[2][1] = 2, append (2, 2, 1)
+    #
+    # (The search continues and finds a path with remaining health = 5 - (1 + 0 + 1 + 1 + 1) = 1 > 0)
+    # Result: True
+
+    def findSafeWalk(self, grid: List[List[int]], health: int) -> bool:
+        m, n = len(grid), len(grid[0])
+        dist = [[-1] * n for _ in range(m)]
+        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        dist[0][0] = grid[0][0]
+        dq = deque()
+        dq.append((health - dist[0][0], 0, 0))
+        while dq:
+            h, x, y = dq.popleft()
+            if h < dist[x][y]:
+                continue
+            for dx, dy in dirs:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < m and 0 <= ny < n:
+                    nh = h - grid[nx][ny]
+                    if nh > dist[nx][ny]:
+                        dist[nx][ny] = nh
+                        dq.append((nh, nx, ny))
+        return dist[m - 1][n - 1] > 0
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: grid = [[0,1,0,0,0],[0,1,0,1,0],[0,0,0,1,0]], health = 1 -> Expected: True
+    grid1 = [[0, 1, 0, 0, 0], [0, 1, 0, 1, 0], [0, 0, 0, 1, 0]]
+    health1 = 1
+    print(f"Result for grid1, health={health1}: {sol.findSafeWalk(grid1, health1)}")
+
+    # Example 2: grid = [[0,1,1,0,0,0],[1,0,1,0,0,0],[0,1,1,1,0,1],[0,0,1,0,1,0]], health = 3 -> Expected: False
+    grid2 = [[0, 1, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0], [0, 1, 1, 1, 0, 1], [0, 0, 1, 0, 1, 0]]
+    health2 = 3
+    print(f"Result for grid2, health={health2}: {sol.findSafeWalk(grid2, health2)}")
+
+    # Example 3: grid = [[1,1,1],[1,0,1],[1,1,1]], health = 5 -> Expected: True
+    grid3 = [[1, 1, 1], [1, 0, 1], [1, 1, 1]]
+    health3 = 5
+    print(f"Result for grid3, health={health3}: {sol.findSafeWalk(grid3, health3)}")
