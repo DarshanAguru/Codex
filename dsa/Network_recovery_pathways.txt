@@ -1,0 +1,108 @@
+# Date: 03/07/2026
+# Problem: https://leetcode.com/problems/network-recovery-pathways/
+# Leetcode Problem No: 3620
+# Relevance: Graph, Binary Search, Shortest Path, Dijkstra
+
+import heapq
+from collections import defaultdict
+from typing import List
+
+class Solution:
+
+    # Logic: Binary Search on Answer + Dijkstra's Algorithm (O(E log E * log(Max_Weight)) Time, O(V + E) Space)
+    # 1. We want to find a path from node 0 to node n-1 such that the total edge weight sum (recovery cost) is <= k,
+    #    and all intermediate nodes are online. Among all such paths, we want to maximize the minimum edge weight (path score).
+    # 2. We can binary search the result in the range [0, max_edge_weight].
+    # 3. For a candidate value `mid`, we check if a valid path exists where all edge weights are >= `mid` and the shortest
+    #    path cost is <= k.
+    # 4. To perform the feasibility check (`helper(mid)`), we run Dijkstra's algorithm:
+    #    - We only traverse edges with weight >= `mid`.
+    #    - We do not visit any intermediate nodes `v` (where `v != n-1`) if they are offline (`not online[v]`).
+    #    - If we reach the target node `n-1` with a cost <= k, we return True.
+    # 5. Based on the helper's result, we adjust our binary search range to find the maximum possible valid path score.
+    #
+    # Dry run for edges = [[0, 1, 5], [1, 2, 10]], online = [True, True, True], k = 15:
+    # n = 3, maxx = 10.
+    # Binary search range: l = 0, h = 10.
+    #
+    # Step 1: mid = 5. Run helper(5):
+    # - Start at 0, dist = [0, inf, inf].
+    # - From 0, neighbor 1 with edge weight 5. Since 5 >= 5 and online[1] is True: nc = 5. dist = [0, 5, inf], push (5, 1).
+    # - Pop (5, 1). Neighbor 2 with edge weight 10. Since 10 >= 5: nc = 15. dist = [0, 5, 15], push (15, 2).
+    # - Pop (15, 2). u == 2 (n-1). Since 15 <= k (15), return True.
+    # - l is updated to mid + 1 = 6. res = 5.
+    #
+    # Step 2: mid = 8. Run helper(8):
+    # - From 0, neighbor 1 has edge weight 5 < 8. Ignored.
+    # - Queue becomes empty. return False.
+    # - h is updated to mid - 1 = 7.
+    #
+    # Step 3: mid = 6. Run helper(6):
+    # - From 0, neighbor 1 has edge weight 5 < 6. Ignored.
+    # - return False.
+    # - h is updated to mid - 1 = 5.
+    #
+    # Loop ends. Return res = 5.
+
+    def findMaxPathScore(self, edges: List[List[int]], online: List[bool], k: int) -> int:
+        n = len(online)
+        graph = defaultdict(list)
+        maxx = 0
+        for u, v, score in edges:
+            graph[u].append((v, score))
+            maxx = max(maxx, score)
+        
+        def helper(lim: int) -> bool:
+            dist = [float('inf')] * n
+            dist[0] = 0
+            pq = [(0, 0)]
+            while pq:
+                c, u = heapq.heappop(pq)
+                if c > dist[u]:
+                    continue
+
+                if u == n - 1:
+                    return c <= k
+                
+                for v, w in graph[u]:
+                    if w < lim:
+                        continue
+                    
+                    if v != n - 1 and not online[v]:
+                        continue
+                    
+                    nc = w + c
+                    if nc < dist[v] and nc <= k:
+                        dist[v] = nc
+                        heapq.heappush(pq, (nc, v))
+            return False
+        
+        l, h = 0, maxx
+        res = -1
+        while l <= h:
+            mid = (l + h) // 2
+            if helper(mid):
+                res = mid
+                l = mid + 1
+            else:
+                h = mid - 1
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1:
+    # Nodes: 0, 1, 2. Online: all True. k = 15.
+    # Path 0 -> 1 -> 2 has edges of cost 5 and 10. Max score = min(5, 10) = 5.
+    edges1 = [[0, 1, 5], [1, 2, 10]]
+    online1 = [True, True, True]
+    k1 = 15
+    print(f"Result for example 1: {sol.findMaxPathScore(edges1, online1, k1)}")
+
+    # Example 2:
+    # Same as Example 1 but node 1 is offline.
+    # Since node 1 (intermediate node) is offline, no path exists. Expected: -1.
+    edges2 = [[0, 1, 5], [1, 2, 10]]
+    online2 = [True, False, True]
+    k2 = 15
+    print(f"Result for example 2: {sol.findMaxPathScore(edges2, online2, k2)}")

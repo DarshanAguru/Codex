@@ -2152,6 +2152,22 @@
     "type": "file"
   },
   {
+    "name": "Network_recovery_pathways.txt",
+    "path": "dsa/Network_recovery_pathways.txt",
+    "size": 4240,
+    "timestamp": 1783036800000,
+    "displayDate": "03/07/2026",
+    "problemNo": 3620,
+    "topics": [
+      "Graph",
+      "Binary Search",
+      "Shortest Path",
+      "Dijkstra"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Next_greater_element.txt",
     "path": "dsa/Next_greater_element.txt",
     "size": 2475,
