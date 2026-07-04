@@ -2108,6 +2108,22 @@
     "type": "file"
   },
   {
+    "name": "Minimum_score_of_a_path_between_two_cities.txt",
+    "path": "dsa/Minimum_score_of_a_path_between_two_cities.txt",
+    "size": 3489,
+    "timestamp": 1783123200000,
+    "displayDate": "04/07/2026",
+    "problemNo": 2492,
+    "topics": [
+      "Graph",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Union Find"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_swaps_to_arrange_a_binary_grid.txt",
     "path": "dsa/Minimum_swaps_to_arrange_a_binary_grid.txt",
     "size": 2404,
