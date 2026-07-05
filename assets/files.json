@@ -2226,6 +2226,21 @@
     "type": "file"
   },
   {
+    "name": "Number_of_paths_with_max_score.txt",
+    "path": "dsa/Number_of_paths_with_max_score.txt",
+    "size": 5299,
+    "timestamp": 1783209600000,
+    "displayDate": "05/07/2026",
+    "problemNo": 1301,
+    "topics": [
+      "Array",
+      "Dynamic Programming",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Number_of_steps_to_reduce_a_number_in_binary_representation_to_one.txt",
     "path": "dsa/Number_of_steps_to_reduce_a_number_in_binary_representation_to_one.txt",
     "size": 1898,
