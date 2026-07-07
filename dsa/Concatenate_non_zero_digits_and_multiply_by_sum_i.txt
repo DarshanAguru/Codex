@@ -1,0 +1,52 @@
+# Date: 07/07/2026
+# Problem: https://leetcode.com/problems/concatenate-non-zero-digits-and-multiply-by-sum-i/
+# Leetcode Problem No: 3754
+# Relevance: Math, Simulation, Digits
+
+class Solution:
+
+    # Logic: Mathematical Digit Extraction (O(log10(N)) Time, O(1) Space)
+    # 1. We want to extract non-zero digits of `n` in their original order, form a new integer `x`,
+    #    and return `x * sum_of_digits(x)`.
+    # 2. We extract digits from right to left using `n % 10` and division `n // 10`.
+    # 3. To reconstruct `x` in its original order from right to left, we use a multiplier `k` (starting at 1).
+    #    Each time we find a non-zero digit `rem`, we prepend it to `x` by updating `x = rem * k + x`
+    #    and increment `k` by a factor of 10 (`k = k * 10`).
+    # 4. Simultaneously, we maintain the sum of these non-zero digits in `summ`.
+    # 5. After processing all digits, we return `x * summ`.
+    #
+    # Dry run for n = 10203004:
+    # - Init: x = 0, k = 1, summ = 0.
+    # - Loop 1: rem = 4. x = 4 * 1 + 0 = 4, summ = 4, k = 10. n = 1020300.
+    # - Loop 2: rem = 0. Skip. n = 102030.
+    # - Loop 3: rem = 0. Skip. n = 10203.
+    # - Loop 4: rem = 3. x = 3 * 10 + 4 = 34, summ = 7, k = 100. n = 1020.
+    # - Loop 5: rem = 0. Skip. n = 102.
+    # - Loop 6: rem = 2. x = 2 * 100 + 34 = 234, summ = 9, k = 1000. n = 10.
+    # - Loop 7: rem = 0. Skip. n = 1.
+    # - Loop 8: rem = 1. x = 1 * 1000 + 234 = 1234, summ = 10, k = 10000. n = 0.
+    # - Returns: 1234 * 10 = 12340.
+
+    def sumAndMultiply(self, n: int) -> int:
+        x = 0
+        k = 1
+        summ = 0
+        while n != 0:
+            rem = n % 10
+            if rem != 0:
+                x = rem * k + x
+                summ += rem
+                k = k * 10
+            n = n // 10
+        return x * summ
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: n = 10203004 -> Expected: 12340
+    n1 = 10203004
+    print(f"Result for n={n1}: {sol.sumAndMultiply(n1)}")
+
+    # Example 2: n = 4506 -> Expected: 6840 (456 * 15)
+    n2 = 4506
+    print(f"Result for n={n2}: {sol.sumAndMultiply(n2)}")

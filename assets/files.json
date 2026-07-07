@@ -419,6 +419,21 @@
     "type": "file"
   },
   {
+    "name": "Concatenate_non_zero_digits_and_multiply_by_sum_i.txt",
+    "path": "dsa/Concatenate_non_zero_digits_and_multiply_by_sum_i.txt",
+    "size": 2096,
+    "timestamp": 1783382400000,
+    "displayDate": "07/07/2026",
+    "problemNo": 3754,
+    "topics": [
+      "Math",
+      "Simulation",
+      "Digits"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Construct_product_matrix.txt",
     "path": "dsa/Construct_product_matrix.txt",
     "size": 2751,
