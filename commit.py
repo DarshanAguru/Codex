@@ -26,11 +26,10 @@ def generate_message(status: str) -> str:
     if not all_files:
         return "Minor updates"
     
-    message = f"{', '.join(all_files)}"
-    if len(all_files) > 2:
-        message += f" and {len(all_files) - 2} other files"
-    
-    return message
+    if len(all_files) <= 2:
+        return f"{', '.join(all_files)}"
+    else:
+        return f"{', '.join(all_files[:2])} & {len(all_files) - 2} more"
 
 def main() -> None:
     print("1. Running build command...")
