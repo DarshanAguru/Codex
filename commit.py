@@ -31,37 +31,45 @@ def generate_message(status: str) -> str:
     else:
         return f"{', '.join(all_files[:2])} & {len(all_files) - 2} more"
 
+def betterPrint(text: str, lev: int = 1, ptr: str = "") -> None:
+    print_text = "\t" * (lev - 1)
+    if ptr.strip() != "":
+        print_text += f"{ptr} "
+    print_text += text
+    print(print_text)
+
+
 def main() -> None:
-    print("1. Running build command...")
+    betterPrint("Running build command...",ptr="1.")
     output = run_command("npm run build")
     if not output:
-        print("  --Build Failed")
+        betterPrint("Build Failed", lev=2, ptr="-")
         sys.exit(1)
     else:
-        print("  --", "Printing build output:")
+        betterPrint("Printing build output:", lev = 2, ptr = "-")
         for line in output.split("\n"):
             if "Successfully" in line:
-                print("    --",line)
-        print("  --","Build Successful")
+                betterPrint(line, lev=3, ptr="--")
+        betterPrint("Build Successful", lev = 2, ptr="-")
 
-    print("2. Staging all changes...")
+    betterPrint("Staging all changes...", ptr="2.")
     run_command("git add .")
     
     status = run_command("git status --short")
     if not status:
-        print("No changes to commit.")
+        betterPrint("No changes to commit.", lev=2, ptr="-")
         return
 
-    print("3. Generating commit message...")
+    betterPrint("Generating commit message...", ptr="3.")
     message = generate_message(status)
 
-    print(f'4. Committing (with message): "{message}"')
+    betterPrint(f'Committing (with message): "{message}"', ptr="4.")
     run_command(f'git commit -m "{message}"')
     
-    print("5. Pushing to origin main...")
+    betterPrint("Pushing to origin main...", ptr="5.")
     run_command("git push -u origin main")
     
-    print("6. Successfully committed and pushed!")
+    betterPrint("Successfully committed and pushed!", ptr="6.")
 
 if __name__ == "__main__":
     main()
