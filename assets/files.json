@@ -2398,6 +2398,21 @@
     "type": "file"
   },
   {
+    "name": "Rank_transform_of_an_array.txt",
+    "path": "dsa/Rank_transform_of_an_array.txt",
+    "size": 2598,
+    "timestamp": 1783814400000,
+    "displayDate": "12/07/2026",
+    "problemNo": 1331,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Remove_duplicated_from_sorted_list.txt",
     "path": "dsa/Remove_duplicated_from_sorted_list.txt",
     "size": 2179,

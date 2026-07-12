@@ -1,0 +1,58 @@
+# Date: 12/07/2026
+# Problem: https://leetcode.com/problems/rank-transform-of-an-array/
+# Leetcode Problem No: 1331
+# Relevance: Array, Hash Table, Sorting
+
+from typing import List
+
+class Solution:
+
+    # Logic: Sorting with Enumeration (O(N log N) Time, O(N) Space)
+    # 1. The problem asks us to replace each element of an array `arr` with its rank (starting from 1).
+    #    Larger elements get larger ranks. Identical elements get the same rank.
+    # 2. We enumerate `arr` as `(index, value)` pairs and sort them by value.
+    # 3. We initialize a result array `res` of size `n`.
+    # 4. We assign rank 1 to the smallest element (at `arr[0][0]` in the original array).
+    # 5. We iterate through the sorted pairs from index 1 to n-1:
+    #    - If the current element's value is different from the previous element's value (`arr[i][1] != arr[i-1][1]`),
+    #      its rank increases by 1.
+    #    - Otherwise, it gets the same rank as the previous element.
+    # 6. We return `res`.
+    #
+    # Dry run for arr = [40, 10, 20, 30]:
+    # n = 4.
+    # - Enumerate and Sort by value:
+    #   Sorted pairs: [(1, 10), (2, 20), (3, 30), (0, 40)]
+    # - Init res = [0, 0, 0, 0]
+    # - i = 0: res[arr[0][0]] = res[1] = 1. (res = [0, 1, 0, 0])
+    # - i = 1: arr[1][1] (20) != arr[0][1] (10) -> Rank increases. res[arr[1][0]] = res[2] = res[1] + 1 = 2. (res = [0, 1, 2, 0])
+    # - i = 2: arr[2][1] (30) != arr[1][1] (20) -> Rank increases. res[arr[2][0]] = res[3] = res[2] + 1 = 3. (res = [0, 1, 2, 3])
+    # - i = 3: arr[3][1] (40) != arr[2][1] (30) -> Rank increases. res[arr[3][0]] = res[0] = res[3] + 1 = 4. (res = [4, 1, 2, 3])
+    # - Return [4, 1, 2, 3].
+
+    def arrayRankTransform(self, arr: List[int]) -> List[int]:
+        n = len(arr)
+        if n == 0:
+            return []
+        arr = list(enumerate(arr))
+        arr.sort(key = lambda x: x[1])
+        res = [0] * n
+        res[arr[0][0]] = 1
+        for i in range(1, n):
+            res[arr[i][0]] = res[arr[i-1][0]] + int(arr[i][1] != arr[i-1][1])
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: arr = [40,10,20,30] -> Expected: [4,1,2,3]
+    arr1 = [40, 10, 20, 30]
+    print(f"Result for example 1: {sol.arrayRankTransform(arr1)}")
+
+    # Example 2: arr = [100,100,100] -> Expected: [1,1,1]
+    arr2 = [100, 100, 100]
+    print(f"Result for example 2: {sol.arrayRankTransform(arr2)}")
+
+    # Example 3: arr = [37,12,28,9,100,56,80,5,12] -> Expected: [5,3,4,2,8,6,7,1,3]
+    arr3 = [37, 12, 28, 9, 100, 56, 80, 5, 12]
+    print(f"Result for example 3: {sol.arrayRankTransform(arr3)}")
