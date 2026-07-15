@@ -1068,6 +1068,20 @@
     "type": "file"
   },
   {
+    "name": "Gcd_of_odd_and_even_sums.txt",
+    "path": "dsa/Gcd_of_odd_and_even_sums.txt",
+    "size": 1813,
+    "timestamp": 1784073600000,
+    "displayDate": "15/07/2026",
+    "problemNo": 3658,
+    "topics": [
+      "Math",
+      "Simulation"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Get_biggest_three_rhombus_sums_in_a_grid.txt",
     "path": "dsa/Get_biggest_three_rhombus_sums_in_a_grid.txt",
     "size": 3052,

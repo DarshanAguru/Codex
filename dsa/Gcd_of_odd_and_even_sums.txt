@@ -1,0 +1,47 @@
+# Date: 15/07/2026
+# Problem: https://leetcode.com/problems/gcd-of-odd-and-even-sums/
+# Leetcode Problem No: 3658
+# Relevance: Math, Simulation
+
+from math import gcd
+
+class Solution:
+
+    # Logic: Simulation of Odd/Even Sums and GCD (O(N) Time, O(1) Space)
+    # 1. We want to find the greatest common divisor (GCD) of:
+    #    - `sum_odd`: the sum of the first `n` positive odd numbers.
+    #    - `sum_even`: the sum of the first `n` positive even numbers.
+    # 2. We initialize `sum_odd = 0` and `sum_even = 0`.
+    # 3. We iterate from `i = 0` to `n-1` and accumulate:
+    #    - `2 * i + 1` into `sum_odd`.
+    #    - `2 * i + 2` into `sum_even`.
+    # 4. We calculate and return the GCD of `sum_odd` and `sum_even` using the `math.gcd` function.
+    # Note: Mathematically, sum_odd simplifies to n^2 and sum_even simplifies to n(n+1).
+    # Since gcd(n^2, n(n+1)) = n * gcd(n, n+1) and gcd(n, n+1) = 1 (consecutive numbers are coprime),
+    # the result is always n. However, the simulation logic is retained as requested.
+    #
+    # Dry run for n = 3:
+    # - sum_odd = 0, sum_even = 0
+    # - i = 0: sum_odd += 1 -> 1; sum_even += 2 -> 2.
+    # - i = 1: sum_odd += 3 -> 4; sum_even += 4 -> 6.
+    # - i = 2: sum_odd += 5 -> 9; sum_even += 6 -> 12.
+    # - Returns gcd(9, 12) = 3.
+
+    def gcdOfOddEvenSums(self, n: int) -> int:
+        sum_odd = 0
+        sum_even = 0
+        for i in range(n):
+            sum_odd += 2 * i + 1
+            sum_even += 2 * i + 2
+        return gcd(sum_odd, sum_even)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: n = 3 -> Expected: 3 (gcd(9, 12) = 3)
+    n1 = 3
+    print(f"Result for n={n1}: {sol.gcdOfOddEvenSums(n1)}")
+
+    # Example 2: n = 1 -> Expected: 1 (gcd(1, 2) = 1)
+    n2 = 1
+    print(f"Result for n={n2}: {sol.gcdOfOddEvenSums(n2)}")
