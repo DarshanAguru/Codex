@@ -1,0 +1,67 @@
+# Date: 16/07/2026
+# Problem: https://leetcode.com/problems/sum-of-gcd-of-formed-pairs/
+# Leetcode Problem No: 3867
+# Relevance: Math, Number Theory, Sorting, Two Pointers
+
+from math import gcd
+from typing import List
+
+class Solution:
+
+    # Logic: Simulation + Sorting + Two Pointers (O(N log N + N log M) Time, O(N) Space)
+    # 1. We first construct the `prefixGcd` array (named `pref`), where `pref[i]` is the GCD of `nums[i]`
+    #    and the maximum element in `nums[0...i]`. We maintain a running maximum `maxx` during this iteration.
+    # 2. We sort the `pref` array in non-decreasing order.
+    # 3. We pair the smallest unpaired elements with the largest unpaired elements. We do this using
+    #    a two-pointer approach (`left` starting at 0, `right` starting at n-1) and append all pairs
+    #    to a list `pairs`.
+    # 4. If `n` is odd, the middle element is ignored automatically since `left` and `right` will cross.
+    # 5. Finally, we iterate through `pairs` and calculate the sum of the GCDs of all formed pairs.
+    # 
+    # Dry run for nums = [3, 6, 2, 8]:
+    # n = 4, pref = [0, 0, 0, 0], maxx = 0.
+    # - i = 0, num = 3: maxx = 3, pref[0] = gcd(3, 3) = 3
+    # - i = 1, num = 6: maxx = 6, pref[1] = gcd(6, 6) = 6
+    # - i = 2, num = 2: maxx = 6, pref[2] = gcd(2, 6) = 2
+    # - i = 3, num = 8: maxx = 8, pref[3] = gcd(8, 8) = 8
+    # After loop: pref = [3, 6, 2, 8].
+    # - Sort pref: pref = [2, 3, 6, 8]
+    # - Two pointers: left = 0, right = 3.
+    #   - Loop 1: left = 0, right = 3. Append (2, 8) to pairs. left = 1, right = 2.
+    #   - Loop 2: left = 1, right = 2. Append (3, 6) to pairs. left = 2, right = 1.
+    #   - left < right is False, terminate.
+    # - Calculate GCD sum of pairs:
+    #   - pair = (2, 8): summ += gcd(2, 8) = 2
+    #   - pair = (3, 6): summ += gcd(3, 6) = 2 + 3 = 5
+    # - Returns 5.
+
+    def gcdSum(self, nums: List[int]) -> int:
+        n = len(nums)
+        pref = [0] * n
+        maxx = 0
+        for i, num in enumerate(nums):
+            maxx = max(num, maxx)
+            pref[i] = gcd(num, maxx)
+        pref.sort()
+        left = 0
+        right = n - 1
+        pairs = []
+        while left < right:
+            pairs.append((pref[left], pref[right]))
+            left += 1
+            right -= 1
+        summ = 0
+        for pair in pairs:
+            summ += gcd(*pair)
+        return summ
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [3,6,2,8] -> Expected: 5 (pairs: (2, 8) -> gcd=2, (3, 6) -> gcd=3)
+    nums1 = [3, 6, 2, 8]
+    print(f"Result for nums1: {sol.gcdSum(nums1)}")
+
+    # Example 2: nums = [4,4,4,4] -> Expected: 8 (pairs: (4, 4) -> gcd=4, (4, 4) -> gcd=4)
+    nums2 = [4, 4, 4, 4]
+    print(f"Result for nums2: {sol.gcdSum(nums2)}")

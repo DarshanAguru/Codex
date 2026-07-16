@@ -2806,6 +2806,22 @@
     "type": "file"
   },
   {
+    "name": "Sum_of_gcd_of_formed_pairs.txt",
+    "path": "dsa/Sum_of_gcd_of_formed_pairs.txt",
+    "size": 2752,
+    "timestamp": 1784160000000,
+    "displayDate": "16/07/2026",
+    "problemNo": 3867,
+    "topics": [
+      "Math",
+      "Number Theory",
+      "Sorting",
+      "Two Pointers"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Sum_of_root_to_leaf_binary_numbers.txt",
     "path": "dsa/Sum_of_root_to_leaf_binary_numbers.txt",
     "size": 2417,
