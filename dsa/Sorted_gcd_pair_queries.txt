@@ -1,0 +1,105 @@
+# Date: 17/07/2026
+# Problem: https://leetcode.com/problems/sorted-gcd-pair-queries/
+# Leetcode Problem No: 3312
+# Relevance: Array, Math, Binary Search, Number Theory, Prefix Sum
+
+from typing import List
+
+class Solution:
+
+    # Logic: Divisor Frequency + GCD Pair Counting + Prefix Sums + Binary Search (O(N * sqrt(max_val) + max_val * log(max_val) + Q * log(max_val)) Time, O(max_val) Space)
+    # 1. We want to find the query-th smallest GCD of all pairs in the array `nums`.
+    # 2. Let `maxx` be the maximum element in `nums`. We maintain a `divisors` frequency array, where
+    #    `divisors[i]` is the count of numbers in `nums` that are divisible by `i`.
+    #    We populate this by iterating through each `num` in `nums` and finding all its divisors in $O(\sqrt{num})$ time.
+    # 3. Next, we determine how many pairs have exactly GCD equal to `i` (stored in `gcds[i]`).
+    #    - If there are `cnt` elements in `nums` divisible by `i`, there are `cnt * (cnt - 1) // 2` pairs whose GCD is a multiple of `i`.
+    #    - To find those whose GCD is exactly `i`, we subtract the number of pairs with GCD equal to multiples of `i` (i.e. `2*i, 3*i, ...`).
+    #    - We do this iteratively from `maxx` down to 1.
+    # 4. We compute a prefix sum array `pref` of the `gcds` count, where `pref[i]` stores the number of pairs with GCD <= `i`.
+    # 5. For each query `q`, we binary search in the prefix sum array `pref` to find the smallest GCD `mid`
+    #    such that `pref[mid] > q`.
+    # 
+    # Dry run for nums = [2, 3, 4], queries = [0, 2]:
+    # maxx = 4.
+    # - Step 1: Find divisor counts
+    #   - num = 2: divisors[1] += 1, divisors[2] += 1
+    #   - num = 3: divisors[1] += 1, divisors[3] += 1
+    #   - num = 4: divisors[1] += 1, divisors[2] += 1, divisors[4] += 1
+    #   divisors = [0, 3, 2, 1, 1]
+    #
+    # - Step 2: Calculate exact gcds count from maxx=4 down to 1
+    #   - i = 4: cnt = 1. gcds[4] = 1*0 // 2 = 0.
+    #   - i = 3: cnt = 1. gcds[3] = 1*0 // 2 = 0.
+    #   - i = 2: cnt = 2. gcds[2] = 2*1 // 2 = 1. Multiples to subtract: j = 4. gcds[2] -= gcds[4] -> 1 - 0 = 1.
+    #   - i = 1: cnt = 3. gcds[1] = 3*2 // 2 = 3. Multiples to subtract: j = 2, 3, 4.
+    #     gcds[1] -= (gcds[2] + gcds[3] + gcds[4]) -> 3 - (1 + 0 + 0) = 2.
+    #   gcds = [0, 2, 1, 0, 0]
+    #
+    # - Step 3: Prefix sums of gcds
+    #   pref = [0, 2, 3, 3, 3] (indicating 2 pairs have GCD=1, 1 pair has GCD=2, total 3 pairs).
+    #
+    # - Step 4: Binary search answers
+    #   - q = 0: find smallest mid where pref[mid] > 0.
+    #     - left = 1, right = 4. mid = 2. pref[2] = 3 > 0. ans = 2, right = 1.
+    #     - mid = 1. pref[1] = 2 > 0. ans = 1, right = 0.
+    #     - loop terminates. Returns 1.
+    #   - q = 2: find smallest mid where pref[mid] > 2.
+    #     - left = 1, right = 4. mid = 2. pref[2] = 3 > 2. ans = 2, right = 1.
+    #     - mid = 1. pref[1] = 2 is not > 2. left = 2.
+    #     - loop terminates. Returns 2.
+    # Results: [1, 2].
+
+    def gcdValues(self, nums: List[int], queries: List[int]) -> List[int]:
+        n = len(nums)
+        maxx = max(nums)
+        divisors = [0] * (maxx + 1)
+        for num in nums:
+            i = 1
+            while i * i <= num:
+                if num % i == 0:
+                    divisors[i] += 1
+                    if i != num // i:
+                        divisors[num // i] += 1
+                i += 1
+        gcds = [0] * (maxx + 1)
+        for i in range(maxx, 0, -1):
+            cnt = divisors[i]
+            gcds[i] = cnt * (cnt - 1) // 2
+            for j in range(2 * i, maxx + 1, i):
+                gcds[i] -= gcds[j]
+        
+        pref = [0] * (maxx + 1)
+        for i in range(1, maxx + 1):
+            pref[i] = pref[i - 1] + gcds[i]
+        res = []
+
+        def bs(q: int):
+            left = 1
+            right = maxx
+            ans = -1
+            while left <= right:
+                mid = (left + right) // 2
+                if pref[mid] > q:
+                    ans = mid
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            return ans
+
+        for q in queries:
+            res.append(bs(q))
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [2,3,4], queries = [0,2,2] -> Expected: [1,2,2]
+    nums1 = [2, 3, 4]
+    queries1 = [0, 2, 2]
+    print(f"Result for example 1: {sol.gcdValues(nums1, queries1)}")
+
+    # Example 2: nums = [4,4,2,1], queries = [5,3,1,0] -> Expected: [4,2,1,1]
+    nums2 = [4, 4, 2, 1]
+    queries2 = [5, 3, 1, 0]
+    print(f"Result for example 2: {sol.gcdValues(nums2, queries2)}")

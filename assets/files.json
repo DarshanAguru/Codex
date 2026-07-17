@@ -2749,6 +2749,23 @@
     "type": "file"
   },
   {
+    "name": "Sorted_gcd_pair_queries.txt",
+    "path": "dsa/Sorted_gcd_pair_queries.txt",
+    "size": 4602,
+    "timestamp": 1784246400000,
+    "displayDate": "17/07/2026",
+    "problemNo": 3312,
+    "topics": [
+      "Array",
+      "Math",
+      "Binary Search",
+      "Number Theory",
+      "Prefix Sum"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Special_positions_in_a_binary_matrix.txt",
     "path": "dsa/Special_positions_in_a_binary_matrix.txt",
     "size": 1859,
