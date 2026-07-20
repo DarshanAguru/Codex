@@ -2659,6 +2659,21 @@
     "type": "file"
   },
   {
+    "name": "Shift_2d_grid.txt",
+    "path": "dsa/Shift_2d_grid.txt",
+    "size": 3271,
+    "timestamp": 1784505600000,
+    "displayDate": "20/07/2026",
+    "problemNo": 1260,
+    "topics": [
+      "Array",
+      "Matrix",
+      "Simulation"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Shortest_distance_to_target_string_in_a_circular_array.txt",
     "path": "dsa/Shortest_distance_to_target_string_in_a_circular_array.txt",
     "size": 1993,

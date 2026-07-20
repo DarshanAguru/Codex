@@ -1,0 +1,79 @@
+# Date: 20/07/2026
+# Problem: https://leetcode.com/problems/shift-2d-grid/
+# Leetcode Problem No: 1260
+# Relevance: Array, Matrix, Simulation
+
+from typing import List
+
+class Solution:
+
+    # Logic: Array Rotation via Reversal (O(N * M) Time, O(1) Extra Space)
+    # 1. We treat the 2D grid of size `n x m` as a 1D array of size `size = n * m`.
+    # 2. Shifting the grid elements `k` times is equivalent to rotating a 1D array of length `size` to the right by `k` positions.
+    # 3. We first normalize `k = k % size`. If `k == 0`, no shifts are needed, so we return the grid directly.
+    # 4. To rotate a 1D array to the right by `k` positions:
+    #    - Reverse the entire array from `0` to `size - 1`.
+    #    - Reverse the first `k` elements from `0` to `k - 1`.
+    #    - Reverse the remaining `size - k` elements from `k` to `size - 1`.
+    # 5. We implement a helper function `rev(i, j)` that reverses the elements in the range `[i, j]` using 1D indexes.
+    #    To access the corresponding 2D elements, we map a 1D index `idx` to 2D coordinates `(idx // m, idx % m)`.
+    # 6. We perform the three reversals in-place and return the modified `grid`.
+    # 
+    # Dry run for grid = [[1,2,3],[4,5,6],[7,8,9]], k = 1:
+    # n = 3, m = 3, size = 9.
+    # k = 1 % 9 = 1.
+    #
+    # Treat grid as 1D: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    #
+    # Step 1: rev(0, 8) (Reverse whole array):
+    # - Swaps (0, 8) -> [9, 2, 3, 4, 5, 6, 7, 8, 1]
+    # - Swaps (1, 7) -> [9, 8, 3, 4, 5, 6, 7, 2, 1]
+    # - Swaps (2, 6) -> [9, 8, 7, 4, 5, 6, 3, 2, 1]
+    # - Swaps (3, 5) -> [9, 8, 7, 6, 5, 4, 3, 2, 1]
+    #
+    # Step 2: rev(0, 0) (Reverse first k elements, here only index 0):
+    # - Array remains: [9, 8, 7, 6, 5, 4, 3, 2, 1]
+    #
+    # Step 3: rev(1, 8) (Reverse remaining size-k elements):
+    # - Swaps (1, 8) -> [9, 1, 7, 6, 5, 4, 3, 2, 8]
+    # - Swaps (2, 7) -> [9, 1, 2, 6, 5, 4, 3, 7, 8]
+    # - Swaps (3, 6) -> [9, 1, 2, 3, 5, 4, 6, 7, 8]
+    # - Swaps (4, 5) -> [9, 1, 2, 3, 4, 5, 6, 7, 8]
+    #
+    # Map back to 2D grid:
+    # [[9, 1, 2], [3, 4, 5], [6, 7, 8]]
+    # Returns the modified grid.
+
+    def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
+        n, m = len(grid), len(grid[0])
+        size = n * m
+
+        k = k % size
+        if k == 0:
+            return grid
+        
+        def rev(i: int, j: int) -> None:
+            while i < j:
+                row_i, col_i = i // m, i % m
+                row_j, col_j = j // m, j % m
+                grid[row_i][col_i], grid[row_j][col_j] = grid[row_j][col_j], grid[row_i][col_i]
+                i += 1
+                j -= 1
+        
+        rev(0, size - 1)
+        rev(0, k - 1)
+        rev(k, size - 1)
+        return grid
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: grid = [[1,2,3],[4,5,6],[7,8,9]], k = 1 -> Expected: [[9,1,2],[3,4,5],[6,7,8]]
+    grid1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    k1 = 1
+    print(f"Result for example 1: {sol.shiftGrid(grid1, k1)}")
+
+    # Example 2: grid = [[3,8,1,9],[19,7,2,5],[4,6,11,10],[12,0,21,13]], k = 4 -> Expected: [[12,0,21,13],[3,8,1,9],[19,7,2,5],[4,6,11,10]]
+    grid2 = [[3, 8, 1, 9], [19, 7, 2, 5], [4, 6, 11, 10], [12, 0, 21, 13]]
+    k2 = 4
+    print(f"Result for example 2: {sol.shiftGrid(grid2, k2)}")
