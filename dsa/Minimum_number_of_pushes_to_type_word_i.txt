@@ -1,0 +1,50 @@
+# Date: 30/07/2026
+# Problem: https://leetcode.com/problems/minimum-number-of-pushes-to-type-word-i/
+# Leetcode Problem No: 3014
+# Relevance: Math, String, Greedy
+
+class Solution:
+
+    # Logic: Greedy Key Mapping (O(N) Time, O(1) Space)
+    # 1. We want to map the distinct characters of `word` to the keys on a phone keypad (from 2 to 9, so 8 keys in total)
+    #    such that the total number of key pushes to type `word` is minimized.
+    # 2. Since `word` contains distinct characters (as specified in Problem I constraints), we map characters to keys greedily:
+    #    - The first 8 characters are mapped to the 1st position of each of the 8 keys (requiring 1 push each).
+    #    - The next 8 characters are mapped to the 2nd position (requiring 2 pushes each).
+    #    - The next 8 characters are mapped to the 3rd position (requiring 3 pushes each).
+    #    - And so on.
+    # 3. For any character at index `i` (0-indexed) in `word`, the number of pushes required to type it is `(i // 8) + 1`.
+    # 4. We iterate through the string and sum up the pushes required for each character.
+    # 
+    # Dry run for word = "abcde":
+    # len(word) = 5.
+    # - i = 0: res += (0 // 8 + 1) = 1 -> res = 1
+    # - i = 1: res += (1 // 8 + 1) = 1 -> res = 2
+    # - i = 2: res += (2 // 8 + 1) = 1 -> res = 3
+    # - i = 3: res += (3 // 8 + 1) = 1 -> res = 4
+    # - i = 4: res += (4 // 8 + 1) = 1 -> res = 5
+    # Result: 5.
+    #
+    # Dry run for word = "xycdefghij":
+    # len(word) = 10.
+    # - i = 0 to 7: each adds 1 push -> res = 8
+    # - i = 8: adds (8 // 8 + 1) = 2 pushes -> res = 10
+    # - i = 9: adds (9 // 8 + 1) = 2 pushes -> res = 12
+    # Result: 12.
+
+    def minimumPushes(self, word: str) -> int:
+        res = 0
+        for i in range(len(word)):
+            res += (i // 8 + 1)
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: word = "abcde" -> Expected: 5
+    word1 = "abcde"
+    print(f"Result for word1: {sol.minimumPushes(word1)}")
+
+    # Example 2: word = "xycdefghij" -> Expected: 12
+    word2 = "xycdefghij"
+    print(f"Result for word2: {sol.minimumPushes(word2)}")

@@ -2076,6 +2076,21 @@
     "type": "file"
   },
   {
+    "name": "Minimum_number_of_pushes_to_type_word_i.txt",
+    "path": "dsa/Minimum_number_of_pushes_to_type_word_i.txt",
+    "size": 2132,
+    "timestamp": 1785369600000,
+    "displayDate": "30/07/2026",
+    "problemNo": 3014,
+    "topics": [
+      "Math",
+      "String",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_number_of_seconds_to_make_mountain_height_zero.txt",
     "path": "dsa/Minimum_number_of_seconds_to_make_mountain_height_zero.txt",
     "size": 2320,
