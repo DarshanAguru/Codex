@@ -1,0 +1,55 @@
+# Date: 30/08/2026
+# Problem: https://leetcode.com/problems/removing-minimum-and-maximum-from-array/
+# Leetcode Problem No: 2091
+# Relevance: Array, Greedy
+
+from typing import List
+
+class Solution:
+
+    # Logic: Greedy Edge Deletions (O(N) Time, O(1) Space)
+    # 1. We find the indices of the minimum and maximum elements in the array: `minIdx` and `maxIdx`.
+    # 2. Let `l = min(minIdx, maxIdx)` and `r = max(minIdx, maxIdx)`.
+    # 3. There are 3 strategies to remove both elements:
+    #    a) Remove both from the front (left side): Deletions = `r + 1`.
+    #    b) Remove both from the back (right side): Deletions = `n - l`.
+    #    c) Remove `l` from the front and `r` from the back: Deletions = `(l + 1) + (n - r)`.
+    # 4. We return the minimum deletions required among these 3 choices: `min(frontEnd, backEnd, bothEnd)`.
+    #
+    # Dry run for nums = [2, 10, 7, 5, 4, 1, 8, 6]:
+    # n = 8.
+    # minIdx = 5 (value 1), maxIdx = 1 (value 10).
+    # l = min(5, 1) = 1, r = max(5, 1) = 5.
+    # Strategy 1 (frontEnd): r + 1 = 5 + 1 = 6. (Delete 2, 10, 7, 5, 4, 1 from front)
+    # Strategy 2 (backEnd): n - l = 8 - 1 = 7. (Delete 10, 7, 5, 4, 1, 8, 6 from back)
+    # Strategy 3 (bothEnd): (l + 1) + (n - r) = (1 + 1) + (8 - 5) = 2 + 3 = 5. (Delete 2, 10 from front; 1, 8, 6 from back)
+    # Return min(6, 7, 5) = 5.
+
+    def minimumDeletions(self, nums: List[int]) -> int:
+        minIdx, maxIdx = 0, 0
+        for i, num in enumerate(nums):
+            if nums[minIdx] > num:
+                minIdx = i
+            if nums[maxIdx] < num:
+                maxIdx = i
+        
+        l, r = min(minIdx, maxIdx), max(minIdx, maxIdx)
+        frontEnd = r + 1
+        backEnd = len(nums) - l
+        bothEnd = (l + 1) + (len(nums) - r)
+        return min(frontEnd, backEnd, bothEnd)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [2,10,7,5,4,1,8,6] -> Expected: 5
+    nums1 = [2, 10, 7, 5, 4, 1, 8, 6]
+    print(f"Result for example 1: {sol.minimumDeletions(nums1)}")
+
+    # Example 2: nums = [0,-4,19,1,8,-2,-3,5] -> Expected: 3
+    nums2 = [0, -4, 19, 1, 8, -2, -3, 5]
+    print(f"Result for example 2: {sol.minimumDeletions(nums2)}")
+
+    # Example 3: nums = [101] -> Expected: 1
+    nums3 = [101]
+    print(f"Result for example 3: {sol.minimumDeletions(nums3)}")

@@ -2469,6 +2469,20 @@
     "type": "file"
   },
   {
+    "name": "Removing_minimum_and_maximum_from_array.txt",
+    "path": "dsa/Removing_minimum_and_maximum_from_array.txt",
+    "size": 2302,
+    "timestamp": 1788048000000,
+    "displayDate": "30/08/2026",
+    "problemNo": 2091,
+    "topics": [
+      "Array",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Robot_collisions.txt",
     "path": "dsa/Robot_collisions.txt",
     "size": 2995,
