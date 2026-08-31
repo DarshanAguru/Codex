@@ -978,6 +978,20 @@
     "type": "file"
   },
   {
+    "name": "Find_the_minimum_and_maximum_number_of_nodes_between_critical_points.txt",
+    "path": "dsa/Find_the_minimum_and_maximum_number_of_nodes_between_critical_points.txt",
+    "size": 4066,
+    "timestamp": 1788134400000,
+    "displayDate": "31/08/2026",
+    "problemNo": 2058,
+    "topics": [
+      "Linked List",
+      "Two Pointers"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Find_the_prefix_common_array_of_two_arrays.txt",
     "path": "dsa/Find_the_prefix_common_array_of_two_arrays.txt",
     "size": 2382,

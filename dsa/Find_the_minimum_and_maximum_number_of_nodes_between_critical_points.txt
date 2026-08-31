@@ -1,0 +1,104 @@
+# Date: 31/08/2026
+# Problem: https://leetcode.com/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/
+# Leetcode Problem No: 2058
+# Relevance: Linked List, Two Pointers
+
+from typing import List, Optional
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+
+    # Logic: Single Pass Pointer Traversal (O(N) Time, O(1) Space)
+    # 1. A critical point is either a local maxima (prev < curr > next) or local minima (prev > curr < next).
+    # 2. We maintain three pointers: `prev`, `curr`, and `nxt` to evaluate critical points as we traverse.
+    # 3. We keep track of the index position using `right` (1-indexed starting at curr = index 1).
+    # 4. We track:
+    #    - `first`: the index of the first critical point found.
+    #    - `left`: the index of the previous critical point found.
+    #    - `minn`: the minimum distance between any two adjacent critical points (`right - left`).
+    # 5. For each critical point:
+    #    - If it is the first critical point, record `first = right`.
+    #    - Otherwise, update `minn = min(minn, right - left)`.
+    #    - Update `left = right`.
+    # 6. At the end:
+    #    - If fewer than 2 critical points exist (`first == -1` or `first == left`), return `[-1, -1]`.
+    #    - The maximum distance is `maxx = left - first` (distance between the last and first critical points).
+    #    - Return `[minn, maxx]`.
+    #
+    # Time Complexity: O(N) where N is the number of nodes in the linked list.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for head = [5, 3, 1, 2, 5, 1, 2]:
+    # - Node 3 (idx 1): prev=5, nxt=1 -> Not a critical point.
+    # - Node 1 (idx 2): prev=3, nxt=2 -> 3 > 1 < 2 (Local minima). first=2, left=2.
+    # - Node 2 (idx 3): prev=1, nxt=5 -> Not a critical point.
+    # - Node 5 (idx 4): prev=2, nxt=1 -> 2 < 5 > 1 (Local maxima). minn=4-2=2, left=4.
+    # - Node 1 (idx 5): prev=5, nxt=2 -> 5 > 1 < 2 (Local minima). minn=min(2, 5-4)=1, left=5.
+    # - End of traversal.
+    # - first = 2, left = 5.
+    # - maxx = 5 - 2 = 3, minn = 1.
+    # - Returns [1, 3].
+
+    def nodesBetweenCriticalPoints(self, head: Optional[ListNode]) -> List[int]:
+        if not head or not head.next or not head.next.next:
+            return [-1, -1]
+
+        left, right = -1, 1
+        first = -1
+        minn = float("inf")
+        prev = head
+        curr = prev.next
+        nxt = curr.next
+
+        while nxt is not None:
+            if (prev.val < curr.val > nxt.val) or (prev.val > curr.val < nxt.val):
+                if first == -1:
+                    first = right
+                else:
+                    minn = min(minn, right - left)
+                left = right
+            prev = curr
+            curr = nxt
+            nxt = nxt.next
+            right += 1
+
+        if first == -1 or first == left:
+            return [-1, -1]
+
+        maxx = left - first
+        return [int(minn), maxx]
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Helper to build list
+    def build_list(arr):
+        if not arr:
+            return None
+        head = ListNode(arr[0])
+        curr = head
+        for val in arr[1:]:
+            curr.next = ListNode(val)
+            curr = curr.next
+        return head
+
+    # Example 1: head = [3,1] -> Expected: [-1, -1]
+    head1 = build_list([3, 1])
+    print(f"Result for [3, 1]: {sol.nodesBetweenCriticalPoints(head1)}")
+
+    # Example 2: head = [5,3,1,2,5,1,2] -> Expected: [1, 3]
+    head2 = build_list([5, 3, 1, 2, 5, 1, 2])
+    print(f"Result for [5, 3, 1, 2, 5, 1, 2]: {sol.nodesBetweenCriticalPoints(head2)}")
+
+    # Example 3: head = [1,3,2,2,3,2,2,2,7] -> Expected: [3, 3]
+    head3 = build_list([1, 3, 2, 2, 3, 2, 2, 2, 7])
+    print(f"Result for [1, 3, 2, 2, 3, 2, 2, 2, 7]: {sol.nodesBetweenCriticalPoints(head3)}")
+
+    # Example 4: head = [2,3,3,2] -> Expected: [-1, -1]
+    head4 = build_list([2, 3, 3, 2])
+    print(f"Result for [2, 3, 3, 2]: {sol.nodesBetweenCriticalPoints(head4)}")
