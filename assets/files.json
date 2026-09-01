@@ -2076,6 +2076,23 @@
     "type": "file"
   },
   {
+    "name": "Minimum_moves_to_clean_the_classroom.txt",
+    "path": "dsa/Minimum_moves_to_clean_the_classroom.txt",
+    "size": 4492,
+    "timestamp": 1788220800000,
+    "displayDate": "01/09/2026",
+    "problemNo": 3568,
+    "topics": [
+      "Array",
+      "Matrix",
+      "Breadth-First Search",
+      "Bit Manipulation",
+      "Shortest Path"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "path": "dsa/Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "size": 2013,

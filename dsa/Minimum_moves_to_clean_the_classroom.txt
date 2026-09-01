@@ -1,0 +1,115 @@
+# Date: 01/09/2026
+# Problem: https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/
+# Leetcode Problem No: 3568
+# Relevance: Array, Matrix, Breadth-First Search, Bit Manipulation, Shortest Path
+
+from collections import deque
+from typing import List
+
+class Solution:
+
+    # Logic: BFS with State Compression (Bitmask) & DP/Pruning (O(M * N * 2^K) Time & Space)
+    # 1. We want to find the minimum number of moves to collect all litter items ('L') in the classroom.
+    # 2. Assign a unique ID (0 to K-1) to each 'L' cell, where K is the total number of litter items.
+    # 3. State in BFS: `(x, y, mask, en, dist)`
+    #    - `x, y`: current grid coordinates.
+    #    - `mask`: bitmask representing collected litter (all collected when `mask == (1 << K) - 1`).
+    #    - `en`: current remaining energy.
+    #    - `dist`: current number of steps taken from start.
+    # 4. Use `dp[x][y][mask]` to store the maximum energy remaining when reaching cell `(x, y)` with `mask`.
+    #    - If we reach the same `(x, y, mask)` with less than or equal energy, we can prune that state.
+    # 5. Transitions:
+    #    - For each 4-directional neighbor `(nx, ny)`:
+    #      - Check bounds and ignore obstacle `'X'`.
+    #      - Energy decreases by 1 (`newEn = en - 1`).
+    #      - If `'L'`, set the corresponding bit in `newMask`.
+    #      - If `'R'`, energy resets to maximum capacity (`newEn = energy`).
+    #      - If `dp[nx][ny][newMask] >= newEn`, skip; otherwise record new energy and enqueue.
+    # 6. Since BFS explores by increasing distance, the first time `mask == fullMask`, we return `dist`.
+    # 7. If queue is exhausted without collecting all litter, return `-1`.
+    #
+    # Time Complexity: O(M * N * 2^K) where M x N is the grid dimension and K is the number of 'L' cells.
+    # Space Complexity: O(M * N * 2^K) for BFS queue and DP memoization table.
+    #
+    # Dry run for classroom = ["S.", "XL"], energy = 2:
+    # - Litter count K = 1 ('L' at (1, 1) -> id 0). fullMask = 1.
+    # - Start at (0, 0), en = 2, mask = 0, dist = 0.
+    # - Move to (0, 1): newEn = 1, mask = 0, dist = 1.
+    # - Move to (1, 1): cell is 'L', newMask = 1, newEn = 0, dist = 2.
+    # - mask == fullMask reached at dist = 2. Returns 2.
+
+    def minMoves(self, classroom: List[str], energy: int) -> int:
+        m = len(classroom)
+        n = len(classroom[0])
+        sx, sy = -1, -1
+        ltrId = 0
+        ltrs = [[0] * n for _ in range(m)]
+
+        for i in range(m):
+            for j in range(n):
+                if classroom[i][j] == 'S':
+                    sx, sy = i, j
+                elif classroom[i][j] == 'L':
+                    ltrs[i][j] = ltrId
+                    ltrId += 1
+
+        masks = 1 << ltrId
+        fullMask = masks - 1
+
+        dq = deque()
+        dq.append((sx, sy, 0, energy, 0))
+
+        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+        dp = [[[-1] * masks for _ in range(n)] for _ in range(m)]
+        dp[sx][sy][0] = energy
+
+        while dq:
+            x, y, mask, en, dist = dq.popleft()
+            if mask == fullMask:
+                return dist
+
+            if en == 0:
+                continue
+
+            for dx, dy in dirs:
+                nx = x + dx
+                ny = y + dy
+                if nx >= m or nx < 0 or ny >= n or ny < 0:
+                    continue
+                if classroom[nx][ny] == "X":
+                    continue
+                newEn = en - 1
+                newMask = mask
+
+                if classroom[nx][ny] == "L":
+                    newMask = newMask | (1 << ltrs[nx][ny])
+
+                if classroom[nx][ny] == "R":
+                    newEn = energy
+
+                if dp[nx][ny][newMask] >= newEn:
+                    continue
+
+                dp[nx][ny][newMask] = newEn
+                dq.append((nx, ny, newMask, newEn, dist + 1))
+
+        return -1
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: classroom = ["S.", "XL"], energy = 2 -> Expected: 2
+    classroom1 = ["S.", "XL"]
+    energy1 = 2
+    print(f"Result for Example 1: {sol.minMoves(classroom1, energy1)}")
+
+    # Example 2: classroom = ["LS", "RL"], energy = 4 -> Expected: 3
+    classroom2 = ["LS", "RL"]
+    energy2 = 4
+    print(f"Result for Example 2: {sol.minMoves(classroom2, energy2)}")
+
+    # Example 3: classroom = [".L.", "S.X", "R.L"], energy = 3 -> Expected: -1
+    classroom3 = [".L.", "S.X", "R.L"]
+    energy3 = 3
+    print(f"Result for Example 3: {sol.minMoves(classroom3, energy3)}")
