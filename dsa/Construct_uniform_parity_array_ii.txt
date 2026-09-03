@@ -1,0 +1,68 @@
+# Date: 03/09/2026
+# Problem: https://leetcode.com/problems/construct-uniform-parity-array-ii/
+# Leetcode Problem No: 3876
+# Relevance: Array, Math, Greedy
+
+from typing import List
+
+class Solution:
+
+    # Logic: Minimum Element & Parity Analysis (O(N) Time, O(1) Space)
+    # 1. We want to construct `nums2` where all elements are either all odd or all even.
+    # 2. For each index `i`, we can set `nums2[i] = nums1[i]` or `nums2[i] = nums1[i] - nums1[j]` (where nums1[i] - nums1[j] >= 1).
+    # 3. Parity rules:
+    #    - Even - Odd = Odd (requires Even > Odd)
+    #    - Odd - Odd = Even (requires Odd > Odd)
+    # 4. If all numbers in `nums1` are even (`isOdd == False`), they are already uniform in parity -> True.
+    # 5. If there are odd numbers in `nums1`:
+    #    - Can we make all numbers even? The smallest odd number in the array cannot subtract any strictly smaller odd number to become a positive even number (Odd - Odd >= 1). Thus, making all numbers even is impossible.
+    #    - The only option is to make all numbers odd.
+    #    - All odd numbers can remain as they are.
+    #    - An even number `x` can be converted to odd only if there is an odd number `y` such that `x - y >= 1` (i.e. `x > y`).
+    #    - Therefore, every even number must be strictly greater than the minimum odd number.
+    # 6. Conclusion:
+    #    - If the overall minimum of the array `minn` is even and there is at least one odd number, then `minn` is an even number smaller than all odd numbers, making it impossible to convert -> False.
+    #    - Otherwise, it is always possible -> True.
+    #
+    # Time Complexity: O(N) single pass through the array.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for nums1 = [2, 5, 8]:
+    # - minn = 2 (even), isOdd = True.
+    # - 2 is even and smaller than the odd number 5. 2 cannot be transformed into a positive odd number.
+    # - Returns False.
+    #
+    # Dry run for nums1 = [3, 6, 8]:
+    # - minn = 3 (odd), isOdd = True.
+    # - 6 can become 6 - 3 = 3 (odd), 8 can become 8 - 3 = 5 (odd).
+    # - Returns True.
+
+    def uniformArray(self, nums1: List[int]) -> bool:
+        isOdd = False
+        minn = float("inf")
+
+        for num in nums1:
+            if num % 2 != 0:
+                isOdd = True
+            minn = min(minn, num)
+
+        return False if (minn % 2 == 0 and isOdd) else True
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums1 = [2, 5, 8] -> Expected: False
+    nums1_1 = [2, 5, 8]
+    print(f"Result for {nums1_1}: {sol.uniformArray(nums1_1)}")
+
+    # Example 2: nums1 = [1, 3, 5] -> Expected: True
+    nums1_2 = [1, 3, 5]
+    print(f"Result for {nums1_2}: {sol.uniformArray(nums1_2)}")
+
+    # Example 3: nums1 = [2, 4, 6] -> Expected: True
+    nums1_3 = [2, 4, 6]
+    print(f"Result for {nums1_3}: {sol.uniformArray(nums1_3)}")
+
+    # Example 4: nums1 = [3, 6, 8] -> Expected: True
+    nums1_4 = [3, 6, 8]
+    print(f"Result for {nums1_4}: {sol.uniformArray(nums1_4)}")
