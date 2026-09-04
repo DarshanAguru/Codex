@@ -2809,6 +2809,21 @@
     "type": "file"
   },
   {
+    "name": "Smallest_stable_index_i.txt",
+    "path": "dsa/Smallest_stable_index_i.txt",
+    "size": 2507,
+    "timestamp": 1788480000000,
+    "displayDate": "04/09/2026",
+    "problemNo": 3903,
+    "topics": [
+      "Array",
+      "Prefix Max",
+      "Suffix Min"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Smallest_subtree_with_all_the_deepest_nodes.txt",
     "path": "dsa/Smallest_subtree_with_all_the_deepest_nodes.txt",
     "size": 3548,
