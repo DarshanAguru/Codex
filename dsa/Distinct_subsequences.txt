@@ -1,0 +1,64 @@
+# Date: 06/09/2026
+# Problem: https://leetcode.com/problems/distinct-subsequences/
+# Leetcode Problem No: 115
+# Relevance: String, Dynamic Programming
+
+class Solution:
+
+    # Logic: 2D Bottom-Up Dynamic Programming (O(N * M) Time, O(N * M) Space)
+    # 1. We want to find the number of distinct subsequences of `s` which equal `t`.
+    # 2. State Definition:
+    #    Let `dp[i][j]` represent the number of distinct subsequences of `s[i:]` that match `t[j:]`.
+    # 3. Base Cases:
+    #    - If `t` is empty (`j == m`), there is exactly 1 valid subsequence (the empty string): `dp[i][m] = 1` for all `0 <= i <= n`.
+    #    - If `s` is empty but `t` is not (`i == n` and `j < m`), there are 0 valid subsequences: `dp[n][j] = 0`.
+    # 4. Transitions:
+    #    For each position `i` in `s` (from `n-1` down to 0) and `j` in `t` (from `m-1` down to 0):
+    #    - If `s[i] == t[j]`:
+    #      We have two choices:
+    #      a) Match `s[i]` with `t[j]` -> solve subproblem `dp[i+1][j+1]`.
+    #      b) Skip `s[i]` and look for a match in `s[i+1:]` -> `dp[i+1][j]`.
+    #      Total ways: `dp[i][j] = dp[i+1][j+1] + dp[i+1][j]`.
+    #    - If `s[i] != t[j]`:
+    #      We cannot match `s[i]`, so we must skip it: `dp[i][j] = dp[i+1][j]`.
+    # 5. The result for the full strings is stored in `dp[0][0]`.
+    #
+    # Time Complexity: O(N * M) where N = len(s) and M = len(t).
+    # Space Complexity: O(N * M) for the DP table.
+    #
+    # Dry run for s = "rabbbit", t = "rabbit":
+    # - n = 7, m = 6
+    # - When matching characters 'b' at multiple positions, we sum the branches where 'b' is taken vs skipped.
+    # - dp[0][0] evaluates to 3 (corresponding to dropping 1 of the 3 'b's in s).
+    # - Returns 3.
+
+    def numDistinct(self, s: str, t: str) -> int:
+        n = len(s)
+        m = len(t)
+        if m > n:
+            return 0
+
+        dp = [[0] * (m + 1) for _ in range(n + 1)]
+
+        for i in range(n + 1):
+            dp[i][m] = 1
+
+        for i in range(n - 1, -1, -1):
+            for j in range(m - 1, -1, -1):
+                if s[i] == t[j]:
+                    dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j]
+                else:
+                    dp[i][j] = dp[i + 1][j]
+
+        return dp[0][0]
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "rabbbit", t = "rabbit" -> Expected: 3
+    s1, t1 = "rabbbit", "rabbit"
+    print(f"Result for s='{s1}', t='{t1}': {sol.numDistinct(s1, t1)}")
+
+    # Example 2: s = "babgbag", t = "bag" -> Expected: 5
+    s2, t2 = "babgbag", "bag"
+    print(f"Result for s='{s2}', t='{t2}': {sol.numDistinct(s2, t2)}")
