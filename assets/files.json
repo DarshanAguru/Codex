@@ -774,6 +774,20 @@
     "type": "file"
   },
   {
+    "name": "Distinct_subsequences_ii.txt",
+    "path": "dsa/Distinct_subsequences_ii.txt",
+    "size": 2804,
+    "timestamp": 1788739200000,
+    "displayDate": "07/09/2026",
+    "problemNo": 940,
+    "topics": [
+      "String",
+      "Dynamic Programming"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Divide_an_array_into_subarrays_with_minimum_cost_i.txt",
     "path": "dsa/Divide_an_array_into_subarrays_with_minimum_cost_i.txt",
     "size": 1584,

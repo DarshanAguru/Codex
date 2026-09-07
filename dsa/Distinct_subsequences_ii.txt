@@ -1,0 +1,66 @@
+# Date: 07/09/2026
+# Problem: https://leetcode.com/problems/distinct-subsequences-ii/
+# Leetcode Problem No: 940
+# Relevance: String, Dynamic Programming
+
+class Solution:
+
+    # Logic: 1D Dynamic Programming with Duplicate Elimination (O(N) Time, O(N) Space)
+    # 1. We want to find the number of distinct non-empty subsequences of string `s` modulo 10^9 + 7.
+    # 2. State Definition:
+    #    Let `dp[i]` represent the total number of distinct subsequences (including the empty string)
+    #    that can be formed using prefix `s[0...i]`.
+    # 3. Base Case:
+    #    For prefix of length 1 (`s[0]`):
+    #    - Subsequences formed: {"", s[0]} -> `dp[0] = 2`.
+    #    - Track `last[s[0]] = 1` (the number of subsequences that existed before adding s[0]).
+    # 4. Transitions:
+    #    For each character `s[i]` (from index 1 to `n-1`):
+    #    - Without considering duplicates, appending `s[i]` to all existing subsequences creates `dp[i-1]` new subsequences.
+    #      So total would be `2 * dp[i-1]`.
+    #    - However, if `s[i]` has appeared previously, appending `s[i]` to any subsequence that existed BEFORE
+    #      its last occurrence produces duplicates that were already counted when that previous occurrence was appended.
+    #    - Therefore: `dp[i] = (2 * dp[i-1] - last[s[i]]) % MOD`.
+    #    - Update `last[s[i]] = dp[i-1]` for future occurrences.
+    # 5. At the end, subtract 1 from `dp[n-1]` to exclude the empty subsequence: `(dp[n-1] - 1) % MOD`.
+    #
+    # Time Complexity: O(N) where N is the length of string `s`.
+    # Space Complexity: O(N) for the DP array (can be optimized to O(1) space using O(26) map/array).
+    #
+    # Dry run for s = "aba":
+    # - i = 0 ('a'): dp[0] = 2 {"", "a"}, last['a'] = 1
+    # - i = 1 ('b'): dp[1] = 2 * 2 = 4 {"", "a", "b", "ab"}, last['b'] = 2
+    # - i = 2 ('a'): dp[2] = 2 * 4 - last['a'] = 8 - 1 = 7 {"", "a", "b", "ab", "ba", "aba", "aa"}, last['a'] = 4
+    # - Total non-empty = (7 - 1) % MOD = 6.
+    # - Returns 6.
+
+    def distinctSubseqII(self, s: str) -> int:
+        MOD = 1_000_000_007
+        n = len(s)
+        dp = [0] * n
+        dp[0] = 2
+        last = {}
+        last[s[0]] = 1
+
+        for i in range(1, n):
+            dp[i] = (2 * dp[i - 1]) % MOD
+            if s[i] in last:
+                dp[i] = (dp[i] - last[s[i]]) % MOD
+            last[s[i]] = dp[i - 1]
+
+        return (dp[n - 1] - 1) % MOD
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "abc" -> Expected: 7
+    s1 = "abc"
+    print(f"Result for s='{s1}': {sol.distinctSubseqII(s1)}")
+
+    # Example 2: s = "aba" -> Expected: 6
+    s2 = "aba"
+    print(f"Result for s='{s2}': {sol.distinctSubseqII(s2)}")
+
+    # Example 3: s = "aaa" -> Expected: 3
+    s3 = "aaa"
+    print(f"Result for s='{s3}': {sol.distinctSubseqII(s3)}")
