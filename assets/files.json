@@ -513,6 +513,19 @@
     "type": "file"
   },
   {
+    "name": "Count_commas_in_range.txt",
+    "path": "dsa/Count_commas_in_range.txt",
+    "size": 1602,
+    "timestamp": 1788825600000,
+    "displayDate": "08/09/2026",
+    "problemNo": 3870,
+    "topics": [
+      "Math"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Count_inversions_in_array.txt",
     "path": "dsa/Count_inversions_in_array.txt",
     "size": 2569,
