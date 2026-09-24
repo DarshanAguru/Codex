@@ -1,0 +1,51 @@
+# Date: 24/09/2026
+# Problem: https://leetcode.com/problems/smallest-index-with-digit-sum-equal-to-index/
+# Leetcode Problem No: 3550
+# Relevance: Array, Math
+
+from typing import List
+
+class Solution:
+
+    # Logic: Linear Scan with Digit Sum Helper (O(N * log10(M)) Time, O(1) Space)
+    # 1. We iterate through the array `nums` from left to right (from index 0 up to n - 1).
+    # 2. For each element `nums[idx]`, calculate the sum of its decimal digits using modulo and integer division.
+    # 3. If `sumOfDigits(nums[idx]) == idx`, return `idx` immediately since we are traversing indices in ascending order.
+    # 4. If no such index satisfies the condition after traversing the whole array, return -1.
+    #
+    # Time Complexity: O(N * log10(M)) where N is the length of `nums` and M is the maximum value in `nums`.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for nums = [1, 10, 11]:
+    # - idx = 0, num = 1: sumOfDigits(1) = 1 != 0
+    # - idx = 1, num = 10: sumOfDigits(10) = 1 + 0 = 1 == 1 -> Found match at index 1!
+    # - Returns 1.
+
+    def smallestIndex(self, nums: List[int]) -> int:
+        def sumOfDigits(n: int) -> int:
+            sum_ = 0
+            while n > 0:
+                rem = n % 10
+                sum_ += rem
+                n = n // 10
+            return sum_
+
+        for idx, num in enumerate(nums):
+            if sumOfDigits(num) == idx:
+                return idx
+        return -1
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [1, 10, 11] -> Expected: 1
+    nums1 = [1, 10, 11]
+    print(f"Result for {nums1}: {sol.smallestIndex(nums1)}")
+
+    # Example 2: nums = [1, 2, 3] -> Expected: -1
+    nums2 = [1, 2, 3]
+    print(f"Result for {nums2}: {sol.smallestIndex(nums2)}")
+
+    # Example 3: nums = [0, 2, 4] -> Expected: 0
+    nums3 = [0, 2, 4]
+    print(f"Result for {nums3}: {sol.smallestIndex(nums3)}")

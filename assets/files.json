@@ -2850,6 +2850,20 @@
     "type": "file"
   },
   {
+    "name": "Smallest_index_with_digit_sum_equal_to_index.txt",
+    "path": "dsa/Smallest_index_with_digit_sum_equal_to_index.txt",
+    "size": 1896,
+    "timestamp": 1790208000000,
+    "displayDate": "24/09/2026",
+    "problemNo": 3550,
+    "topics": [
+      "Array",
+      "Math"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Smallest_stable_index_i.txt",
     "path": "dsa/Smallest_stable_index_i.txt",
     "size": 2507,
