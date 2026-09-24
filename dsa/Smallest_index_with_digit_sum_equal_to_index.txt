@@ -49,3 +49,4 @@ if __name__ == "__main__":
     # Example 3: nums = [0, 2, 4] -> Expected: 0
     nums3 = [0, 2, 4]
     print(f"Result for {nums3}: {sol.smallestIndex(nums3)}")
+        
