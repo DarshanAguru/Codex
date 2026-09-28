@@ -1,0 +1,64 @@
+# Date: 28/09/2026
+# Problem: https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/
+# Leetcode Problem No: 1190
+# Relevance: String, Stack
+
+class Solution:
+
+    # Logic: Stack Simulation for Substring Reversal (O(N^2) Time, O(N) Space)
+    # 1. We iterate through the characters of string `s` using a stack `st`.
+    # 2. For each character:
+    #    - If it is not a closing parenthesis `')'`, push it onto the stack.
+    #    - When encountering `')'`:
+    #      a) Pop characters from the stack until an opening parenthesis `'('` is reached.
+    #         Because popping extracts characters in LIFO order, this automatically reverses the substring.
+    #      b) Pop the opening parenthesis `'('` to discard it.
+    #      c) Push the reversed characters back onto the stack.
+    # 3. After the loop finishes, join all remaining characters in the stack to produce the final string.
+    #
+    # Time Complexity: O(N^2) worst-case (e.g. deeply nested parentheses such as `((((...))))`), where N is the length of `s`.
+    # Space Complexity: O(N) for storing characters in the stack.
+    #
+    # Dry run for s = "(u(love)i)":
+    # - Push '(', 'u', '(', 'l', 'o', 'v', 'e' -> st = ['(', 'u', '(', 'l', 'o', 'v', 'e']
+    # - Encounter ')': pop 'e', 'v', 'o', 'l' -> tmp = "evol", pop '('
+    # - Push 'e', 'v', 'o', 'l' -> st = ['(', 'u', 'e', 'v', 'o', 'l']
+    # - Push 'i' -> st = ['(', 'u', 'e', 'v', 'o', 'l', 'i']
+    # - Encounter ')': pop 'i', 'l', 'o', 'v', 'e', 'u' -> tmp = "iloveu", pop '('
+    # - Push 'i', 'l', 'o', 'v', 'e', 'u' -> st = ['i', 'l', 'o', 'v', 'e', 'u']
+    # - Result: "".join(st) = "iloveu".
+
+    def reverseParentheses(self, s: str) -> str:
+        n = len(s)
+        st = []
+
+        for i in range(n):
+            ch = s[i]
+            tmp = ""
+            if ch == ")":
+                while st and st[-1] != "(":
+                    tmp += st.pop()
+                if st and st[-1] == "(":
+                    st.pop()
+                for c in tmp:
+                    st.append(c)
+            else:
+                st.append(ch)
+
+        return "".join(st)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "(abcd)" -> Expected: "dcba"
+    s1 = "(abcd)"
+    print(f"Result for '{s1}': '{sol.reverseParentheses(s1)}'")
+
+    # Example 2: s = "(u(love)i)" -> Expected: "iloveu"
+    s2 = "(u(love)i)"
+    print(f"Result for '{s2}': '{sol.reverseParentheses(s2)}'")
+
+    # Example 3: s = "(ed(et(oc))el)" -> Expected: "leetcode"
+    s3 = "(ed(et(oc))el)"
+    print(f"Result for '{s3}': '{sol.reverseParentheses(s3)}'")
+

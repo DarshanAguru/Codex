@@ -1,0 +1,64 @@
+# Date: 28/09/2026
+# Problem: https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/
+# Leetcode Problem No: 1807
+# Relevance: Hash Table, String
+
+from typing import List
+
+class Solution:
+
+    # Logic: Hash Map Lookup with Single Pass Parsing (O(N + K) Time, O(N + K) Space)
+    # 1. Convert `knowledge` into a hash map `mapping` for O(1) average lookup time.
+    # 2. Iterate through string `s` while maintaining a pointer `st` for the start index of an open bracket:
+    #    - If `ch == '('`: set `st = i` to mark the start of a key.
+    #    - If `ch == ')'`: extract the key `s[st+1:i]`, look it up in `mapping` (defaulting to '?' if not found),
+    #      append the replacement to `res`, and reset `st = -1`.
+    #    - If `st < 0`: we are outside of any bracket pair, so append `ch` directly to `res`.
+    # 3. Join and return `res`.
+    #
+    # Time Complexity: O(N + K) where N is the length of `s` and K is the total number of characters in `knowledge`.
+    # Space Complexity: O(N + K) for the hash map and output list.
+    #
+    # Dry run for s = "(name)is(age)yearsold", knowledge = [["name","bob"],["age","two"]]:
+    # - mapping = {"name": "bob", "age": "two"}
+    # - i=0 '(': st = 0
+    # - i=5 ')': key = "name", found -> "bob", st = -1, res = ["bob"]
+    # - i=6..7 "is": res = ["bob", "i", "s"]
+    # - i=8 '(': st = 8
+    # - i=12 ')': key = "age", found -> "two", st = -1, res = ["bob", "i", "s", "two"]
+    # - i=13..20 "yearsold": appended directly -> "yearsold"
+    # - Result: "bobistwoyearsold".
+
+    def evaluate(self, s: str, knowledge: List[List[str]]) -> str:
+        mapping = dict(knowledge)
+        res = []
+        st = -1
+
+        for i, ch in enumerate(s):
+            if ch == "(":
+                st = i
+            elif ch == ")":
+                res.append(mapping.get(s[st + 1:i], "?"))
+                st = -1
+            elif st < 0:
+                res.append(ch)
+
+        return "".join(res)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "(name)is(age)yearsold", knowledge = [["name","bob"],["age","two"]] -> Expected: "bobistwoyearsold"
+    s1 = "(name)is(age)yearsold"
+    k1 = [["name", "bob"], ["age", "two"]]
+    print(f"Result for Example 1: '{sol.evaluate(s1, k1)}'")
+
+    # Example 2: s = "hi(name)", knowledge = [["a","b"]] -> Expected: "hi?"
+    s2 = "hi(name)"
+    k2 = [["a", "b"]]
+    print(f"Result for Example 2: '{sol.evaluate(s2, k2)}'")
+
+    # Example 3: s = "(a)(a)(a)aaa", knowledge = [["a","yes"]] -> Expected: "yesyesyesaaa"
+    s3 = "(a)(a)(a)aaa"
+    k3 = [["a", "yes"]]
+    print(f"Result for Example 3: '{sol.evaluate(s3, k3)}'")

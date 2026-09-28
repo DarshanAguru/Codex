@@ -873,6 +873,20 @@
     "type": "file"
   },
   {
+    "name": "Evaluate_the_bracket_pairs_of_a_string.txt",
+    "path": "dsa/Evaluate_the_bracket_pairs_of_a_string.txt",
+    "size": 2642,
+    "timestamp": 1790553600000,
+    "displayDate": "28/09/2026",
+    "problemNo": 1807,
+    "topics": [
+      "Hash Table",
+      "String"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Exclusive_time_of_functions.txt",
     "path": "dsa/Exclusive_time_of_functions.txt",
     "size": 2175,
@@ -1670,6 +1684,20 @@
       "Array"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Maximum_nesting_depth_of_the_parentheses.txt",
+    "path": "dsa/Maximum_nesting_depth_of_the_parentheses.txt",
+    "size": 2176,
+    "timestamp": 1790553600000,
+    "displayDate": "28/09/2026",
+    "problemNo": 1614,
+    "topics": [
+      "String",
+      "Stack"
+    ],
+    "language": "python",
     "type": "file"
   },
   {
@@ -2580,6 +2608,20 @@
     "topics": [
       "Array",
       "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Reverse_substrings_between_each_pair_of_parentheses.txt",
+    "path": "dsa/Reverse_substrings_between_each_pair_of_parentheses.txt",
+    "size": 2605,
+    "timestamp": 1790553600000,
+    "displayDate": "28/09/2026",
+    "problemNo": 1190,
+    "topics": [
+      "String",
+      "Stack"
     ],
     "language": "python",
     "type": "file"

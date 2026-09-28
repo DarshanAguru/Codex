@@ -1,0 +1,61 @@
+# Date: 28/09/2026
+# Problem: https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/
+# Leetcode Problem No: 1614
+# Relevance: String, Stack
+
+class Solution:
+
+    # Logic: Counter / Stack-Based Depth Tracking (O(N) Time, O(1) Space)
+    # 1. A string `s` is a valid parentheses string (VPS). We want to find its maximum nesting depth.
+    # 2. As we iterate through each character in `s`:
+    #    - When encountering an opening parenthesis `'('`, the current nesting depth increases by 1 (`_open += 1`).
+    #    - When encountering a closing parenthesis `')'`, the current nesting depth decreases by 1 (`_open -= 1`).
+    #    - Other characters (digits, operators) do not affect the depth.
+    # 3. At each step, update the maximum depth seen so far: `res = max(res, _open)`.
+    # 4. Return `res`.
+    #
+    # Time Complexity: O(N) where N is the length of string `s`.
+    # Space Complexity: O(1) auxiliary space as we only use counter variables.
+    #
+    # Dry run for s = "(1+(2*3)+((8)/4))+1":
+    # - '(' -> _open = 1, res = 1
+    # - '1', '+', '(' -> _open = 2, res = 2
+    # - '2', '*', '3', ')' -> _open = 1, res = 2
+    # - '+', '(', '(' -> _open = 3, res = 3
+    # - '8', ')', '/', '4', ')' -> _open = 1, res = 3
+    # - ')' -> _open = 0, res = 3
+    # - '+', '1' -> _open = 0, res = 3
+    # - Returns 3.
+
+    def maxDepth(self, s: str) -> int:
+        res = 0
+        _open = 0
+
+        for c in s:
+            if c == "(":
+                _open += 1
+            elif c == ")":
+                _open -= 1
+            res = max(res, _open)
+
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "(1+(2*3)+((8)/4))+1" -> Expected: 3
+    s1 = "(1+(2*3)+((8)/4))+1"
+    print(f"Result for '{s1}': {sol.maxDepth(s1)}")
+
+    # Example 2: s = "(1)+((2))+(((3)))" -> Expected: 3
+    s2 = "(1)+((2))+(((3)))"
+    print(f"Result for '{s2}': {sol.maxDepth(s2)}")
+
+    # Example 3: s = "()(())((()()))" -> Expected: 3
+    s3 = "()(())((()()))"
+    print(f"Result for '{s3}': {sol.maxDepth(s3)}")
+
+    # Example 4: s = "1" -> Expected: 0
+    s4 = "1"
+    print(f"Result for '{s4}': {sol.maxDepth(s4)}")
+        return res
