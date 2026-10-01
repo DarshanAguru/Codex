@@ -376,6 +376,22 @@
     "type": "file"
   },
   {
+    "name": "Check_if_there_is_a_valid_parentheses_string_path.txt",
+    "path": "dsa/Check_if_there_is_a_valid_parentheses_string_path.txt",
+    "size": 3488,
+    "timestamp": 1790812800000,
+    "displayDate": "01/10/2026",
+    "problemNo": 2267,
+    "topics": [
+      "Array",
+      "Dynamic Programming",
+      "Depth-First Search",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Closest_equal_element_queries.txt",
     "path": "dsa/Closest_equal_element_queries.txt",
     "size": 2856,
@@ -1696,6 +1712,21 @@
     "topics": [
       "String",
       "Stack"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Maximum_nesting_depth_of_two_valid_parentheses_strings.txt",
+    "path": "dsa/Maximum_nesting_depth_of_two_valid_parentheses_strings.txt",
+    "size": 2650,
+    "timestamp": 1790812800000,
+    "displayDate": "01/10/2026",
+    "problemNo": 1111,
+    "topics": [
+      "String",
+      "Stack",
+      "Greedy"
     ],
     "language": "python",
     "type": "file"
@@ -3217,6 +3248,21 @@
       "Hash Table"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Valid_parentheses.txt",
+    "path": "dsa/Valid_parentheses.txt",
+    "size": 2957,
+    "timestamp": 1790812800000,
+    "displayDate": "01/10/2026",
+    "problemNo": 20,
+    "topics": [
+      "String",
+      "Stack",
+      "Bit Manipulation"
+    ],
+    "language": "python",
     "type": "file"
   },
   {

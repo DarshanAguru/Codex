@@ -1,0 +1,94 @@
+# Date: 01/10/2026
+# Problem: https://leetcode.com/problems/check-if-there-is-a-valid-parentheses-string-path/
+# Leetcode Problem No: 2267
+# Relevance: Array, Dynamic Programming, Depth-First Search, Matrix
+
+from typing import List
+
+class Solution:
+
+    # Logic: DFS with State Memoization / DP (O(M * N * (M + N)) Time & Space)
+    # 1. We must find if there exists a path from (0, 0) to (m-1, n-1) moving only down or right
+    #    such that the sequence of parentheses visited forms a valid parentheses string.
+    # 2. Key Observations & Prunings:
+    #    - Total path length from (0, 0) to (m-1, n-1) is always (m - 1) + (n - 1) + 1 = m + n - 1.
+    #      If this length is odd, it's impossible to balance opening and closing brackets -> return False.
+    #    - The path must start with '(' and end with ')' -> if grid[0][0] == ')' or grid[m-1][n-1] == '(', return False.
+    #    - At any point, if balance `diff < 0`, more ')' than '(' have been seen -> invalid prefix.
+    #    - If `diff > remaining_steps` (where remaining_steps = (m - 1 - i) + (n - 1 - j)), there are not enough
+    #      steps left to close all open brackets -> prune.
+    # 3. State Definition:
+    #    - State: `(i, j, diff)` representing current cell (i, j) with balance `diff` of open minus closed brackets.
+    #    - Use a `seen` set to memoize visited states and avoid redundant explorations.
+    # 4. Transitions:
+    #    From (i, j), we explore moving down `(i + 1, j)` and moving right `(i, j + 1)`.
+    #    At (m-1, n-1), return `diff == 0`.
+    #
+    # Time Complexity: O(M * N * (M + N)) since i < M, j < N, and diff <= (M + N) / 2.
+    # Space Complexity: O(M * N * (M + N)) for memoization table and recursion stack.
+    #
+    # Dry run for 4x3 grid with start='(', end=')':
+    # - m = 4, n = 3 -> path length = 4 + 3 - 1 = 6 (even, valid candidate).
+    # - Explore down/right paths while maintaining 0 <= diff <= remaining_steps.
+    # - Reaching (3, 2) with diff == 0 returns True.
+
+    def hasValidPath(self, grid: List[List[str]]) -> bool:
+        m, n = len(grid), len(grid[0])
+
+        # Quick Pruning Checks
+        if (m + n - 1) % 2 != 0:
+            return False
+        if grid[0][0] == ")" or grid[m - 1][n - 1] == "(":
+            return False
+
+        seen = set()
+
+        def helper(i: int, j: int, diff: int) -> bool:
+            if i >= m or j >= n:
+                return False
+
+            if grid[i][j] == "(":
+                diff += 1
+            else:
+                diff -= 1
+
+            if diff < 0:
+                return False
+
+            # Prune if remaining cells cannot close open brackets
+            remaining_steps = (m - 1 - i) + (n - 1 - j)
+            if diff > remaining_steps:
+                return False
+
+            if i == m - 1 and j == n - 1:
+                return diff == 0
+
+            state = (i, j, diff)
+            if state in seen:
+                return False
+
+            seen.add(state)
+
+            return helper(i + 1, j, diff) or helper(i, j + 1, diff)
+
+        return helper(0, 0, 0)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: 4x3 grid -> Expected: True
+    grid1 = [
+        ["(", "(", "("],
+        [")", "(", ")"],
+        ["(", "(", ")"],
+        ["(", "(", ")"]
+    ]
+    print(f"Result for Grid 1: {sol.hasValidPath(grid1)}")
+
+    # Example 2: 2x2 grid -> Expected: False
+    grid2 = [
+        [")", ")"],
+        ["(", "("]
+    ]
+    print(f"Result for Grid 2: {sol.hasValidPath(grid2)}")
+

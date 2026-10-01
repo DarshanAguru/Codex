@@ -1,0 +1,68 @@
+# Date: 01/10/2026
+# Problem: https://leetcode.com/problems/maximum-nesting-depth-of-two-valid-parentheses-strings/
+# Leetcode Problem No: 1111
+# Relevance: String, Stack, Greedy
+
+from typing import List
+
+class Solution:
+
+    # Logic: Depth-Parity Alternation (O(N) Time, O(1) Auxiliary Space)
+    # 1. We want to split a valid parentheses string (VPS) `seq` into two disjoint VPS subsequences A and B
+    #    such that `max(depth(A), depth(B))` is minimized.
+    # 2. To minimize the maximum depth, we can divide the nesting depths evenly between A (group 0) and B (group 1).
+    # 3. We maintain the current nesting depth with `diff`:
+    #    - When encountering `'('`:
+    #      `diff += 1`
+    #      Assign to group 1 if `diff % 2 == 0` (even depth), otherwise group 0 (odd depth).
+    #    - When encountering `')'`:
+    #      `diff -= 1`
+    #      The matching opening bracket was at depth `diff + 1`.
+    #      If `diff % 2 == 0`, `diff + 1` was odd -> assigned to group 0.
+    #      If `diff % 2 != 0`, `diff + 1` was even -> assigned to group 1.
+    # 4. This guarantees that matching parenthesis pairs are always assigned to the same group,
+    #    producing two valid VPS subsequences with maximum depth halved (~ ceil(depth / 2)).
+    #
+    # Time Complexity: O(N) where N is the length of `seq`.
+    # Space Complexity: O(1) auxiliary space (excluding the output array).
+    #
+    # Dry run for seq = "(()())":
+    # - '(' -> diff = 1 (odd) -> group 0
+    # - '(' -> diff = 2 (even) -> group 1
+    # - ')' -> diff = 1 (odd) -> group 1 (matches '(' at depth 2)
+    # - '(' -> diff = 2 (even) -> group 1
+    # - ')' -> diff = 1 (odd) -> group 1 (matches '(' at depth 2)
+    # - ')' -> diff = 0 (even) -> group 0 (matches '(' at depth 1)
+    # - Result: [0, 1, 1, 1, 1, 0].
+
+    def maxDepthAfterSplit(self, seq: str) -> List[int]:
+        diff = 0
+        res = []
+
+        for c in seq:
+            if c == '(':
+                diff += 1
+                if diff % 2 == 0:
+                    res.append(1)
+                else:
+                    res.append(0)
+            else:
+                diff -= 1
+                if diff % 2 == 0:
+                    res.append(0)
+                else:
+                    res.append(1)
+
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: seq = "(()())" -> Expected: [0, 1, 1, 1, 1, 0]
+    seq1 = "(()())"
+    print(f"Result for '{seq1}': {sol.maxDepthAfterSplit(seq1)}")
+
+    # Example 2: seq = "()(())()" -> Expected: [0, 0, 0, 1, 1, 0, 0, 0]
+    seq2 = "()(())()"
+    print(f"Result for '{seq2}': {sol.maxDepthAfterSplit(seq2)}")
+        return res
