@@ -1197,6 +1197,21 @@
     "type": "file"
   },
   {
+    "name": "Generate_parentheses.txt",
+    "path": "dsa/Generate_parentheses.txt",
+    "size": 3252,
+    "timestamp": 1791158400000,
+    "displayDate": "05/10/2026",
+    "problemNo": 22,
+    "topics": [
+      "String",
+      "Dynamic Programming",
+      "Backtracking"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Get_biggest_three_rhombus_sums_in_a_grid.txt",
     "path": "dsa/Get_biggest_three_rhombus_sums_in_a_grid.txt",
     "size": 3052,
@@ -1463,6 +1478,21 @@
       "String"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Longest_valid_parentheses.txt",
+    "path": "dsa/Longest_valid_parentheses.txt",
+    "size": 2453,
+    "timestamp": 1791158400000,
+    "displayDate": "05/10/2026",
+    "problemNo": 32,
+    "topics": [
+      "String",
+      "Dynamic Programming",
+      "Stack"
+    ],
+    "language": "python",
     "type": "file"
   },
   {
@@ -2791,6 +2821,20 @@
     "type": "file"
   },
   {
+    "name": "Score_of_parentheses.txt",
+    "path": "dsa/Score_of_parentheses.txt",
+    "size": 2997,
+    "timestamp": 1791158400000,
+    "displayDate": "05/10/2026",
+    "problemNo": 856,
+    "topics": [
+      "String",
+      "Stack"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Search_element_in_rotated_array.txt",
     "path": "dsa/Search_element_in_rotated_array.txt",
     "size": 2402,
@@ -3261,6 +3305,22 @@
       "String",
       "Stack",
       "Bit Manipulation"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Valid_parenthesis_string.txt",
+    "path": "dsa/Valid_parenthesis_string.txt",
+    "size": 3009,
+    "timestamp": 1791158400000,
+    "displayDate": "05/10/2026",
+    "problemNo": 678,
+    "topics": [
+      "String",
+      "Dynamic Programming",
+      "Stack",
+      "Greedy"
     ],
     "language": "python",
     "type": "file"

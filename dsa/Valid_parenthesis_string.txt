@@ -1,0 +1,76 @@
+# Date: 05/10/2026
+# Problem: https://leetcode.com/problems/valid-parenthesis-string/
+# Leetcode Problem No: 678
+# Relevance: String, Dynamic Programming, Stack, Greedy
+
+class Solution:
+
+    # Logic: Two Stacks for Opening Brackets and Wildcards (O(N) Time, O(N) Space)
+    # 1. We maintain two stacks to store indices:
+    #    - `open_st`: indices of unmatched opening parentheses `'('`.
+    #    - `star_st`: indices of wildcard asterisks `'*'`.
+    # 2. Iterate through string `s` with index `i`:
+    #    - If `s[i] == '('`: push `i` to `open_st`.
+    #    - If `s[i] == '*'`: push `i` to `star_st`.
+    #    - If `s[i] == ')'`:
+    #      - Prefer matching with an opening parenthesis first (pop from `open_st`).
+    #      - Otherwise, match with an asterisk acting as `'('` (pop from `star_st`).
+    #      - If both stacks are empty, this `')'` has nothing to balance it -> return False.
+    # 3. Post-processing unmatched `'('`:
+    #    - Any remaining `'('` must be matched by an `'*'` acting as `')'`.
+    #    - An asterisk can only close an opening bracket if it appears AFTER the bracket:
+    #      i.e., `star_index > open_index`.
+    #    - If `open_st.pop() > star_st.pop()`, the `'('` appears after the `'*'`, which is invalid -> return False.
+    # 4. If all `'('` are successfully matched (`not open_st`), return True.
+    #
+    # Time Complexity: O(N) where N is the length of `s`, as each index is pushed and popped at most once.
+    # Space Complexity: O(N) auxiliary space for `open_st` and `star_st`.
+    #
+    # Dry run for s = "(*))":
+    # - i = 0, '(': open_st = [0], star_st = []
+    # - i = 1, '*': open_st = [0], star_st = [1]
+    # - i = 2, ')': open_st non-empty -> pop 0 -> open_st = [], star_st = [1]
+    # - i = 3, ')': open_st empty, star_st non-empty -> pop 1 -> open_st = [], star_st = []
+    # - Traversal ends: open_st is empty -> returns True.
+
+    def checkValidString(self, s: str) -> bool:
+        open_st = []
+        star_st = []
+
+        for i in range(len(s)):
+            if s[i] == "(":
+                open_st.append(i)
+            elif s[i] == "*":
+                star_st.append(i)
+            else:
+                if open_st:
+                    open_st.pop()
+                elif star_st:
+                    star_st.pop()
+                else:
+                    return False
+
+        while open_st and star_st:
+            if open_st.pop() > star_st.pop():
+                return False
+
+        return not open_st
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "()" -> Expected: True
+    s1 = "()"
+    print(f"Result for '{s1}': {sol.checkValidString(s1)}")
+
+    # Example 2: s = "(*)" -> Expected: True
+    s2 = "(*)"
+    print(f"Result for '{s2}': {sol.checkValidString(s2)}")
+
+    # Example 3: s = "(*))" -> Expected: True
+    s3 = "(*))"
+    print(f"Result for '{s3}': {sol.checkValidString(s3)}")
+
+    # Example 4: s = ")(" -> Expected: False
+    s4 = ")("
+    print(f"Result for '{s4}': {sol.checkValidString(s4)}")

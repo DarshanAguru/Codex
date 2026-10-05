@@ -1,0 +1,77 @@
+# Date: 05/10/2026
+# Problem: https://leetcode.com/problems/score-of-parentheses/
+# Leetcode Problem No: 856
+# Relevance: String, Stack
+
+class Solution:
+
+    # Logic: Stack-Based Evaluation with Scope Sentinels (O(N) Time, O(N) Space)
+    # 1. We maintain:
+    #    - `st`: A stack to match parentheses.
+    #    - `score`: A stack storing intermediate values and scope delimiters (`0`).
+    # 2. Iterate through string `s`:
+    #    - When encountering `'('`:
+    #      Push `'('` onto `st` and push `0` onto `score` to mark the start of a nested scope.
+    #    - When encountering `')'`:
+    #      Pop the matching `'('` from `st`.
+    #      - If `score[-1] == 0`, we have an immediate `"()"` pair with no inner expressions.
+    #        Pop `0` and push `1`.
+    #      - If `score[-1] != 0`, we have nested expressions inside `"(A)"`.
+    #        Sum all inner scores by popping until reaching the scope delimiter `0`.
+    #        Pop the `0` delimiter, and push `2 * tmp` representing the double score of the nested content.
+    # 3. After the traversal, return the sum of all top-level evaluated components in `score`.
+    #
+    # Time Complexity: O(N) where N is the length of `s`, since each parenthesis is pushed and popped at most twice.
+    # Space Complexity: O(N) auxiliary space for the stacks.
+    #
+    # Dry run for s = "(()(()))":
+    # - i = 0, '(': score = [0]
+    # - i = 1, '(': score = [0, 0]
+    # - i = 2, ')': score[-1] == 0 -> replace with 1 -> score = [0, 1]
+    # - i = 3, '(': score = [0, 1, 0]
+    # - i = 4, '(': score = [0, 1, 0, 0]
+    # - i = 5, ')': score[-1] == 0 -> replace with 1 -> score = [0, 1, 0, 1]
+    # - i = 6, ')': inner sum = 1, pop delimiter 0 -> push 2 * 1 = 2 -> score = [0, 1, 2]
+    # - i = 7, ')': inner sum = 2 + 1 = 3, pop delimiter 0 -> push 2 * 3 = 6 -> score = [6]
+    # - Return sum([6]) = 6.
+
+    def scoreOfParentheses(self, s: str) -> int:
+        st = []
+        score = []
+
+        for i, ch in enumerate(s):
+            if ch == "(":
+                st.append(ch)
+                score.append(0)
+            else:
+                st.pop()
+                tmp = 0
+                if score[-1] == 0:
+                    score.pop()
+                    score.append(1)
+                else:
+                    while score and score[-1] != 0:
+                        tmp += score.pop()
+                    score.pop()
+                    score.append(2 * tmp)
+
+        return sum(score)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "()" -> Expected: 1
+    s1 = "()"
+    print(f"Result for '{s1}': {sol.scoreOfParentheses(s1)}")
+
+    # Example 2: s = "(())" -> Expected: 2
+    s2 = "(())"
+    print(f"Result for '{s2}': {sol.scoreOfParentheses(s2)}")
+
+    # Example 3: s = "()()" -> Expected: 2
+    s3 = "()()"
+    print(f"Result for '{s3}': {sol.scoreOfParentheses(s3)}")
+
+    # Example 4: s = "(()(()))" -> Expected: 6
+    s4 = "(()(()))"
+    print(f"Result for '{s4}': {sol.scoreOfParentheses(s4)}")
