@@ -1,0 +1,60 @@
+# Date: 06/10/2026
+# Problem: https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/
+# Leetcode Problem No: 921
+# Relevance: String, Stack, Greedy
+
+class Solution:
+
+    # Logic: Balance Counter Tracking (O(N) Time, O(1) Space)
+    # 1. We maintain two counters:
+    #    - `cnt`: The number of unmatched opening parentheses `'('`.
+    #    - `res`: The number of unmatched closing parentheses `')'` requiring an added `'('`.
+    # 2. Iterate through each character `ch` in `s`:
+    #    - If `ch == '('`: increment `cnt` by 1.
+    #    - If `ch == ')'`: decrement `cnt` by 1.
+    #      - If `cnt < 0`: A closing bracket has appeared without any prior unmatched opening bracket.
+    #        We must add an opening bracket, so we increment `res += abs(cnt)` (which is 1) and reset `cnt = 0`.
+    # 3. After iterating through all characters, any remaining `cnt > 0` represents unmatched opening brackets
+    #    that require corresponding closing brackets to be added.
+    # 4. Total minimum additions needed is `res + cnt`.
+    #
+    # Time Complexity: O(N) where N is the length of string `s`, since we scan through the string in a single pass.
+    # Space Complexity: O(1) auxiliary space, requiring only integer counters.
+    #
+    # Dry run for s = "())":
+    # - ch = '(': cnt = 1, res = 0
+    # - ch = ')': cnt = 0, res = 0
+    # - ch = ')': cnt = -1 -> res += 1, cnt = 0
+    # - Return: res + cnt = 1 + 0 = 1.
+
+    def minAddToMakeValid(self, s: str) -> int:
+        res = 0
+        cnt = 0
+        for ch in s:
+            if ch == "(":
+                cnt += 1
+            else:
+                cnt -= 1
+                if cnt < 0:
+                    res += abs(cnt)
+                    cnt = 0
+        return res + cnt
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "())" -> Expected: 1
+    s1 = "())"
+    print(f"Result for '{s1}': {sol.minAddToMakeValid(s1)}")
+
+    # Example 2: s = "(((" -> Expected: 3
+    s2 = "((("
+    print(f"Result for '{s2}': {sol.minAddToMakeValid(s2)}")
+
+    # Example 3: s = "()" -> Expected: 0
+    s3 = "()"
+    print(f"Result for '{s3}': {sol.minAddToMakeValid(s3)}")
+
+    # Example 4: s = "()))((" -> Expected: 4
+    s4 = "()))(("
+    print(f"Result for '{s4}': {sol.minAddToMakeValid(s4)}")

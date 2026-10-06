@@ -2061,6 +2061,21 @@
     "type": "file"
   },
   {
+    "name": "Minimum_add_to_make_parentheses_valid.txt",
+    "path": "dsa/Minimum_add_to_make_parentheses_valid.txt",
+    "size": 2273,
+    "timestamp": 1791244800000,
+    "displayDate": "06/10/2026",
+    "problemNo": 921,
+    "topics": [
+      "String",
+      "Stack",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_ascii_delete_sum_for_two_strings.txt",
     "path": "dsa/Minimum_ascii_delete_sum_for_two_strings.txt",
     "size": 2253,
