@@ -1,0 +1,80 @@
+# Date: 07/10/2026
+# Problem: https://leetcode.com/problems/remove-invalid-parentheses/
+# Leetcode Problem No: 301
+# Relevance: String, Backtracking, Breadth-First Search
+
+from typing import List
+
+class Solution:
+
+    # Logic: Breadth-First Search (BFS) Level-by-Level Exploration (O(2^N) Time, O(2^N) Space)
+    # 1. We need to remove the minimum number of invalid parentheses to make the input string valid,
+    #    returning all unique results.
+    # 2. BFS guarantees minimum removals:
+    #    - Each level represents the strings obtained by removing an increasing number of parentheses (0 removals, 1 removal, etc.).
+    #    - At each level:
+    #      a) Check all strings in `lev` using helper `isValid`.
+    #      b) If any valid strings are found at the current level, return all valid strings from this level immediately.
+    #         Because BFS explores by shortest distance (fewest removals), stopping at the first level with valid strings
+    #         guarantees that the number of removals is minimized.
+    # 3. Generating next level:
+    #    - If no strings at the current level are valid, generate the next level `next_strs`.
+    #    - For each string, try removing each '(' or ')' at every index.
+    #    - Non-parenthesis characters are ignored and preserved.
+    #    - Use sets (`lev`, `next_strs`) to automatically deduplicate states and avoid redundant processing.
+    #
+    # Time Complexity: O(2^N) in the worst case where N is the length of `s`, checking validity in O(N).
+    # Space Complexity: O(2^N) auxiliary space to store visited string states across BFS levels.
+    #
+    # Dry run for s = "()())()":
+    # - Level 0: {"()())()"} -> None are valid.
+    # - Level 1: Generate all strings by removing 1 parenthesis:
+    #   - Removing index 3 ')' -> "(())()" (Valid)
+    #   - Removing index 4 ')' -> "()()()" (Valid)
+    #   - Removing other indices -> Invalid strings
+    # - Valid strings found at Level 1 -> Returns ["(())()", "()()()"].
+
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        def isValid(s_: str) -> bool:
+            bal = 0
+            for ch in s_:
+                if ch == "(":
+                    bal += 1
+                elif ch == ")":
+                    bal -= 1
+                    if bal < 0:
+                        return False
+            return bal == 0
+
+        lev = set([s])
+
+        while lev:
+            valid = [x for x in lev if isValid(x)]
+            if valid:
+                return sorted(valid)
+
+            next_strs = set()
+            for curr in lev:
+                for i, ch in enumerate(curr):
+                    if ch not in "()":
+                        continue
+                    tmp = curr[:i] + curr[i + 1:]
+                    next_strs.add(tmp)
+            lev = next_strs
+
+        return [""]
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "()())()" -> Expected: ["(())()", "()()()"]
+    s1 = "()())()"
+    print(f"Result for '{s1}': {sol.removeInvalidParentheses(s1)}")
+
+    # Example 2: s = "(a)())()" -> Expected: ["(a())()", "(a)()()"]
+    s2 = "(a)())()"
+    print(f"Result for '{s2}': {sol.removeInvalidParentheses(s2)}")
+
+    # Example 3: s = ")(" -> Expected: [""]
+    s3 = ")("
+    print(f"Result for '{s3}': {sol.removeInvalidParentheses(s3)}")

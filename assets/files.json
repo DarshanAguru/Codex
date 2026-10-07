@@ -2661,6 +2661,21 @@
     "type": "file"
   },
   {
+    "name": "Remove_invalid_parentheses.txt",
+    "path": "dsa/Remove_invalid_parentheses.txt",
+    "size": 3302,
+    "timestamp": 1791331200000,
+    "displayDate": "07/10/2026",
+    "problemNo": 301,
+    "topics": [
+      "String",
+      "Backtracking",
+      "Breadth-First Search"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Remove_nth_node_from_last_in_ll.txt",
     "path": "dsa/Remove_nth_node_from_last_in_ll.txt",
     "size": 3116,
