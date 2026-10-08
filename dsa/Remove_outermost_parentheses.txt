@@ -1,0 +1,64 @@
+# Date: 08/10/2026
+# Problem: https://leetcode.com/problems/remove-outermost-parentheses/
+# Leetcode Problem No: 1021
+# Relevance: String, Stack
+
+class Solution:
+
+    # Logic: Balance Counter Tracking for Primitive Decompositions (O(N) Time, O(N) Space)
+    # 1. A valid parentheses string can be partitioned into disjoint primitive components.
+    #    In each primitive component, the first opening bracket and its matching closing bracket are outermost.
+    # 2. We use an integer `bal` to track the nesting depth:
+    #    - An opening bracket `'('` is outermost if it occurs when `bal == 0`.
+    #      Hence, we append `'('` to the result only if `bal > 0`, and then increment `bal += 1`.
+    #    - A closing bracket `')'` is outermost if it reduces `bal` down to 0.
+    #      Hence, we decrement `bal -= 1` first, and append `')'` to the result only if `bal > 0`.
+    # 3. Finally, join and return the accumulated characters.
+    #
+    # Time Complexity: O(N) where N is the length of string `s`, scanning each character once.
+    # Space Complexity: O(N) auxiliary space to collect the result characters.
+    #
+    # Dry run for s = "(()())(())":
+    # - '(': bal=0 -> don't append, bal=1
+    # - '(': bal=1 > 0 -> append '(', bal=2
+    # - ')': bal becomes 1 > 0 -> append ')', bal=1
+    # - '(': bal=1 > 0 -> append '(', bal=2
+    # - ')': bal becomes 1 > 0 -> append ')', bal=1
+    # - ')': bal becomes 0 -> don't append, bal=0  (Finished 1st primitive "(()())" -> "()()")
+    # - '(': bal=0 -> don't append, bal=1
+    # - '(': bal=1 > 0 -> append '(', bal=2
+    # - ')': bal becomes 1 > 0 -> append ')', bal=1
+    # - ')': bal becomes 0 -> don't append, bal=0  (Finished 2nd primitive "(())" -> "()")
+    # - Return: "()()()"
+
+    def removeOuterParentheses(self, s: str) -> str:
+        res = []
+        bal = 0
+
+        for c in s:
+            if c == "(":
+                if bal > 0:
+                    res.append(c)
+                bal += 1
+            else:
+                bal -= 1
+                if bal > 0:
+                    res.append(c)
+
+        return "".join(res)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "(()())(())" -> Expected: "()()()"
+    s1 = "(()())(())"
+    print(f"Result for '{s1}': '{sol.removeOuterParentheses(s1)}'")
+
+    # Example 2: s = "(()())(())(()(()))" -> Expected: "()()()()(())"
+    s2 = "(()())(())(()(()))"
+    print(f"Result for '{s2}': '{sol.removeOuterParentheses(s2)}'")
+
+    # Example 3: s = "()()" -> Expected: ""
+    s3 = "()()"
+    print(f"Result for '{s3}': '{sol.removeOuterParentheses(s3)}'")
+    
