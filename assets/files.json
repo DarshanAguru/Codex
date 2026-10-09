@@ -2251,6 +2251,21 @@
     "type": "file"
   },
   {
+    "name": "Minimum_insertions_to_balance_a_parentheses_string.txt",
+    "path": "dsa/Minimum_insertions_to_balance_a_parentheses_string.txt",
+    "size": 2747,
+    "timestamp": 1791504000000,
+    "displayDate": "09/10/2026",
+    "problemNo": 1541,
+    "topics": [
+      "String",
+      "Stack",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_moves_to_clean_the_classroom.txt",
     "path": "dsa/Minimum_moves_to_clean_the_classroom.txt",
     "size": 4492,
