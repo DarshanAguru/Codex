@@ -1,0 +1,54 @@
+# Date: 15/10/2026
+# Problem: https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-i/
+# Leetcode Problem No: 2913
+# Relevance: Array, Hash Table
+
+from typing import List
+
+class Solution:
+
+    # Logic: Subarray Enumeration with Hash Set (O(N^2) Time, O(N) Space)
+    # 1. We need to compute the sum of squares of distinct element counts across all contiguous subarrays of `nums`.
+    # 2. For every starting index `i` from 0 to `n - 1`:
+    #    - Maintain a hash set `seen` of elements encountered in the subarray starting at `i`.
+    #    - Expand the subarray to index `j` from `i` to `n - 1`:
+    #      - Add `nums[j]` to `seen`.
+    #      - The number of distinct elements in subarray `nums[i..j]` is `len(seen)`.
+    #      - Add `len(seen)^2` to our accumulator `res`.
+    # 3. Return `res`.
+    #
+    # Time Complexity: O(N^2) where N is the length of `nums`, since there are O(N^2) subarrays and each insertion/size query is O(1).
+    # Space Complexity: O(N) auxiliary space to maintain the hash set `seen`.
+    #
+    # Dry run for nums = [1, 2, 1]:
+    # - i = 0:
+    #   - j = 0: nums[0]=1, seen={1}, len=1 -> res += 1^2 = 1 (res = 1)
+    #   - j = 1: nums[1]=2, seen={1, 2}, len=2 -> res += 2^2 = 4 (res = 5)
+    #   - j = 2: nums[2]=1, seen={1, 2}, len=2 -> res += 2^2 = 4 (res = 9)
+    # - i = 1:
+    #   - j = 1: nums[1]=2, seen={2}, len=1 -> res += 1^2 = 1 (res = 10)
+    #   - j = 2: nums[2]=1, seen={2, 1}, len=2 -> res += 2^2 = 4 (res = 14)
+    # - i = 2:
+    #   - j = 2: nums[2]=1, seen={1}, len=1 -> res += 1^2 = 1 (res = 15)
+    # - Return: 15.
+
+    def sumCounts(self, nums: List[int]) -> int:
+        n = len(nums)
+        res = 0
+        for i in range(n):
+            seen = set()
+            for j in range(i, n):
+                seen.add(nums[j])
+                res += len(seen) * len(seen)
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [1, 2, 1] -> Expected: 15
+    nums1 = [1, 2, 1]
+    print(f"Result for {nums1}: {sol.sumCounts(nums1)}")
+
+    # Example 2: nums = [1, 1] -> Expected: 3
+    nums2 = [1, 1]
+    print(f"Result for {nums2}: {sol.sumCounts(nums2)}")

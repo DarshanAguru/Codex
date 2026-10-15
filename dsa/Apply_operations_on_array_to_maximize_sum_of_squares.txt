@@ -1,0 +1,65 @@
+# Date: 15/10/2026
+# Problem: https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/
+# Leetcode Problem No: 2897
+# Relevance: Array, Hash Table, Greedy, Bit Manipulation
+
+from typing import List
+
+class Solution:
+
+    # Logic: Bitwise Bit Distribution & Greedy Concentration (O(30 * N) Time, O(1) Space)
+    # 1. The operation replaces `(nums[i], nums[j])` with `(nums[i] AND nums[j], nums[i] OR nums[j])`.
+    #    - Notice that bitwise AND preserves bits present in both numbers, while bitwise OR collects
+    #      bits present in either number.
+    #    - The total number of 1-bits at any bit position across all elements is invariant under this operation.
+    # 2. Convexity of Squares:
+    #    - Since `(x + d)^2 + (y - d)^2 > x^2 + y^2` when `x >= y` and `d > 0`, concentrating 1-bits into
+    #      the largest possible numbers strictly maximizes the sum of squares.
+    # 3. Strategy:
+    #    - Count the frequency of set bits at each bit position (from 0 to 29) across all numbers in `nums`.
+    #    - Greedily construct the `k` largest possible numbers: for each of the `k` numbers, set the j-th bit
+    #      if `cnt[j] > 0`, and decrement `cnt[j]`.
+    #    - Add the square of each constructed number modulo 10^9 + 7 to `res`.
+    #
+    # Time Complexity: O(30 * N + 30 * k) = O(N) where N is the length of `nums` (numbers <= 10^9 fit in 30 bits).
+    # Space Complexity: O(1) auxiliary space (using a fixed-size array of size 30 for bit counts).
+    #
+    # Dry run for nums = [2, 6, 5, 8], k = 2:
+    # - Binary: 2 (0010), 6 (0110), 5 (0101), 8 (1000)
+    # - Bit counts: bit 3: 1, bit 2: 2, bit 1: 2, bit 0: 1
+    # - Form 1st number: take all available bits {3, 2, 1, 0} -> 1111_2 = 15. Remaining counts: {bit 2: 1, bit 1: 1}.
+    # - Form 2nd number: take remaining bits {2, 1} -> 0110_2 = 6.
+    # - Sum of squares = (15^2 + 6^2) = 225 + 36 = 261.
+
+    def maxSum(self, nums: List[int], k: int) -> int:
+        MOD = 1_000_000_007
+        cnt = [0] * 30
+
+        for num in nums:
+            for i in range(30):
+                if num & (1 << i):
+                    cnt[i] += 1
+
+        res = 0
+        for _ in range(k):
+            curr = 0
+            for j in range(29, -1, -1):
+                if cnt[j] > 0:
+                    curr |= 1 << j
+                    cnt[j] -= 1
+            res = (res + curr * curr) % MOD
+
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [2, 6, 5, 8], k = 2 -> Expected: 261
+    nums1 = [2, 6, 5, 8]
+    k1 = 2
+    print(f"Result for {nums1}, k={k1}: {sol.maxSum(nums1, k1)}")
+
+    # Example 2: nums = [4, 5, 4, 7], k = 3 -> Expected: 90
+    nums2 = [4, 5, 4, 7]
+    k2 = 3
+    print(f"Result for {nums2}, k={k2}: {sol.maxSum(nums2, k2)}")

@@ -73,6 +73,22 @@
     "type": "file"
   },
   {
+    "name": "Apply_operations_on_array_to_maximize_sum_of_squares.txt",
+    "path": "dsa/Apply_operations_on_array_to_maximize_sum_of_squares.txt",
+    "size": 2776,
+    "timestamp": 1792022400000,
+    "displayDate": "15/10/2026",
+    "problemNo": 2897,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Greedy",
+      "Bit Manipulation"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Area_of_largest_rectangle_in_hist.txt",
     "path": "dsa/Area_of_largest_rectangle_in_hist.txt",
     "size": 2933,
@@ -1642,6 +1658,36 @@
     "type": "file"
   },
   {
+    "name": "Maximize_sum_of_squares_of_digits.txt",
+    "path": "dsa/Maximize_sum_of_squares_of_digits.txt",
+    "size": 2617,
+    "timestamp": 1792022400000,
+    "displayDate": "15/10/2026",
+    "problemNo": 3723,
+    "topics": [
+      "Math",
+      "Greedy",
+      "String"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
+    "name": "Maximum_alternating_sum_of_squares.txt",
+    "path": "dsa/Maximum_alternating_sum_of_squares.txt",
+    "size": 2186,
+    "timestamp": 1792022400000,
+    "displayDate": "15/10/2026",
+    "problemNo": 3727,
+    "topics": [
+      "Array",
+      "Greedy",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_amount_of_money_robot_can_earn.txt",
     "path": "dsa/Maximum_amount_of_money_robot_can_earn.txt",
     "size": 3444,
@@ -3131,6 +3177,20 @@
     "type": "file"
   },
   {
+    "name": "Subarrays_distinct_element_sum_of_squares_i.txt",
+    "path": "dsa/Subarrays_distinct_element_sum_of_squares_i.txt",
+    "size": 2162,
+    "timestamp": 1792022400000,
+    "displayDate": "15/10/2026",
+    "problemNo": 2913,
+    "topics": [
+      "Array",
+      "Hash Table"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Subset_sum_equals_to_k_dp.txt",
     "path": "dsa/Subset_sum_equals_to_k_dp.txt",
     "size": 3603,
@@ -3203,6 +3263,21 @@
       "Bit Manipulation"
     ],
     "language": "java",
+    "type": "file"
+  },
+  {
+    "name": "Sum_of_squares_of_special_elements.txt",
+    "path": "dsa/Sum_of_squares_of_special_elements.txt",
+    "size": 1682,
+    "timestamp": 1792022400000,
+    "displayDate": "15/10/2026",
+    "problemNo": 2778,
+    "topics": [
+      "Array",
+      "Simulation",
+      "Math"
+    ],
+    "language": "python",
     "type": "file"
   },
   {

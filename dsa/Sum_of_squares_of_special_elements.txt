@@ -1,0 +1,41 @@
+# Date: 15/10/2026
+# Problem: https://leetcode.com/problems/sum-of-squares-of-special-elements/
+# Leetcode Problem No: 2778
+# Relevance: Array, Simulation, Math
+
+from typing import List
+
+class Solution:
+
+    # Logic: 1-Indexed Divisibility Check (O(N) Time, O(1) Auxiliary Space)
+    # 1. Let `n` be the length of the array `nums`.
+    # 2. An element `nums[i - 1]` (where `i` is its 1-based index) is considered "special"
+    #    if `n % i == 0` (i.e. `i` divides `n` evenly).
+    # 3. We iterate through `nums` using `enumerate(nums, start=1)`:
+    #    - If `len(nums) % i == 0`, square the element (`x * x`) and include it in the sum.
+    # 4. Return the total sum of squares of all special elements.
+    #
+    # Time Complexity: O(N) where N is the length of `nums`, scanning each element once.
+    # Space Complexity: O(1) auxiliary space (excluding list comprehension if converted to generator).
+    #
+    # Dry run for nums = [1, 2, 3, 4]:
+    # - n = 4
+    # - i = 1, x = 1: 4 % 1 == 0 -> special, 1^2 = 1
+    # - i = 2, x = 2: 4 % 2 == 0 -> special, 2^2 = 4
+    # - i = 3, x = 3: 4 % 3 != 0 -> skip
+    # - i = 4, x = 4: 4 % 4 == 0 -> special, 4^2 = 16
+    # - Total sum: 1 + 4 + 16 = 21.
+
+    def sumOfSquares(self, nums: List[int]) -> int:
+        return sum([x * x for i, x in enumerate(nums, start=1) if len(nums) % i == 0])
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [1, 2, 3, 4] -> Expected: 21
+    nums1 = [1, 2, 3, 4]
+    print(f"Result for {nums1}: {sol.sumOfSquares(nums1)}")
+
+    # Example 2: nums = [2, 7, 1, 19, 18, 3] -> Expected: 63
+    nums2 = [2, 7, 1, 19, 18, 3]
+    print(f"Result for {nums2}: {sol.sumOfSquares(nums2)}")

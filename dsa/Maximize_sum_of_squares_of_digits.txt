@@ -1,0 +1,61 @@
+# Date: 15/10/2026
+# Problem: https://leetcode.com/problems/maximize-sum-of-squares-of-digits/
+# Leetcode Problem No: 3723
+# Relevance: Math, Greedy, String
+
+class Solution:
+
+    # Logic: Greedy Digit Allocation via Convexity of Squares (O(num) Time, O(num) Space)
+    # 1. We must construct a `num`-digit number whose digits sum to `sum` such that the sum of the squares
+    #    of its digits is maximized.
+    # 2. Convexity of Squares:
+    #    - The square function f(x) = x^2 is strictly convex. Given a fixed sum, concentrating the sum into
+    #      as few large numbers as possible maximizes the sum of squares (e.g. 9^2 + 0^2 = 81 > 5^2 + 4^2 = 41).
+    #    - Therefore, the optimal strategy is to greedily assign the largest possible digit (9) to as many positions as possible.
+    # 3. Algorithm:
+    #    - If `9 * num < sum`, it is impossible to achieve the target sum; return `""`.
+    #    - From the most significant digit (leftmost) to the least significant digit, greedily assign
+    #      `min(9, sum)` to each digit position and subtract that amount from `sum`.
+    #    - Join and return the constructed string of digits.
+    #
+    # Time Complexity: O(num) to construct `num` digits.
+    # Space Complexity: O(num) auxiliary space to store the result characters.
+    #
+    # Dry run for num = 3, sum = 22:
+    # - 9 * 3 = 27 >= 22 (valid)
+    # - Pos 0: assign min(9, 22) = 9. Remaining sum = 13. res[0] = "9"
+    # - Pos 1: assign min(9, 13) = 9. Remaining sum = 4. res[1] = "9"
+    # - Pos 2: assign min(9, 4) = 4. Remaining sum = 0. res[2] = "4"
+    # - Return: "994". Sum of squares = 81 + 81 + 16 = 178 (maximum possible).
+
+    def maxSumOfSquares(self, num: int, sum: int) -> str:
+        maxx = 9 * num
+        if maxx < sum:
+            return ""
+        res = ["0"] * num
+
+        for i in range(num):
+            tmp = "0"
+            for j in range(9, -1, -1):
+                if sum - j >= 0:
+                    tmp = str(j)
+                    sum -= j
+                    break
+            res[i] = tmp
+
+        return "".join(res)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: num = 2, sum = 9 -> Expected: "90"
+    print(f"Result for num=2, sum=9: '{sol.maxSumOfSquares(2, 9)}'")
+
+    # Example 2: num = 2, sum = 17 -> Expected: "98"
+    print(f"Result for num=2, sum=17: '{sol.maxSumOfSquares(2, 17)}'")
+
+    # Example 3: num = 3, sum = 22 -> Expected: "994"
+    print(f"Result for num=3, sum=22: '{sol.maxSumOfSquares(3, 22)}'")
+
+    # Example 4: num = 3, sum = 28 -> Expected: ""
+    print(f"Result for num=3, sum=28: '{sol.maxSumOfSquares(3, 28)}'")
