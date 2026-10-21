@@ -1,0 +1,79 @@
+# Date: 21/10/2026
+# Problem: https://leetcode.com/problems/minimum-operations-to-sort-a-string/
+# Leetcode Problem No: 3863
+# Relevance: String, Greedy, Sorting
+
+class Solution:
+
+    # Logic: Greedy Boundary and Extremum Analysis (O(N) Time, O(1) Space)
+    # 1. An operation allows choosing any PROPER substring (length < N) and sorting it.
+    #    We must determine the minimum operations to sort the entire string `s`.
+    # 2. Case Analysis:
+    #    - 0 Operations: If `s` is already sorted non-decreasingly, no operations are required.
+    #    - -1 Operations: If `N == 2` and `s` is unsorted, the only proper substrings have length 1,
+    #      which cannot swap characters. Thus, it is impossible to sort -> return -1.
+    #    - 1 Operation:
+    #      - If `s[0] == minn`: The smallest character is already in place. Sorting the suffix `s[1:]`
+    #        (which is a proper substring of length N - 1) sorts the entire string.
+    #      - If `s[-1] == maxx`: The largest character is already in place. Sorting the prefix `s[:-1]`
+    #        sorts the entire string.
+    #    - 2 Operations:
+    #      - If any middle character `s[i]` (1 <= i <= N - 2) is equal to `minn` or `maxx`:
+    #        We can sort a proper prefix/suffix containing that extremum to bring `minn` to index 0
+    #        or `maxx` to index N - 1 in 1 operation. The second operation then sorts the remainder.
+    #    - 3 Operations:
+    #      - If `minn` is strictly at `s[-1]` and `maxx` is strictly at `s[0]`, neither is in the middle.
+    #        We need 3 operations (e.g. sort prefix to move `maxx` inward, sort suffix to place `maxx` at end,
+    #        then sort prefix).
+    #
+    # Time Complexity: O(N) where N is the length of string `s`, computing min/max and scanning once.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for s = "cba":
+    # - N = 3, minn = 'a', maxx = 'c'
+    # - Not sorted -> not 0
+    # - N != 2 -> not -1
+    # - s[0] != 'a' and s[-1] != 'c' -> not 1
+    # - Middle char s[1] = 'b' != 'a' and != 'c' -> not 2
+    # - Return: 3
+
+    def minOperations(self, s: str) -> int:
+        n = len(s)
+        maxx, minn = max(s), min(s)
+        if all(a <= b for a, b in zip(s, s[1:])):
+            return 0
+
+        if n == 2:
+            return -1
+
+        if s[0] == minn or s[-1] == maxx:
+            return 1
+
+        for i in range(1, n - 1):
+            if s[i] == minn or s[i] == maxx:
+                return 2
+
+        return 3
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "cba" -> Expected: 3
+    s1 = "cba"
+    print(f"Result for '{s1}': {sol.minOperations(s1)}")
+
+    # Example 2: s = "ba" -> Expected: -1
+    s2 = "ba"
+    print(f"Result for '{s2}': {sol.minOperations(s2)}")
+
+    # Example 3: s = "abdc" -> Expected: 1
+    s3 = "abdc"
+    print(f"Result for '{s3}': {sol.minOperations(s3)}")
+
+    # Example 4: s = "dacb" -> Expected: 2
+    s4 = "dacb"
+    print(f"Result for '{s4}': {sol.minOperations(s4)}")
+
+    # Example 5: s = "abc" -> Expected: 0
+    s5 = "abc"
+    print(f"Result for '{s5}': {sol.minOperations(s5)}")

@@ -2389,6 +2389,21 @@
     "type": "file"
   },
   {
+    "name": "Minimum_operations_to_sort_a_string.txt",
+    "path": "dsa/Minimum_operations_to_sort_a_string.txt",
+    "size": 3105,
+    "timestamp": 1792540800000,
+    "displayDate": "21/10/2026",
+    "problemNo": 3863,
+    "topics": [
+      "String",
+      "Greedy",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_path_sum_in_a_grid_dp.txt",
     "path": "dsa/Minimum_path_sum_in_a_grid_dp.txt",
     "size": 3339,
