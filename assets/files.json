@@ -1749,6 +1749,22 @@
     "type": "file"
   },
   {
+    "name": "Maximum_k_to_sort_a_permutation.txt",
+    "path": "dsa/Maximum_k_to_sort_a_permutation.txt",
+    "size": 2496,
+    "timestamp": 1792713600000,
+    "displayDate": "23/10/2026",
+    "problemNo": 3644,
+    "topics": [
+      "Array",
+      "Math",
+      "Greedy",
+      "Bit Manipulation"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_level_sum_of_a_binary_tree.txt",
     "path": "dsa/Maximum_level_sum_of_a_binary_tree.txt",
     "size": 2215,
