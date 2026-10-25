@@ -1,0 +1,101 @@
+# Date: 25/10/2026
+# Problem: https://leetcode.com/problems/number-of-closed-islands/
+# Leetcode Problem No: 1254
+# Relevance: Array, Depth-First Search, Breadth-First Search, Union Find, Matrix
+
+from typing import List
+
+class Solution:
+
+    # Logic: Full-Component DFS Traversal with Boundary Detection (O(M * N) Time, O(M * N) Space)
+    # 1. In this grid:
+    #    - 0 represents land.
+    #    - 1 represents water.
+    #    - A closed island is a maximal 4-directionally connected group of 0s completely surrounded by 1s.
+    #      Any island touching the boundary of the grid cannot be surrounded by 1s, so it is NOT closed.
+    # 2. DFS Strategy:
+    #    - We traverse all cells of the grid. Whenever an unvisited land cell (0) is found, we run `helper(r, c)`.
+    #    - In `helper`:
+    #      - If `(r, c)` goes out of bounds: We've reached the boundary without encountering water,
+    #        meaning this island touches the edge -> return False.
+    #      - If `(r, c)` is already visited or is water (`grid[r][c] == 1`): return True (safe boundary).
+    #      - Mark `(r, c)` as visited.
+    #      - Explore all 4 cardinal neighbors `(nr, nc)`.
+    #        Crucial: We must NOT short-circuit the loop even if one neighbor returns False!
+    #        We must visit and mark all connected land cells in `seen` so that remaining parts of this
+    #        unclosed component are not erroneously re-explored later as separate components.
+    #      - If all 4 branches evaluate to True, the entire component is enclosed by water -> return True.
+    # 3. If `helper(i, j)` returns True, increment `res` by 1.
+    #
+    # Time Complexity: O(M * N) where M and N are the rows and columns of the grid, as each cell is visited at most once.
+    # Space Complexity: O(M * N) auxiliary space for the recursion stack and `seen` set.
+    #
+    # Dry run for grid = [[1, 1, 1], [1, 0, 1], [1, 1, 1]]:
+    # - Cell (1, 1) is 0 and not in seen.
+    # - Call helper(1, 1):
+    #   - Mark (1, 1) in seen.
+    #   - Check (1, 2) -> water (1) -> True
+    #   - Check (2, 1) -> water (1) -> True
+    #   - Check (1, 0) -> water (1) -> True
+    #   - Check (0, 1) -> water (1) -> True
+    # - All neighbors return True -> helper(1, 1) returns True.
+    # - res increments to 1. Returns 1.
+
+    def closedIsland(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        seen = set()
+        dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+        def helper(r: int, c: int) -> bool:
+            if r < 0 or r >= m or c < 0 or c >= n:
+                return False
+            if (r, c) in seen or grid[r][c] == 1:
+                return True
+            seen.add((r, c))
+            closed = True
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if not helper(nr, nc):
+                    closed = False
+            return closed
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 0 and (i, j) not in seen:
+                    if helper(i, j):
+                        res += 1
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: 5x8 grid -> Expected: 2
+    grid1 = [
+        [1, 1, 1, 1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 0, 1, 1, 0],
+        [1, 0, 1, 0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 0, 1, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 0]
+    ]
+    print(f"Result for Grid 1: {sol.closedIsland(grid1)}")
+
+    # Example 2: 3x5 grid -> Expected: 1
+    grid2 = [
+        [0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0],
+        [0, 1, 1, 1, 0]
+    ]
+    print(f"Result for Grid 2: {sol.closedIsland(grid2)}")
+
+    # Example 3: 7x7 grid -> Expected: 2
+    grid3 = [
+        [1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1]
+    ]
+    print(f"Result for Grid 3: {sol.closedIsland(grid3)}")

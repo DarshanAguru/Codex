@@ -2568,6 +2568,23 @@
     "type": "file"
   },
   {
+    "name": "Number_of_closed_islands.txt",
+    "path": "dsa/Number_of_closed_islands.txt",
+    "size": 3980,
+    "timestamp": 1792886400000,
+    "displayDate": "25/10/2026",
+    "problemNo": 1254,
+    "topics": [
+      "Array",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Union Find",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Number_of_paths_with_max_score.txt",
     "path": "dsa/Number_of_paths_with_max_score.txt",
     "size": 5299,
