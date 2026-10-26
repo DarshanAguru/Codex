@@ -573,6 +573,22 @@
     "type": "file"
   },
   {
+    "name": "Count_islands_with_total_value_divisible_by_k.txt",
+    "path": "dsa/Count_islands_with_total_value_divisible_by_k.txt",
+    "size": 3395,
+    "timestamp": 1792972800000,
+    "displayDate": "26/10/2026",
+    "problemNo": 3619,
+    "topics": [
+      "Array",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Count_number_of_subarrays_with_xor_k.txt",
     "path": "dsa/Count_number_of_subarrays_with_xor_k.txt",
     "size": 1885,

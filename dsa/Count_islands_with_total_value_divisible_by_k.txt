@@ -1,0 +1,90 @@
+# Date: 26/10/2026
+# Problem: https://leetcode.com/problems/count-islands-with-total-value-divisible-by-k/
+# Leetcode Problem No: 3619
+# Relevance: Array, Depth-First Search, Breadth-First Search, Matrix
+
+from typing import List
+
+class Solution:
+
+    # Logic: Connected Component DFS with In-Place Visited Sinking (O(M * N) Time, O(M * N) Space)
+    # 1. We are given an M x N grid with non-negative integers:
+    #    - Positive integers (> 0) represent land with given values.
+    #    - 0 represents water.
+    #    - An island is a 4-directionally connected component of land cells.
+    # 2. For each unvisited land cell `grid[i][j] > 0`:
+    #    - Trigger a depth-first search `helper(r, c)` to traverse the full island.
+    #    - In `helper`:
+    #      - Accumulate the current cell's value into `summ`.
+    #      - Sink/mark the cell by setting `grid[r][c] = 0` in-place to prevent revisit.
+    #      - Explore all valid 4-directional neighbors `(nr, nc)` that are inside boundaries and have `grid[nr][nc] > 0`.
+    #      - Return the accumulated total value of the connected component.
+    # 3. Check if the returned total value is divisible by `k` (`tmp % k == 0`). If so, increment `res`.
+    # 4. Return total count `res`.
+    #
+    # Time Complexity: O(M * N) where M and N are rows and columns, as each cell is visited and sunk at most once.
+    # Space Complexity: O(M * N) auxiliary recursion stack space in the worst case (e.g. an entirely connected grid).
+    #
+    # Dry run for grid = [[1, 2], [3, 4]], k = 5:
+    # - Cell (0, 0) > 0:
+    #   - Visit (0, 0): val=1, sink to 0. Neighbor (0, 1) > 0.
+    #     - Visit (0, 1): val=2, sink to 0. Neighbor (1, 1) > 0.
+    #       - Visit (1, 1): val=4, sink to 0. Neighbor (1, 0) > 0.
+    #         - Visit (1, 0): val=3, sink to 0. No more land neighbors.
+    #         - Returns 3.
+    #       - (1, 1) returns 4 + 3 = 7.
+    #     - (0, 1) returns 2 + 7 = 9.
+    #   - (0, 0) returns 1 + 9 = 10.
+    # - 10 % 5 == 0 -> res = 1.
+    # - Return: 1.
+
+    def countIslands(self, grid: List[List[int]], k: int) -> int:
+        m, n = len(grid), len(grid[0])
+        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+        def helper(r: int, c: int) -> int:
+            summ = grid[r][c]
+            grid[r][c] = 0
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] > 0:
+                    summ += helper(nr, nc)
+            return summ
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] > 0:
+                    tmp = helper(i, j)
+                    if tmp % k == 0:
+                        res += 1
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: 3x5 grid, k = 7 -> Expected: 0
+    grid1 = [
+        [0, 2, 1, 0, 0],
+        [0, 4, 0, 0, 5],
+        [0, 1, 0, 0, 3]
+    ]
+    k1 = 7
+    print(f"Result for Grid 1, k={k1}: {sol.countIslands(grid1, k1)}")
+
+    # Example 2: 3x4 grid, k = 3 -> Expected: 6
+    grid2 = [
+        [3, 0, 3, 0],
+        [0, 3, 0, 3],
+        [3, 0, 3, 0]
+    ]
+    k2 = 3
+    print(f"Result for Grid 2, k={k2}: {sol.countIslands(grid2, k2)}")
+
+    # Example 3: 2x2 grid, k = 5 -> Expected: 1
+    grid3 = [
+        [1, 2],
+        [3, 4]
+    ]
+    k3 = 5
+    print(f"Result for Grid 3, k={k3}: {sol.countIslands(grid3, k3)}")
