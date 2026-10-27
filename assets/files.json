@@ -704,6 +704,20 @@
     "type": "file"
   },
   {
+    "name": "Create_grid_with_exactly_one_path.txt",
+    "path": "dsa/Create_grid_with_exactly_one_path.txt",
+    "size": 2189,
+    "timestamp": 1793059200000,
+    "displayDate": "27/10/2026",
+    "problemNo": 3963,
+    "topics": [
+      "Matrix",
+      "Constructive Algorithms"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Daily_temperatures.txt",
     "path": "dsa/Daily_temperatures.txt",
     "size": 1897,
