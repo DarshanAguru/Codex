@@ -1,0 +1,89 @@
+# Date: 31/10/2026
+# Problem: https://leetcode.com/problems/twisted-mirror-path-count/
+# Leetcode Problem No: 3665
+# Relevance: Array, Dynamic Programming, Matrix
+
+from typing import List
+
+class Solution:
+
+    # Logic: State-Transition Dynamic Programming with Mirror Deflection (O(M * N) Time, O(1) Auxiliary Space)
+    # 1. We want to find the number of unique paths from (0, 0) to (m - 1, n - 1) in an M x N grid.
+    #    - Cell value 0: Empty cell (moves right or down freely).
+    #    - Cell value 1: Mirror (deflects incoming direction: right -> down, down -> right).
+    # 2. State & Direction Encoding:
+    #    - We track two directional path streams entering/leaving each cell:
+    #      `left`: Paths arriving from the left (moving rightward).
+    #      `top`: Paths arriving from above (moving downward).
+    # 3. Transition Matrix:
+    #    - For each cell type `val` in {0, 1}, `mat[val]` determines outgoing paths to the right (index 0)
+    #      and to the bottom (index 1) based on incoming streams `[from_left, from_top]`:
+    #      - Empty Cell (val = 0):
+    #        Outgoing Right = from_left + from_top
+    #        Outgoing Down  = from_left + from_top
+    #        mat[0] = [[1, 1], [1, 1]]
+    #      - Mirror Cell (val = 1):
+    #        Moving right into mirror deflects downward: Outgoing Down gets from_left (1 * from_left).
+    #        Moving down into mirror deflects rightward: Outgoing Right gets from_top (1 * from_top).
+    #        mat[1] = [[0, 1], [1, 0]]
+    # 4. In-Place DP Optimization:
+    #    - We can reuse `grid[i][j]` in-place to store the downward-propagating paths (`top` for the next row),
+    #      while a variable `left` tracks the rightward-propagating paths across the current row.
+    #    - Initialize `left = 1` before entering `(0, 0)`.
+    #    - Reset `left = 0` at the start of each subsequent row.
+    # 5. Return the accumulated paths reaching `grid[-1][-1]`.
+    #
+    # Time Complexity: O(M * N) where M and N are rows and columns of the grid.
+    # Space Complexity: O(1) auxiliary space (modifying `grid` in-place).
+    #
+    # Dry run for grid = [[0, 1, 0], [0, 0, 1], [1, 0, 0]]:
+    # - Process row-by-row updating `grid[i][j]` (downward flow) and `left` (rightward flow).
+    # - At (0, 0) [0]: left=1, top=0 -> grid[0][0]=1, left=1
+    # - At (0, 1) [1]: left=1, top=0 -> grid[0][1]=1, left=0
+    # - At (0, 2) [0]: left=0, top=0 -> grid[0][2]=0, left=0
+    # - Subsequent rows propagate along reflections, reaching grid[2][2] = 5.
+    # - Return: 5.
+
+    def uniquePaths(self, grid: List[List[int]]) -> int:
+        MOD = 1_000_000_007
+        m, n = len(grid), len(grid[0])
+        mat = [
+            [[1, 1], [1, 1]],
+            [[0, 1], [1, 0]]
+        ]
+        left = 1
+        for i in range(m):
+            for j in range(n):
+                val = grid[i][j]
+                top = grid[i - 1][j] if i > 0 else 0
+
+                grid[i][j] = (left * mat[val][1][0] + top * mat[val][1][1]) % MOD
+                left = (left * mat[val][0][0] + top * mat[val][0][1]) % MOD
+            left = 0
+
+        return grid[-1][-1]
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: 3x3 grid with mirrors -> Expected: 5
+    grid1 = [
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 0, 0]
+    ]
+    print(f"Result for Grid 1: {sol.uniquePaths(grid1)}")
+
+    # Example 2: 2x2 empty grid -> Expected: 2
+    grid2 = [
+        [0, 0],
+        [0, 0]
+    ]
+    print(f"Result for Grid 2: {sol.uniquePaths(grid2)}")
+
+    # Example 3: 2x2 grid with mirror at (0, 1) -> Expected: 2
+    grid3 = [
+        [0, 1],
+        [0, 0]
+    ]
+    print(f"Result for Grid 3: {sol.uniquePaths(grid3)}")

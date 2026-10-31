@@ -3433,6 +3433,21 @@
     "type": "file"
   },
   {
+    "name": "Twisted_mirror_path_count.txt",
+    "path": "dsa/Twisted_mirror_path_count.txt",
+    "size": 3682,
+    "timestamp": 1793404800000,
+    "displayDate": "31/10/2026",
+    "problemNo": 3665,
+    "topics": [
+      "Array",
+      "Dynamic Programming",
+      "Matrix"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Two_furthest_houses_with_different_colors.txt",
     "path": "dsa/Two_furthest_houses_with_different_colors.txt",
     "size": 1817,
