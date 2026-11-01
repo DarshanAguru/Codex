@@ -2375,6 +2375,20 @@
     "type": "file"
   },
   {
+    "name": "Minimum_moves_to_equal_array_elements.txt",
+    "path": "dsa/Minimum_moves_to_equal_array_elements.txt",
+    "size": 2152,
+    "timestamp": 1793491200000,
+    "displayDate": "01/11/2026",
+    "problemNo": 453,
+    "topics": [
+      "Array",
+      "Math"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "path": "dsa/Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "size": 2013,
