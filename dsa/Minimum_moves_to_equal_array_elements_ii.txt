@@ -1,0 +1,62 @@
+# Date: 02/11/2026
+# Problem: https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/
+# Leetcode Problem No: 462
+# Relevance: Array, Math, Sorting
+
+from typing import List
+
+class Solution:
+
+    # Logic: Median Minimization of Absolute Deviations (O(N log N) Time, O(1) Space)
+    # 1. In one move, we can increment or decrement any element by 1.
+    #    We want to choose a target integer X that minimizes the total cost:
+    #      sum(|nums[i] - X| for all i)
+    # 2. Key Mathematical Insight:
+    #    - The value of X that minimizes the sum of absolute deviations is the MEDIAN of the dataset.
+    #    - Explanation:
+    #      Consider two elements A <= B. Any point X chosen in the interval [A, B] gives |A - X| + |B - X| = B - A,
+    #      which is constant and minimal. If X is outside [A, B], the distance is strictly greater than B - A.
+    #      By pairing the outer elements (smallest with largest, second smallest with second largest, etc.),
+    #      the point that falls into the intersection of all nested intervals is precisely the median.
+    # 3. Algorithm:
+    #    - Sort `nums` in non-decreasing order.
+    #    - Identify the median at index `n // 2`.
+    #    - Sum the absolute differences between each element and the median:
+    #      `sum(abs(num - median) for num in nums)`.
+    #
+    # Time Complexity: O(N log N) where N is the length of `nums`, dominated by sorting.
+    # Space Complexity: O(1) auxiliary space (sorting in-place).
+    #
+    # Dry run for nums = [1, 10, 2, 9]:
+    # - Sorted: [1, 2, 9, 10], n = 4
+    # - Median: nums[4 // 2] = nums[2] = 9
+    # - Absolute differences:
+    #   |1 - 9| = 8
+    #   |2 - 9| = 7
+    #   |9 - 9| = 0
+    #   |10 - 9| = 1
+    # - Total moves: 8 + 7 + 0 + 1 = 16.
+
+    def minMoves2(self, nums: List[int]) -> int:
+        n = len(nums)
+        nums.sort()
+        median = nums[n // 2]
+        res = 0
+        for i in range(n):
+            res += abs(nums[i] - median)
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [1, 2, 3] -> Expected: 2
+    nums1 = [1, 2, 3]
+    print(f"Result for {nums1}: {sol.minMoves2(nums1)}")
+
+    # Example 2: nums = [1, 10, 2, 9] -> Expected: 16
+    nums2 = [1, 10, 2, 9]
+    print(f"Result for {nums2}: {sol.minMoves2(nums2)}")
+
+    # Example 3: nums = [1, 0, 0, 8, 6] -> Expected: 14
+    nums3 = [1, 0, 0, 8, 6]
+    print(f"Result for {nums3}: {sol.minMoves2(nums3)}")
