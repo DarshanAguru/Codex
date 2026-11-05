@@ -1,0 +1,49 @@
+# Date: 05/11/2026
+# Problem: https://leetcode.com/problems/find-the-distance-value-between-two-arrays/
+# Leetcode Problem No: 1385
+# Relevance: Array, Two Pointers, Binary Search, Sorting
+
+from typing import List
+
+class Solution:
+
+    # Logic: Pairwise Distance Threshold Check (O(N * M) Time, O(1) Auxiliary Space)
+    # 1. We are given two integer arrays `arr1` and `arr2`, and an integer `d`.
+    # 2. An element `num1` in `arr1` contributes to the distance value if and only if
+    #    there is NO element `num2` in `arr2` such that `|num1 - num2| <= d`.
+    #    That is, for all `num2` in `arr2`, we must have `|num1 - num2| > d`.
+    # 3. For each `num1` in `arr1`:
+    #    - Evaluate whether `all(abs(num1 - num2) > d for num2 in arr2)`.
+    #    - If true, count 1 for this element.
+    # 4. Return the sum of all valid elements from `arr1`.
+    #
+    # Time Complexity: O(N * M) where N = len(arr1) and M = len(arr2), testing each pair.
+    #                  (Can be optimized to O((M + N) log M) using binary search on sorted arr2).
+    # Space Complexity: O(1) auxiliary space (using generator evaluation inside sum).
+    #
+    # Dry run for arr1 = [4, 5, 8], arr2 = [10, 9, 1, 8], d = 2:
+    # - num1 = 4:
+    #   |4 - 10| = 6 > 2, |4 - 9| = 5 > 2, |4 - 1| = 3 > 2, |4 - 8| = 4 > 2 -> All > 2 -> Valid (count = 1)
+    # - num1 = 5:
+    #   |5 - 10| = 5 > 2, |5 - 9| = 4 > 2, |5 - 1| = 4 > 2, |5 - 8| = 3 > 2 -> All > 2 -> Valid (count = 2)
+    # - num1 = 8:
+    #   |8 - 8| = 0 <= 2 -> Disqualified -> Invalid
+    # - Result: 2.
+
+    def findTheDistanceValue(self, arr1: List[int], arr2: List[int], d: int) -> int:
+        return sum([1 for num1 in arr1 if all([abs(num1 - num2) > d for num2 in arr2])])
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: arr1 = [4, 5, 8], arr2 = [10, 9, 1, 8], d = 2 -> Expected: 2
+    a1, a2, d1 = [4, 5, 8], [10, 9, 1, 8], 2
+    print(f"Result for arr1={a1}, arr2={a2}, d={d1}: {sol.findTheDistanceValue(a1, a2, d1)}")
+
+    # Example 2: arr1 = [1, 4, 2, 3], arr2 = [-4, -3, 6, 10, 20, 30], d = 3 -> Expected: 2
+    b1, b2, d2 = [1, 4, 2, 3], [-4, -3, 6, 10, 20, 30], 3
+    print(f"Result for arr1={b1}, arr2={b2}, d={d2}: {sol.findTheDistanceValue(b1, b2, d2)}")
+
+    # Example 3: arr1 = [2, 1, 100, 3], arr2 = [-5, -2, 10, -3, 7], d = 6 -> Expected: 1
+    c1, c2, d3 = [2, 1, 100, 3], [-5, -2, 10, -3, 7], 6
+    print(f"Result for arr1={c1}, arr2={c2}, d={d3}: {sol.findTheDistanceValue(c1, c2, d3)}")

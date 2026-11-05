@@ -1109,6 +1109,22 @@
     "type": "file"
   },
   {
+    "name": "Find_the_distance_value_between_two_arrays.txt",
+    "path": "dsa/Find_the_distance_value_between_two_arrays.txt",
+    "size": 2472,
+    "timestamp": 1793836800000,
+    "displayDate": "05/11/2026",
+    "problemNo": 1385,
+    "topics": [
+      "Array",
+      "Two Pointers",
+      "Binary Search",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Find_the_length_of_the_longest_common_prefix.txt",
     "path": "dsa/Find_the_length_of_the_longest_common_prefix.txt",
     "size": 2607,
