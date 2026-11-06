@@ -689,6 +689,22 @@
     "type": "file"
   },
   {
+    "name": "Count_zero_request_servers.txt",
+    "path": "dsa/Count_zero_request_servers.txt",
+    "size": 4029,
+    "timestamp": 1793923200000,
+    "displayDate": "06/11/2026",
+    "problemNo": 2747,
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Sliding Window",
+      "Sorting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Create_binary_tree_from_descriptions.txt",
     "path": "dsa/Create_binary_tree_from_descriptions.txt",
     "size": 3477,

@@ -1,0 +1,85 @@
+# Date: 06/11/2026
+# Problem: https://leetcode.com/problems/count-zero-request-servers/
+# Leetcode Problem No: 2747
+# Relevance: Array, Hash Table, Sliding Window, Sorting
+
+from typing import List
+
+class Solution:
+
+    # Logic: Offline Queries + Sliding Window with Two Pointers (O(L log L + Q log Q) Time, O(L + Q + N) Space)
+    # 1. We are given:
+    #    - `n`: total number of servers (labeled 1 to n).
+    #    - `logs`: list of [server_id, time].
+    #    - `queries`: list of query times, where query i asks for the number of servers with 0 requests
+    #      in the time window [q - x, q].
+    # 2. Offline Queries & Sliding Window:
+    #    - Sort `logs` ascending by timestamp `time`.
+    #    - Sort `queries` ascending by query time `q`, while keeping their original index `i`.
+    #    - Maintain a sliding window [q - x, q] over the sorted `logs` using two pointers `left` and `right`:
+    #      - Expand `right`: While `logs[right][1] <= q`, include this log. Add its `server_id` to frequency map `freq`.
+    #        If `server_id` was not previously in `freq`, increment `active` (count of distinct active servers).
+    #      - Shrink `left`: While `logs[left][1] < q - x`, remove this expired log. Decrement its count in `freq`.
+    #        If count reaches 0, decrement `active`.
+    #    - For query at index `i`, the number of zero-request servers is `n - active`.
+    # 3. Return `res`.
+    #
+    # Time Complexity: O(L log L + Q log Q) where L is len(logs) and Q is len(queries), as both arrays are sorted
+    #                  and then scanned in linear time with two pointers.
+    # Space Complexity: O(L + Q + N) auxiliary space to store indexed queries, frequency map, and result array.
+    #
+    # Dry run for n = 3, logs = [[1, 3], [2, 6], [1, 5]], x = 5, queries = [10, 11]:
+    # - Sorted logs: [[1, 3], [1, 5], [2, 6]]
+    # - Sorted queries: [(10, 0), (11, 1)]
+    # - Query (10, 0), window = [5, 10]:
+    #   - Expand right: all logs have time <= 10 -> include [1, 3], [1, 5], [2, 6] -> freq = {1: 2, 2: 1}, active = 2
+    #   - Shrink left: logs[0][1] = 3 < 5 -> remove [1, 3] -> freq[1] = 1, active remains 2
+    #   - logs[1][1] = 5 >= 5 -> stop shrinking
+    #   - res[0] = 3 - 2 = 1 (server 3 has 0 requests)
+    # - Query (11, 1), window = [6, 11]:
+    #   - Expand right: no more logs
+    #   - Shrink left: logs[1][1] = 5 < 6 -> remove [1, 5] -> freq[1] = 0 -> active becomes 1
+    #   - res[1] = 3 - 1 = 2 (servers 1 and 3 have 0 requests)
+    # - Result: [1, 2].
+
+    def countServers(self, n: int, logs: List[List[int]], x: int, queries: List[int]) -> List[int]:
+        logs.sort(key=lambda item: item[1])
+        sorted_queries = sorted([(q, i) for i, q in enumerate(queries)])
+
+        left = 0
+        right = 0
+        active = 0
+        freq = {}
+        res = [0] * len(queries)
+
+        for q, i in sorted_queries:
+            while right < len(logs) and logs[right][1] <= q:
+                server_id = logs[right][0]
+                if freq.get(server_id, 0) == 0:
+                    freq[server_id] = 1
+                    active += 1
+                else:
+                    freq[server_id] += 1
+                right += 1
+
+            while left < len(logs) and logs[left][1] < q - x:
+                server_id = logs[left][0]
+                freq[server_id] -= 1
+                if freq[server_id] == 0:
+                    active -= 1
+                left += 1
+
+            res[i] = n - active
+
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: n = 3, logs = [[1, 3], [2, 6], [1, 5]], x = 5, queries = [10, 11] -> Expected: [1, 2]
+    n1, logs1, x1, queries1 = 3, [[1, 3], [2, 6], [1, 5]], 5, [10, 11]
+    print(f"Result 1: {sol.countServers(n1, logs1, x1, queries1)}")
+
+    # Example 2: n = 3, logs = [[2, 4], [2, 1], [1, 2], [3, 1]], x = 2, queries = [3, 4] -> Expected: [0, 1]
+    n2, logs2, x2, queries2 = 3, [[2, 4], [2, 1], [1, 2], [3, 1]], 2, [3, 4]
+    print(f"Result 2: {sol.countServers(n2, logs2, x2, queries2)}")
