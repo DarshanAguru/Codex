@@ -1,0 +1,80 @@
+# Date: 08/11/2026
+# Problem: https://leetcode.com/problems/count-servers-that-communicate/
+# Leetcode Problem No: 1267
+# Relevance: Array, Depth-First Search, Breadth-First Search, Union Find, Matrix, Counting
+
+from typing import List
+
+class Solution:
+
+    # Logic: Row and Column Server Precomputation (O(M * N) Time, O(M + N) Space)
+    # 1. We are given an M x N grid where `1` represents a server and `0` represents an empty cell.
+    #    Two servers communicate if they share the same row or the same column.
+    #    A server communicates with at least one other server if its row has > 1 servers OR its column has > 1 servers.
+    # 2. Pass 1 (Counting):
+    #    - Count the total number of servers in each row using `row_cnt` (size M).
+    #    - Count the total number of servers in each column using `col_cnt` (size N).
+    # 3. Pass 2 (Verification):
+    #    - Traverse the grid again.
+    #    - For each cell with a server (`grid[i][j] == 1`):
+    #      If `row_cnt[i] > 1` or `col_cnt[j] > 1`, this server can communicate with at least one other server.
+    #      Increment `res`.
+    # 4. Return `res`.
+    #
+    # Time Complexity: O(M * N) where M and N are rows and columns of `grid`, passing through the grid twice.
+    # Space Complexity: O(M + N) auxiliary space for row and column count arrays.
+    #
+    # Dry run for grid = [[1, 0], [1, 1]]:
+    # - m = 2, n = 2
+    # - Pass 1:
+    #   (0, 0)=1 -> row_cnt[0]=1, col_cnt[0]=1
+    #   (1, 0)=1 -> row_cnt[1]=1, col_cnt[0]=2
+    #   (1, 1)=1 -> row_cnt[1]=2, col_cnt[1]=1
+    #   row_cnt = [1, 2], col_cnt = [2, 1]
+    # - Pass 2:
+    #   (0, 0): col_cnt[0] = 2 > 1 -> communicates (res = 1)
+    #   (1, 0): row_cnt[1] = 2 > 1 -> communicates (res = 2)
+    #   (1, 1): row_cnt[1] = 2 > 1 -> communicates (res = 3)
+    # - Result: 3.
+
+    def countServers(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return 0
+        m, n = len(grid), len(grid[0])
+        row_cnt = [0] * m
+        col_cnt = [0] * n
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j]:
+                    row_cnt[i] += 1
+                    col_cnt[j] += 1
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j]:
+                    if row_cnt[i] > 1 or col_cnt[j] > 1:
+                        res += 1
+
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: grid = [[1, 0], [0, 1]] -> Expected: 0
+    grid1 = [[1, 0], [0, 1]]
+    print(f"Result for Grid 1: {sol.countServers(grid1)}")
+
+    # Example 2: grid = [[1, 0], [1, 1]] -> Expected: 3
+    grid2 = [[1, 0], [1, 1]]
+    print(f"Result for Grid 2: {sol.countServers(grid2)}")
+
+    # Example 3: grid = [[1, 1, 0, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 0, 1]] -> Expected: 4
+    grid3 = [
+        [1, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ]
+    print(f"Result for Grid 3: {sol.countServers(grid3)}")

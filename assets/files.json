@@ -604,6 +604,24 @@
     "type": "file"
   },
   {
+    "name": "Count_servers_that_communicate.txt",
+    "path": "dsa/Count_servers_that_communicate.txt",
+    "size": 2982,
+    "timestamp": 1794096000000,
+    "displayDate": "08/11/2026",
+    "problemNo": 1267,
+    "topics": [
+      "Array",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Union Find",
+      "Matrix",
+      "Counting"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Count_set_bits.txt",
     "path": "dsa/Count_set_bits.txt",
     "size": 959,
