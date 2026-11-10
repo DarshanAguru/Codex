@@ -408,6 +408,20 @@
     "type": "file"
   },
   {
+    "name": "Climbing_stairs_ii.txt",
+    "path": "dsa/Climbing_stairs_ii.txt",
+    "size": 3080,
+    "timestamp": 1794268800000,
+    "displayDate": "10/11/2026",
+    "problemNo": 3693,
+    "topics": [
+      "Array",
+      "Dynamic Programming"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Closest_equal_element_queries.txt",
     "path": "dsa/Closest_equal_element_queries.txt",
     "size": 2856,

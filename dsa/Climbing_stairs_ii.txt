@@ -1,0 +1,64 @@
+# Date: 10/11/2026
+# Problem: https://leetcode.com/problems/climbing-stairs-ii/
+# Leetcode Problem No: 3693
+# Relevance: Array, Dynamic Programming
+
+from typing import List
+
+class Solution:
+
+    # Logic: 1D Dynamic Programming with Quadratic Jump Costs (O(N) Time, O(N) Space)
+    # 1. We are climbing a staircase from step 0 to step n.
+    #    - `costs` is a list of length n, where `costs[i]` is the cost to step on stair i + 1.
+    #    - From any step, we can jump forward 1, 2, or 3 steps.
+    #    - The cost of jumping `k` steps (k in {1, 2, 3}) to stair `i` is `costs[i] + k^2`
+    #      (where 1^2 = 1, 2^2 = 4, 3^2 = 9).
+    # 2. State & Transitions:
+    #    - Let `dp[i]` represent the minimum cost to land on stair `i` (0-indexed, where 0 is stair 1).
+    #    - For each stair `i`:
+    #      - Reaching stair `i` from step 0 (ground):
+    #        - If jumping from 0 (when i in {0, 1, 2}): previous cost is 0.
+    #      - Reaching stair `i` from previous stairs:
+    #        - Jump of 1 from stair i - 1: `dp[i - 1] + 1` (if i > 0)
+    #        - Jump of 2 from stair i - 2: `dp[i - 2] + 4` (if i > 1)
+    #        - Jump of 3 from stair i - 3: `dp[i - 3] + 9` (if i > 2)
+    #      - `dp[i] = costs[i] + min(val1 + 1, val2 + 4, val3 + 9)`.
+    # 3. Return `dp[n - 1]`, the minimum cost to reach stair `n`.
+    #
+    # Time Complexity: O(N) where N is the number of stairs, doing O(1) transitions per step.
+    # Space Complexity: O(N) auxiliary space for the DP array (can be reduced to O(1) using 3 rolling variables).
+    #
+    # Dry run for n = 4, costs = [1, 2, 3, 4]:
+    # - i = 0 (stair 1): val1=0, val2=0, val3=0 -> costs[0] + min(0+1, 0+4, 0+9) = 1 + 1 = 2
+    # - i = 1 (stair 2): val1=dp[0]=2, val2=0, val3=0 -> costs[1] + min(2+1, 0+4, 0+9) = 2 + min(3, 4, 9) = 2 + 3 = 5
+    # - i = 2 (stair 3): val1=dp[1]=5, val2=dp[0]=2, val3=0 -> costs[2] + min(5+1, 2+4, 0+9) = 3 + min(6, 6, 9) = 3 + 6 = 9
+    # - i = 3 (stair 4): val1=dp[2]=9, val2=dp[1]=5, val3=dp[0]=2 -> costs[3] + min(9+1, 5+4, 2+9) = 4 + min(10, 9, 11) = 4 + 9 = 13
+    # - Return dp[3] = 13.
+
+    def climbStairs(self, n: int, costs: List[int]) -> int:
+        dp = [float("inf")] * (n + 1)
+        for i in range(n):
+            val1, val2, val3 = 0, 0, 0
+            if i > 0:
+                val1 = dp[i - 1]
+            if i > 1:
+                val2 = dp[i - 2]
+            if i > 2:
+                val3 = dp[i - 3]
+            dp[i] = costs[i] + min(val1 + 1, val2 + 4, val3 + 9)
+        return dp[n - 1]
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: n = 4, costs = [1, 2, 3, 4] -> Expected: 13
+    n1, costs1 = 4, [1, 2, 3, 4]
+    print(f"Result for n={n1}, costs={costs1}: {sol.climbStairs(n1, costs1)}")
+
+    # Example 2: n = 3, costs = [3, 2, 4] -> Expected: 11
+    n2, costs2 = 3, [3, 2, 4]
+    print(f"Result for n={n2}, costs={costs2}: {sol.climbStairs(n2, costs2)}")
+
+    # Example 3: n = 5, costs = [1, 5, 2, 4, 3] -> Expected: 15
+    n3, costs3 = 5, [1, 5, 2, 4, 3]
+    print(f"Result for n={n3}, costs={costs3}: {sol.climbStairs(n3, costs3)}")
