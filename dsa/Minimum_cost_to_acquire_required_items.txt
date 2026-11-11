@@ -1,0 +1,52 @@
+# Date: 11/11/2026
+# Problem: https://leetcode.com/problems/minimum-cost-to-acquire-required-items/
+# Leetcode Problem No: 3789
+# Relevance: Math, Greedy
+
+class Solution:
+
+    # Logic: Greedy Bundle Evaluation & Closed-Form Comparison (O(1) Time, O(1) Space)
+    # 1. We need to acquire at least `need1` units of item 1 and `need2` units of item 2.
+    #    - Individual item 1 costs `cost1`.
+    #    - Individual item 2 costs `cost2`.
+    #    - A bundle providing 1 of both costs `costBoth`.
+    # 2. Candidate Strategies:
+    #    - Strategy 1 (`take_both`): Buy all items individually without bundles:
+    #      `need1 * cost1 + need2 * cost2`
+    #    - Strategy 2 (`take_min`): Use bundles for the shared requirement `min(need1, need2)`,
+    #      and purchase the remaining excess individually:
+    #      `minn * costBoth + (need1 - minn) * cost1 + (need2 - minn) * cost2`
+    #    - Strategy 3 (`take_max`): Buy `max(need1, need2)` bundles, fully covering both requirements
+    #      (potentially wasting excess items of one type because the bundle is cheaper than buying single items):
+    #      `maxx * costBoth`
+    # 3. The minimum cost is simply the minimum among these three candidate strategies.
+    #
+    # Time Complexity: O(1) basic arithmetic operations.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for cost1 = 5, cost2 = 4, costBoth = 3, need1 = 2, need2 = 4:
+    # - minn = 2, maxx = 4
+    # - take_both = 2 * 5 + 4 * 4 = 10 + 16 = 26
+    # - take_min = 2 * 3 + 0 * 5 + 2 * 4 = 6 + 8 = 14
+    # - take_max = 4 * 3 = 12
+    # - Return min(26, 14, 12) = 12.
+
+    def minimumCost(self, cost1: int, cost2: int, costBoth: int, need1: int, need2: int) -> int:
+        minn = min(need1, need2)
+        maxx = max(need1, need2)
+        take_both = need1 * cost1 + need2 * cost2
+        take_min = minn * costBoth + (need1 - minn) * cost1 + (need2 - minn) * cost2
+        take_max = maxx * costBoth
+        return min(take_both, take_min, take_max)
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: cost1=5, cost2=4, costBoth=3, need1=2, need2=4 -> Expected: 12
+    print(f"Result 1: {sol.minimumCost(5, 4, 3, 2, 4)}")
+
+    # Example 2: cost1=2, cost2=3, costBoth=10, need1=3, need2=2 -> Expected: 12
+    print(f"Result 2: {sol.minimumCost(2, 3, 10, 3, 2)}")
+
+    # Example 3: cost1=3, cost2=5, costBoth=4, need1=4, need2=2 -> Expected: 14
+    print(f"Result 3: {sol.minimumCost(3, 5, 4, 4, 2)}")

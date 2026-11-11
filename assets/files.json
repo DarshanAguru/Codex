@@ -2306,6 +2306,20 @@
     "type": "file"
   },
   {
+    "name": "Minimum_cost_to_acquire_required_items.txt",
+    "path": "dsa/Minimum_cost_to_acquire_required_items.txt",
+    "size": 2454,
+    "timestamp": 1794355200000,
+    "displayDate": "11/11/2026",
+    "problemNo": 3789,
+    "topics": [
+      "Math",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_cost_to_convert_string_i.txt",
     "path": "dsa/Minimum_cost_to_convert_string_i.txt",
     "size": 3345,
