@@ -1,0 +1,72 @@
+# Date: 15/11/2026
+# Problem: https://leetcode.com/problems/number-of-sub-arrays-with-odd-sum/
+# Leetcode Problem No: 1524
+# Relevance: Array, Math, Dynamic Programming, Prefix Sum
+
+from typing import List
+
+
+class Solution:
+
+    # Logic: Running Prefix Sum Parity Counting (O(N) Time, O(1) Space)
+    # 1. The sum of a subarray arr[j...i] (where j <= i) can be expressed as:
+    #      sum(j...i) = prefix_sum[i] - prefix_sum[j - 1]
+    # 2. A subarray sum is odd if and only if the difference between the two prefix sums is odd:
+    #      odd - even = odd
+    #      even - odd = odd
+    # 3. Therefore, as we iterate through the array maintaining a running prefix sum:
+    #      - If the current prefix sum is ODD:
+    #        Any previous prefix sum that was EVEN forms an odd subarray.
+    #        We add `even` (the count of previous even prefix sums) to our result.
+    #        Then, increment the `odd` counter.
+    #      - If the current prefix sum is EVEN:
+    #        Any previous prefix sum that was ODD forms an odd subarray.
+    #        We add `odd` (the count of previous odd prefix sums) to our result.
+    #        Then, increment the `even` counter.
+    # 4. Base state before processing any elements:
+    #      - prefix_sum = 0 (which is even), so `even = 1` and `odd = 0`.
+    # 5. Take modulo 1_000_000_007 at each addition to prevent overflow.
+    #
+    # Time Complexity: O(N) — Single pass through the array.
+    # Space Complexity: O(1) — Constant auxiliary space for prefix parity counters.
+    #
+    # Dry run for arr = [1, 3, 5]:
+    # Initial: even = 1, odd = 0, summ = 0, res = 0
+    # - num = 1: summ = 1 (odd)  -> res += even (0 + 1 = 1), odd = 1
+    # - num = 3: summ = 4 (even) -> res += odd  (1 + 1 = 2), even = 2
+    # - num = 5: summ = 9 (odd)  -> res += even (2 + 2 = 4), odd = 2
+    # Output: res = 4 (Subarrays: [1], [1, 3, 5], [3], [5])
+
+    def numOfSubarrays(self, arr: List[int]) -> int:
+        MOD = 1_000_000_007
+        odd = 0
+        even = 1
+        summ = 0
+        res = 0
+
+        for num in arr:
+            summ += num
+            if summ & 1:
+                res = (res + even) % MOD
+                odd += 1
+            else:
+                res = (res + odd) % MOD
+                even += 1
+
+        return res
+
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: arr = [1, 3, 5] -> Expected: 4
+    arr1 = [1, 3, 5]
+    print(f"Result for arr={arr1}: {sol.numOfSubarrays(arr1)}")
+
+    # Example 2: arr = [2, 4, 6] -> Expected: 0
+    arr2 = [2, 4, 6]
+    print(f"Result for arr={arr2}: {sol.numOfSubarrays(arr2)}")
+
+    # Example 3: arr = [1, 2, 3, 4, 5, 6, 7] -> Expected: 16
+    arr3 = [1, 2, 3, 4, 5, 6, 7]
+    print(f"Result for arr={arr3}: {sol.numOfSubarrays(arr3)}")

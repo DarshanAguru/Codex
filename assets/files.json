@@ -2780,6 +2780,22 @@
     "type": "file"
   },
   {
+    "name": "Number_of_sub_arrays_with_odd_sum.txt",
+    "path": "dsa/Number_of_sub_arrays_with_odd_sum.txt",
+    "size": 2759,
+    "timestamp": 1794700800000,
+    "displayDate": "15/11/2026",
+    "problemNo": 1524,
+    "topics": [
+      "Array",
+      "Math",
+      "Dynamic Programming",
+      "Prefix Sum"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Number_of_ways_to_assign_edge_weights_i.txt",
     "path": "dsa/Number_of_ways_to_assign_edge_weights_i.txt",
     "size": 2458,
