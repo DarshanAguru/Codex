@@ -1,0 +1,52 @@
+# Date: 16/11/2026
+# Problem: https://leetcode.com/problems/calculate-digit-sum-of-a-string/
+# Leetcode Problem No: 2243
+# Relevance: String, Simulation
+
+class Solution:
+
+    # Logic: Chunk-based Digit Summing Simulation (O(N log_k N) Time, O(N) Space)
+    # 1. We are given a numeric string `s` and an integer `k`.
+    #    While `len(s) > k`, we perform a reduction round:
+    #    - Partition `s` into consecutive substrings of length `k` (the last group may have length < k).
+    #    - Replace each group by the string representation of the sum of its digits.
+    #    - Concatenate the group sums to form the new string `s`.
+    # 2. Termination:
+    #    - The process terminates as soon as `len(s) <= k`.
+    # 3. Return the resulting string `s`.
+    #
+    # Time Complexity: O(N log_k N) where N is the length of `s`, since each round substantially reduces the
+    #                  length of the string when k >= 2.
+    # Space Complexity: O(N) auxiliary space to construct the intermediate strings in each round.
+    #
+    # Dry run for s = "11111222223", k = 3:
+    # - Round 1:
+    #   - Groups of 3: "111" -> 3, "112" -> 4, "222" -> 6, "23" -> 5
+    #   - New string: "3465" (length = 4 > 3)
+    # - Round 2:
+    #   - Groups of 3: "346" -> 13, "5" -> 5
+    #   - New string: "135" (length = 3 <= 3)
+    # - Loop terminates: returns "135".
+
+    def digitSum(self, s: str, k: int) -> str:
+        while len(s) > k:
+            new_s = []
+            for i in range(0, len(s), k):
+                new_s.append(str(sum(int(ch) for ch in s[i:i + k])))
+            s = "".join(new_s)
+        return s
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "11111222223", k = 3 -> Expected: "135"
+    s1, k1 = "11111222223", 3
+    print(f"Result 1: '{sol.digitSum(s1, k1)}'")
+
+    # Example 2: s = "00000000", k = 3 -> Expected: "000"
+    s2, k2 = "00000000", 3
+    print(f"Result 2: '{sol.digitSum(s2, k2)}'")
+
+    # Example 3: s = "12", k = 3 -> Expected: "12"
+    s3, k3 = "12", 3
+    print(f"Result 3: '{sol.digitSum(s3, k3)}'")

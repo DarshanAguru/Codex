@@ -293,6 +293,20 @@
     "type": "file"
   },
   {
+    "name": "Calculate_digit_sum_of_a_string.txt",
+    "path": "dsa/Calculate_digit_sum_of_a_string.txt",
+    "size": 2058,
+    "timestamp": 1794787200000,
+    "displayDate": "16/11/2026",
+    "problemNo": 2243,
+    "topics": [
+      "String",
+      "Simulation"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Champagne_tower.txt",
     "path": "dsa/Champagne_tower.txt",
     "size": 1855,
