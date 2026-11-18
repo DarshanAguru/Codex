@@ -1,0 +1,48 @@
+# Date: 18/11/2026
+# Problem: https://leetcode.com/problems/minimum-number-of-changes-to-make-binary-string-beautiful/
+# Leetcode Problem No: 2914
+# Relevance: String, Greedy
+
+class Solution:
+
+    # Logic: Pairwise Greedy Comparison (O(N) Time, O(1) Space)
+    # 1. A binary string of even length is "beautiful" if it can be partitioned into substrings of even lengths
+    #    where each substring contains only '0's or only '1's.
+    # 2. Key Insight:
+    #    - Any valid even-length uniform substring (e.g. length 2, 4, 6...) can be decomposed into independent
+    #      blocks of length 2 ("00" or "11").
+    #    - Therefore, the minimal and sufficient condition is that every non-overlapping pair of adjacent characters
+    #      (s[0..1], s[2..3], s[4..5], ...) must consist of identical digits.
+    #    - For each pair (s[i], s[i + 1]), if `s[i] != s[i + 1]`, we must flip one character to match the other
+    #      (cost = 1 change). If they already match, cost = 0.
+    # 3. Sum the mismatch count across all N / 2 adjacent pairs.
+    #
+    # Time Complexity: O(N) where N is the length of `s`, examining each character once.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for s = "1001":
+    # - Pair 1: s[0]='1', s[1]='0' -> mismatch -> res += 1 (res = 1)
+    # - Pair 2: s[2]='0', s[3]='1' -> mismatch -> res += 1 (res = 2)
+    # - Total changes = 2.
+
+    def minChanges(self, s: str) -> int:
+        res = 0
+        for i in range(0, len(s), 2):
+            if s[i] != s[i + 1]:
+                res += 1
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: s = "1001" -> Expected: 2
+    s1 = "1001"
+    print(f"Result for '{s1}': {sol.minChanges(s1)}")
+
+    # Example 2: s = "10" -> Expected: 1
+    s2 = "10"
+    print(f"Result for '{s2}': {sol.minChanges(s2)}")
+
+    # Example 3: s = "0000" -> Expected: 0
+    s3 = "0000"
+    print(f"Result for '{s3}': {sol.minChanges(s3)}")

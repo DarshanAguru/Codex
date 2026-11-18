@@ -2496,6 +2496,20 @@
     "type": "file"
   },
   {
+    "name": "Minimum_number_of_changes_to_make_binary_string_beautiful.txt",
+    "path": "dsa/Minimum_number_of_changes_to_make_binary_string_beautiful.txt",
+    "size": 1948,
+    "timestamp": 1794960000000,
+    "displayDate": "18/11/2026",
+    "problemNo": 2914,
+    "topics": [
+      "String",
+      "Greedy"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "path": "dsa/Minimum_number_of_flips_to_make_the_binary_string_alternating.txt",
     "size": 2013,
