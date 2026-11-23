@@ -2953,6 +2953,23 @@
     "type": "file"
   },
   {
+    "name": "Product_of_the_last_k_numbers.txt",
+    "path": "dsa/Product_of_the_last_k_numbers.txt",
+    "size": 2598,
+    "timestamp": 1795392000000,
+    "displayDate": "23/11/2026",
+    "problemNo": 1352,
+    "topics": [
+      "Array",
+      "Math",
+      "Design",
+      "Data Stream",
+      "Prefix Sum"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Rank_transform_of_an_array.txt",
     "path": "dsa/Rank_transform_of_an_array.txt",
     "size": 2598,
