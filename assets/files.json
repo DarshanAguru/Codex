@@ -2010,6 +2010,22 @@
     "type": "file"
   },
   {
+    "name": "Maximum_subarray_with_equal_products.txt",
+    "path": "dsa/Maximum_subarray_with_equal_products.txt",
+    "size": 2437,
+    "timestamp": 1795478400000,
+    "displayDate": "24/11/2026",
+    "problemNo": 3411,
+    "topics": [
+      "Array",
+      "Math",
+      "Number Theory",
+      "Sliding Window"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Maximum_sum_path_binaryTree.txt",
     "path": "dsa/Maximum_sum_path_binaryTree.txt",
     "size": 2094,

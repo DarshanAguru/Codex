@@ -1,0 +1,62 @@
+# Date: 24/11/2026
+# Problem: https://leetcode.com/problems/maximum-subarray-with-equal-products/
+# Leetcode Problem No: 3411
+# Relevance: Array, Math, Number Theory, Sliding Window
+
+import math
+from typing import List
+
+class Solution:
+
+    # Logic: Pairwise Coprimality Sliding Window (O(N^2) Time, O(1) Space)
+    # 1. A subarray `arr` is product-equivalent if `prod(arr) == gcd(arr) * lcm(arr)`.
+    # 2. Number-Theoretic Property:
+    #    - For any pair of numbers (a, b), `a * b = gcd(a, b) * lcm(a, b)` always holds (length 2 is always valid).
+    #    - For length >= 3, `prod(arr) == gcd(arr) * lcm(arr)` holds if and only if every pair of elements
+    #      in `arr` is pairwise coprime (i.e. gcd(arr[i], arr[j]) == 1 for all i != j), or the subarray has length 2.
+    # 3. Two-Pointer / Sliding Window:
+    #    - Initialize `res = min(n, 2)`.
+    #    - For each `right` index from 0 to n - 1:
+    #      - Shrink `left` until `nums[right]` is coprime with all elements `nums[i]` in `[left, right - 1]`.
+    #      - Update `res = max(res, right - left + 1)`.
+    # 4. Return `res`.
+    #
+    # Time Complexity: O(N^2 * log(MAX)) where N <= 100 is the length of `nums`.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for nums = [1, 2, 1, 2, 1, 1, 1]:
+    # - Subarrays consisting of 1s and at most one 2 are pairwise coprime.
+    # - The longest such continuous window has length 5 (e.g. [1, 2, 1, 1, 1]).
+    # - Return: 5.
+
+    def maxLength(self, nums: List[int]) -> int:
+        n = len(nums)
+        left = 0
+        res = min(n, 2)
+        for right in range(n):
+            while left < right:
+                flag = True
+                for i in range(left, right):
+                    if math.gcd(nums[right], nums[i]) != 1:
+                        flag = False
+                        break
+                if flag:
+                    break
+                left += 1
+            res = max(res, right - left + 1)
+        return res
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: nums = [1, 2, 1, 2, 1, 1, 1] -> Expected: 5
+    n1 = [1, 2, 1, 2, 1, 1, 1]
+    print(f"Result for {n1}: {sol.maxLength(n1)}")
+
+    # Example 2: nums = [2, 3, 4, 5, 6] -> Expected: 3
+    n2 = [2, 3, 4, 5, 6]
+    print(f"Result for {n2}: {sol.maxLength(n2)}")
+
+    # Example 3: nums = [1, 2, 3, 1, 4, 5] -> Expected: 5
+    n3 = [1, 2, 3, 1, 4, 5]
+    print(f"Result for {n3}: {sol.maxLength(n3)}")
