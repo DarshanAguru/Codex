@@ -1,0 +1,52 @@
+# Date: 26/11/2026
+# Problem: https://leetcode.com/problems/stone-removal-game/
+# Leetcode Problem No: 3360
+# Relevance: Math, Simulation, Game Theory
+
+from math import sqrt
+
+class Solution:
+
+    # Logic: Mathematical Triangular Remainder Analysis (O(1) Time, O(1) Space)
+    # 1. Rules of the game:
+    #    - Turn 1: Alice removes 10 stones.
+    #    - Turn 2: Bob removes 9 stones.
+    #    - Turn 3: Alice removes 8 stones, and so forth (decrementing by 1 each turn).
+    #    - The player who cannot make their assigned move loses.
+    # 2. Cumulative Stone Requirement:
+    #    - If all 10 possible turns were played (from 10 down to 1), total stones removed would be:
+    #      10 + 9 + 8 + ... + 1 = 10 * 11 / 2 = 55 stones.
+    #    - Let `left = 55 - n` be the "deficit" of stones from the full 55.
+    #    - The number of turns NOT played from the bottom end (1, 2, ...) can be estimated via
+    #      triangular numbers: `m * (m + 1) / 2 ~ left => notplayed ~ round(sqrt(2 * left))`.
+    #    - Total turns played = 10 - notplayed.
+    #    - Alice wins if total turns played is odd, which corresponds to `notplayed % 2 == 1`
+    #      (since 10 - odd = odd).
+    #
+    # Time Complexity: O(1) closed-form calculation using square root.
+    # Space Complexity: O(1) auxiliary space.
+    #
+    # Dry run for n = 12:
+    # - Turn 1 (Alice): removes 10 -> remaining = 2
+    # - Turn 2 (Bob): needs 9, but only 2 available -> Bob loses, Alice wins.
+    # - Math formula check:
+    #   left = 55 - 12 = 43
+    #   notplayed = round(sqrt(86)) = round(9.2736) = 9
+    #   notplayed % 2 = 9 % 2 = 1 -> True.
+
+    def canAliceWin(self, n: int) -> bool:
+        left = 55 - n
+        notplayed = round(sqrt(2 * left))
+        return notplayed % 2 == 1
+
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Example 1: n = 12 -> Expected: True (Alice removes 10, Bob cannot remove 9)
+    print(f"Result for n = 12: {sol.canAliceWin(12)}")
+
+    # Example 2: n = 1 -> Expected: False (Alice cannot even remove 10)
+    print(f"Result for n = 1: {sol.canAliceWin(1)}")
+
+    # Example 3: n = 19 -> Expected: False (Alice: 10, Bob: 9, Alice cannot remove 8)
+    print(f"Result for n = 19: {sol.canAliceWin(19)}")

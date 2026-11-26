@@ -3469,6 +3469,21 @@
     "type": "file"
   },
   {
+    "name": "Stone_removal_game.txt",
+    "path": "dsa/Stone_removal_game.txt",
+    "size": 2214,
+    "timestamp": 1795651200000,
+    "displayDate": "26/11/2026",
+    "problemNo": 3360,
+    "topics": [
+      "Math",
+      "Simulation",
+      "Game Theory"
+    ],
+    "language": "python",
+    "type": "file"
+  },
+  {
     "name": "Subarrays_distinct_element_sum_of_squares_i.txt",
     "path": "dsa/Subarrays_distinct_element_sum_of_squares_i.txt",
     "size": 2162,
